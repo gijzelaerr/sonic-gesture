@@ -11,7 +11,8 @@ public:
     Mat img, hsv, bw, facepixels;
     MatND histogram;
     vector<Rect> faces;
-    CascadeClassifier haarzoeker;    
+    CascadeClassifier haarzoeker;
+    Rect face_rect;
     Skin(const string& facefile, const string& haarfile);
     void load_image(const string& filename);
     void load_haar(const string& filename);

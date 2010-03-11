@@ -17,12 +17,13 @@ Hand::Hand(const string& filename, MatND histogram) {
     load_image(filename);
     make_backproject(histogram);
     make_cutout();
-	find_hog();
+    //find_hog();
 }
 
 void Hand::load_image(const string& filename) {
     img = imread(filename, 1);
     if (!img.data) {
+        cerr << "can't read image data" << endl;
         throw exception();
 	}
     flip(img, img, 1);
@@ -40,16 +41,25 @@ void Hand::make_backproject(MatND histogram) {
 void Hand::make_cutout() {
     Mat mask, clean, sized, sub, bw;
     GaussianBlur( backproj, mask, Size(51, 51), 0);
-    threshold(mask, mask, 80, 1, CV_THRESH_BINARY);
+    threshold(mask, mask, 10, 255, CV_THRESH_BINARY);
 
     int dia = WORKSIZE/20 + 1;
     Mat kernel = Mat(dia, dia, CV_8U, 1);
     dilate(mask, mask, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));	
-    
+
+
     vector<vector<Point> > contours;
     findContours( mask, contours, RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE );
-    //drawContours( working, contours, -1, Scalar( 0, 0, 255 ));
-	
+    drawContours( img, contours, -1, Scalar( 0, 0, 255 ));
+
+    imshow("gijs", img);
+    waitKey();
+
+    if (contours.size() == 0) {
+        cerr << "can't find blobs in image" << endl;
+        return;
+        //throw exception();
+    }
     Rect box = boundingRect(contours.at(0));
     //rectangle(mask, box.tl(), box.br(), Scalar(0, 255, 0) );
 	

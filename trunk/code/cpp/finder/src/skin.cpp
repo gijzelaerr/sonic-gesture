@@ -13,9 +13,13 @@ using namespace std;
 
 Skin::Skin(const string& facefile, const string& haarfile) {
     load_image(facefile);
-	load_haar(haarfile);
+    load_haar(haarfile);
     find_face();
     make_histogram();
+
+    rectangle(img, face_rect.tl(), face_rect.br(), Scalar(0, 255, 0));
+    imshow("face", img);
+    waitKey();
 }
 
 void Skin::load_image(const string& filename) {
@@ -41,9 +45,9 @@ void Skin::find_face() {
 		cerr << "no faces found in image" << endl;
 		throw exception();
 	}
-	Rect face = faces.at(0);
-    Rect region = sub_region(face);
-    facepixels = hsv(region);
+	face_rect = faces.at(0);
+    face_rect = sub_region(face_rect);
+    facepixels = hsv(face_rect);
 }
 
 void Skin::make_histogram() {

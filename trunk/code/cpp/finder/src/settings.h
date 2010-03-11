@@ -19,6 +19,6 @@
 #define WORKSIZE 300
 #define XWINDOWS 3
 
-#define GUIDONIAN_PATH "../../../../data/guidonian"
+#define TRAIN_PATH "../../../../data/train"
 
 #endif

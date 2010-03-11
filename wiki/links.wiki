@@ -1,0 +1,52 @@
+#summary Interesting papers and links for this project
+
+= Introduction =
+
+here you can find links and online published papers that are relevant to Sonic Gesture.
+
+
+= Links =
+ * http://www.robots.ox.ac.uk/~vgg/software/
+ * http://www.robots.ox.ac.uk/~gk/
+ * [http://www.xbox.com/en-US/live/projectnatal/ project natal]
+ * [http://www.youtube.com/watch?v=ngCI1DpE6T8 Computers That Can Read Sign Language (video)]
+ * [http://www.tudelft.nl/live/pagina.jsp?id=13caf1c5-de0e-493c-804e-6f554d235698&lang=nl Computer helpt dove kinderen met leren gebarentaal ]
+ * [http://ict.ewi.tudelft.nl/index.php?option=com_sections&id=56&Itemid=120 Automatic Gesture Recognition at tudelft]
+ * [http://www.gebarencentrum.nl/uitleg_ngt.asp gebaren centrum nederland]
+ * [http://en.wikipedia.org/wiki/Guidonian_hand Guidonian hand]
+ * [http://en.wikipedia.org/wiki/Kod%C3%A1ly_Method#Hand_signs Kodály Method]
+ * [http://www.music.vt.edu/musicdictionary/appendix/scales/solmization/syllables.html Solmization scales]
+ * [http://www.youtube.com/watch?v=8j3j9nYgP4w#t=4m20s Video, Close Encounters Of The Third Kind, example of Kodály Method]
+ * [http://www.classicsforkids.com/teachers/training/handsigns.asp classics for kids - teaching Curwen/Glover Hand Signs]
+ * [http://www.designinggesturalinterfaces.com/ Designing Gustural Interfaces (book)]
+ * [http://www.blobkat.com/index.php?pag=works&project=thesis Sound Composition using a Wii remote]
+ * [http://www.signingsavvy.com/ sign language video dictionary] 
+ * [http://www.infomus.org/EywMain.html EyesWeb]
+ * [http://www.vlfeat.org/]
+ * [http://cimg.sourceforge.net/]
+ * [http://www.handprint.com/LS/CVS/color.html]
+ * [http://www.youtube.com/watch?v=b8gXj83cBtM]
+ * [http://en.wikipedia.org/wiki/Conducting Conducting]
+ * [http://www.steim.org steim]
+
+= Papers = 
+ * [http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.140.3840&rep=rep1&type=pdf Long Term Arm and Hand Tracking for Continuous Sign Language TV Broadcasts]
+ * [http://www.computer.org/portal/web/csdl/doi/10.1109/CVPRW.2009.5206523 Learning sign language by watching TV (using weakly aligned subtitles)]
+ * [http://smcnetwork.org/files/proceedings/2009/316.pdf A SYSTEM FOR MUSICAL IMPROVISATION COMBINING SONIC GESTURE RECOGNITION AND GENETIC ALGORITHMS]
+ * [http://www.idmil.org/_media/publications/lahdeoja_smc2009.pdf INSTRUMENT AUGMENTATION USING ANCILLARY GESTURES FOR SUBTLE SONIC EFFECTS]
+ * [http://www.tele.ucl.ac.be/~jjfil/publis/Filatriau_SMC05.pdf INSTRUMENTAL GESTURES AND SONIC TEXTURES]
+ * [http://www.springerlink.com/content/lnalp43l2r6wcddc/ A Linguistic Feature Vector for the Visual Interpretation of Sign Language]
+ * [http://marathon.csee.usf.edu/~sarkar/PDFs/YangSarkarLoedingTPAMI-2008-01-0026.pdf Handling Movement Epenthesis and Hand Segmentation Ambiguities in Continuous Sign Language Recognition using Nested Dynamic Programming]\
+ * [http://www.computer.org/portal/web/csdl/doi/10.1109/CVPR.1999.786981 Shadow Gestures: 3D Hand Pose Estimation Using a Single Camera]
+ * [http://smsoftdev-solutions.blogspot.com/2009/08/integral-histogram-for-fast-calculation.html]
+ * http://www.computer.org/portal/web/csdl/doi/10.1109/ICCV.1995.466879
+ * http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.7537&rep=rep1&type=pdf
+ * http://www.computer.org/portal/web/csdl/doi/10.1109/AFGR.1996.557274
+ * http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.51.6538&rep=rep1&type=pdf
+ * http://www.aaai.org/Papers/Symposia/Fall/1996/FS-96-05/FS96-05-017.pdf
+
+= etc =
+ * http://cimg.sourceforge.net/
+ * http://www.naturalimagestatistics.net/
+ * http://gmazars.info/conf/
+ * http://research.microsoft.com/en-us/um/people/szeliski/Book/

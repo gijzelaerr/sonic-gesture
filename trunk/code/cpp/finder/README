@@ -1,0 +1,21 @@
+
+Compile
+------
+
+To Compile you need:
+
+* A C++ compiler
+* CMake
+* OpenCV 2.0 libraries installed
+* Boost C++ libraries
+
+first run cmake. then make. Now you have binaries
+
+
+Usage
+-----
+
+In settings.h you can predefine define all settings. 
+For example if you want to use a movie or video device.
+
+First run train to train the hog classifier. Then run finder.

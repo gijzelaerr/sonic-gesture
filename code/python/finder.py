@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """
 Gijs Molenaar
-gijs@pythonic.nl
 http://gijs.pythonic.nl
 
 requires opencv svn + new python api

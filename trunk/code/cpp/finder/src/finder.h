@@ -30,6 +30,7 @@ public:
     Limb left_hand, right_hand, head;
     vector<Hand> hands;
     KNearest hand_matcher;
+    vector<Mat> presentation;
     
     Finder(VideoCapture c);
     void grab_frame();

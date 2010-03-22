@@ -16,13 +16,13 @@
 using namespace cv;
 using namespace std;
 
+// histogram stuff
 int hbins = 30, sbins = 32;
 int histSize[] = {hbins, sbins};
 const float hranges[] = { 0, 180 };
 const float sranges[] = { 0, 256 };
 const float* ranges[] = { hranges, sranges };
 int channels[] = {0, 1};
-
 
 Finder::Finder(VideoCapture c) {
     if(!c.isOpened()) {
@@ -251,13 +251,15 @@ void Finder::init_hands() {
         Hand hand = hands.at(i);
         Mat handmat(hand.descriptors);
         Mat r = knn_train.col(i);
+        cout << r.cols << " " << r.rows << endl;
+        cout << handmat.cols << " " << handmat.rows << endl;
         handmat.copyTo(r);
     }
     knn_train = knn_train.t();
     cout << knn_train.size().width << " " <<  knn_train.size().width << endl;
 
-    float v[1][4] = {{0, 1, 2, 3}};
-    Mat knn_class(4, 1, CV_32FC1, v);
+    float labels[1][4] = {{0, 1, 2, 3}};
+    Mat knn_class(4, 1, CV_32FC1, labels);
     knn_class = knn_class.t();
 
     hand_matcher = KNearest();
@@ -289,5 +291,11 @@ void Finder::mainloop() {
     }
 }
 
+int main(int, char**) {
+    VideoCapture cap(DEVICE);
+    Finder finder(cap);
+    finder.mainloop();
+    return EXIT_SUCCESS;
+}
 
 

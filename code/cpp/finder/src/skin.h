@@ -12,7 +12,7 @@ public:
     MatND histogram;
     vector<Rect> faces;
     CascadeClassifier haarzoeker;
-    Rect face_rect;
+    Rect face_rect, sub_rect;
     Skin(const string& facefile, const string& haarfile);
     void load_image(const string& filename);
     void load_haar(const string& filename);

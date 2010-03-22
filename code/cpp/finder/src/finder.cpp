@@ -37,9 +37,9 @@ Finder::Finder(VideoCapture c) {
     resize(frame, small, Size(), scale, scale);
     small_size = small.size();
 
-
     histogram.create(2, histSize, CV_32F);
     histogram = Scalar(0);
+
 }
 
 void Finder::grab_frame() {
@@ -182,7 +182,9 @@ void Finder::visualize() {
         drawContours( visuals, cs, -1, Scalar( 255, 0, 0 ));
     }
     
-    vector<Mat> presentation;
+
+
+    presentation.clear();
     presentation.push_back(small);
     presentation.push_back(backproj);
     presentation.push_back(blurred);
@@ -190,6 +192,7 @@ void Finder::visualize() {
     //presentation.push_back(mask);
     presentation.push_back(visuals);
     presentation.push_back(limb_zoom);
+
 
     int w = MIN(XWINDOWS, presentation.size())*small_size.width;
     int h = ceil(float(presentation.size())/XWINDOWS)*small_size.height;
@@ -251,12 +254,9 @@ void Finder::init_hands() {
         Hand hand = hands.at(i);
         Mat handmat(hand.descriptors);
         Mat r = knn_train.col(i);
-        cout << r.cols << " " << r.rows << endl;
-        cout << handmat.cols << " " << handmat.rows << endl;
         handmat.copyTo(r);
     }
     knn_train = knn_train.t();
-    cout << knn_train.size().width << " " <<  knn_train.size().width << endl;
 
     float labels[1][4] = {{0, 1, 2, 3}};
     Mat knn_class(4, 1, CV_32FC1, labels);
@@ -269,6 +269,8 @@ void Finder::init_hands() {
 
 void Finder::mainloop() {
     init_hands();
+
+
 
     for(;;) {
         double t = (double)getTickCount();
@@ -291,11 +293,6 @@ void Finder::mainloop() {
     }
 }
 
-int main(int, char**) {
-    VideoCapture cap(DEVICE);
-    Finder finder(cap);
-    finder.mainloop();
-    return EXIT_SUCCESS;
-}
+
 
 

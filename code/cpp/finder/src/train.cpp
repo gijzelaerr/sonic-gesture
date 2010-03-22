@@ -6,7 +6,6 @@
 #include "cv.h"
 #include "highgui.h"
 
-
 #include "skin.h"
 #include "hand.h"
 #include "settings.h"

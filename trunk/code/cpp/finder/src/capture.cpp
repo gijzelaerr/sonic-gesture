@@ -15,6 +15,7 @@ using namespace boost::gregorian;
 namespace fs = boost::filesystem;
 
 
+// Inherit from main program, since we want to do almost the same heree
 class Capture : public Finder {
 public:
 
@@ -35,11 +36,13 @@ public:
         assert(fs::exists(train_path));
 
         ptime now = second_clock::local_time();
-        //Get the date part out of the time
         date today = now.date();
-        cout << to_simple_string(today) << endl;
-        fs::path store_path = train_path / "gijs";
+        fs::path store_path = train_path / to_simple_string(now);
+        
+        // make sure this directory _doens't_ exists
         assert(!fs::exists(store_path));
+        
+        assert(create_directory(store_path));
 
         for(unsigned int i=0; i < examples.size(); i++) {
             string image_file = examples.at(i);
@@ -64,12 +67,13 @@ public:
                 t = ((double) getTickCount() - t)*1000 / getTickFrequency();
                 int wait = MIN(40, MAX(40 - (int) t, 4)); // Wait max of 40 ms, min of 4;
                 int inpoet = waitKey(wait);
-                if (inpoet == 27) 
+                if (inpoet == 27) // escape
                     return;
-                else if (inpoet == 32) {
+                else if (inpoet == 32) { //space
                     fs::path store_file =  store_path / image_file;
-                    cout << store_file.string() << endl;
-                    //assert(imwrite(image_file, frame));
+                    cout << "saving " << store_file.string() << endl;
+                    //assert(imwrite(store_file.string(), small));
+                    imshow("left hand", left_hand.get_image());
                     break;
                 }
             }
@@ -82,19 +86,19 @@ public:
         small.copyTo(visuals, mask);
         rectangle(small, face.tl(), face.br(), Scalar(0, 255, 0));
 
-        if (head.contour.size() > 0) {
+        if (head.data) {
             vector<vector<Point> > cs;
             cs.push_back(head.contour);
             drawContours(visuals, cs, -1, Scalar(0, 0, 255));
         }
 
-        if (left_hand.contour.size() > 0) {
+        if (left_hand.data) {
             vector<vector<Point> > cs;
             cs.push_back(left_hand.contour);
             drawContours(visuals, cs, -1, Scalar(0, 255, 0));
         }
 
-        if (right_hand.contour.size() > 0) {
+        if (right_hand.data) {
             vector<vector<Point> > cs;
             cs.push_back(right_hand.contour);
             drawContours(visuals, cs, -1, Scalar(255, 0, 0));

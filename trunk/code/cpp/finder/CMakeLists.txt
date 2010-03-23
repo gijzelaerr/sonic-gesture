@@ -10,14 +10,13 @@ add_executable (capture src/capture.cpp src/hand.cpp src/skin.cpp src/tools.cpp 
 target_link_libraries (capture  ${OpenCV_LIBS})
 target_link_libraries (capture  ${Boost_LIBRARIES})
 
-
 add_executable (train src/train.cpp src/train.h src/hand.cpp src/skin.cpp src/tools.cpp)
 target_link_libraries (train ${OpenCV_LIBS})
 target_link_libraries (train ${Boost_LIBRARIES})
-include_directories (${BOOST_FILESYSTEM_LIBRARY})
 
 link_directories ( ${Boost_LIBRARY_DIRS} )
 include_directories ( ${Boost_INCLUDE_DIRS} )
+include_directories (${BOOST_FILESYSTEM_LIBRARY})
 
 #TODO: add -D_GLIBCXX_PARALLEL if using openMP
 

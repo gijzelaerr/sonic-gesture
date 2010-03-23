@@ -12,8 +12,8 @@
 #define TRAIN_PATH "../../../../data/train"
 #define EXAMPLES_PATH "../../../../data/examples"
 
-//#define DEVICE 0
-#define DEVICE "../../../../data/movies/heiligenacht.mp4"
+#define DEVICE 0
+//#define DEVICE "../../../../data/movies/heiligenacht.mp4"
 //#define DEVICE "../../../data/movies/wayne_cotter.mp4"
 //#define DEVICE "../../../data/movies/friend.mov"
 

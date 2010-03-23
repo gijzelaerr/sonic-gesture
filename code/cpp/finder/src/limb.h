@@ -15,11 +15,15 @@ public:
     Point2f center;
     HOGDescriptor hog;
     vector<float> hog_descriptors;
-    Mat sub, bw;
+    Mat bw;
+    bool data;
     
     Limb();
-    Limb(vector<Point> c);
-    void compute_hog(Mat image);
+    Limb(vector<Point> c, Mat frame);
+    void compute_hog();
+    Mat get_image();
+private:
+    Mat sub, frame;
 };
 
 bool compare_limbs(const Limb& a, const Limb& b);

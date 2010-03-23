@@ -48,8 +48,9 @@ void Finder::grab_frame() {
 		cout << "end of movie" << endl;
         throw exception();
     }
+    if(MIRROR)
+        flip(frame, frame, 1);
     resize(frame, small, Size(), scale, scale);
-    flip(small, small, 1);
     cvtColor(small, hsv, CV_BGR2HSV);
     cvtColor(small, bw, CV_BGR2GRAY);
 }
@@ -77,9 +78,10 @@ void Finder::make_mask() {
     GaussianBlur( backproj, blurred, Size(31, 31), 0);
     threshold(blurred, th, 20, 255, THRESH_BINARY);
     int dia = WORKSIZE/20 + 1;
-    Mat kernel = Mat(dia, dia, CV_8U, 1);
-    //morphologyEx(th, mask, MORPH_CLOSE, Mat());
-    dilate(th, mask, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));
+    Mat kernel = Mat(dia, dia, CV_8U, Scalar(0));
+    circle(kernel, Point(dia/2, dia/2), dia/2, Scalar(1), -1);
+    morphologyEx(th, mask, MORPH_CLOSE, Mat());
+    //dilate(th, mask, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));
 }
 
 void Finder::find_contours() {
@@ -108,7 +110,7 @@ void Finder::find_limbs() {
 
     for (unsigned int i = 0; i < contours.size(); i++) {
         vector<Point> contour = contours.at(i);
-        Limb limb = Limb(contour);
+        Limb limb = Limb(contour, small);
         limbs.push_back(limb);
         if (pointPolygonTest(contour, facepoint, false) > 0) {
             head = limb;
@@ -214,7 +216,6 @@ void Finder::match_hands() {
     bw.copyTo(limb_zoom);
     limb_zoom = Scalar(0);
     if (left_hand.contour.size() != 0) {
-        left_hand.compute_hog(small);
         Mat roi(limb_zoom, Rect(20, 90, left_hand.bw.cols, left_hand.bw.rows));
         left_hand.bw.copyTo(roi);
 
@@ -234,7 +235,6 @@ void Finder::match_hands() {
     }
 
     if (right_hand.contour.size() != 0) {
-        right_hand.compute_hog(small);
         Mat roi(limb_zoom, Rect(250, 90, right_hand.bw.cols, right_hand.bw.rows));
         right_hand.bw.copyTo(roi);
     }

@@ -41,7 +41,7 @@ public:
         fs::path store_path = train_path / "gijs";
         assert(!fs::exists(store_path));
 
-        for(uint i=0; i < examples.size(); i++) {
+        for(unsigned int i=0; i < examples.size(); i++) {
             string image_file = examples.at(i);
             fs::path image_path = examples_path / image_file;
             assert(fs::exists(image_path));

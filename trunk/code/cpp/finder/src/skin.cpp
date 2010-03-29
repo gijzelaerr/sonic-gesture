@@ -2,8 +2,8 @@
 #include <exception>
 #include <iostream>
 
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+#include "cv.h"
+#include "highgui.h"
 
 #include "settings.h"
 #include "skin.h"

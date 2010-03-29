@@ -9,7 +9,7 @@ requires opencv svn + new python api
 # CHANGE ME
 CAMERAID=1 # -1 for auto, -2 for video
 #HAARCASCADE="/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml"
-HAARCASCADE="/usr/local/share/opencv/haarcascades/haarcascade_frontalface_default.xml" # where to find haar cascade file for face detection
+HAARCASCADE="/Gentoo-32/usr/local/share/opencv/haarcascades/haarcascade_frontalface_default.xml" # where to find haar cascade file for face detection
 MOVIE="/home/gijs/Work/sonic-vision/data/heiligenacht.mp4" # what movie to read
 #MOVIE="/home/gijs/Work/sonic-vision/data/wayne_cotter.mp4"
 STORE=False # write output video?

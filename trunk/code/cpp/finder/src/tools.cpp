@@ -3,7 +3,7 @@
 
 #include "tools.h"
 
-#include "opencv/cv.h"
+#include "cv.h"
 
 using namespace cv;
 using namespace std;

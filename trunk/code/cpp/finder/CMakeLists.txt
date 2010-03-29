@@ -35,8 +35,8 @@ target_link_libraries (train ${Boost_LIBRARIES})
 
 
 link_directories ( ${Boost_LIBRARY_DIRS} )
-#include_directories ( ${Boost_INCLUDE_DIRS} )
-#include_directories (${BOOST_FILESYSTEM_LIBRARY})
+include_directories ( ${Boost_INCLUDE_DIRS} )
+include_directories (${BOOST_FILESYSTEM_LIBRARY})
 
 #TODO: add -D_GLIBCXX_PARALLEL if using openMP
 

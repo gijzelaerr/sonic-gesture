@@ -2,7 +2,7 @@
 #ifndef _TOOLS_H
 #define	_TOOLS_H
 
-#include "opencv/cv.h"
+#include "cv.h"
 
 using namespace cv;
 

@@ -2,7 +2,8 @@
 #include <iostream>
 
 #include "tools.h"
-#include "cv.h"
+
+#include "opencv/cv.h"
 
 using namespace cv;
 using namespace std;

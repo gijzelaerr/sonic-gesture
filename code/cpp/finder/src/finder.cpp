@@ -3,9 +3,9 @@
 #include <iostream>
 #include <exception>
 
-#include "cv.h"
-#include "cvaux.h"
-#include "ml.h"
+#include "opencv/cv.h"
+#include "opencv/cvaux.h"
+#include "opencv/ml.h"
 
 #include "finder.h"
 #include "tools.h"

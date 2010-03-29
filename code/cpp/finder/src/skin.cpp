@@ -1,8 +1,10 @@
 
 #include <exception>
 #include <iostream>
-#include "cv.h"
-#include "highgui.h"
+
+#include "opencv/cv.h"
+#include "opencv/highgui.h"
+
 #include "settings.h"
 #include "skin.h"
 #include "tools.h"

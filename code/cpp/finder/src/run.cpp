@@ -1,7 +1,6 @@
 
 #include <stdlib.h>
-#include <cv.h>
-
+#include "opencv/cv.h"
 #include "settings.h"
 #include "finder.h"
 

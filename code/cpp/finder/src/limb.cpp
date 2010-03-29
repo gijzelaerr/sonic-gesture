@@ -21,7 +21,7 @@ Limb::Limb(vector<Point> contours, Mat frame) {
     compute_hog();
 };
 
-
+// compute hog of sub
 void Limb::compute_hog() {
     Mat sized;
     resize(sub, sized, Size(64,128));

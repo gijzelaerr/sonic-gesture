@@ -33,7 +33,7 @@ public:
     vector<Mat> presentation;
     
     Finder(VideoCapture c);
-    void grab_frame();
+    bool grab_frame();
     void find_face();
     void make_histogram();
     void make_backproject();

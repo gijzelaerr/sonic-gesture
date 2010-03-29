@@ -1,9 +1,11 @@
 
+#include <stdlib.h>
+
+#include "cv.h"
+#include "highgui.h"
 #include "boost/filesystem.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
-#include <stdlib.h>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+
 #include "settings.h"
 #include "finder.h"
 

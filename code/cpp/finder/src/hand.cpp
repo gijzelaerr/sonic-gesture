@@ -3,8 +3,8 @@
 #include <iostream>
 #include <exception>
 
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+#include "cv.h"
+#include "highgui.h"
 
 #include "hand.h"
 #include "settings.h"

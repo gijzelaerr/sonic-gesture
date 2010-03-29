@@ -2,8 +2,8 @@
 #ifndef _HAND_H
 #define	_HAND_H
 
-#include "opencv/cv.h"
-#include "opencv/cvaux.h"
+#include "cv.h"
+#include "cvaux.h"
 
 using namespace cv;
 

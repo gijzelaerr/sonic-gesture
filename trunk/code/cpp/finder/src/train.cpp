@@ -1,11 +1,10 @@
 
+#include <iostream>
 #include <stdlib.h>
-#include <boost/filesystem.hpp>
-#include <boost/algorithm/string.hpp>
-#include <iostream> 
-#include "cv.h"
-#include "highgui.h"
-
+#include "boost/filesystem.hpp"
+#include "boost/algorithm/string.hpp"
+#include "opencv/cv.h"
+#include "opencv/highgui.h"
 #include "skin.h"
 #include "hand.h"
 #include "settings.h"

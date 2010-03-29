@@ -2,8 +2,8 @@
 #include "boost/filesystem.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include <stdlib.h>
-#include "cv.h"
-#include "highgui.h"
+#include "opencv/cv.h"
+#include "opencv/highgui.h"
 #include "settings.h"
 #include "finder.h"
 
@@ -21,8 +21,10 @@ public:
 
     Capture(VideoCapture c) : Finder::Finder(c) {}
 
+
     void mainloop() {
 
+        // the file names of example and train
         string expstr[] = { "00_do.jpg", "01_di.jpg", "02_re.jpg", "03_ri.jpg",
             "04_mi.jpg", "05_fa.jpg", "06_fi.jpg", "07_sol.jpg", "08_si.jpg",
             "09_la.jpg", "10_li.jpg", "11_ti.jpg"};
@@ -37,12 +39,14 @@ public:
 
         ptime now = second_clock::local_time();
         date today = now.date();
-        fs::path store_path = train_path / to_simple_string(now);
+        fs::path current_train_path = train_path / to_simple_string(now);
+        fs::path original_path = current_train_path / "original/";
         
-        // make sure this directory _doens't_ exists
-        assert(!fs::exists(store_path));
+        // make sure this directory _doens't_ exists, so we don't overwrite
+        assert(!fs::exists(current_train_path));
         
-        assert(create_directory(store_path));
+        assert(create_directory(current_train_path));
+        assert(create_directory(original_path));
 
         for(unsigned int i=0; i < examples.size(); i++) {
             string image_file = examples.at(i);
@@ -70,10 +74,13 @@ public:
                 if (inpoet == 27) // escape
                     return;
                 else if (inpoet == 32) { //space
-                    fs::path store_file =  store_path / image_file;
-                    cout << "saving " << store_file.string() << endl;
-                    //assert(imwrite(store_file.string(), small));
+                    fs::path hand_file =  current_train_path / image_file;
+                    fs::path orig_file = original_path / image_file;
+                    cout << "saving " << hand_file.string() << endl;
+                    cout << "saving " << orig_file.string() << endl;
                     imshow("left hand", left_hand.get_image());
+                    assert(imwrite(orig_file.string(), small));
+                    assert(imwrite(hand_file.string(), left_hand.get_image()));
                     break;
                 }
             }
@@ -130,6 +137,7 @@ private:
 };
 
 int main(int argc, char** argv) {
+    assert(fs::exists(fs::path(DEVICE)));
     VideoCapture cap(DEVICE);
     Capture gijs = Capture(cap);
     gijs.mainloop();

@@ -2,9 +2,9 @@
 #ifndef _FINDER_H
 #define	_FINDER_H
 
-#include "cv.h"
-#include "highgui.h"
-#include "ml.h"
+#include "opencv/cv.h"
+#include "opencv/highgui.h"
+#include "opencv/ml.h"
 
 #include "limb.h"
 #include "hand.h"

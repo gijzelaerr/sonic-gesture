@@ -10,4 +10,6 @@ float sum(const vector<float>& x);
 
 Rect sub_region(Rect region);
 void show_mat(Mat M);
+Mat round_kernel(int dia);
+
 #endif

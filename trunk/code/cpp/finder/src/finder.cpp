@@ -26,7 +26,7 @@ int channels[] = {0, 1};
 
 Finder::Finder(VideoCapture c) {
     if(!c.isOpened()) {
-		cout << "couldn't open video\n";
+        cout << "couldn't open video\n";
         throw exception();
     }
     cap = c;
@@ -42,17 +42,18 @@ Finder::Finder(VideoCapture c) {
 
 }
 
-void Finder::grab_frame() {
+// return false if can't grab
+bool Finder::grab_frame() {
     cap >> frame;
     if (!frame.data) {
-		cout << "end of movie" << endl;
-        throw exception();
+        cout << "end of movie" << endl;
+        return false;
     }
-    if(MIRROR)
-        flip(frame, frame, 1);
+    if(MIRROR) flip(frame, frame, 1);
     resize(frame, small, Size(), scale, scale);
     cvtColor(small, hsv, CV_BGR2HSV);
     cvtColor(small, bw, CV_BGR2GRAY);
+    return true;
 }
 
 void Finder::make_histogram() {
@@ -78,10 +79,9 @@ void Finder::make_mask() {
     GaussianBlur( backproj, blurred, Size(31, 31), 0);
     threshold(blurred, th, 20, 255, THRESH_BINARY);
     int dia = WORKSIZE/20 + 1;
-    Mat kernel = Mat(dia, dia, CV_8U, Scalar(0));
-    circle(kernel, Point(dia/2, dia/2), dia/2, Scalar(1), -1);
-    morphologyEx(th, mask, MORPH_CLOSE, Mat());
-    //dilate(th, mask, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));
+    Mat kernel = round_kernel(dia);
+    //morphologyEx(th, mask, MORPH_CLOSE, Mat());
+    dilate(th, mask, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));
 }
 
 void Finder::find_contours() {
@@ -275,7 +275,8 @@ void Finder::mainloop() {
     for(;;) {
         double t = (double)getTickCount();
         
-        grab_frame();
+        if(!grab_frame())
+            break;
         find_face();
         make_histogram();
         make_backproject();

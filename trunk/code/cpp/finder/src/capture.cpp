@@ -138,6 +138,7 @@ private:
     Mat example_hand;
 };
 
+
 int main(int argc, char** argv) {
     assert(fs::exists(fs::path(DEVICE)));
     VideoCapture cap(DEVICE);

@@ -37,3 +37,9 @@ void show_mat(Mat M) {
     }
 }
 
+Mat round_kernel(int dia) {
+    Mat kernel = Mat(dia, dia, CV_8U, Scalar(0));
+    circle(kernel, Point(dia/2, dia/2), dia/2, Scalar(1), -1);
+    return kernel;
+}
+

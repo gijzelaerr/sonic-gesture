@@ -1,9 +1,11 @@
 
 #include <iostream>
 
-#include "tools.h"
-
 #include "cv.h"
+#include "highgui.h"
+
+#include "tools.h"
+#include "settings.h"
 
 using namespace cv;
 using namespace std;
@@ -68,3 +70,47 @@ vector<Point> scale_contour(vector<Point> contour,float scale) {
     return scaled_contour;
 }
 
+// increase the size of a contour. Window_size is required to know max size
+// Doing many findContours is quite slow. hm.
+vector<Point> dilate_contour(vector<Point> contour, Size window_size) {
+    int dia = WORKSIZE/10 + 1;
+    vector<vector<Point> > contours;
+    vector<vector<Point> > contours_new;
+    Mat binary(window_size, CV_8U, Scalar(0));
+    Mat kernel = round_kernel(dia);
+    
+    contours.push_back(contour);
+    drawContours( binary, contours, -1, Scalar(255), CV_FILLED);
+
+    dilate(binary, binary, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));
+    findContours( binary, contours_new, RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE );
+    assert(contours.size() > 0);
+    return contours_new.at(0);
+}
+
+vector<Point> inflate_contour(vector<Point> contour, float scale) {
+    Point2f center;
+    float radius;
+    vector<Point> new_contour;
+    vector<Point>::iterator iterator;
+    int x, y;
+    
+    minEnclosingCircle(contour, center, radius);
+    
+    iterator = contour.begin();
+    while( iterator != contour.end() ) {
+        if(iterator->x > center.x)
+            x = (iterator->x - center.x) * scale + center.x;
+        else
+            x = center.x - (center.x - iterator->x) * scale;
+
+        if(iterator->y > center.y)
+            y = (iterator->y - center.y) * scale + center.y;
+        else
+            y = center.y - (center.y - iterator->y) * scale;
+        
+        new_contour.push_back(Point(x, y));
+        ++iterator;
+    }
+    return new_contour;
+}

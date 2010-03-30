@@ -97,19 +97,19 @@ public:
 
         if (head.data) {
             vector<vector<Point> > cs;
-            cs.push_back(head.contour);
+            cs.push_back(head.contour_small);
             drawContours(visuals, cs, -1, Scalar(0, 0, 255));
         }
 
         if (left_hand.data) {
             vector<vector<Point> > cs;
-            cs.push_back(left_hand.contour);
+            cs.push_back(left_hand.contour_small);
             drawContours(visuals, cs, -1, Scalar(0, 255, 0));
         }
 
         if (right_hand.data) {
             vector<vector<Point> > cs;
-            cs.push_back(right_hand.contour);
+            cs.push_back(right_hand.contour_small);
             drawContours(visuals, cs, -1, Scalar(255, 0, 0));
         }
 

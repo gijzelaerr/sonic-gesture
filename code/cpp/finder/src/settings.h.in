@@ -33,5 +33,7 @@
 #define WORKSIZE 300
 #define XWINDOWS 3
 
+// Limb settings
+#define INFLATE_SIZE 1.5
 
 #endif

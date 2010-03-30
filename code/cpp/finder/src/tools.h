@@ -11,5 +11,7 @@ float sum(const vector<float>& x);
 Rect sub_region(Rect region);
 void show_mat(Mat M);
 Mat round_kernel(int dia);
+vector<vector<Point> > scale_contours(vector<vector<Point> > contours, float scale);
+vector<Point> scale_contour(vector<Point> contour, float scale);
 
 #endif

@@ -10,20 +10,20 @@ using namespace std;
 
 struct Limb {
 public:
-    vector<Point> contour;
-    float radius;
-    Point2f center;
+    vector<Point> contour_big, contour_small;
+    float radius_big, radius_small;
+    Point2f center_big, center_small;
     HOGDescriptor hog;
     vector<float> hog_descriptors;
     Mat bw;
     bool data;
     
     Limb();
-    Limb(vector<Point> c, Mat frame);
+    Limb(vector<Point> c, float scale, Mat frame);
     void compute_hog();
-    Mat get_image();
+    Mat get_limb_image();
 private:
-    Mat sub, frame;
+    Mat cutout, frame;
 };
 
 bool compare_limbs(const Limb& a, const Limb& b);

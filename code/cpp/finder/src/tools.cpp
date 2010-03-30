@@ -43,3 +43,28 @@ Mat round_kernel(int dia) {
     return kernel;
 }
 
+vector<vector<Point> > scale_contours(vector<vector<Point> > contours, float scale) {
+    vector<vector<Point> > scaled_contours;
+    vector<Point> contour;
+
+    for(unsigned int i=0; i < contours.size(); i++) {
+        contour = contours.at(i);
+        scaled_contours.push_back(scale_contour(contour, scale));
+    }
+    return scaled_contours;
+}
+
+vector<Point> scale_contour(vector<Point> contour,float scale) {
+    vector<Point> scaled_contour;
+    vector<Point>::iterator contour_iterator;
+    Point temp_point;
+
+    contour_iterator = contour.begin();
+    while( contour_iterator != contour.end() ) {
+        temp_point = Point((int)(contour_iterator->x * scale), (int)(contour_iterator->y * scale));
+        scaled_contour.push_back(temp_point);
+        ++contour_iterator;
+    }
+    return scaled_contour;
+}
+

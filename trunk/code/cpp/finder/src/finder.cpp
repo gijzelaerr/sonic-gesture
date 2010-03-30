@@ -16,6 +16,7 @@
 using namespace cv;
 using namespace std;
 
+
 // histogram stuff
 int hbins = 30, sbins = 32;
 int histSize[] = {hbins, sbins};
@@ -24,6 +25,7 @@ const float sranges[] = { 0, 256 };
 const float* ranges[] = { hranges, sranges };
 int channels[] = {0, 1};
 
+
 Finder::Finder(VideoCapture c) {
     if(!c.isOpened()) {
         cout << "couldn't open video\n";
@@ -31,10 +33,10 @@ Finder::Finder(VideoCapture c) {
     }
     cap = c;
     haar = CascadeClassifier(FACEHAAR);
-    cap >> frame;
-    frame_size = frame.size();
-    scale = float(WORKSIZE)/frame.rows;
-    resize(frame, small, Size(), scale, scale);
+    cap >> big;
+    big_size = big.size();
+    scale = float(WORKSIZE)/big.rows;
+    resize(big, small, Size(), scale, scale);
     small_size = small.size();
 
     histogram.create(2, histSize, CV_32F);
@@ -42,19 +44,21 @@ Finder::Finder(VideoCapture c) {
 
 }
 
+
 // return false if can't grab
 bool Finder::grab_frame() {
-    cap >> frame;
-    if (!frame.data) {
+    cap >> big;
+    if (!big.data) {
         cout << "end of movie" << endl;
         return false;
     }
-    if(MIRROR) flip(frame, frame, 1);
-    resize(frame, small, Size(), scale, scale);
+    if(MIRROR) flip(big, big, 1);
+    resize(big, small, Size(), scale, scale);
     cvtColor(small, hsv, CV_BGR2HSV);
     cvtColor(small, bw, CV_BGR2GRAY);
     return true;
 }
+
 
 void Finder::make_histogram() {
     if (!(face == Rect())) {
@@ -70,9 +74,11 @@ void Finder::make_histogram() {
     }
 }
 
+
 void Finder::make_backproject() {
     calcBackProject( &hsv, 1, channels, histogram, backproj, ranges );
 }
+
 
 void Finder::make_mask() {
     normalize(backproj, backproj, 0, 255, NORM_MINMAX);
@@ -80,14 +86,16 @@ void Finder::make_mask() {
     threshold(blurred, th, 20, 255, THRESH_BINARY);
     int dia = WORKSIZE/20 + 1;
     Mat kernel = round_kernel(dia);
-    //morphologyEx(th, mask, MORPH_CLOSE, Mat());
-    dilate(th, mask, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));
+    morphologyEx(th, mask, MORPH_CLOSE, Mat());
+    //dilate(th, mask, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));
 }
+
 
 void Finder::find_contours() {
     findContours( mask, contours, RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE );
 }
-	
+
+
 void Finder::find_face() {
     //haar.detectMultiScale(small, faces, 1.2, 2, CV_HAAR_SCALE_IMAGE +
     //    CV_HAAR_DO_CANNY_PRUNING + CV_HAAR_FIND_BIGGEST_OBJECT, Size(WORKSIZE/10, WORKSIZE/10) );
@@ -108,15 +116,17 @@ void Finder::find_limbs() {
     Point facepoint = Point(face.x+face.width/2, face.y+face.height/2);
     vector<Limb> limbs;
 
+    // loop over contours and make limbs
     for (unsigned int i = 0; i < contours.size(); i++) {
         vector<Point> contour = contours.at(i);
-        Limb limb = Limb(contour, small);
+        Limb limb(contour, scale, big);
         limbs.push_back(limb);
         if (pointPolygonTest(contour, facepoint, false) > 0) {
             head = limb;
         }
     }
 
+    // sort the limbs
     sort(limbs.begin(), limbs.end(), compare_limbs);
     right_hand = Limb();
     left_hand = Limb();
@@ -125,16 +135,15 @@ void Finder::find_limbs() {
     if (!(face == Rect())) {
         //loop over 3 biggest limbs
         for(unsigned int i = 0; i < MIN(limbs.size(), 3); i++) {
-            if (limbs.at(i).contour == head.contour) {
+            if (limbs.at(i).contour_small == head.contour_small) {
                 continue;
-            } else if (limbs.at(i).center.x < facepoint.x) {
+            } else if (limbs.at(i).center_small.x < facepoint.x) {
                 left_hand = limbs.at(i);
-            } else if (limbs.at(i).center.x > facepoint.x) {
+            } else if (limbs.at(i).center_small.x > facepoint.x) {
                 right_hand = limbs.at(i);
             }
         }
     }else {
-        
         if (limbs.size() > 2) {
             vector<Limb>  three_limbs;
             for(int i=0; i<3; i++) {
@@ -148,7 +157,7 @@ void Finder::find_limbs() {
         } else if (limbs.size() == 2) {
             head = limbs.at(0);
             Limb hand = limbs.at(1);
-            if (hand.center.x < head.center.x) {
+            if (hand.center_small.x < head.center_small.x) {
                 left_hand = hand;
             } else {
                 right_hand = hand;
@@ -160,32 +169,31 @@ void Finder::find_limbs() {
     }
 };
 
+
 void Finder::visualize() {
     small.copyTo(visuals);
     convertScaleAbs(visuals, visuals, 0.2);
     small.copyTo(visuals, mask);
     rectangle(small, face.tl(), face.br(), Scalar(0, 255, 0));
 	
-    if (head.contour.size() > 0) {
+    if (head.contour_small.size() > 0) {
         vector<vector<Point> > cs;
-        cs.push_back(head.contour);
+        cs.push_back(head.contour_small);
         drawContours( visuals, cs, -1, Scalar( 0, 0, 255 ));
     }
 
-    if (left_hand.contour.size() > 0) {
+    if (left_hand.contour_small.size() > 0) {
         vector<vector<Point> > cs;
-        cs.push_back(left_hand.contour);
+        cs.push_back(left_hand.contour_small);
         drawContours( visuals, cs, -1, Scalar( 0, 255, 0 ));
     }    
     
-    if (right_hand.contour.size() > 0) {
+    if (right_hand.contour_small.size() > 0) {
         vector<vector<Point> > cs;
-        cs.push_back(right_hand.contour);
+        cs.push_back(right_hand.contour_small);
         drawContours( visuals, cs, -1, Scalar( 255, 0, 0 ));
     }
     
-
-
     presentation.clear();
     presentation.push_back(small);
     presentation.push_back(backproj);
@@ -212,10 +220,11 @@ void Finder::visualize() {
     }
 }
 
+
 void Finder::match_hands() {
     bw.copyTo(limb_zoom);
     limb_zoom = Scalar(0);
-    if (left_hand.contour.size() != 0) {
+    if (left_hand.contour_small.size() != 0) {
         Mat roi(limb_zoom, Rect(20, 90, left_hand.bw.cols, left_hand.bw.rows));
         left_hand.bw.copyTo(roi);
 
@@ -234,13 +243,14 @@ void Finder::match_hands() {
 
     }
 
-    if (right_hand.contour.size() != 0) {
+    if (right_hand.contour_small.size() != 0) {
         Mat roi(limb_zoom, Rect(250, 90, right_hand.bw.cols, right_hand.bw.rows));
         right_hand.bw.copyTo(roi);
     }
 
 
 }
+
 
 void Finder::init_hands() {
     Skin skin(HEAD, FACEHAAR);
@@ -267,10 +277,9 @@ void Finder::init_hands() {
 
 }
 
+
 void Finder::mainloop() {
     init_hands();
-
-
 
     for(;;) {
         double t = (double)getTickCount();

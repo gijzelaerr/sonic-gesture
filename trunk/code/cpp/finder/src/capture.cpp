@@ -17,7 +17,7 @@ using namespace boost::gregorian;
 namespace fs = boost::filesystem;
 
 
-// Inherit from main program, since we want to do almost the same heree
+// Inherit from main program, since we want to do almost the same here
 class Capture : public Finder {
 public:
 
@@ -80,9 +80,9 @@ public:
                     fs::path orig_file = original_path / image_file;
                     cout << "saving " << hand_file.string() << endl;
                     cout << "saving " << orig_file.string() << endl;
-                    imshow("left hand", left_hand.get_image());
+                    imshow("left hand", left_hand.get_limb_image());
                     assert(imwrite(orig_file.string(), small));
-                    assert(imwrite(hand_file.string(), left_hand.get_image()));
+                    assert(imwrite(hand_file.string(), left_hand.get_limb_image()));
                     break;
                 }
             }

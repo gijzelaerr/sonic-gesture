@@ -15,12 +15,12 @@ using namespace cv;
 
 struct Finder {
 public:
-    Mat frame, small, hsv, bw, backproj, mask;
+    Mat big, small, hsv, bw, backproj, mask;
     Mat facepixels, visuals, combi, temp, blurred, morphed, th, limb_zoom;
     MatND histogram, new_hist, old_hist;
     VideoCapture cap;
     CascadeClassifier haar;
-    Size frame_size;
+    Size big_size;
     Size small_size;
     float scale;
     vector<Rect> faces;

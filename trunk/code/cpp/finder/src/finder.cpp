@@ -196,9 +196,9 @@ void Finder::visualize() {
     
     presentation.clear();
     presentation.push_back(small);
-    presentation.push_back(backproj);
-    presentation.push_back(blurred);
-    presentation.push_back(th);
+    //presentation.push_back(backproj);
+    //presentation.push_back(blurred);
+    //presentation.push_back(th);
     //presentation.push_back(mask);
     presentation.push_back(visuals);
     presentation.push_back(limb_zoom);

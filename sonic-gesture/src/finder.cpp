@@ -26,7 +26,9 @@ int channels[] = {0, 1};
 Finder::Finder(VideoCapture c) {
     if(!c.isOpened()) {
         cout << "couldn't open video\n";
-        throw exception();
+		string bla;
+		cin >> bla;
+        exit(1);
     }
     cap = c;
     haar = CascadeClassifier(FACEHAAR);

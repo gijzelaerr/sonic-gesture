@@ -1,0 +1,6 @@
+
+This code was taken from:
+
+http://smsoftdev-solutions.blogspot.com/2009/08/integral-histogram-for-fast-calculation.html
+
+and modified a little so it compiles. Added cmake file also.

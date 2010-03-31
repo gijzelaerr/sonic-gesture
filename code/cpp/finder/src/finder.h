@@ -2,9 +2,7 @@
 #ifndef _FINDER_H
 #define	_FINDER_H
 
-#include "cv.h"
-#include "highgui.h"
-#include "ml.h"
+#include "common.h"
 
 #include "limb.h"
 #include "hand.h"
@@ -13,9 +11,10 @@
 using namespace cv;
 
 
-struct Finder {
+class Finder {
 public:
-    Mat big, small, hsv, bw, backproj, mask;
+    Mat big, hsv, bw, backproj, mask;
+	Mat small_; // small is reserved keyword in visual studio c++
     Mat facepixels, visuals, combi, temp, blurred, morphed, th, limb_zoom;
     MatND histogram, new_hist, old_hist;
     VideoCapture cap;

@@ -1,12 +1,5 @@
 
-#include <stdlib.h>
-
-#include "cv.h"
-#include "highgui.h"
-#include "boost/filesystem.hpp"
-#include "boost/date_time/posix_time/posix_time.hpp"
-
-#include "settings.h"
+#include "common.h"
 #include "finder.h"
 
 using namespace std;
@@ -21,7 +14,9 @@ namespace fs = boost::filesystem;
 class Capture : public Finder {
 public:
 
-    Capture(VideoCapture c) : Finder::Finder(c) {}
+    Capture(VideoCapture c) :
+	  Finder(c)
+	  {};
 
 
     void mainloop() {
@@ -55,7 +50,7 @@ public:
             fs::path image_path = examples_path / image_file;
             assert(fs::exists(image_path));
             Mat small_hand = imread(image_path.string(), 1);
-            resize(small_hand, example_hand, small.size());
+            resize(small_hand, example_hand, small_.size());
 
             for (;;) {
                 double t = (double) getTickCount();
@@ -81,7 +76,7 @@ public:
                     cout << "saving " << hand_file.string() << endl;
                     cout << "saving " << orig_file.string() << endl;
                     imshow("left hand", left_hand.get_limb_image());
-                    assert(imwrite(orig_file.string(), small));
+                    assert(imwrite(orig_file.string(), small_));
                     assert(imwrite(hand_file.string(), left_hand.get_limb_image()));
                     break;
                 }
@@ -90,10 +85,10 @@ public:
     }
 
     void visualize() {
-        small.copyTo(visuals);
+        small_.copyTo(visuals);
         convertScaleAbs(visuals, visuals, 0.2);
-        small.copyTo(visuals, mask);
-        rectangle(small, face.tl(), face.br(), Scalar(0, 255, 0));
+        small_.copyTo(visuals, mask);
+        rectangle(small_, face.tl(), face.br(), Scalar(0, 255, 0));
 
         if (head.data) {
             vector<vector<Point> > cs;
@@ -115,12 +110,12 @@ public:
 
 
         presentation.clear();
-        presentation.push_back(small);
+        presentation.push_back(small_);
         presentation.push_back(visuals);
         presentation.push_back(example_hand);
 
-        int w = MIN(XWINDOWS, presentation.size()) * small_size.width;
-        int h = ceil(float(presentation.size()) / XWINDOWS) * small_size.height;
+        int w = (int)(MIN(XWINDOWS, presentation.size()) * small_size.width);
+        int h = (int)(ceil(float(presentation.size()) / XWINDOWS) * small_size.height);
         combi.create(Size(w, h), CV_8UC3);
         for (unsigned int i = 0; i < presentation.size(); i++) {
             Mat current = presentation.at(i);

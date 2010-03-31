@@ -1,11 +1,7 @@
 
+#include "common.h"
 #include "limb.h"
 #include "tools.h"
-#include "settings.h"
-
-using namespace cv;
-using namespace std;
-
 
 Limb::Limb() {
     center_big = center_small = Point();
@@ -17,7 +13,7 @@ Limb::Limb() {
 // We keep both
 Limb::Limb(vector<Point> contour_small, float scale, Mat frame) {
     Limb::contour_small = contour_small;
-    contour_big = scale_contour(contour_small, 1.0/scale);
+    contour_big = scale_contour(contour_small, float(1.0/scale));
     contour_big = inflate_contour(contour_big, INFLATE_SIZE);
     
     Limb::frame = frame;

@@ -3,11 +3,8 @@
 #include <iostream>
 #include <exception>
 
-#include "cv.h"
-#include "highgui.h"
-
+#include "common.h"
 #include "hand.h"
-#include "settings.h"
 
 using namespace cv;
 using namespace std;
@@ -47,7 +44,7 @@ void Hand::make_cutout() {
 
     int dia = WORKSIZE/20 + 1;
     Mat kernel = Mat(dia, dia, CV_8U, 1);
-    dilate(mask, mask, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));	
+    dilate(mask, mask, kernel, Point(int(ceil(dia/2.0)), int(ceil(dia/2.0))));
 
 
     vector<vector<Point> > contours;

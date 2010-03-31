@@ -20,12 +20,12 @@ float sum(const vector<float>& x) {
 
 Rect sub_region(Rect region) {
     Rect r;
-    float xbor = 0.3;
-    float ybor = 0.16;
-    r.x = region.x + region.width * xbor;
-    r.y = region.y + region.height * ybor;
-    r.width = region.width * (1.0-(2*xbor));
-    r.height = region.height * (1.0-(2*ybor));
+    double xbor = 0.3;
+    double ybor = 0.16;
+    r.x = int(region.x + region.width * xbor);
+    r.y = int(region.y + region.height * ybor);
+    r.width = int(region.width * (1.0-(2*xbor)));
+    r.height = int(region.height * (1.0-(2*ybor)));
     return r;
 }
 
@@ -82,7 +82,7 @@ vector<Point> dilate_contour(vector<Point> contour, Size window_size) {
     contours.push_back(contour);
     drawContours( binary, contours, -1, Scalar(255), CV_FILLED);
 
-    dilate(binary, binary, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));
+    dilate(binary, binary, kernel, Point(int(ceil(dia/2.0)), int(ceil(dia/2.0))));
     findContours( binary, contours_new, RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE );
     assert(contours.size() > 0);
     return contours_new.at(0);
@@ -100,14 +100,14 @@ vector<Point> inflate_contour(vector<Point> contour, float scale) {
     iterator = contour.begin();
     while( iterator != contour.end() ) {
         if(iterator->x > center.x)
-            x = (iterator->x - center.x) * scale + center.x;
+            x = int((iterator->x - center.x) * scale + center.x);
         else
-            x = center.x - (center.x - iterator->x) * scale;
+            x = int(center.x - (center.x - iterator->x) * scale);
 
         if(iterator->y > center.y)
-            y = (iterator->y - center.y) * scale + center.y;
+            y = int((iterator->y - center.y) * scale + center.y);
         else
-            y = center.y - (center.y - iterator->y) * scale;
+            y = int(center.y - (center.y - iterator->y) * scale);
         
         new_contour.push_back(Point(x, y));
         ++iterator;

@@ -2,8 +2,7 @@
 #ifndef _LIMB_H
 #define	_LIMB_H
 
-#include "cv.h"
-#include "cvaux.h"
+#include "common.h"
 
 using namespace cv;
 using namespace std;

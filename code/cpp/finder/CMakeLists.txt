@@ -24,16 +24,16 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 add_executable (run src/run.cpp src/hand.cpp src/skin.cpp src/tools.cpp
     src/finder.cpp src/limb.cpp src/tools.h src/skin.h src/hand.h src/finder.h
-    src/limb.h)
+    src/limb.h src/common.h)
 target_link_libraries (run  ${OpenCV_LIBS})
 
 add_executable (capture src/capture.cpp src/hand.cpp src/skin.cpp src/tools.cpp
     src/finder.cpp src/limb.cpp src/tools.h src/skin.h src/hand.h src/finder.h
-    src/limb.h src/settings.h.in)
+    src/limb.h src/settings.h.in src/common.h)
 target_link_libraries(capture ${OpenCV_LIBS} ${Boost_LIBRARIES})
 
 add_executable (train src/train.cpp src/train.h src/hand.cpp src/skin.cpp
-    src/tools.cpp)
+    src/tools.cpp src/common.h)
 target_link_libraries(train ${OpenCV_LIBS} ${Boost_LIBRARIES})
 
 

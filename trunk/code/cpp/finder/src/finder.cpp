@@ -3,14 +3,11 @@
 #include <iostream>
 #include <exception>
 
-#include "cv.h"
-#include "cvaux.h"
-#include "ml.h"
+#include "common.h"
 
 #include "finder.h"
-#include "tools.h"
-#include "settings.h"
 #include "limb.h"
+#include "tools.h"
 
 
 using namespace cv;
@@ -36,12 +33,11 @@ Finder::Finder(VideoCapture c) {
     cap >> big;
     big_size = big.size();
     scale = float(WORKSIZE)/big.rows;
-    resize(big, small, Size(), scale, scale);
-    small_size = small.size();
+    resize(big, small_, Size(), scale, scale);
+    small_size = small_.size();
 
     histogram.create(2, histSize, CV_32F);
     histogram = Scalar(0);
-
 }
 
 
@@ -53,9 +49,9 @@ bool Finder::grab_frame() {
         return false;
     }
     if(MIRROR) flip(big, big, 1);
-    resize(big, small, Size(), scale, scale);
-    cvtColor(small, hsv, CV_BGR2HSV);
-    cvtColor(small, bw, CV_BGR2GRAY);
+    resize(big, small_, Size(), scale, scale);
+    cvtColor(small_, hsv, CV_BGR2HSV);
+    cvtColor(small_, bw, CV_BGR2GRAY);
     return true;
 }
 
@@ -97,9 +93,9 @@ void Finder::find_contours() {
 
 
 void Finder::find_face() {
-    //haar.detectMultiScale(small, faces, 1.2, 2, CV_HAAR_SCALE_IMAGE +
+    //haar.detectMultiScale(small_, faces, 1.2, 2, CV_HAAR_SCALE_IMAGE +
     //    CV_HAAR_DO_CANNY_PRUNING + CV_HAAR_FIND_BIGGEST_OBJECT, Size(WORKSIZE/10, WORKSIZE/10) );
-    haar.detectMultiScale(small, faces, 1.3, 3, CV_HAAR_DO_CANNY_PRUNING +
+    haar.detectMultiScale(small_, faces, 1.3, 3, CV_HAAR_DO_CANNY_PRUNING +
                           CV_HAAR_FIND_BIGGEST_OBJECT, Size(WORKSIZE/10, WORKSIZE/10) );
 
     if (faces.size() > 0) {
@@ -171,10 +167,10 @@ void Finder::find_limbs() {
 
 
 void Finder::visualize() {
-    small.copyTo(visuals);
+    small_.copyTo(visuals);
     convertScaleAbs(visuals, visuals, 0.2);
-    small.copyTo(visuals, mask);
-    rectangle(small, face.tl(), face.br(), Scalar(0, 255, 0));
+    small_.copyTo(visuals, mask);
+    rectangle(small_, face.tl(), face.br(), Scalar(0, 255, 0));
 	
     if (head.contour_small.size() > 0) {
         vector<vector<Point> > cs;
@@ -195,7 +191,7 @@ void Finder::visualize() {
     }
     
     presentation.clear();
-    presentation.push_back(small);
+    presentation.push_back(small_);
     //presentation.push_back(backproj);
     //presentation.push_back(blurred);
     //presentation.push_back(th);
@@ -205,7 +201,7 @@ void Finder::visualize() {
 
 
     int w = MIN(XWINDOWS, presentation.size())*small_size.width;
-    int h = ceil(float(presentation.size())/XWINDOWS)*small_size.height;
+    int h = int(ceil(float(presentation.size())/XWINDOWS)*small_size.height);
     combi.create(Size(w, h), CV_8UC3);
     for(unsigned int i=0; i < presentation.size(); i++) {
         Mat current = presentation.at(i);
@@ -235,7 +231,7 @@ void Finder::match_hands() {
 
         test = Mat(1, 3780, CV_32FC1);
         test = Scalar(3);
-        int response = hand_matcher.find_nearest(&cvtest,1, 0, 0, nearests, 0);
+        int response = int(hand_matcher.find_nearest(&cvtest,1, 0, 0, nearests, 0));
         Hand found_hand = hands.at(response);
         Mat found_hand_img = found_hand.cutout;
         roi = Mat(limb_zoom, Rect(100, 90, found_hand_img.cols, found_hand_img.rows));

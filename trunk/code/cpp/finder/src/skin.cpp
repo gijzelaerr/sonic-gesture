@@ -2,12 +2,10 @@
 #include <exception>
 #include <iostream>
 
-#include "cv.h"
-#include "highgui.h"
-
-#include "settings.h"
-#include "skin.h"
+#include "common.h"
 #include "tools.h"
+#include "skin.h"
+
 
 using namespace cv;
 using namespace std;

@@ -2,7 +2,7 @@
 #ifndef _SKIN_H
 #define	_SKIN_H
 
-#include "cv.h"
+#include "common.h"
 
 using namespace cv;
 

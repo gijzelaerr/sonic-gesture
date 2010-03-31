@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 2.8)
 
-project( "Sonic Gesture" )
+project( "sonic-gesture" )
+
+INCLUDE(CPack)
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Sonic Gesture")
+SET(CPACK_PACKAGE_VENDOR "Gijs Molenaar http://gijs.pythonic.nl")
+SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.txt")
+SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYRIGHT.txt")
+SET(CPACK_PACKAGE_VERSION_MAJOR "0")
+SET(CPACK_PACKAGE_VERSION_MINOR "0")
+SET(CPACK_PACKAGE_VERSION_PATCH "1")
 
 find_package( OpenCV REQUIRED )  
 find_package( Boost COMPONENTS filesystem system date_time REQUIRED )
@@ -16,8 +25,7 @@ endif()
 # where can we find data
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
-#set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../data")
-set(DATA_DIR "../data")
+set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/data")
 
 #pass cmake config to source
 configure_file (
@@ -46,14 +54,5 @@ target_link_libraries(train ${OpenCV_LIBS} ${Boost_LIBRARIES})
 install (TARGETS run DESTINATION bin)
 install (TARGETS capture DESTINATION bin)
 install (TARGETS train DESTINATION bin)
-install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../../data" DESTINATION . PATTERN ".svn" EXCLUDE)
+install (DIRECTORY "${DATA_DIR}" DESTINATION . PATTERN ".svn" EXCLUDE)
 
-
-INCLUDE(CPack)
-SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Sonic Gesture")
-SET(CPACK_PACKAGE_VENDOR "Gijs Molenaar http://gijs.pythonic.nl")
-SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
-SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYRIGHT")
-SET(CPACK_PACKAGE_VERSION_MAJOR "0")
-SET(CPACK_PACKAGE_VERSION_MINOR "0")
-SET(CPACK_PACKAGE_VERSION_PATCH "1")

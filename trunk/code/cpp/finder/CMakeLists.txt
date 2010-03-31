@@ -1,19 +1,25 @@
 cmake_minimum_required(VERSION 2.8)
-project( finder )
+
+project( "Sonic Gesture" )
+
 find_package( OpenCV REQUIRED )  
 find_package( Boost COMPONENTS filesystem system date_time REQUIRED )
 
 ## if using OpenMP:
 #ADD_DEFINITIONS("-D_GLIBCXX_PARALLEL")
 
+# OpenCV doesn't compile 64 bit on mac
 if(${APPLE})
     set(CMAKE_OSX_ARCHITECTURES "i386")
 endif()
 
+# where can we find data
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
-set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../data")
+#set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../data")
+set(DATA_DIR "../data")
 
+#pass cmake config to source
 configure_file (
   "${PROJECT_SOURCE_DIR}/settings.h.in"
   "${PROJECT_BINARY_DIR}/settings.h"
@@ -36,5 +42,18 @@ add_executable (train src/train.cpp src/train.h src/hand.cpp src/skin.cpp
     src/tools.cpp src/common.h)
 target_link_libraries(train ${OpenCV_LIBS} ${Boost_LIBRARIES})
 
+# what to install where
+install (TARGETS run DESTINATION bin)
+install (TARGETS capture DESTINATION bin)
+install (TARGETS train DESTINATION bin)
+install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../../data" DESTINATION . PATTERN ".svn" EXCLUDE)
 
 
+INCLUDE(CPack)
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Sonic Gesture")
+SET(CPACK_PACKAGE_VENDOR "Gijs Molenaar http://gijs.pythonic.nl")
+SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
+SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYRIGHT")
+SET(CPACK_PACKAGE_VERSION_MAJOR "0")
+SET(CPACK_PACKAGE_VERSION_MINOR "0")
+SET(CPACK_PACKAGE_VERSION_PATCH "1")

@@ -40,6 +40,7 @@ Finder::Finder(VideoCapture c) {
 
     histogram.create(2, histSize, CV_32F);
     histogram = Scalar(0);
+    matcher = Matcher();
 }
 
 
@@ -226,18 +227,12 @@ void Finder::match_hands() {
         Mat roi(limb_zoom, Rect(20, 90, left_hand.bw.cols, left_hand.bw.rows));
         left_hand.bw.copyTo(roi);
 
-        Mat test = Mat(left_hand.hog_descriptors).t();
-        CvMat cvtest = test;
-        //show_mat(test);
-        CvMat* nearests = cvCreateMat( 1, 1, CV_32FC1);
-
-        test = Mat(1, 3780, CV_32FC1);
-        test = Scalar(3);
-        int response = int(hand_matcher.find_nearest(&cvtest,1, 0, 0, nearests, 0));
-        Hand found_hand = hands.at(response);
-        Mat found_hand_img = found_hand.cutout;
-        roi = Mat(limb_zoom, Rect(100, 90, found_hand_img.cols, found_hand_img.rows));
-        found_hand_img.copyTo(roi);
+        int response = matcher.match(left_hand.hog_descriptors);
+        cout << response << endl;
+        //Hand found_hand = hands.at(response);
+        //Mat found_hand_img = found_hand.cutout;
+        //roi = Mat(limb_zoom, Rect(100, 90, found_hand_img.cols, found_hand_img.rows));
+        //found_hand_img.copyTo(roi);
 
     }
 
@@ -250,35 +245,7 @@ void Finder::match_hands() {
 }
 
 
-void Finder::init_hands() {
-    Skin skin(HEAD, FACEHAAR);
-    hands.push_back(Hand(HANDA, skin.histogram));
-    hands.push_back(Hand(HANDB, skin.histogram));
-    hands.push_back(Hand(HANDC, skin.histogram));
-    hands.push_back(Hand(HANDD, skin.histogram));
-
-    Mat knn_train(hands.at(0).descriptors.size(), hands.size(), CV_32FC1);
-    for (unsigned int i = 0; i < hands.size(); i++) {
-        Hand hand = hands.at(i);
-        Mat handmat(hand.descriptors);
-        Mat r = knn_train.col(i);
-        handmat.copyTo(r);
-    }
-    knn_train = knn_train.t();
-
-    float labels[1][4] = {{0, 1, 2, 3}};
-    Mat knn_class(4, 1, CV_32FC1, labels);
-    knn_class = knn_class.t();
-
-    hand_matcher = KNearest();
-    hand_matcher.train(knn_train, knn_class);
-
-}
-
-
 void Finder::mainloop() {
-    init_hands();
-
     for(;;) {
         double t = (double)getTickCount();
         

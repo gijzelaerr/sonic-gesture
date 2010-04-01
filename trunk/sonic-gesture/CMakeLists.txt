@@ -29,22 +29,17 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 add_executable (run src/run.cpp src/hand.cpp src/skin.cpp src/tools.cpp
     src/finder.cpp src/limb.cpp src/tools.h src/skin.h src/hand.h src/finder.h
-    src/limb.h src/common.h)
+    src/limb.h src/common.h src/matcher.cpp src/matcher.h)
 target_link_libraries (run  ${OpenCV_LIBS} ${Boost_LIBRARIES})
 
 add_executable (capture src/capture.cpp src/hand.cpp src/skin.cpp src/tools.cpp
     src/finder.cpp src/limb.cpp src/tools.h src/skin.h src/hand.h src/finder.h
-    src/limb.h src/settings.h.in src/common.h)
+    src/limb.h src/settings.h.in src/common.h src/matcher.cpp src/matcher.h)
 target_link_libraries(capture ${OpenCV_LIBS} ${Boost_LIBRARIES})
-
-add_executable (train src/train.cpp src/train.h src/hand.cpp src/skin.cpp
-    src/tools.cpp src/common.h)
-target_link_libraries(train ${OpenCV_LIBS} ${Boost_LIBRARIES})
 
 # what to install where
 install (TARGETS run DESTINATION bin)
 install (TARGETS capture DESTINATION bin)
-#install (TARGETS train DESTINATION bin)
 install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/examples" DESTINATION data PATTERN ".svn" EXCLUDE)
 install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/haar" DESTINATION data PATTERN ".svn" EXCLUDE)
 install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/hand" DESTINATION data PATTERN ".svn" EXCLUDE)

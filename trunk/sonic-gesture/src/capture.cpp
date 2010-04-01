@@ -1,14 +1,10 @@
 
-#include "common.h"
 #include "finder.h"
 
-using namespace std;
-using namespace boost;
-using namespace cv;
+#include "boost/date_time/gregorian/gregorian.hpp"
+#include "boost/date_time/posix_time/posix_time.hpp"
 using namespace boost::posix_time;
 using namespace boost::gregorian;
-namespace fs = boost::filesystem;
-
 
 // Inherit from main program, since we want to do almost the same here
 class Capture : public Finder {
@@ -17,7 +13,6 @@ public:
     Capture(VideoCapture c) :
 	  Finder(c)
 	  {};
-
 
     void mainloop() {
 

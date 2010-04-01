@@ -1,7 +1,7 @@
 
 
-#include <iostream>
-#include <exception>
+//#include <iostream>
+//#include <exception>
 
 #include "common.h"
 #include "hand.h"
@@ -23,7 +23,7 @@ void Hand::load_image(const string& filename) {
     img = imread(filename, 1);
     if (!img.data) {
         cerr << "can't read image data" << endl;
-        throw exception();
+        throw std::exception();
 	}
     flip(img, img, 1);
     cvtColor(img, hsv, CV_BGR2HSV);

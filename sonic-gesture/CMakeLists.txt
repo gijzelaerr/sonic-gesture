@@ -15,8 +15,8 @@ endif()
 # where can we find data
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
-#set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/data")
-set(DATA_DIR "../data")
+set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/data")
+#set(DATA_DIR "data")
 
 #pass cmake config to source
 configure_file (
@@ -30,7 +30,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 add_executable (run src/run.cpp src/hand.cpp src/skin.cpp src/tools.cpp
     src/finder.cpp src/limb.cpp src/tools.h src/skin.h src/hand.h src/finder.h
     src/limb.h src/common.h)
-target_link_libraries (run  ${OpenCV_LIBS})
+target_link_libraries (run  ${OpenCV_LIBS} ${Boost_LIBRARIES})
 
 add_executable (capture src/capture.cpp src/hand.cpp src/skin.cpp src/tools.cpp
     src/finder.cpp src/limb.cpp src/tools.h src/skin.h src/hand.h src/finder.h

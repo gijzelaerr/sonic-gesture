@@ -1,26 +1,20 @@
 
-#include <iostream>
-#include <stdlib.h>
-#include "boost/filesystem.hpp"
-#include "boost/algorithm/string.hpp"
-#include "cv.h"
-#include "highgui.h"
-#include "skin.h"
-#include "hand.h"
-#include "settings.h"
-
-
-using namespace std;
-using namespace boost;
-using namespace cv;
-namespace fs = boost::filesystem;
+#include "common.h"
 
 int main(int argc, char** argv) {
-
-    char const* solfege_str[] = {"do", "re", "mi", "fa", "sol", "la", "ti" };
+    vector<Point> locations;
+    Size winStride = Size(8, 8);
+    Size padding = Size(0, 0);
+    HOGDescriptor hog = HOGDescriptor();
+    vector<float> descriptors;
+    Mat handimg;
+    Mat knn_train;
+    Mat knn_label;
+    char const* solfege_str[] = SOLFEGE_FILES;
     vector<string> solfege(solfege_str, solfege_str + sizeof (solfege_str)/sizeof (*solfege_str));
+    bool first = true;
 
-    fs::path train_path(TRAIN_PATH );
+    fs::path train_path(TRAIN_PATH);
     assert(fs::exists(train_path));
 
     fs::directory_iterator end_iter;
@@ -30,30 +24,32 @@ int main(int argc, char** argv) {
         // skip hidden files
         if (istarts_with(train_set.filename(), ".")) continue;
 
-        fs::path head_path = train_set / "head.jpg";
-        if(!fs::exists(head_path)) {
-            cerr << "cant find file " << head_path.file_string() << endl;
-            return 1;
-        }
+        for(unsigned int i=0; i < solfege.size(); i++) {
+            fs::path hand_path = train_set / solfege.at(i);
+            assert(fs::exists(hand_path));
+            handimg = imread(hand_path.file_string());
 
-        Skin skin(head_path.file_string(), FACEHAAR);
+            hog.compute(handimg, descriptors, winStride, padding, locations);
 
-
-        vector<string>::iterator solfege_iterator = solfege.begin();
-        while( solfege_iterator != solfege.end() ) {
-            fs::path hand_path = train_set / (*solfege_iterator + ".jpg");
-            if(!fs::exists(hand_path)) {
-                cerr << "cant find file " << hand_path.file_string() << endl;
-                return 1;
+            // initialize the matrix with info from first hand
+            if(first) {
+                knn_train = Mat(descriptors.size(), solfege.size(), CV_32FC1);
+                knn_label = (1, solfege.size(), CV_32FC1)
+                first = false;
             }
 
-            cout << hand_path.file_string() << endl;
-            Hand hand(hand_path.file_string(), skin.histogram);
-
-            ++solfege_iterator;
+            Mat handmat(descriptors);
+            Mat r = knn_train.col(i);
+            handmat.copyTo(r);
         }
     }
-    
+    knn_train = knn_train.t();
+    KNearest matcher = KNearest();
+    matcher.train(knn_train, knn_label);
+    fs::path data_path(DATA_DIR);
+    fs::path knn_file = data_path / "storage" / "knn.xml";
+    matcher.save(knn_file.file_string());
+
     return (EXIT_SUCCESS);
 }
 

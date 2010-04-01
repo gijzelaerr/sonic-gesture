@@ -1,17 +1,9 @@
 
-#include <exception>
-#include <iostream>
-
 #include "common.h"
-#include "tools.h"
 #include "skin.h"
-
 
 using namespace cv;
 using namespace std;
-
-
-
 
 Skin::Skin(const string& facefile, const string& haarfile) {
     load_image(facefile);
@@ -23,8 +15,8 @@ Skin::Skin(const string& facefile, const string& haarfile) {
 void Skin::load_image(const string& filename) {
     img = imread(filename, 1);
     if (!img.data) {
-		cout << "can't load" << filename << endl;
-        throw exception();
+	cout << "can't load" << filename << endl;
+        throw std::exception();
 	}
     cvtColor(img, hsv, CV_BGR2HSV);
     cvtColor(img, bw, CV_BGR2GRAY);
@@ -33,7 +25,7 @@ void Skin::load_image(const string& filename) {
 void Skin::load_haar(const string& filename) {
 	if ( !haarzoeker.load(FACEHAAR) ) {
 		cerr << "can't load" << filename << endl;
-		throw exception();
+		throw std::exception();
     }
 }
 
@@ -41,7 +33,7 @@ void Skin::find_face() {
     haarzoeker.detectMultiScale(img, faces, 1.1, 5, CV_HAAR_SCALE_IMAGE, Size(30, 30) );
 	if (faces.size() == 0) {
 		cerr << "no faces found in image" << endl;
-		throw exception();
+		throw std::exception();
 	}
 	face_rect = faces.at(0);
     sub_rect = sub_region(face_rect);

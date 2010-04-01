@@ -22,9 +22,7 @@ public:
     void mainloop() {
 
         // the file names of example and train
-        string expstr[] = { "00_do.jpg", "01_di.jpg", "02_re.jpg", "03_ri.jpg",
-            "04_mi.jpg", "05_fa.jpg", "06_fi.jpg", "07_sol.jpg", "08_si.jpg",
-            "09_la.jpg", "10_li.jpg", "11_ti.jpg"};
+        string expstr[] = SOLFEGE_FILES;
 
         vector<string> examples(expstr, expstr + sizeof (expstr)/sizeof (*expstr));
 
@@ -75,7 +73,6 @@ public:
                     fs::path orig_file = original_path / image_file;
                     cout << "saving " << hand_file.string() << endl;
                     cout << "saving " << orig_file.string() << endl;
-                    imshow("left hand", left_hand.get_limb_image());
                     assert(imwrite(orig_file.string(), small_));
                     assert(imwrite(hand_file.string(), left_hand.get_limb_image()));
                     break;

@@ -15,14 +15,8 @@ public:
 	  {};
 
     void mainloop() {
-
-        // the file names of example and train
         string expstr[] = SOLFEGE_FILES;
-
-        vector<string> examples(expstr, expstr + sizeof (expstr)/sizeof (*expstr));
-
-        fs::path examples_path(EXAMPLES_PATH );
-        assert(fs::exists(examples_path));
+        vector<string> names(expstr, expstr + sizeof (expstr)/sizeof (*expstr));
 
         fs::path train_path(NEWTRAIN_PATH );
         assert(fs::exists(train_path));
@@ -38,13 +32,11 @@ public:
         assert(create_directory(current_train_path));
         assert(create_directory(original_path));
 
-        for(unsigned int i=0; i < examples.size(); i++) {
-            string image_file = examples.at(i);
-            fs::path image_path = examples_path / image_file;
-            assert(fs::exists(image_path));
-            Mat small_hand = imread(image_path.string(), 1);
-            resize(small_hand, example_hand, small_.size());
+        vector<Mat> examples = load_example_hands(small_.size());
 
+        for(unsigned int i=0; i < examples.size(); i++) {
+            example_hand = examples.at(i);
+            string image_file = names.at(i);
             for (;;) {
                 double t = (double) getTickCount();
 
@@ -103,7 +95,7 @@ public:
 
         presentation.clear();
         presentation.push_back(small_);
-        presentation.push_back(backproj);
+        //presentation.push_back(backproj);
         presentation.push_back(visuals);
         presentation.push_back(example_hand);
 

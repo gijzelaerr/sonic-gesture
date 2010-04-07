@@ -38,6 +38,8 @@ Finder::Finder(VideoCapture c) {
 
     histogram.create(2, histSize, CV_32F);
     histogram = Scalar(0);
+
+    example_hands = load_example_hands(Size(100, 100));
     //matcher = Matcher();
 }
 
@@ -219,18 +221,18 @@ void Finder::visualize() {
 
 
 void Finder::match_hands() {
-    bw.copyTo(limb_zoom);
+    small_.copyTo(limb_zoom);
     limb_zoom = Scalar(0);
     if (left_hand.contour_small.size() != 0) {
         Mat roi(limb_zoom, Rect(20, 90, left_hand.bw.cols, left_hand.bw.rows));
         left_hand.bw.copyTo(roi);
 
         int response = matcher.match(left_hand.hog_descriptors);
-        cout << response << endl;
-        //Hand found_hand = hands.at(response);
-        //Mat found_hand_img = found_hand.cutout;
-        //roi = Mat(limb_zoom, Rect(100, 90, found_hand_img.cols, found_hand_img.rows));
-        //found_hand_img.copyTo(roi);
+        //cout << response << endl;
+        Mat found_hand = example_hands.at(response);
+        //imshow("found hand", found_hand);
+        roi = Mat(limb_zoom, Rect(100, 90, found_hand.cols, found_hand.rows));
+        found_hand.copyTo(roi);
 
     }
 

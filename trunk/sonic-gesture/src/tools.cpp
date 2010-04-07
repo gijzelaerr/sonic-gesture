@@ -114,3 +114,25 @@ vector<Point> inflate_contour(vector<Point> contour, float scale) {
     }
     return new_contour;
 }
+
+vector<Mat> load_example_hands(Size target_size) {
+        // the file names of example and train
+        string expstr[] = SOLFEGE_FILES;
+        vector<string> examples(expstr, expstr + sizeof (expstr)/sizeof (*expstr));
+        vector<Mat> examples_mat;
+
+        fs::path examples_path(EXAMPLES_PATH );
+        assert(fs::exists(examples_path));
+
+        for(unsigned int i =0; i < examples.size(); i++) {
+            string image_file = examples.at(i);
+            fs::path image_path = examples_path / image_file;
+            assert(fs::exists(image_path));
+            Mat example_mat = imread(image_path.string(), 1);
+            Mat temp;
+            resize(example_mat, temp, target_size);
+            examples_mat.push_back(temp);
+        }
+        return examples_mat;
+
+}

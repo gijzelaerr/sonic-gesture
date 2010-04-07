@@ -5,8 +5,6 @@
 #include "common.h"
 
 #include "limb.h"
-#include "hand.h"
-#include "skin.h"
 #include "matcher.h"
 
 using namespace cv;
@@ -31,6 +29,7 @@ public:
     KNearest hand_matcher;
     vector<Mat> presentation;
     Matcher matcher;
+    vector<Mat> example_hands;
     
     Finder(VideoCapture c);
     bool grab_frame();

@@ -32,7 +32,7 @@ public:
         assert(create_directory(current_train_path));
         assert(create_directory(original_path));
 
-        vector<Mat> examples = load_example_hands(small_.size());
+        vector<Mat> examples = load_example_hands(small_.size(), false);
 
         for(unsigned int i=0; i < examples.size(); i++) {
             example_hand = examples.at(i);

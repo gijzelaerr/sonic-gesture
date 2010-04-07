@@ -28,8 +28,8 @@ public:
     Limb left_hand, right_hand, head;
     KNearest hand_matcher;
     vector<Mat> presentation;
-    Matcher matcher;
-    vector<Mat> example_hands;
+    Matcher left_matcher, right_matcher;
+    vector<Mat> example_right_hands, example_left_hands;
     
     Finder(VideoCapture c);
     bool grab_frame();

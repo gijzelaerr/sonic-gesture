@@ -17,6 +17,7 @@ class Matcher {
 
 public:
     Matcher();
+    Matcher(bool mirror);
     int match(vector<float> descriptors);
 };
 

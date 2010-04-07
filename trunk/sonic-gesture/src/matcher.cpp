@@ -2,6 +2,9 @@
 #include "matcher.h"
 
 Matcher::Matcher() {
+}
+
+Matcher::Matcher(bool mirror) {
     winStride = Size(8, 8);
     padding = Size(0, 0);
     hog = HOGDescriptor();
@@ -37,6 +40,7 @@ Matcher::Matcher() {
             assert(fs::exists(hand_path));
 
             handimg = imread(hand_path.file_string(), 0);
+            if(mirror) flip(handimg, handimg, 1);
             hog.compute(handimg, descriptors, winStride, padding, locations);
 
             // initialize the matrix with info from first hand

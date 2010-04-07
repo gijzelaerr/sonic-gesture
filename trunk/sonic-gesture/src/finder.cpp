@@ -21,8 +21,6 @@ int channels[] = {0, 1};
 Finder::Finder(VideoCapture c) {
     if(!c.isOpened()) {
         cout << "couldn't open video\n";
-		string bla;
-		cin >> bla;
         exit(1);
     }
     cap = c;
@@ -39,8 +37,10 @@ Finder::Finder(VideoCapture c) {
     histogram.create(2, histSize, CV_32F);
     histogram = Scalar(0);
 
-    example_hands = load_example_hands(Size(100, 100));
-    //matcher = Matcher();
+    example_left_hands = load_example_hands(Size(100, 100), false);
+    example_right_hands = load_example_hands(Size(100, 100), true);
+    //left_matcher = Matcher(false);
+    //right_matcher = Matcher(true);
 }
 
 
@@ -221,24 +221,28 @@ void Finder::visualize() {
 
 
 void Finder::match_hands() {
+    /// use small for color, bw for black
     small_.copyTo(limb_zoom);
     limb_zoom = Scalar(0);
     if (left_hand.contour_small.size() != 0) {
         Mat roi(limb_zoom, Rect(20, 90, left_hand.bw.cols, left_hand.bw.rows));
         left_hand.bw.copyTo(roi);
 
-        int response = matcher.match(left_hand.hog_descriptors);
-        //cout << response << endl;
-        Mat found_hand = example_hands.at(response);
-        //imshow("found hand", found_hand);
-        roi = Mat(limb_zoom, Rect(100, 90, found_hand.cols, found_hand.rows));
-        found_hand.copyTo(roi);
+        //int response = left_matcher.match(left_hand.hog_descriptors);
+        //Mat found_hand = example_left_hands.at(response);
+        //roi = Mat(limb_zoom, Rect(100, 90, found_hand.cols, found_hand.rows));
+        //found_hand.copyTo(roi);
 
     }
 
     if (right_hand.contour_small.size() != 0) {
-        Mat roi(limb_zoom, Rect(250, 90, right_hand.bw.cols, right_hand.bw.rows));
+        Mat roi(limb_zoom, Rect(200, 90, right_hand.bw.cols, right_hand.bw.rows));
         right_hand.bw.copyTo(roi);
+
+        int response = right_matcher.match(right_hand.hog_descriptors);
+        //Mat found_hand = example_right_hands.at(response);
+        //roi = Mat(limb_zoom, Rect(260, 90, found_hand.cols, found_hand.rows));
+        //found_hand.copyTo(roi);
     }
 
 

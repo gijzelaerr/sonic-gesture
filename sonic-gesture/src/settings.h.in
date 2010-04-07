@@ -17,8 +17,9 @@
 #define HANDB DATA_DIR + "/hand/b.png"
 #define HANDC DATA_DIR + "/hand/c.png"
 #define HANDD DATA_DIR + "/hand/d.png"
-#define FACEHAAR DATA_DIR + "/haar/haarcascade_frontalface_alt.xml"
+#define FACEHAAR DATA_DIR + "/storage/haarcascade_frontalface_alt.xml"
 #define TRAIN_PATH DATA_DIR + "/train"
+#define NEWTRAIN_PATH DATA_DIR + "/train_new"
 #define EXAMPLES_PATH DATA_DIR + "/examples"
 
 

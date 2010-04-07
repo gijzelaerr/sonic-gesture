@@ -94,8 +94,8 @@ vector<Point> inflate_contour(vector<Point> contour, float scale) {
     vector<Point> new_contour;
     vector<Point>::iterator iterator;
     int x, y;
-    
-    minEnclosingCircle(contour, center, radius);
+
+    minEnclosingCircle(Mat(contour), center, radius);
     
     iterator = contour.begin();
     while( iterator != contour.end() ) {

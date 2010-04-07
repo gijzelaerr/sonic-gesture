@@ -24,7 +24,7 @@ public:
         fs::path examples_path(EXAMPLES_PATH );
         assert(fs::exists(examples_path));
 
-        fs::path train_path(TRAIN_PATH );
+        fs::path train_path(NEWTRAIN_PATH );
         assert(fs::exists(train_path));
 
         ptime now = second_clock::local_time();
@@ -103,6 +103,7 @@ public:
 
         presentation.clear();
         presentation.push_back(small_);
+        presentation.push_back(backproj);
         presentation.push_back(visuals);
         presentation.push_back(example_hand);
 

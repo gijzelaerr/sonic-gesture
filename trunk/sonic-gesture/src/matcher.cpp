@@ -52,14 +52,16 @@ Matcher::Matcher() {
     }
     train = train.t();
     labels_mat = Mat(labels);
-    KNearest matcher = KNearest();
-    matcher.train(train, labels_mat);
+    knn_matcher = KNearest();
+    cout << "traing matcher with " << train.rows << " examples with " <<
+            train.cols << " features..." << endl;
+    knn_matcher.train(train, labels_mat);
 }
 
 int Matcher::match(vector<float> other_descriptors) {
     Mat img_mat = Mat(other_descriptors).t();
     CvMat img_cvmat = img_mat;
     CvMat* nearests = cvCreateMat( 1, 1, CV_32FC1);
-    int response = int(matcher.find_nearest(&img_cvmat,1, 0, 0, nearests, 0));
+    int response = int(knn_matcher.find_nearest(&img_cvmat,1, 0, 0, nearests, 0));
     return response;
 }

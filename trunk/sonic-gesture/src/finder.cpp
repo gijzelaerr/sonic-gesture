@@ -3,12 +3,7 @@
 #include <iostream>
 #include <exception>
 
-#include "common.h"
-
 #include "finder.h"
-#include "limb.h"
-#include "tools.h"
-
 
 using namespace cv;
 using namespace std;
@@ -43,7 +38,7 @@ Finder::Finder(VideoCapture c) {
 
     histogram.create(2, histSize, CV_32F);
     histogram = Scalar(0);
-    matcher = Matcher();
+    //matcher = Matcher();
 }
 
 

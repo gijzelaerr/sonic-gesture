@@ -27,13 +27,13 @@ configure_file (
 include_directories(${PROJECT_BINARY_DIR})
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_executable (run src/run.cpp src/hand.cpp src/skin.cpp src/tools.cpp
-    src/finder.cpp src/limb.cpp src/tools.h src/skin.h src/hand.h src/finder.h
+add_executable (run src/run.cpp src/tools.cpp
+    src/finder.cpp src/limb.cpp src/tools.h src/finder.h
     src/limb.h src/common.h src/matcher.cpp src/matcher.h)
 target_link_libraries (run  ${OpenCV_LIBS} ${Boost_LIBRARIES})
 
-add_executable (capture src/capture.cpp src/hand.cpp src/skin.cpp src/tools.cpp
-    src/finder.cpp src/limb.cpp src/tools.h src/skin.h src/hand.h src/finder.h
+add_executable (capture src/capture.cpp src/tools.cpp
+    src/finder.cpp src/limb.cpp src/tools.h src/finder.h
     src/limb.h src/settings.h.in src/common.h src/matcher.cpp src/matcher.h)
 target_link_libraries(capture ${OpenCV_LIBS} ${Boost_LIBRARIES})
 

@@ -31,6 +31,9 @@ Finder::Finder(VideoCapture c) {
         exit(1);
     }
     cap = c;
+    fs::path haar_path(FACEHAAR);
+    cout << FACEHAAR << endl;
+    assert(fs::exists(haar_path));
     haar = CascadeClassifier(FACEHAAR);
     cap >> big;
     big_size = big.size();
@@ -120,7 +123,7 @@ void Finder::find_limbs() {
         vector<Point> contour = contours.at(i);
         Limb limb(contour, scale, big);
         limbs.push_back(limb);
-        if (pointPolygonTest(contour, facepoint, false) > 0) {
+        if (pointPolygonTest(Mat(contour), facepoint, false) > 0) {
             head = limb;
         }
     }

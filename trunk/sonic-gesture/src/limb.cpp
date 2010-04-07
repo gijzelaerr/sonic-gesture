@@ -20,8 +20,8 @@ Limb::Limb(vector<Point> contour_small, float scale, Mat frame) {
     
     Limb::frame = frame;
     data = true;
-    minEnclosingCircle(contour_small, center_small, radius_small);
-    minEnclosingCircle(contour_big, center_big, radius_big);
+    minEnclosingCircle(Mat(contour_small), center_small, radius_small);
+    minEnclosingCircle(Mat(contour_big), center_big, radius_big);
     
     //mask.zeros(frame.size(), CV_8U);
     Mat mask = Mat(frame.size(), CV_8U, Scalar(0));
@@ -32,7 +32,7 @@ Limb::Limb(vector<Point> contour_small, float scale, Mat frame) {
 
 
     frame.copyTo(temp, mask);    
-    cutout = temp(boundingRect(contour_big));
+    cutout = temp(boundingRect(Mat(contour_big)));
     Mat sized;
     resize(cutout, sized, Size(64,128));
     cvtColor(sized, bw, CV_BGR2GRAY);

@@ -56,7 +56,7 @@ void Hand::make_cutout() {
         return;
         //throw exception();
     }
-    Rect box = boundingRect(contours.at(0));
+    Rect box = boundingRect(Mat(contours.at(0)));
     //rectangle(mask, box.tl(), box.br(), Scalar(0, 255, 0) );
 	
     img.copyTo(clean, mask);

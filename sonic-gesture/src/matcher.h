@@ -5,7 +5,7 @@
 #include "common.h"
 
 class Matcher {
-    KNearest matcher;
+    KNearest knn_matcher;
     Size winStride, padding;
     HOGDescriptor hog;
     vector<Point> locations;

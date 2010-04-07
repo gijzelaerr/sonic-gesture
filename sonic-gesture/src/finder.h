@@ -28,7 +28,6 @@ public:
     vector<vector<Point> > contours;
     vector<Point> face_contour;
     Limb left_hand, right_hand, head;
-    vector<Hand> hands;
     KNearest hand_matcher;
     vector<Mat> presentation;
     Matcher matcher;

@@ -1,4 +1,5 @@
 
+#include "common.h"
 #include "finder.h"
 
 #include "boost/date_time/gregorian/gregorian.hpp"
@@ -120,10 +121,10 @@ private:
 
 
 int main(int argc, char** argv) {
-    assert(fs::exists(fs::path(DEVICE)));
-    VideoCapture cap(DEVICE);
-    Capture gijs = Capture(cap);
-    gijs.mainloop();
+    //assert(fs::exists(fs::path(DEVICE)));
+    VideoCapture vid_cap(DEVICE);
+    Capture cap = Capture(vid_cap);
+    cap.mainloop();
     return (EXIT_SUCCESS);
 }
 

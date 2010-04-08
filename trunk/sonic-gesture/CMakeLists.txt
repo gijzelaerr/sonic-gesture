@@ -7,8 +7,8 @@ find_package( Boost COMPONENTS filesystem system date_time REQUIRED )
 ## if using OpenMP:
 #ADD_DEFINITIONS("-D_GLIBCXX_PARALLEL")
 
-# OpenCV doesn't compile 64 bit on mac
-if(${APPLE})
+# OpenCV 2.0 doesn't compile 64 bit on mac
+if(${APPLE} AND OpenCV_VERSION_MAJOR EQUAL 2 AND OpenCV_VERSION_MINOR EQUAL 0)
     set(CMAKE_OSX_ARCHITECTURES "i386")
 endif()
 

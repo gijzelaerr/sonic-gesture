@@ -13,7 +13,7 @@ class Matcher {
     Mat handimg;
     Mat train;
     Mat labels_mat;
-    vector<int> labels;
+    vector<float> labels;
 
 public:
     Matcher();

@@ -28,10 +28,12 @@ public:
     Limb left_hand, right_hand, head;
     KNearest hand_matcher;
     vector<Mat> presentation;
-    Matcher left_matcher, right_matcher;
+    Matcher* left_matcher;
+    Matcher* right_matcher;
     vector<Mat> example_right_hands, example_left_hands;
     
     Finder(VideoCapture c);
+    
     bool grab_frame();
     void find_face();
     void make_histogram();

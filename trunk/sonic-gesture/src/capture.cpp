@@ -13,6 +13,7 @@ public:
 
     Capture(VideoCapture c) :
 	  Finder(c)
+      //Finder()
 	  {};
 
     void mainloop() {

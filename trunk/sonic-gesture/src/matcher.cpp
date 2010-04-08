@@ -25,6 +25,8 @@ Matcher::Matcher(bool mirror) {
         if (istarts_with(train_set.filename(), ".")) continue;
         train_folders.push_back(train_set);
     }
+    
+    assert(train_folders.size()>0);
 
     // loop over folders
     for(unsigned int train_folder=0; train_folder < train_folders.size(); train_folder++) {
@@ -66,6 +68,6 @@ int Matcher::match(vector<float> other_descriptors) {
     Mat img_mat = Mat(other_descriptors).t();
     CvMat img_cvmat = img_mat;
     CvMat* nearests = cvCreateMat( 1, 1, CV_32FC1);
-    int response = int(knn_matcher.find_nearest(&img_cvmat,1, 0, 0, nearests, 0));
+    int response = int(knn_matcher.find_nearest(&img_cvmat,2, 0, 0, 0, 0));
     return response;
 }

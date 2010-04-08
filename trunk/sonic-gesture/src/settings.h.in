@@ -4,7 +4,7 @@
 
 
 // flip image or not
-#define MIRROR false
+#define MIRROR true
 
 
 // set by CMAKE

@@ -18,34 +18,33 @@ const float* ranges[] = { hranges, sranges };
 int channels[] = {0, 1};
 
 
-Finder::Finder(VideoCapture c) {
-    if(!c.isOpened()) {
+Finder::Finder(VideoCapture cap) {
+    if(!cap.isOpened()) {
         cout << "couldn't open video\n";
         exit(1);
     }
-    cap = c;
-    fs::path haar_path(FACEHAAR);
-    cout << FACEHAAR << endl;
-    assert(fs::exists(haar_path));
-    haar = CascadeClassifier(FACEHAAR);
-    cap >> big;
+    Finder::cap = cap;
+    cap >> big; 
+    
     big_size = big.size();
     scale = float(WORKSIZE)/big.rows;
     resize(big, small_, Size(), scale, scale);
     small_size = small_.size();
 
+    // load haar stuff
+    fs::path haar_path(FACEHAAR);
+    assert(fs::exists(haar_path));
+    haar = CascadeClassifier(FACEHAAR);    
+    
+    // make histogram stuff
     histogram.create(2, histSize, CV_32F);
     histogram = Scalar(0);
-
-    example_left_hands = load_example_hands(Size(100, 100), false);
-    example_right_hands = load_example_hands(Size(100, 100), true);
-    //left_matcher = Matcher(false);
-    //right_matcher = Matcher(true);
 }
 
 
 // return false if can't grab
 bool Finder::grab_frame() {
+    
     cap >> big;
     if (!big.data) {
         cout << "end of movie" << endl;
@@ -228,10 +227,10 @@ void Finder::match_hands() {
         Mat roi(limb_zoom, Rect(20, 90, left_hand.bw.cols, left_hand.bw.rows));
         left_hand.bw.copyTo(roi);
 
-        //int response = left_matcher.match(left_hand.hog_descriptors);
-        //Mat found_hand = example_left_hands.at(response);
-        //roi = Mat(limb_zoom, Rect(100, 90, found_hand.cols, found_hand.rows));
-        //found_hand.copyTo(roi);
+        int response = left_matcher->match(left_hand.hog_descriptors);
+        Mat found_hand = example_left_hands.at(response);
+        roi = Mat(limb_zoom, Rect(100, 90, found_hand.cols, found_hand.rows));
+        found_hand.copyTo(roi);
 
     }
 
@@ -239,10 +238,10 @@ void Finder::match_hands() {
         Mat roi(limb_zoom, Rect(200, 90, right_hand.bw.cols, right_hand.bw.rows));
         right_hand.bw.copyTo(roi);
 
-        int response = right_matcher.match(right_hand.hog_descriptors);
-        //Mat found_hand = example_right_hands.at(response);
-        //roi = Mat(limb_zoom, Rect(260, 90, found_hand.cols, found_hand.rows));
-        //found_hand.copyTo(roi);
+        int response = right_matcher->match(right_hand.hog_descriptors);
+        Mat found_hand = example_right_hands.at(response);
+        roi = Mat(limb_zoom, Rect(260, 90, found_hand.cols, found_hand.rows));
+        found_hand.copyTo(roi);
     }
 
 
@@ -250,6 +249,12 @@ void Finder::match_hands() {
 
 
 void Finder::mainloop() {
+    // make matcher stuff
+    example_left_hands = load_example_hands(Size(100, 100), false);
+    example_right_hands = load_example_hands(Size(100, 100), true);
+    left_matcher = new Matcher(false);
+    right_matcher = new Matcher(true);
+    
     for(;;) {
         double t = (double)getTickCount();
         

@@ -12,8 +12,9 @@ Limb::Limb() {
 
 // scale is ratio between big and small
 // We keep both
+// frame is original image
 Limb::Limb(vector<Point> contour_small, float scale, Mat frame) {
-    Mat temp;
+    Mat binary;
     Limb::contour_small = contour_small;
     contour_big = scale_contour(contour_small, float(1.0/scale));
     contour_big = inflate_contour(contour_big, INFLATE_SIZE);
@@ -23,16 +24,36 @@ Limb::Limb(vector<Point> contour_small, float scale, Mat frame) {
     minEnclosingCircle(Mat(contour_small), center_small, radius_small);
     minEnclosingCircle(Mat(contour_big), center_big, radius_big);
     
-    //mask.zeros(frame.size(), CV_8U);
     Mat mask = Mat(frame.size(), CV_8U, Scalar(0));
-    temp.zeros(frame.size(), CV_8U);
-    vector<vector<Point> > contours;
-    contours.push_back(contour_big);
-    drawContours( mask, contours, -1, Scalar(255), CV_FILLED);
+    binary.zeros(frame.size(), CV_8U);
+   
+    vector<vector<Point> > contours_big;
+    contours_big.push_back(contour_big);
+    drawContours( mask, contours_big, -1, Scalar(255), CV_FILLED);
+    
 
+    frame.copyTo(binary, mask);
 
-    frame.copyTo(temp, mask);    
-    cutout = temp(boundingRect(Mat(contour_big)));
+    Rect cutout_border = boundingRect(Mat(contour_big));
+    
+    // make sure the cutout_border is inside the borders of image
+    int x = max(0, cutout_border.x);
+    int y = max(0, cutout_border.y);
+    int width, height;
+    if (cutout_border.width+cutout_border.x > binary.cols) {
+        width = binary.cols - x;
+    } else {
+        width = cutout_border.width;
+    }
+    if (cutout_border.height + cutout_border.y > binary.rows) {
+        height = binary.rows - y;
+    } else {
+        height = cutout_border.height;
+    }
+    cutout_border = Rect(x, y, width, height);
+    
+    cutout = binary(cutout_border); 
+  
     Mat sized;
     resize(cutout, sized, Size(64,128));
     cvtColor(sized, bw, CV_BGR2GRAY);

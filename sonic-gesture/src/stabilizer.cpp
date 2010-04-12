@@ -1,35 +1,38 @@
 
 #include <vector>
-
+#include <iostream>
 #include "stabilizer.h"
 
+using namespace std;
+
 Stabilizer::Stabilizer(int state_num) {
-    this->states = vector();
     for (int i = 0; i < state_num; i++) {
         this->states.push_back(STATE_MIN);
     }
 };
 
 // update stabilizer with new measurement. Decrease all non-measured states
-void Stabilizer::update(int state) {
+int Stabilizer::update(int state) {
     assert(state <= this->states.size());
-    int new;
+    int new_val;
 
     for (unsigned int i = 0; i < this->states.size(); i++) {
         if (i == state) {
-            new = min(this->states.at(i)+1, STATE_MAX);
-            this->states.at(i) = new;
-            if (new >= STATE_THRESH && !this->active) {
+            new_val = min(this->states.at(i)+1, STATE_MAX);
+            this->states.at(i) = new_val;
+            //cout << "update " << i << " with " << new_val;
+            if ((new_val >= STATE_THRESH) && (!this->active)) {
                 this->trigger(true, i);
             }
         } else {
-            new = max(this->states.at(i)-1, STATE_MIN);
-            this->states.at(i) = new;
-            if (new < STATE_THRESH && this->active) {
+            new_val = max(this->states.at(i)-1, STATE_MIN);
+            this->states.at(i) = new_val;
+            if ((new_val < STATE_THRESH) && (this->active)) {
                 this->trigger(false, i);
             }
         }
     }
+    return this->get_state();
 };
 
 // return num of max state
@@ -44,11 +47,19 @@ int Stabilizer::get_state() {
             max_val = val;
         }
     }
-    return max_state;
+    if (max_val > STATE_THRESH) {
+        return max_state;
+    } else {
+        return -1;
+    }
 };
 
 void Stabilizer::trigger(bool new_active, int new_state) {
-    
+    this->active = new_active;
+}
+
+bool Stabilizer::is_active() {
+    return this->active;
 }
 
 void Stabilizer::set_callback() {

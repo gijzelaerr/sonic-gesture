@@ -6,17 +6,19 @@
 #define STATE_THRESH 8
 
 #include <assert.h>
+#include <vector>
 
 using namespace std;
 
 class Stabilizer {
 public:
-    Stabilizer(int possibilities);
-    void update(int state);
+    Stabilizer(int state_num=1);
+    int update(int state);
     int get_state();
     void set_callback();
+    bool is_active();
 private:
-    trigger(bool active, int state);
+    void trigger(bool active, int state);
     bool active;
     vector<int> states;
 };

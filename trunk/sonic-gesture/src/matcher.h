@@ -3,6 +3,7 @@
 #define	_MATCHER_H
 
 #include "common.h"
+#include "stabilizer.h"
 
 class Matcher {
     KNearest knn_matcher;
@@ -14,6 +15,7 @@ class Matcher {
     Mat train;
     Mat labels_mat;
     vector<float> labels;
+    Stabilizer* stabilizer;
 
 public:
     Matcher();

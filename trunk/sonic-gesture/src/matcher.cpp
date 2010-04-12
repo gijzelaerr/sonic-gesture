@@ -1,16 +1,22 @@
 
 #include "matcher.h"
+#include "stabilizer.h"
 
-Matcher::Matcher() {
-}
 
-Matcher::Matcher(bool mirror) {
+Matcher::Matcher(bool mirror=false) {
+    // initialize the HOG parameters
     winStride = Size(8, 8);
     padding = Size(0, 0);
     hog = HOGDescriptor();
 
+    // construct a vector of the image file names
     char const* solfege_str[] = SOLFEGE_FILES;
     vector<string> solfege(solfege_str, solfege_str + sizeof (solfege_str)/sizeof (*solfege_str));
+
+    // create a stabilizer
+    stabilizer = new Stabilizer(solfege.size());
+    
+    // we keep track of which is the first, so we can extract size info from image
     bool first = true;
 
     fs::path train_path(TRAIN_PATH);
@@ -67,7 +73,6 @@ Matcher::Matcher(bool mirror) {
 int Matcher::match(vector<float> other_descriptors) {
     Mat img_mat = Mat(other_descriptors).t();
     CvMat img_cvmat = img_mat;
-    CvMat* nearests = cvCreateMat( 1, 1, CV_32FC1);
-    int response = int(knn_matcher.find_nearest(&img_cvmat,2, 0, 0, 0, 0));
-    return response;
+    int response = int(knn_matcher.find_nearest(&img_cvmat, 2, 0, 0, 0, 0));
+    return this->stabilizer->update(response);
 }

@@ -1,11 +1,10 @@
+
 #include "stabilizer.h"
 #include <gtest/gtest.h>
 
-
 // Tests the default c'tor.
 TEST(Stabilizer, DefaultConstructor) {
-  Stabilizer s;
+  const Stabilizer s(10);
 
-  EXPECT_STREQ(NULL, s.c_string());
-  EXPECT_EQ(0u, s.Length());
+  EXPECT_EQ(false, s.is_active());
 }

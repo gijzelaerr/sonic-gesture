@@ -6,10 +6,10 @@ project( "sonic-gesture" )
 find_package( OpenCV REQUIRED )  
 find_package( Boost COMPONENTS filesystem system date_time REQUIRED )
 
-find_package(GTest REQUIRED)
+#find_package(GTest REQUIRED)
 
 # OpenCV 2.0 doesn't compile 64 bit on mac
-if(${APPLE} AND OpenCV_VERSION_MAJOR EQUAL 2 AND OpenCV_VERSION_MINOR EQUAL 0)
+IF(${APPLE} )#AND ${OpenCV_VERSION_MAJOR} EQUAL 2 AND ${OpenCV_VERSION_MINOR} EQUAL 0)
     set(CMAKE_OSX_ARCHITECTURES "i386")
 endif()
 
@@ -27,23 +27,25 @@ configure_file (
 
 include_directories(${PROJECT_BINARY_DIR})
 include_directories(${Boost_INCLUDE_DIRS})
-include_directories(${GTEST_INCLUDE_DIRS})
-include_directories(${PROJECT_SOURCE_DIR})
+#include_directories(${GTEST_INCLUDE_DIRS})
+#include_directories(${PROJECT_SOURCE_DIR})
 
 add_executable (run src/run.cpp src/tools.cpp
     src/finder.cpp src/limb.cpp src/tools.h src/finder.h
-    src/limb.h src/common.h src/matcher.cpp src/matcher.h)
+    src/limb.h src/common.h src/matcher.cpp src/matcher.h
+    src/stabilizer.h src/stabilizer.cpp )
 target_link_libraries (run  ${OpenCV_LIBS})
 target_link_libraries(run ${Boost_LIBRARIES})
 
-add_test(AllTestsInRun run_test)
-target_link_libraries(run ${GTEST_BOTH_LIBRARIES})
-add_executable(run_test 
-target_link_libraries(run_test ${GTEST_BOTH_LIBRARIES})
+#add_test(AllTestsInRun run_test)
+#target_link_libraries(run ${GTEST_BOTH_LIBRARIES})
+#add_executable(run_test  test/stabilizer_unittest.cpp)
+#target_link_libraries(run_test ${GTEST_BOTH_LIBRARIES})
 
 add_executable (capture src/capture.cpp src/tools.cpp
     src/finder.cpp src/limb.cpp src/tools.h src/finder.h
-    src/limb.h src/settings.h.in src/common.h src/matcher.cpp src/matcher.h)
+    src/limb.h src/settings.h.in src/common.h src/matcher.cpp src/matcher.h
+    src/stabilizer.h src/stabilizer.cpp )
 target_link_libraries (capture  ${OpenCV_LIBS})
 target_link_libraries(capture ${Boost_LIBRARIES})
 target_link_libraries(capture ${GTEST_BOTH_LIBRARIES})
@@ -82,5 +84,4 @@ SET(CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/data/installer/icon.bmp")
 SET(CPACK_PACKAGE_VERSION_MAJOR "0")
 SET(CPACK_PACKAGE_VERSION_MINOR "0")
 SET(CPACK_PACKAGE_VERSION_PATCH "1")
-
 

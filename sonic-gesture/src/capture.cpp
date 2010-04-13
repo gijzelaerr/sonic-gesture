@@ -13,7 +13,7 @@ class Capture : public Finder {
 public:
     Capture(int device=0);
     Capture(string movie);
-    //~Capture();
+    ~Capture();
     void run();
     
 private:
@@ -37,7 +37,8 @@ Capture::Capture(int device): Finder(device) {
     init();
 };
 
-//Capture::~Capture(): ~Finder() {};
+Capture::~Capture() {
+};
     
 void Capture::init() {
     string expstr[] = SOLFEGE_FILES;

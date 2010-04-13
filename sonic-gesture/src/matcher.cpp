@@ -3,7 +3,7 @@
 #include "stabilizer.h"
 
 
-Matcher::Matcher(bool mirror=false) {
+Matcher::Matcher(bool mirror) {
     // initialize the HOG parameters
     winStride = Size(8, 8);
     padding = Size(0, 0);
@@ -69,6 +69,10 @@ Matcher::Matcher(bool mirror=false) {
             train.cols << " features..." << endl;
     knn_matcher.train(train, labels_mat);
 }
+
+Matcher::~Matcher() {
+    delete stabilizer;
+};
 
 int Matcher::match(vector<float> other_descriptors) {
     CvMat img_cvmat = (Mat)Mat(other_descriptors).t();

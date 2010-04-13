@@ -24,7 +24,12 @@ Finder::Finder(string movie) {
     this->init();
 }
 
-Finder::~Finder() {};
+Finder::~Finder() {
+    delete left_matcher;
+    delete right_matcher;
+    delete histogram;
+    
+};
 
 void Finder::init() {
     if(!this->cap.isOpened()) {
@@ -101,7 +106,7 @@ void Finder::make_backproject() {
 void Finder::make_mask() {
     normalize(backproj, backproj, 0, 255, NORM_MINMAX);
     GaussianBlur( backproj, blurred, Size(31, 31), 0);
-    threshold(blurred, th, 20, 255, THRESH_BINARY);
+    threshold(blurred, th, THRESHOLD, 255, THRESH_BINARY);
     int dia = WORKSIZE/20 + 1;
     Mat kernel = round_kernel(dia);
     morphologyEx(th, mask, MORPH_CLOSE, Mat());

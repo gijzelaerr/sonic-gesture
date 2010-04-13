@@ -36,4 +36,7 @@
 // Limb settings
 #define INFLATE_SIZE 1.5
 
+// threshold for probabilistic image to binary image
+#define THRESHOLD 20
+
 #endif

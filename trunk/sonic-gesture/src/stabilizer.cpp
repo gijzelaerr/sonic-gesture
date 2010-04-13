@@ -20,8 +20,8 @@ int Stabilizer::update(int state) {
     assert(state <= (int)this->states.size());
     int new_val;
 
-    for (unsigned int i = 0; i < this->states.size(); i++) {
-        if (i == (int)state) {
+    for (int i = 0; i < (int)this->states.size(); i++) {
+        if (i == state) {
             new_val = min(this->states.at(i)+1, STATE_MAX);
             this->states.at(i) = new_val;
             //cout << "update " << i << " with " << new_val;

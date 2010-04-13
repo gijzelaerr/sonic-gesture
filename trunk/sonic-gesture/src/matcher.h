@@ -18,8 +18,8 @@ class Matcher {
     Stabilizer* stabilizer;
 
 public:
-    Matcher();
-    Matcher(bool mirror);
+    Matcher(bool mirror=false);
+    ~Matcher();
     int match(vector<float> descriptors);
 };
 

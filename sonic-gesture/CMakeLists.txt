@@ -21,8 +21,8 @@ set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/data")
 
 #pass cmake config to source
 configure_file (
-  "${PROJECT_SOURCE_DIR}/settings.h.in"
-  "${PROJECT_BINARY_DIR}/settings.h"
+  "${PROJECT_SOURCE_DIR}/cmake.h.in"
+  "${PROJECT_BINARY_DIR}/cmake.h"
   )
 
 include_directories(${PROJECT_BINARY_DIR})
@@ -33,7 +33,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 add_executable (run src/run.cpp src/tools.cpp
     src/finder.cpp src/limb.cpp src/tools.h src/finder.h
     src/limb.h src/common.h src/matcher.cpp src/matcher.h
-    src/stabilizer.h src/stabilizer.cpp )
+    src/stabilizer.h src/stabilizer.cpp src/histogram.cpp src/histogram.h)
 target_link_libraries (run  ${OpenCV_LIBS})
 target_link_libraries(run ${Boost_LIBRARIES})
 
@@ -44,8 +44,8 @@ target_link_libraries(run ${Boost_LIBRARIES})
 
 add_executable (capture src/capture.cpp src/tools.cpp
     src/finder.cpp src/limb.cpp src/tools.h src/finder.h
-    src/limb.h src/settings.h.in src/common.h src/matcher.cpp src/matcher.h
-    src/stabilizer.h src/stabilizer.cpp )
+    src/limb.h src/settings.h src/common.h src/matcher.cpp src/matcher.h
+    src/stabilizer.h src/stabilizer.cpp src/histogram.cpp src/histogram.h)
 target_link_libraries (capture  ${OpenCV_LIBS})
 target_link_libraries(capture ${Boost_LIBRARIES})
 target_link_libraries(capture ${GTEST_BOTH_LIBRARIES})

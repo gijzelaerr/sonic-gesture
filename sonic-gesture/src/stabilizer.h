@@ -13,6 +13,7 @@ using namespace std;
 class Stabilizer {
 public:
     Stabilizer(int state_num=1);
+    ~Stabilizer();
     int update(int state);
     int get_state();
     void set_callback();

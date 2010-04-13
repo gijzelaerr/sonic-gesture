@@ -6,16 +6,17 @@
 
 #include "limb.h"
 #include "matcher.h"
+#include "histogram.h"
 
 using namespace cv;
 
 
 class Finder {
-public:
+protected:
     Mat big, hsv, bw, backproj, mask;
 	Mat small_; // small is reserved keyword in visual studio c++
     Mat facepixels, visuals, combi, temp, blurred, morphed, th, limb_zoom;
-    MatND histogram, new_hist, old_hist;
+    //MatND histogram, new_hist, old_hist;
     VideoCapture cap;
     CascadeClassifier haar;
     Size big_size;
@@ -31,9 +32,9 @@ public:
     Matcher* left_matcher;
     Matcher* right_matcher;
     vector<Mat> example_right_hands, example_left_hands;
-    
-    Finder(VideoCapture c);
-    
+    Histogram* histogram;
+
+
     bool grab_frame();
     void find_face();
     void make_histogram();
@@ -44,7 +45,15 @@ public:
     void find_limbs();
     void match_hands();
     void init_hands();
-    void mainloop();
+    bool step();
+    void init();
+    void prepare_frame();
+
+public:
+    Finder(int device=0);
+    Finder(string movie);
+    ~Finder();
+    void run();
 };
 
 

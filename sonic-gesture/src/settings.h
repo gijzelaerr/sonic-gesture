@@ -2,13 +2,10 @@
 #ifndef _SETTINGS_H
 #define	_SETTINGS_H
 
+#include "cmake.h"
 
 // flip image or not
 #define MIRROR false
-
-
-// set by CMAKE
-#define DATA_DIR std::string("@DATA_DIR@")
 
 // where to find everything
 #define SKIN DATA_DIR + "/hand/skin.png"
@@ -25,8 +22,8 @@
 
 // What (webcam) device or movie to use.
 //#define DEVICE 0
-//#define DEVICE DATA_DIR + "/movies/gijs_train_movie.mov"
-#define DEVICE DATA_DIR + "/movies/gijs_train_lefti.avi"
+#define DEVICE DATA_DIR + "/movies/gijs_train_movie.mov"
+//#define DEVICE DATA_DIR + "/movies/gijs_train_lefti.avi"
 //#define DEVICE DATA_DIR + "/movies/heiligenacht.mp4"
 //#define DEVICE DATA_DIR + "/movies/friend.mov"
 

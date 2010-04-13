@@ -11,13 +11,17 @@ Stabilizer::Stabilizer(int state_num) {
     }
 };
 
+Stabilizer::~Stabilizer() {
+};
+
+
 // update stabilizer with new measurement. Decrease all non-measured states
 int Stabilizer::update(int state) {
-    assert(state <= this->states.size());
+    assert(state <= (int)this->states.size());
     int new_val;
 
     for (unsigned int i = 0; i < this->states.size(); i++) {
-        if (i == state) {
+        if (i == (int)state) {
             new_val = min(this->states.at(i)+1, STATE_MAX);
             this->states.at(i) = new_val;
             //cout << "update " << i << " with " << new_val;

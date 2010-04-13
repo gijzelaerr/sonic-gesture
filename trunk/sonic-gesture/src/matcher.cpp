@@ -71,8 +71,7 @@ Matcher::Matcher(bool mirror=false) {
 }
 
 int Matcher::match(vector<float> other_descriptors) {
-    Mat img_mat = Mat(other_descriptors).t();
-    CvMat img_cvmat = img_mat;
+    CvMat img_cvmat = (Mat)Mat(other_descriptors).t();
     int response = int(knn_matcher.find_nearest(&img_cvmat, 2, 0, 0, 0, 0));
     return this->stabilizer->update(response);
 }

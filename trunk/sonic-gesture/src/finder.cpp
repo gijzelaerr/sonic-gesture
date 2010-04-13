@@ -4,36 +4,41 @@
 #include <exception>
 
 #include "finder.h"
+#include "histogram.h"
+
 
 using namespace cv;
 using namespace std;
 
 
-// histogram stuff
-int hbins = 30, sbins = 32;
-int histSize[] = {hbins, sbins};
-const float hranges[] = { 0, 180 };
-const float sranges[] = { 0, 256 };
-const float* ranges[] = { hranges, sranges };
-int channels[] = {0, 1};
+Finder::Finder(int device) {
+    cout << "starting with device " << DEVICE << "." << endl;
+    this->cap = VideoCapture(device);
+    this->init();
+}
 
+Finder::Finder(string movie) {
+    cout << "starting with movie " << movie << "." << endl;
+    // TODO: add check if file exists
+    this->cap = VideoCapture(movie);
+    this->init();
+}
 
-Finder::Finder(VideoCapture cap) {
-    this->cap = cap;
-    
+Finder::~Finder() {};
+
+void Finder::init() {
     if(!this->cap.isOpened()) {
         cout << "couldn't open capture device!\n";
         exit(1);
     }
 
-    //if(MAKE_MOVIE)
-            //VideoWriter("output.avi", fourcc, 25, );
-
-    this->cap >> this->big;
+    // grab first frame
+    this->grab_frame();
     
+    // resize image to worksize, and store size and scale info
     this->big_size = this->big.size();
     this->scale = float(WORKSIZE)/this->big.rows;
-    resize(this->big, this->small_, Size(), this->scale, this->scale);
+    this->prepare_frame();
     this->small_size = this->small_.size();
 
     // load haar stuff
@@ -41,47 +46,55 @@ Finder::Finder(VideoCapture cap) {
     assert(fs::exists(haar_path));
     this->haar = CascadeClassifier(FACEHAAR);
     
-    // make histogram stuff
-    this->histogram.create(2, histSize, CV_32F);
-    this->histogram = Scalar(0);
+    histogram = new Histogram();
 
-
+    // make matcher stuff
+    example_left_hands = load_example_hands(Size(200, 200), false);
+    example_right_hands = load_example_hands(Size(100, 100), true);
+    left_matcher = new Matcher(false);
+    right_matcher = new Matcher(true);
+    
+    // do one step to initialize everything
+    step();
+    
+    // what windows do we want to see
+    presentation.push_back(small_);
+    //presentation.push_back(backproj);
+    //presentation.push_back(blurred);
+    //presentation.push_back(th);
+    //presentation.push_back(mask);
+    presentation.push_back(visuals);
+    presentation.push_back(limb_zoom);
 }
 
 
-// return false if can't grab
 bool Finder::grab_frame() {
-    
-    cap >> big;
+    this->cap >> this->big;
     if (!big.data) {
         cout << "end of movie" << endl;
         return false;
     }
-    if(MIRROR) flip(big, big, 1);
-    resize(big, small_, Size(), scale, scale);
-    cvtColor(small_, hsv, CV_BGR2HSV);
-    cvtColor(small_, bw, CV_BGR2GRAY);
     return true;
 }
 
+// Preprocessing step, resize and convert color
+void Finder::prepare_frame() {
+    if(MIRROR) flip(this->big, this->big, 1);
+    resize(this->big, this->small_, Size(), this->scale, this->scale);
+    cvtColor(this->small_, this->hsv, CV_BGR2HSV);
+    cvtColor(this->small_, this->bw, CV_BGR2GRAY);
+}
 
 void Finder::make_histogram() {
-    if (!(face == Rect())) {
+    if (!(this->face == Rect())) {
         facepixels = hsv(face);
-        old_hist = new_hist;
-        calcHist( &facepixels,  1, channels, Mat(), new_hist, 2,  histSize, ranges,  true, false );
-        if (new_hist.type() == old_hist.type()) {
-            //double diff = compareHist(new_hist, old_hist, CV_COMP_BHATTACHARYYA);
-            add(new_hist, old_hist, histogram);
-        } 
-        histogram = new_hist;
-        normalize(histogram, histogram, 255);
+        this->histogram->update(facepixels);
     }
 }
 
 
 void Finder::make_backproject() {
-    calcBackProject( &hsv, 1, channels, histogram, backproj, ranges );
+    backproj = this->histogram->backproject(hsv);
 }
 
 
@@ -115,8 +128,6 @@ void Finder::find_face() {
     }
 }
 
-
-
 void Finder::find_limbs() {
     Point facepoint = Point(face.x+face.width/2, face.y+face.height/2);
     vector<Limb> limbs;
@@ -148,7 +159,7 @@ void Finder::find_limbs() {
                 right_hand = limbs.at(i);
             }
         }
-    }else {
+    } else {
         if (limbs.size() > 2) {
             vector<Limb>  three_limbs;
             for(int i=0; i<3; i++) {
@@ -199,16 +210,6 @@ void Finder::visualize() {
         drawContours( visuals, cs, -1, Scalar( 255, 0, 0 ));
     }
     
-    presentation.clear();
-    presentation.push_back(small_);
-    //presentation.push_back(backproj);
-    //presentation.push_back(blurred);
-    //presentation.push_back(th);
-    //presentation.push_back(mask);
-    presentation.push_back(visuals);
-    presentation.push_back(limb_zoom);
-
-
     int w = MIN(XWINDOWS, presentation.size())*small_size.width;
     int h = int(ceil(float(presentation.size())/XWINDOWS)*small_size.height);
     combi.create(Size(w, h), CV_8UC3);
@@ -238,7 +239,6 @@ void Finder::match_hands() {
         left_hand.bw.copyTo(roi);
 
         response = left_matcher->match(left_hand.hog_descriptors);
-        cout << response << endl;
         if (response >= 0) {
             found_hand = example_left_hands.at(response);
             roi = Mat(limb_zoom, Rect(100, 60, found_hand.cols, found_hand.rows));
@@ -261,34 +261,33 @@ void Finder::match_hands() {
 
 }
 
-
-void Finder::mainloop() {
-    // make matcher stuff
-    example_left_hands = load_example_hands(Size(200, 200), false);
-    example_right_hands = load_example_hands(Size(100, 100), true);
-    left_matcher = new Matcher(false);
-    right_matcher = new Matcher(true);
+bool Finder::step() {
+    double t = (double)getTickCount();
     
-    for(;;) {
-        double t = (double)getTickCount();
-        
-        if(!grab_frame())
-            break;
-        find_face();
-        make_histogram();
-        make_backproject();
-        make_mask();
-        find_contours();
-        find_limbs();
-        match_hands();
-        visualize();
-        imshow("Sonic Gesture", combi);
-        
-        t = ((double)getTickCount() - t)*1000/getTickFrequency();
-        int wait = MIN(40, MAX(40-(int)t, 4)); // Wait max of 40 ms, min of 4;
-        if(waitKey(wait) >= 0)
-            break;
-    }
+    if(!grab_frame())
+        return false;
+    prepare_frame();
+    find_face();
+    make_histogram();
+    make_backproject();
+    make_mask();
+    find_contours();
+    find_limbs();
+    match_hands();
+    visualize();
+    
+    t = ((double)getTickCount() - t)*1000/getTickFrequency();
+    int wait = MIN(40, MAX(40-(int)t, 4)); // Wait max of 40 ms, min of 4;
+ 
+    if(waitKey(wait) >= 0)
+        return false;
+    return true;
+}    
+
+void Finder::run() {
+    while (this->step()){
+       imshow("Sonic Gesture", combi);
+    };
 }
 
 

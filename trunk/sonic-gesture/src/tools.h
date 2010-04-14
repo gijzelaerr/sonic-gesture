@@ -16,6 +16,6 @@ vector<Point> scale_contour(vector<Point> contour, float scale);
 vector<Point> dilate_contour(vector<Point> contour, Size window_size);
 vector<Point> inflate_contour(vector<Point> contour, float scale);
 bool is_number(const string& s);
-vector<Mat> load_example_hands(Size target_size, bool mirror);
+vector<Mat> load_example_hands(const Size& target_size, bool mirror);
 #
 #endif

@@ -18,7 +18,7 @@ public:
     bool data;
     
     Limb();
-    Limb(vector<Point> c, float scale, Mat frame);
+    Limb(vector<Point> c, float scale, const Mat& frame);
     void compute_hog();
     Mat get_limb_image();
 private:

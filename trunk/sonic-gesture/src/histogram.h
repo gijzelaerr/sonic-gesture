@@ -16,8 +16,8 @@ private:
 public:
     Histogram();
     ~Histogram();
-    void update(Mat image);
-    Mat backproject(Mat image);
+    void update(const Mat& image);
+    Mat backproject(const Mat& image);
     
 };
 

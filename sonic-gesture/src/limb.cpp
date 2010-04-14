@@ -13,7 +13,7 @@ Limb::Limb() {
 // scale is ratio between big and small
 // We keep both
 // frame is original image
-Limb::Limb(vector<Point> contour_small, float scale, Mat frame) {
+Limb::Limb(vector<Point> contour_small, float scale, const Mat& frame) {
     Mat binary;
     Limb::contour_small = contour_small;
     contour_big = scale_contour(contour_small, float(1.0/scale));

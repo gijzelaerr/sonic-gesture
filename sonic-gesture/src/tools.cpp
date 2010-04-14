@@ -45,7 +45,7 @@ Mat round_kernel(int dia) {
     return kernel;
 }
 
-vector<vector<Point> > scale_contours(vector<vector<Point> > contours, float scale) {
+vector<vector<Point> > scale_contours(const vector<vector<Point> >& contours, float scale) {
     vector<vector<Point> > scaled_contours;
     vector<Point> contour;
 
@@ -72,7 +72,7 @@ vector<Point> scale_contour(vector<Point> contour,float scale) {
 
 // increase the size of a contour. Window_size is required to know max size
 // Doing many findContours is quite slow. hm.
-vector<Point> dilate_contour(vector<Point> contour, Size window_size) {
+vector<Point> dilate_contour(const vector<Point>& contour, Size window_size) {
     int dia = WORKSIZE/10 + 1;
     vector<vector<Point> > contours;
     vector<vector<Point> > contours_new;
@@ -88,7 +88,7 @@ vector<Point> dilate_contour(vector<Point> contour, Size window_size) {
     return contours_new.at(0);
 }
 
-vector<Point> inflate_contour(vector<Point> contour, float scale) {
+vector<Point> inflate_contour( vector<Point> contour, float scale) {
     Point2f center;
     float radius;
     vector<Point> new_contour;
@@ -123,7 +123,7 @@ bool is_number(const string& str) {
     return true;
 }
 
-vector<Mat> load_example_hands(Size target_size, bool mirror) {
+vector<Mat> load_example_hands(const Size& target_size, const bool mirror) {
     // the file names of example and train
     string expstr[] = SOLFEGE_FILES;
     vector<string> examples(expstr, expstr + sizeof (expstr)/sizeof (*expstr));

@@ -45,7 +45,7 @@ Mat round_kernel(int dia) {
     return kernel;
 }
 
-vector<vector<Point> > scale_contours(const vector<vector<Point> >& contours, float scale) {
+vector<vector<Point> > scale_contours(const vector<vector<Point> > contours, float scale) {
     vector<vector<Point> > scaled_contours;
     vector<Point> contour;
 
@@ -143,4 +143,22 @@ vector<Mat> load_example_hands(const Size& target_size, const bool mirror) {
         examples_mat.push_back(temp);
     }
     return examples_mat;
+}
+
+Rect rect_in_mat(Rect rectange, Mat matrix) {
+    // make sure the cutout_border is inside the borders of image
+    int x = max(0, rectange.x);
+    int y = max(0, rectange.y);
+    int width, height;
+    if (rectange.width+rectange.x > matrix.cols) {
+        width = matrix.cols - x;
+    } else {
+        width = rectange.width;
+    }
+    if (rectange.height + rectange.y > matrix.rows) {
+        height = matrix.rows - y;
+    } else {
+        height = rectange.height;
+    }
+    return Rect(x, y, width, height);
 }

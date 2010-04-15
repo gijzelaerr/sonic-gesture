@@ -2,6 +2,8 @@
 #include <iostream>
 #include "videopipe.h"
 #include "settings.h"
+#include "tools.h"
+#include "limb.h"
 
 VideoPipe::VideoPipe() {
     source = Source();
@@ -34,7 +36,9 @@ bool VideoPipe::step() {
     double t = (double)getTickCount();
 
     grab();
-    vector<vector<Point> > skins = skinFinder.compute(small_);
+    vector<vector<Point> > skins_small = skinFinder.compute(small_);
+    vector<vector<Point> > skins = scale_contours(skins_small, float(1)/scale);
+    Limbs limbs = make_limbs(skins, skinFinder.face_center, big);
 
     // TODO: this shouldn't be done for every step, one time is enough
     combiner = Combiner(small_size, XWINDOWS);

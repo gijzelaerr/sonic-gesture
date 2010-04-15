@@ -17,5 +17,7 @@ vector<Point> dilate_contour(vector<Point> contour, Size window_size);
 vector<Point> inflate_contour(vector<Point> contour, float scale);
 bool is_number(const string& s);
 vector<Mat> load_example_hands(const Size& target_size, bool mirror);
-#
+Rect rect_in_mat(Rect rectangle, Mat matrix);
+
+
 #endif

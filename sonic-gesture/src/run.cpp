@@ -1,12 +1,17 @@
 
-#include <stdlib.h>
 #include "cv.h"
+
 #include "settings.h"
-#include "finder.h"
+
+#include "videopipe.h"
+#include "source.h"
 
 int main(int, char**) {
-    Finder finder = Finder(DEVICE);
+    Source source = Source(DEVICE);
+    VideoPipe videoPipe = VideoPipe(source);
+    videoPipe.run();
+    //Finder finder = Finder(DEVICE);
     //Finder finder = Finder();
-    finder.run();
+    //finder.run();
     return EXIT_SUCCESS;
 }

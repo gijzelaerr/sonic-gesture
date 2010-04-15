@@ -1,17 +1,18 @@
-/*
- *  source.cpp
- *  sonic-gesture
- *
- *  Created by Gijs Molenaar on 4/14/10.
- *  Copyright 2010 __MyCompanyName__. All rights reserved.
- *
- */
 
+#include <iostream>
+#include <highgui.h>
 #include "source.h"
+#include "settings.h"
 
+using namespace std;
+using std::cout;
+
+Source::Source() {
+ 
+}
 
 Source::Source(int device) {
-    cout << "opening device " << DEVICE << "." << endl;
+    cout << "opening device " << device << "." << endl;
     cap = VideoCapture(device);
     init();
 }
@@ -26,14 +27,18 @@ Source::Source(string movie) {
 Source::~Source() {
 };
 
-void Finder::init() {
+void Source::init() {
     if(!cap.isOpened()) {
         cout << "couldn't open capture device!\n";
         exit(1);
     }
+
+    int width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    int height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+    size = Size(width, height);
 };
 
-&Mat Finder::grab_frame() {
+Mat Source::grab() {
     cap >> frame;
     if (!frame.data) {
         cout << "end of movie" << endl;

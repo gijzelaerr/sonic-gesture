@@ -217,6 +217,7 @@ void Finder::visualize() {
     
     int w = MIN(XWINDOWS, presentation.size())*small_size.width;
     int h = int(ceil(float(presentation.size())/XWINDOWS)*small_size.height);
+
     combi.create(Size(w, h), CV_8UC3);
     for(unsigned int i=0; i < presentation.size(); i++) {
         Mat current = presentation.at(i);

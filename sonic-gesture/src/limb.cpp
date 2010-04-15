@@ -5,53 +5,30 @@
 
 
 Limb::Limb() {
-    center_big = center_small = Point();
-    radius_big = radius_small = 0;
+    center = Point();
+    radius = 0;
     data = false;
 };
 
-// scale is ratio between big and small
-// We keep both
-// frame is original image
-Limb::Limb(vector<Point> contour_small, float scale, const Mat& frame) {
+Limb::Limb(vector<Point> contour, const Mat& image) {
     Mat binary;
-    Limb::contour_small = contour_small;
-    contour_big = scale_contour(contour_small, float(1.0/scale));
-    contour_big = inflate_contour(contour_big, INFLATE_SIZE);
-    
-    Limb::frame = frame;
+    this->contour = contour;
+    //this->contour = inflate_contour(this->contour, INFLATE_SIZE);
     data = true;
-    minEnclosingCircle(Mat(contour_small), center_small, radius_small);
-    minEnclosingCircle(Mat(contour_big), center_big, radius_big);
+    minEnclosingCircle(Mat(contour), center, radius);
     
-    Mat mask = Mat(frame.size(), CV_8U, Scalar(0));
-    binary.zeros(frame.size(), CV_8U);
+    Mat mask = Mat(image.size(), CV_8U, Scalar(0));
+    binary = Mat(image.size(), CV_8U, Scalar(0));
    
-    vector<vector<Point> > contours_big;
-    contours_big.push_back(contour_big);
-    drawContours( mask, contours_big, -1, Scalar(255), CV_FILLED);
+    vector<vector<Point> > contours;
+    contours.push_back(contour);
+    drawContours( mask, contours, -1, Scalar(255), CV_FILLED);
     
+    image.copyTo(binary, mask);
 
-    frame.copyTo(binary, mask);
+    Rect cutout_border = boundingRect(Mat(contour));
 
-    Rect cutout_border = boundingRect(Mat(contour_big));
-    
-    // make sure the cutout_border is inside the borders of image
-    int x = max(0, cutout_border.x);
-    int y = max(0, cutout_border.y);
-    int width, height;
-    if (cutout_border.width+cutout_border.x > binary.cols) {
-        width = binary.cols - x;
-    } else {
-        width = cutout_border.width;
-    }
-    if (cutout_border.height + cutout_border.y > binary.rows) {
-        height = binary.rows - y;
-    } else {
-        height = cutout_border.height;
-    }
-    cutout_border = Rect(x, y, width, height);
-    
+    //cutout_border = rect_in_mat(cutout_border, binary);
     cutout = binary(cutout_border); 
   
     Mat sized;
@@ -81,10 +58,63 @@ Mat Limb::get_limb_image() {
 
 
 bool compare_limbs(const Limb& a, const Limb& b) {
-    return a.radius_small > b.radius_small;
+    return a.radius > b.radius;
 }
 
 
 bool compare_limbs_xpos(const Limb& a, const Limb& b) {
-    return a.center_small.x < b.center_small.x;
+    return a.center.x < b.center.x;
 }
+
+Limbs::Limbs(Limb head, Limb left, Limb right) {
+    this->head = head;
+    this->left = left;
+    this->right = right;
+};
+
+Limbs make_limbs(vector<vector<Point> > contours, Point face_center, Mat image) {
+    vector<Limb> limbs;
+    Limb head, left_hand, right_hand;
+
+    // loop over contours and make limbs
+    for (unsigned int i = 0; i < contours.size(); i++) {
+        vector<Point> contour = contours.at(i);
+        Limb limb(contour, image);
+        limbs.push_back(limb);
+        if (pointPolygonTest(Mat(contour), face_center, false) > 0) {
+            head = limb;
+        }
+    }
+
+    // sort the limbs
+    sort(limbs.begin(), limbs.end(), compare_limbs);
+    right_hand = Limb();
+    left_hand = Limb();
+
+    // if we know the face
+    if (limbs.size() > 2) {
+        //loop over 3 biggest limbs
+        for(unsigned int i = 0; i < MIN(limbs.size(), 3); i++) {
+            if (limbs.at(i).contour == head.contour) {
+                continue;
+            } else if (limbs.at(i).center.x < face_center.x) {
+                left_hand = limbs.at(i);
+            } else if (limbs.at(i).center.x > face_center.x) {
+                right_hand = limbs.at(i);
+            }
+        }
+
+    } else if (limbs.size() == 2) {
+        head = limbs.at(0);
+        Limb hand = limbs.at(1);
+        if (hand.center.x < head.center.x) {
+            left_hand = hand;
+        } else {
+            right_hand = hand;
+        }
+
+    } else if (limbs.size() == 1) {
+        head = limbs.at(0);
+    }
+    return Limbs(head, left_hand, right_hand);
+};

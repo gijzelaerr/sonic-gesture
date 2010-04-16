@@ -30,10 +30,9 @@ include_directories(${Boost_INCLUDE_DIRS})
 #include_directories(${GTEST_INCLUDE_DIRS})
 #include_directories(${PROJECT_SOURCE_DIR})
 
-add_executable (run src/run.cpp src/tools.cpp
-    src/finder.cpp src/limb.cpp src/tools.h src/finder.h
-    src/limb.h src/common.h src/matcher.cpp src/matcher.h
-    src/stabilizer.h src/stabilizer.cpp src/histogram.cpp src/histogram.h)
+#add_executable (run run finder limb tools histogram matcher stabilizer)
+add_executable (run src/run.cpp src/videopipe.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/tools.cpp src/limb.cpp )
+
 target_link_libraries (run  ${OpenCV_LIBS})
 target_link_libraries(run ${Boost_LIBRARIES})
 
@@ -42,18 +41,18 @@ target_link_libraries(run ${Boost_LIBRARIES})
 #add_executable(run_test  test/stabilizer_unittest.cpp)
 #target_link_libraries(run_test ${GTEST_BOTH_LIBRARIES})
 
-add_executable (capture src/capture.cpp src/tools.cpp
-    src/finder.cpp src/limb.cpp src/tools.h src/finder.h
-    src/limb.h src/settings.h src/common.h src/matcher.cpp src/matcher.h
-    src/stabilizer.h src/stabilizer.cpp src/histogram.cpp src/histogram.h)
-target_link_libraries (capture  ${OpenCV_LIBS})
-target_link_libraries(capture ${Boost_LIBRARIES})
-target_link_libraries(capture ${GTEST_BOTH_LIBRARIES})
+#add_executable (capture capture 
+    #src/finder.cpp src/limb.cpp src/tools.h src/finder.h
+    #src/limb.h src/settings.h src/common.h src/matcher.cpp src/matcher.h
+    #src/stabilizer.h src/stabilizer.cpp src/histogram.cpp src/histogram.h)
+#target_link_libraries (capture  ${OpenCV_LIBS})
+#target_link_libraries(capture ${Boost_LIBRARIES})
+#target_link_libraries(capture ${GTEST_BOTH_LIBRARIES})
 
 
 # what to install where
 install (TARGETS run DESTINATION bin)
-install (TARGETS capture DESTINATION bin)
+#install (TARGETS capture DESTINATION bin)
 install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/examples" DESTINATION data PATTERN ".svn" EXCLUDE)
 install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/haar" DESTINATION data PATTERN ".svn" EXCLUDE)
 install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/hand" DESTINATION data PATTERN ".svn" EXCLUDE)
@@ -79,7 +78,7 @@ SET(CPACK_PACKAGE_VENDOR "Gijs Molenaar")
 SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.txt")
 SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYRIGHT.txt")
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Translation gestures into sound")
-SET(CPACK_PACKAGE_EXECUTABLES "run;Run capture;Capture")
+#SET(CPACK_PACKAGE_EXECUTABLES "run;Run capture;Capture")
 SET(CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/data/installer/icon.bmp")
 SET(CPACK_PACKAGE_VERSION_MAJOR "0")
 SET(CPACK_PACKAGE_VERSION_MINOR "0")

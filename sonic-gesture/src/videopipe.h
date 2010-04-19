@@ -6,6 +6,7 @@
 #include "source.h"
 #include "skinfinder.h"
 #include "combiner.h"
+#include "bodypart.h"
 
 using namespace cv;
 
@@ -16,6 +17,7 @@ public:
     void run();
     
 private:
+    BodyParts bodyparts;
     Source source;
     Mat big, small_;
     Size big_size, small_size;

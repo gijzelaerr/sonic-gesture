@@ -3,7 +3,8 @@
 #include "videopipe.h"
 #include "settings.h"
 #include "tools.h"
-#include "limb.h"
+#include "bodypart.h"
+
 
 VideoPipe::VideoPipe() {
     source = Source();
@@ -38,7 +39,7 @@ bool VideoPipe::step() {
     grab();
     vector<vector<Point> > skins_small = skinFinder.compute(small_);
     vector<vector<Point> > skins = scale_contours(skins_small, float(1)/scale);
-    Limbs limbs = make_limbs(skins, skinFinder.face_center, big);
+    bodyparts.update(skins, skinFinder.face_center, big);
 
     // TODO: this shouldn't be done for every step, one time is enough
     combiner = Combiner(small_size, XWINDOWS);
@@ -49,6 +50,7 @@ bool VideoPipe::step() {
     combiner.add_image(skinFinder.blur);
     combiner.add_image(skinFinder.thresh);
     //combiner.add_image(skinFinder.mask);
+    
     visuals = this->combiner.render();
     assert(visuals.data);
     imshow("Sonic Gesture", visuals);

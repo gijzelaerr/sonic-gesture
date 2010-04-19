@@ -12,8 +12,8 @@ using namespace cv;
 class Source {
 public:
     Source();
-    Source(int device);
-    Source(string movie);
+    Source(const int& device);
+    Source(const string& movie);
     ~Source();
     Mat grab();
     Size size;

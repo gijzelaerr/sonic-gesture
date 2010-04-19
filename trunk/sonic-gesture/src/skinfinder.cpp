@@ -20,7 +20,7 @@ SkinFinder::SkinFinder() {
     kernel = round_kernel(dia);
 }
 
-vector<vector<Point> > SkinFinder::compute(Mat frame) {
+vector<vector<Point> > SkinFinder::compute(const Mat& frame) {
     this->frame = frame;
     step();
     return contours;

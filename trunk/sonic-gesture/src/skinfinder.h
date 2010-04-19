@@ -11,7 +11,7 @@ using namespace std;
 class SkinFinder {
 public:
     SkinFinder();
-    vector<vector<Point> > compute(Mat frame);
+    vector<vector<Point> > compute(const Mat& frame);
     vector<vector<Point> > contours;
 
     // required to know which con

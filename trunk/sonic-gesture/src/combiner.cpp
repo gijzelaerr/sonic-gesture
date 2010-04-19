@@ -5,12 +5,12 @@
 
 Combiner::Combiner() {};
 
-Combiner::Combiner(Size frame_size, int num_of_win_in_x) {
+Combiner::Combiner(const Size& frame_size, const int& num_of_win_in_x) {
     this->frame_size = frame_size;
     this->num_of_win_in_x = num_of_win_in_x;
     }
 
-void Combiner::add_image(Mat & image) {
+void Combiner::add_image(const Mat& image) {
     this->images.push_back(image);
 }
 
@@ -18,7 +18,7 @@ Mat Combiner::render() {
     int xoffset, yoffset;
     Mat current;
 
-    int width = MIN(num_of_win_in_x, images.size())*frame_size.width;
+    int width = MIN(num_of_win_in_x, (int)images.size())*frame_size.width;
     int height = int(ceil(float(images.size())/num_of_win_in_x)*frame_size.height);
 
     Size size = Size(width, height);

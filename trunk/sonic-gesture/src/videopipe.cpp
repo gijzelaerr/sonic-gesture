@@ -11,7 +11,7 @@ VideoPipe::VideoPipe() {
     init();
 }
 
-VideoPipe::VideoPipe(Source source) {
+VideoPipe::VideoPipe(const Source& source) {
     this->source = source;
     init();
 }
@@ -33,7 +33,6 @@ void VideoPipe::grab() {
 }
 
 bool VideoPipe::step() {
-    Mat visuals;
     double t = (double)getTickCount();
 
     grab();
@@ -51,10 +50,13 @@ bool VideoPipe::step() {
     combiner.add_image(skinFinder.blur);
     //combiner.add_image(skinFinder.thresh);
     combiner.add_image(visuals);
-    //combiner.add_image(skinFinder.mask);
+    //combiner.add_image(skinFinder.mask); 
     
     visuals = this->combiner.render();
     assert(visuals.data);
+ 
+   
+    
     imshow("Sonic Gesture", visuals);
 
     t = ((double)getTickCount() - t)*1000/getTickFrequency();

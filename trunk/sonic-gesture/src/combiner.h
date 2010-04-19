@@ -9,9 +9,9 @@ using namespace cv;
 class Combiner {
 public:
     Combiner();
-    Combiner(Size frame_size, int num_of_win_in_x);
+    Combiner(const Size& frame_size, const int& num_of_win_in_x);
     Mat render();
-    void add_image(Mat & image);
+    void add_image(const Mat& image);
     vector<Mat> images;
 private:
     Mat combination, temp;

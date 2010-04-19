@@ -13,13 +13,13 @@ using namespace cv;
 class VideoPipe {
 public:
     VideoPipe();
-    VideoPipe(Source source);
+    VideoPipe(const Source& source);
     void run();
     
 private:
     BodyParts bodyparts;
     Source source;
-    Mat big, small_;
+    Mat big, small_, visuals;
     Size big_size, small_size;
     float scale;
     SkinFinder skinFinder;

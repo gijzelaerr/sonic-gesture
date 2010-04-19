@@ -40,6 +40,7 @@ bool VideoPipe::step() {
     vector<vector<Point> > skins_small = skinFinder.compute(small_);
     vector<vector<Point> > skins = scale_contours(skins_small, float(1)/scale);
     bodyparts.update(skins, skinFinder.face_center, big);
+    visuals = bodyparts.draw_in_image();
 
     // TODO: this shouldn't be done for every step, one time is enough
     combiner = Combiner(small_size, XWINDOWS);
@@ -48,7 +49,8 @@ bool VideoPipe::step() {
     //combiner.add_image(skinFinder.bw);
     //combiner.add_image(skinFinder.backproj);
     combiner.add_image(skinFinder.blur);
-    combiner.add_image(skinFinder.thresh);
+    //combiner.add_image(skinFinder.thresh);
+    combiner.add_image(visuals);
     //combiner.add_image(skinFinder.mask);
     
     visuals = this->combiner.render();

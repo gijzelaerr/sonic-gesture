@@ -9,7 +9,7 @@ Blob::Blob(const vector<Point>& contour) {
     this->contour = contour;
 }
 
-Blob::Blob(const vector<Point>& contour, int inflate_size) {
+Blob::Blob(const vector<Point>& contour, double inflate_size) {
     this->contour = inflate_contour(this->contour, inflate_size);
 };
 

@@ -9,9 +9,9 @@ find_package( Boost COMPONENTS filesystem system date_time REQUIRED )
 #find_package(GTest REQUIRED)
 
 # OpenCV 2.0 doesn't compile 64 bit on mac
-IF(${APPLE} )#AND ${OpenCV_VERSION_MAJOR} EQUAL 2 AND ${OpenCV_VERSION_MINOR} EQUAL 0)
-    set(CMAKE_OSX_ARCHITECTURES "i386")
-endif()
+#IF(${APPLE} )#AND ${OpenCV_VERSION_MAJOR} EQUAL 2 AND ${OpenCV_VERSION_MINOR} EQUAL 0)
+#    set(CMAKE_OSX_ARCHITECTURES "i386")
+#endif()
 
 # where can we find data
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
@@ -31,7 +31,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 #include_directories(${PROJECT_SOURCE_DIR})
 
 #add_executable (run run finder limb tools histogram matcher stabilizer)
-add_executable (run src/run.cpp src/videopipe.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/tools.cpp src/limb.cpp )
+add_executable (run src/run.cpp src/videopipe.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/tools.cpp src/limb.cpp src/settings.h src/videopipe.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/tools.h src/limb.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h )
 
 target_link_libraries (run  ${OpenCV_LIBS})
 target_link_libraries(run ${Boost_LIBRARIES})

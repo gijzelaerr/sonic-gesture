@@ -17,10 +17,9 @@ public:
     void update(Blob blob, const Mat& image);
     void update(const Mat& image);
     const Mat get_hog_image();
-    
+    Blob blob;    
     
 private:
-    Blob blob;
     Mat image, hog_image, mask, binary, sized, cutout;
     int inflate_size;
     vector<float> hog_features;
@@ -41,8 +40,12 @@ public:
     BodyParts();
     ~BodyParts();
     void update(const vector<vector<Point> >& contours, Point face_center, const Mat& image);
+    Mat draw_in_image();
 private:
-    BodyPart head, left_hand, right_hand;
+    BodyPart head;
+    BodyPart left_hand;
+    BodyPart right_hand;
+    Mat image;
 };
 
 #endif

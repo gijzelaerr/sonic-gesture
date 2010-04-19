@@ -6,10 +6,13 @@
 Blob::Blob() {};
 
 Blob::Blob(const vector<Point>& contour) {
+    assert(contour.size() > 0);
     this->contour = contour;
 }
 
 Blob::Blob(const vector<Point>& contour, double inflate_size) {
+    assert(contour.size() > 0);
+    this->contour = contour;
     this->contour = inflate_contour(this->contour, inflate_size);
 };
 

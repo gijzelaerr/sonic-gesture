@@ -11,13 +11,13 @@ Source::Source() {
  
 }
 
-Source::Source(int device) {
+Source::Source(const int& device) {
     cout << "opening device " << device << "." << endl;
     cap = VideoCapture(device);
     init();
 }
 
-Source::Source(string movie) {
+Source::Source(const string& movie) {
     cout << "opening movie " << movie << "." << endl;
     // TODO: add check if file exists
     cap = VideoCapture(movie);

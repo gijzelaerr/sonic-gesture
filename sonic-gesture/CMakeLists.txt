@@ -32,9 +32,13 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 #add_executable (run run finder limb tools histogram matcher stabilizer)
 add_executable (run src/run.cpp src/videopipe.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/tools.cpp src/limb.cpp src/settings.h src/videopipe.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/tools.h src/limb.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h )
-
 target_link_libraries (run  ${OpenCV_LIBS})
 target_link_libraries(run ${Boost_LIBRARIES})
+
+add_executable (test src/test.cpp src/videopipe.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/tools.cpp src/limb.cpp src/settings.h src/videopipe.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/tools.h src/limb.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h )
+target_link_libraries (test  ${OpenCV_LIBS})
+target_link_libraries(test ${Boost_LIBRARIES})
+
 
 #add_test(AllTestsInRun run_test)
 #target_link_libraries(run ${GTEST_BOTH_LIBRARIES})

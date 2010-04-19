@@ -88,9 +88,8 @@ vector<Point> dilate_contour(const vector<Point>& contour, Size window_size) {
     return contours_new.at(0);
 }
 
-vector<Point> inflate_contour( vector<Point> contour, float scale) {
-    if (contour.size() == 0)
-        return contour;
+vector<Point> inflate_contour(vector<Point> contour, float scale) {
+    assert(contour.size() >0);
     
     Point2f center;
     float radius;

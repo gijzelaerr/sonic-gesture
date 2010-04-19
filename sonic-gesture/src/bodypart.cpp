@@ -24,8 +24,8 @@ void BodyPart::update(Blob blob, const Mat& image) {
 
 void BodyPart::update(const Mat& image) {
     this->image = image;
-    //make_cutout();
-    //compute_hog();
+    make_cutout();
+    compute_hog();
 };
 
 
@@ -64,7 +64,7 @@ BodyParts::~BodyParts() {
 };
 
 
-void BodyParts::update(const vector<vector<Point> >& contours, Point face_center, const Mat& image) {
+void BodyParts::update(const vector<vector<Point> > contours, Point face_center, const Mat& image) {
     vector<Blob> blobs, tmp_blobs;
     this->image = image;
     Blob blob;
@@ -157,10 +157,19 @@ void BodyParts::update(const vector<vector<Point> >& contours, Point face_center
 };
 
 Mat BodyParts::draw_in_image() {
-    Mat visuals;
+    Mat visuals, mask;
+    vector<vector<Point> > contours;
+    
+    contours.push_back(head.blob.contour);
+    contours.push_back(left_hand.blob.contour);
+    contours.push_back(right_hand.blob.contour);
+
+    mask = Mat(image.size(), CV_8U, Scalar(0));
+    drawContours( mask, contours, -1, Scalar(255), CV_FILLED);
+    
     this->image.copyTo(visuals);
     convertScaleAbs(visuals, visuals, 0.2);
-
+    this->image.copyTo(visuals, mask);
     
     if (head.blob.contour.size() > 0) {
         vector<vector<Point> > cs;

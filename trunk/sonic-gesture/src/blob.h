@@ -10,7 +10,7 @@ class Blob {
 public:
     Blob();
     Blob(const vector<Point>& contour);
-    Blob(const vector<Point>& contour, int inflate_size);
+    Blob(const vector<Point>& contour, double inflate_size);
     Point2f center;
     float radius;
     vector<Point> contour;

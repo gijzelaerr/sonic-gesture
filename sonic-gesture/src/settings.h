@@ -34,7 +34,7 @@
 #define XWINDOWS 3
 
 // Limb settings
-#define INFLATE_SIZE 1.5
+#define INFLATE_SIZE 1.1
 
 // threshold for probabilistic image to binary image
 #define THRESHOLD 20

@@ -16,13 +16,15 @@ public:
     ~BodyPart();
     void update(Blob blob, const Mat& image);
     void update(const Mat& image);
-    const Mat get_hog_image();
-    Blob blob;    
+    Size size();
+    Blob blob;
+    vector<float> hog_features;
+    Mat hog_image;
     
 private:
-    Mat image, hog_image, mask, binary, sized, cutout;
+    Mat image, mask, binary, sized, cutout;
     int inflate_size;
-    vector<float> hog_features;
+    vector<vector<Point> > contours_tmp;
     void make_cutout();
     void compute_hog();
     

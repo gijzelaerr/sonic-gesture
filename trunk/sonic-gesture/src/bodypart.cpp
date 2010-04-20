@@ -3,6 +3,8 @@
 #include "blob.h"
 #include "settings.h"
 
+#include <iostream>
+using namespace std;
 
 BodyPart::BodyPart() {    
     // hog settings
@@ -32,29 +34,25 @@ void BodyPart::update(const Mat& image) {
 void BodyPart::make_cutout() {
     mask = Mat(image.size(), CV_8U, Scalar(0));
     binary = Mat(image.size(), CV_8U, Scalar(0));
-    vector<vector<Point> > contours;
-    contours.push_back(blob.contour);
-    drawContours( mask, contours, -1, Scalar(255), CV_FILLED);
+    contours_tmp.push_back(blob.contour);
+    drawContours( mask, contours_tmp, -1, Scalar(255), CV_FILLED);
     image.copyTo(binary, mask);
-    Rect cutout_border = boundingRect(Mat(blob.contour));
-    cutout = binary(cutout_border);
-    resize(cutout, sized, Size(64,128));
-    cvtColor(sized, hog_image, CV_BGR2GRAY);
-    equalizeHist(hog_image, hog_image);
+    cutout = binary(boundingRect(Mat(blob.contour)));
+    cvtColor(cutout, hog_image, CV_BGR2GRAY);
+    //equalizeHist(hog_image, hog_image);
 }
 
 
-void BodyPart::compute_hog() {    
-    hog.compute(hog_image, hog_features, winStride, padding, locations);
+void BodyPart::compute_hog() {
+    resize(hog_image, sized, Size(64,128));
+    //hog.compute(sized, hog_features, winStride, padding, locations);
+    hog.compute(sized, hog_features);
 };
 
 
-const Mat BodyPart::get_hog_image() {
-    assert(hog_image.data);
-    return hog_image;
-};
-
-
+Size BodyPart::size() {
+    return cutout.size();
+}
 
 BodyParts::BodyParts() {
 };
@@ -79,13 +77,13 @@ void BodyParts::update(const vector<vector<Point> > contours, Point face_center,
 
     // sort the limbs on size
     sort(blobs.begin(), blobs.end(), compare_blob_size);
-    
+
     // take only the 3 biggest blobs
     int s = MIN((int)blobs.size(), 3);
     for(int i=0; i < s; i++)
         tmp_blobs.push_back(blobs.at(i));
     blobs = tmp_blobs;
-    
+
     // then sort the blobs for x pos, left to right
     sort(blobs.begin(), blobs.end(), compare_blob_xpos);
     

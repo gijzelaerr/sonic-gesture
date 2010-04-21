@@ -15,7 +15,7 @@ public:
     Source(const int& device);
     Source(const string& movie);
     ~Source();
-    Mat grab();
+    Mat& grab();
     Size size;
 
 private:

@@ -38,7 +38,7 @@ void Source::init() {
     size = Size(width, height);
 };
 
-Mat Source::grab() {
+Mat& Source::grab() {
     cap >> frame;
     if (!frame.data) {
         cout << "end of movie" << endl;

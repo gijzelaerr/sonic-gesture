@@ -4,8 +4,8 @@
 
 Histogram::Histogram() {
     first = true;
-    int hbins = 30;
-    int sbins = 32;
+    hbins = 30;
+    sbins = 32;
     int histSize[] = {hbins, sbins};
      
     // init histogram stuff
@@ -17,8 +17,6 @@ Histogram::~Histogram() {
 };
 
 void Histogram::update(const Mat& image) {
-    int hbins = 30;
-    int sbins = 32;
     float hranges[] = { 0, 180 };
     float sranges[] = { 0, 256 };
     const float* ranges[] = { hranges, sranges };

@@ -13,6 +13,15 @@ private:
     MatND old_hist;
     bool first;
 
+    int hbins;
+    int sbins;
+    float* hranges;
+    float* sranges;
+    const float** ranges;
+    int* histSize;
+    int* channels;
+
+
 public:
     Histogram();
     ~Histogram();

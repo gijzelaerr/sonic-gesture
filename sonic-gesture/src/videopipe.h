@@ -19,7 +19,8 @@ public:
 private:
     BodyParts bodyparts;
     Source source;
-    Mat big, small_, visuals;
+    Mat big;
+    Mat small_, visuals, combined;
     Size big_size, small_size;
     float scale;
     SkinFinder skinFinder;

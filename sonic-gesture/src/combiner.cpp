@@ -10,8 +10,8 @@ Combiner::Combiner(const Size& frame_size, const int& num_of_win_in_x) {
     this->num_of_win_in_x = num_of_win_in_x;
     }
 
-void Combiner::add_image(const Mat& image) {
-    this->images.push_back(image);
+void Combiner::add_image(Mat& image) {
+    this->images.push_back(&image);
 }
 
 Mat Combiner::render() {
@@ -26,7 +26,7 @@ Mat Combiner::render() {
 
     
     for(unsigned int i=0; i < images.size(); i++) {
-        current = images.at(i);
+        current = *images.at(i);
         assert(current.data);
 
         if (current.size() != frame_size) {

@@ -31,7 +31,7 @@
 
 // window size parameters
 #define WORKSIZE 300
-#define XWINDOWS 3
+#define XWINDOWS 2
 
 // Limb settings
 #define INFLATE_SIZE 1.1

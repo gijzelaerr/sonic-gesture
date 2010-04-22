@@ -54,14 +54,6 @@ Size BodyPart::size() {
     return cutout.size();
 }
 
-BodyParts::BodyParts() {
-};
-
-
-BodyParts::~BodyParts() {
-};
-
-
 void BodyParts::update(const vector<vector<Point> > contours, Point face_center, const Mat& image) {
     vector<Blob> blobs, tmp_blobs;
     this->image = image;

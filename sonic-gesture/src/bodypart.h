@@ -39,15 +39,12 @@ private:
 
 class BodyParts {
 public:
-    BodyParts();
-    ~BodyParts();
     void update(const vector<vector<Point> > contours, Point face_center, const Mat& image);
     Mat draw_in_image();
     BodyPart head;
     BodyPart left_hand;
     BodyPart right_hand;
 private:
-
     Mat image;
 };
 

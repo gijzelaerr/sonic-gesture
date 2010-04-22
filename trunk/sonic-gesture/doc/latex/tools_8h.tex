@@ -1,0 +1,88 @@
+\hypertarget{tools_8h}{
+\section{src/tools.h File Reference}
+\label{tools_8h}\index{src/tools.h@{src/tools.h}}
+}
+{\ttfamily \#include \char`\"{}common.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{tools_8h_ae202b07a53730ea535bb1f5424fc8235}{sum} (const vector$<$ float $>$ \&x)
+\item 
+Rect \hyperlink{tools_8h_aba67583f954db6bc1f13a500b1dc8bb7}{sub\_\-region} (Rect region)
+\item 
+void \hyperlink{tools_8h_a067545950b2bb9395deb536582a4d15f}{show\_\-mat} (Mat M)
+\item 
+Mat \hyperlink{tools_8h_a0ef4eba9806d5638eb48e559aebdc64e}{round\_\-kernel} (int dia)
+\item 
+vector$<$ vector$<$ Point $>$ $>$ \hyperlink{tools_8h_a27322ea1e83f5d2e8f1bbf65786e92bc}{scale\_\-contours} (vector$<$ vector$<$ Point $>$ $>$ \hyperlink{common_8h_adb337241440422f19b5200479d510b76}{contours}, float scale)
+\item 
+vector$<$ Point $>$ \hyperlink{tools_8h_a6270e110a0d16acac0d28e920c8136c3}{scale\_\-contour} (vector$<$ Point $>$ \hyperlink{common_8h_ae36dbb8c0708f160f4cd45521366c562}{contour}, float scale)
+\item 
+vector$<$ Point $>$ \hyperlink{tools_8h_aec9abbf00ffbab862cc043b25ba1b464}{dilate\_\-contour} (vector$<$ Point $>$ \hyperlink{common_8h_ae36dbb8c0708f160f4cd45521366c562}{contour}, Size window\_\-size)
+\item 
+vector$<$ Point $>$ \hyperlink{tools_8h_aac6ef9c7ceda5cbad970082c57b29447}{inflate\_\-contour} (vector$<$ Point $>$ \hyperlink{common_8h_ae36dbb8c0708f160f4cd45521366c562}{contour}, float scale)
+\item 
+bool \hyperlink{tools_8h_a89bb54f4dd90838aaa73325aa41c09f3}{is\_\-number} (const string \&s)
+\item 
+vector$<$ Mat $>$ \hyperlink{tools_8h_ab9cd1c13c85c4c0b3413f740e0cf16d9}{load\_\-example\_\-hands} (const Size \&target\_\-size, bool mirror)
+\item 
+Rect \hyperlink{tools_8h_a446625a4b39a980b5e8825fbb9bd0167}{rect\_\-in\_\-mat} (Rect rectangle, Mat matrix)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{tools_8h_aec9abbf00ffbab862cc043b25ba1b464}{
+\index{tools.h@{tools.h}!dilate\_\-contour@{dilate\_\-contour}}
+\index{dilate\_\-contour@{dilate\_\-contour}!tools.h@{tools.h}}
+\subsubsection[{dilate\_\-contour}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$Point$>$ dilate\_\-contour (vector$<$ Point $>$ {\em contour}, \/  Size {\em window\_\-size})}}
+\label{tools_8h_aec9abbf00ffbab862cc043b25ba1b464}
+\hypertarget{tools_8h_aac6ef9c7ceda5cbad970082c57b29447}{
+\index{tools.h@{tools.h}!inflate\_\-contour@{inflate\_\-contour}}
+\index{inflate\_\-contour@{inflate\_\-contour}!tools.h@{tools.h}}
+\subsubsection[{inflate\_\-contour}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$Point$>$ inflate\_\-contour (vector$<$ Point $>$ {\em contour}, \/  float {\em scale})}}
+\label{tools_8h_aac6ef9c7ceda5cbad970082c57b29447}
+\hypertarget{tools_8h_a89bb54f4dd90838aaa73325aa41c09f3}{
+\index{tools.h@{tools.h}!is\_\-number@{is\_\-number}}
+\index{is\_\-number@{is\_\-number}!tools.h@{tools.h}}
+\subsubsection[{is\_\-number}]{\setlength{\rightskip}{0pt plus 5cm}bool is\_\-number (const string \& {\em s})}}
+\label{tools_8h_a89bb54f4dd90838aaa73325aa41c09f3}
+\hypertarget{tools_8h_ab9cd1c13c85c4c0b3413f740e0cf16d9}{
+\index{tools.h@{tools.h}!load\_\-example\_\-hands@{load\_\-example\_\-hands}}
+\index{load\_\-example\_\-hands@{load\_\-example\_\-hands}!tools.h@{tools.h}}
+\subsubsection[{load\_\-example\_\-hands}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$Mat$>$ load\_\-example\_\-hands (const Size \& {\em target\_\-size}, \/  bool {\em mirror})}}
+\label{tools_8h_ab9cd1c13c85c4c0b3413f740e0cf16d9}
+\hypertarget{tools_8h_a446625a4b39a980b5e8825fbb9bd0167}{
+\index{tools.h@{tools.h}!rect\_\-in\_\-mat@{rect\_\-in\_\-mat}}
+\index{rect\_\-in\_\-mat@{rect\_\-in\_\-mat}!tools.h@{tools.h}}
+\subsubsection[{rect\_\-in\_\-mat}]{\setlength{\rightskip}{0pt plus 5cm}Rect rect\_\-in\_\-mat (Rect {\em rectangle}, \/  Mat {\em matrix})}}
+\label{tools_8h_a446625a4b39a980b5e8825fbb9bd0167}
+\hypertarget{tools_8h_a0ef4eba9806d5638eb48e559aebdc64e}{
+\index{tools.h@{tools.h}!round\_\-kernel@{round\_\-kernel}}
+\index{round\_\-kernel@{round\_\-kernel}!tools.h@{tools.h}}
+\subsubsection[{round\_\-kernel}]{\setlength{\rightskip}{0pt plus 5cm}Mat round\_\-kernel (int {\em dia})}}
+\label{tools_8h_a0ef4eba9806d5638eb48e559aebdc64e}
+\hypertarget{tools_8h_a6270e110a0d16acac0d28e920c8136c3}{
+\index{tools.h@{tools.h}!scale\_\-contour@{scale\_\-contour}}
+\index{scale\_\-contour@{scale\_\-contour}!tools.h@{tools.h}}
+\subsubsection[{scale\_\-contour}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$Point$>$ scale\_\-contour (vector$<$ Point $>$ {\em contour}, \/  float {\em scale})}}
+\label{tools_8h_a6270e110a0d16acac0d28e920c8136c3}
+\hypertarget{tools_8h_a27322ea1e83f5d2e8f1bbf65786e92bc}{
+\index{tools.h@{tools.h}!scale\_\-contours@{scale\_\-contours}}
+\index{scale\_\-contours@{scale\_\-contours}!tools.h@{tools.h}}
+\subsubsection[{scale\_\-contours}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$vector$<$Point$>$ $>$ scale\_\-contours (vector$<$ vector$<$ Point $>$ $>$ {\em contours}, \/  float {\em scale})}}
+\label{tools_8h_a27322ea1e83f5d2e8f1bbf65786e92bc}
+\hypertarget{tools_8h_a067545950b2bb9395deb536582a4d15f}{
+\index{tools.h@{tools.h}!show\_\-mat@{show\_\-mat}}
+\index{show\_\-mat@{show\_\-mat}!tools.h@{tools.h}}
+\subsubsection[{show\_\-mat}]{\setlength{\rightskip}{0pt plus 5cm}void show\_\-mat (Mat {\em M})}}
+\label{tools_8h_a067545950b2bb9395deb536582a4d15f}
+\hypertarget{tools_8h_aba67583f954db6bc1f13a500b1dc8bb7}{
+\index{tools.h@{tools.h}!sub\_\-region@{sub\_\-region}}
+\index{sub\_\-region@{sub\_\-region}!tools.h@{tools.h}}
+\subsubsection[{sub\_\-region}]{\setlength{\rightskip}{0pt plus 5cm}Rect sub\_\-region (Rect {\em region})}}
+\label{tools_8h_aba67583f954db6bc1f13a500b1dc8bb7}
+\hypertarget{tools_8h_ae202b07a53730ea535bb1f5424fc8235}{
+\index{tools.h@{tools.h}!sum@{sum}}
+\index{sum@{sum}!tools.h@{tools.h}}
+\subsubsection[{sum}]{\setlength{\rightskip}{0pt plus 5cm}float sum (const vector$<$ float $>$ \& {\em x})}}
+\label{tools_8h_ae202b07a53730ea535bb1f5424fc8235}

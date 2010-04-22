@@ -16,7 +16,6 @@ namespace fs = boost::filesystem;
 
 class Capture {
 public:
-    Capture();
     Capture(const Source& source);
     void run();
     

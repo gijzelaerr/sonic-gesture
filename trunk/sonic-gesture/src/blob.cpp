@@ -3,6 +3,8 @@
 #include "blob.h"
 #include "tools.h"
 
+#include "highgui.h"
+
 Blob::Blob() {};
 
 Blob::Blob(const vector<Point>& contour) {
@@ -19,12 +21,17 @@ Blob::Blob(const vector<Point>& contour, double inflate_size) {
 };
 
 void Blob::init() {
-    minEnclosingCircle(Mat(contour), center, radius);
+    Mat m = Mat(contour);
+    //minEnclosingCircle(m, center, radius);
+    //RotatedRect s = minAreaRect(m);
+    position = boundingRect(m);
+    area = position.area();
+    center = Point(position.x + (position.width/2), position.y + (position.height/2));
 }
 
 
 bool compare_blob_size(const Blob& a, const Blob& b) {
-    return a.radius > b.radius;
+    return a.area > b.area;
 }
 
 

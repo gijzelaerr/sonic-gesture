@@ -3,7 +3,6 @@
 #include "combiner.h"
 
 
-Combiner::Combiner() {};
 
 Combiner::Combiner(const Size& frame_size, int num_of_win_in_x) {
     this->frame_size = frame_size;

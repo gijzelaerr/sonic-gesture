@@ -3,14 +3,13 @@
 #include "blob.h"
 #include "settings.h"
 
-#include <iostream>
-using namespace std;
 
 BodyPart::BodyPart() {    
     // hog settings
     winStride = Size(8, 8);
     padding = Size(0, 0);
     hog = HOGDescriptor();
+    kalman.init(4, 4);
 };
 
 
@@ -20,15 +19,30 @@ BodyPart::~BodyPart() {};
 void BodyPart::update(const Blob& blob, const Mat& image) {
     this->blob = blob;
     this->image = image;
+    kalmanate();
     make_cutout();
     compute_hog();
 };
 
 void BodyPart::update(const Mat& image) {
     this->image = image;
+    kalmanate();
     make_cutout();
     compute_hog();
 };
+
+void BodyPart::kalmanate() {
+    int x = blob.center.x;
+    int y = blob.center.y;
+    int w = blob.position.width;
+    int h = blob.position.height;
+    int m[1][4] = {{x, y, w, h}};
+    Mat M = Mat(4, 1, CV_32FC1, m).t();
+    //Mat p = kalman.predict();
+    //kalman.correct(M);
+
+
+}
 
 
 void BodyPart::make_cutout() {
@@ -37,17 +51,20 @@ void BodyPart::make_cutout() {
     contours_tmp.push_back(blob.contour);
     drawContours( mask, contours_tmp, -1, Scalar(255), CV_FILLED);
     image.copyTo(binary, mask);
-    cutout = binary(boundingRect(Mat(blob.contour)));
+    cutout = binary(blob.position);
     cvtColor(cutout, hog_image, CV_BGR2GRAY);
-    //equalizeHist(hog_image, hog_image);
 }
 
 
 void BodyPart::compute_hog() {
     resize(hog_image, sized, Size(64,128));
     //hog.compute(sized, hog_features, winStride, padding, locations);
+    equalizeHist(sized, sized);
     hog.compute(sized, hog_features);
 };
+
+
+
 
 
 Size BodyPart::size() {

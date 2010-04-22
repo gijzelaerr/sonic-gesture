@@ -7,12 +7,13 @@
 using namespace cv;
 
 class Blob {
-public:
+public:\
     Blob();
     Blob(const vector<Point>& contour);
     Blob(const vector<Point>& contour, double inflate_size);
-    Point2f center;
-    float radius;
+    Rect position;
+    Point center;
+    int area;
     vector<Point> contour;
     
 private:

@@ -30,14 +30,14 @@ include_directories(${Boost_INCLUDE_DIRS})
 #include_directories(${GTEST_INCLUDE_DIRS})
 #include_directories(${PROJECT_SOURCE_DIR})
 
-#add_executable (run run finder limb tools histogram matcher stabilizer)
-add_executable (run src/run.cpp src/videopipe.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/tools.cpp src/limb.cpp src/settings.h src/videopipe.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/tools.h src/limb.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h )
-target_link_libraries (run  ${OpenCV_LIBS})
-target_link_libraries(run ${Boost_LIBRARIES})
+add_executable (finder src/finder.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/matcher.cpp src/matcher.h)
+target_link_libraries (finder  ${OpenCV_LIBS})
+target_link_libraries(finder ${Boost_LIBRARIES})
 
-add_executable (hogtest src/test.cpp src/videopipe.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/tools.cpp src/limb.cpp src/settings.h src/videopipe.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/tools.h src/limb.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h )
-target_link_libraries (hogtest  ${OpenCV_LIBS})
-target_link_libraries(hogtest ${Boost_LIBRARIES})
+add_executable (capture src/capture.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h)
+target_link_libraries (capture  ${OpenCV_LIBS})
+target_link_libraries(capture ${Boost_LIBRARIES})
+
 
 
 #add_test(AllTestsInRun run_test)
@@ -45,17 +45,8 @@ target_link_libraries(hogtest ${Boost_LIBRARIES})
 #add_executable(run_test  test/stabilizer_unittest.cpp)
 #target_link_libraries(run_test ${GTEST_BOTH_LIBRARIES})
 
-#add_executable (capture capture 
-    #src/finder.cpp src/limb.cpp src/tools.h src/finder.h
-    #src/limb.h src/settings.h src/common.h src/matcher.cpp src/matcher.h
-    #src/stabilizer.h src/stabilizer.cpp src/histogram.cpp src/histogram.h)
-#target_link_libraries (capture  ${OpenCV_LIBS})
-#target_link_libraries(capture ${Boost_LIBRARIES})
-#target_link_libraries(capture ${GTEST_BOTH_LIBRARIES})
-
-
 # what to install where
-install (TARGETS run DESTINATION bin)
+install (TARGETS finder DESTINATION bin)
 #install (TARGETS capture DESTINATION bin)
 install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/examples" DESTINATION data PATTERN ".svn" EXCLUDE)
 install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/haar" DESTINATION data PATTERN ".svn" EXCLUDE)

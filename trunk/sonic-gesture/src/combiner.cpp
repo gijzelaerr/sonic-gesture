@@ -30,6 +30,8 @@ Mat Combiner::render() {
         assert(current.data);
 
         if (current.size() != frame_size) {
+            assert(frame_size.height>0);
+            assert(frame_size.width>0);
             resize(current, temp, frame_size);
             current = temp;
         }

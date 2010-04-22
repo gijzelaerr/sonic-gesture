@@ -1,0 +1,188 @@
+\contentsline {chapter}{\numberline {1}Class Index}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Class List}{1}{section.1.1}
+\contentsline {chapter}{\numberline {2}File Index}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}File List}{3}{section.2.1}
+\contentsline {chapter}{\numberline {3}Class Documentation}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}Blob Class Reference}{5}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Constructor \& Destructor Documentation}{6}{subsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.1.1}Blob}{6}{subsubsection.3.1.1.1}
+\contentsline {subsubsection}{\numberline {3.1.1.2}Blob}{6}{subsubsection.3.1.1.2}
+\contentsline {subsubsection}{\numberline {3.1.1.3}Blob}{6}{subsubsection.3.1.1.3}
+\contentsline {subsection}{\numberline {3.1.2}Member Data Documentation}{6}{subsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.2.1}area}{6}{subsubsection.3.1.2.1}
+\contentsline {subsubsection}{\numberline {3.1.2.2}center}{6}{subsubsection.3.1.2.2}
+\contentsline {subsubsection}{\numberline {3.1.2.3}contour}{6}{subsubsection.3.1.2.3}
+\contentsline {subsubsection}{\numberline {3.1.2.4}position}{6}{subsubsection.3.1.2.4}
+\contentsline {section}{\numberline {3.2}BodyPart Class Reference}{7}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Constructor \& Destructor Documentation}{7}{subsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.1.1}BodyPart}{7}{subsubsection.3.2.1.1}
+\contentsline {subsubsection}{\numberline {3.2.1.2}$\sim $BodyPart}{7}{subsubsection.3.2.1.2}
+\contentsline {subsection}{\numberline {3.2.2}Member Function Documentation}{7}{subsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.1}size}{7}{subsubsection.3.2.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2.2}update}{7}{subsubsection.3.2.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.3}update}{7}{subsubsection.3.2.2.3}
+\contentsline {subsection}{\numberline {3.2.3}Member Data Documentation}{7}{subsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.3.1}blob}{7}{subsubsection.3.2.3.1}
+\contentsline {subsubsection}{\numberline {3.2.3.2}hog\_\discretionary {-}{}{}features}{7}{subsubsection.3.2.3.2}
+\contentsline {subsubsection}{\numberline {3.2.3.3}hog\_\discretionary {-}{}{}image}{7}{subsubsection.3.2.3.3}
+\contentsline {section}{\numberline {3.3}BodyParts Class Reference}{8}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Member Function Documentation}{8}{subsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.1.1}draw\_\discretionary {-}{}{}in\_\discretionary {-}{}{}image}{8}{subsubsection.3.3.1.1}
+\contentsline {subsubsection}{\numberline {3.3.1.2}update}{8}{subsubsection.3.3.1.2}
+\contentsline {subsection}{\numberline {3.3.2}Member Data Documentation}{8}{subsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.2.1}head}{8}{subsubsection.3.3.2.1}
+\contentsline {subsubsection}{\numberline {3.3.2.2}left\_\discretionary {-}{}{}hand}{8}{subsubsection.3.3.2.2}
+\contentsline {subsubsection}{\numberline {3.3.2.3}right\_\discretionary {-}{}{}hand}{8}{subsubsection.3.3.2.3}
+\contentsline {section}{\numberline {3.4}Capture Class Reference}{9}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Constructor \& Destructor Documentation}{9}{subsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.1.1}Capture}{9}{subsubsection.3.4.1.1}
+\contentsline {subsection}{\numberline {3.4.2}Member Function Documentation}{9}{subsection.3.4.2}
+\contentsline {subsubsection}{\numberline {3.4.2.1}run}{9}{subsubsection.3.4.2.1}
+\contentsline {section}{\numberline {3.5}Combiner Class Reference}{10}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Constructor \& Destructor Documentation}{10}{subsection.3.5.1}
+\contentsline {subsubsection}{\numberline {3.5.1.1}Combiner}{10}{subsubsection.3.5.1.1}
+\contentsline {subsection}{\numberline {3.5.2}Member Function Documentation}{10}{subsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.2.1}add\_\discretionary {-}{}{}image}{10}{subsubsection.3.5.2.1}
+\contentsline {subsubsection}{\numberline {3.5.2.2}render}{10}{subsubsection.3.5.2.2}
+\contentsline {subsection}{\numberline {3.5.3}Member Data Documentation}{10}{subsection.3.5.3}
+\contentsline {subsubsection}{\numberline {3.5.3.1}images}{10}{subsubsection.3.5.3.1}
+\contentsline {section}{\numberline {3.6}Finder Class Reference}{11}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Constructor \& Destructor Documentation}{11}{subsection.3.6.1}
+\contentsline {subsubsection}{\numberline {3.6.1.1}Finder}{11}{subsubsection.3.6.1.1}
+\contentsline {subsection}{\numberline {3.6.2}Member Function Documentation}{11}{subsection.3.6.2}
+\contentsline {subsubsection}{\numberline {3.6.2.1}run}{11}{subsubsection.3.6.2.1}
+\contentsline {section}{\numberline {3.7}Histogram Class Reference}{12}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Constructor \& Destructor Documentation}{12}{subsection.3.7.1}
+\contentsline {subsubsection}{\numberline {3.7.1.1}Histogram}{12}{subsubsection.3.7.1.1}
+\contentsline {subsubsection}{\numberline {3.7.1.2}$\sim $Histogram}{12}{subsubsection.3.7.1.2}
+\contentsline {subsection}{\numberline {3.7.2}Member Function Documentation}{12}{subsection.3.7.2}
+\contentsline {subsubsection}{\numberline {3.7.2.1}backproject}{12}{subsubsection.3.7.2.1}
+\contentsline {subsubsection}{\numberline {3.7.2.2}update}{12}{subsubsection.3.7.2.2}
+\contentsline {section}{\numberline {3.8}Matcher Class Reference}{13}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}Constructor \& Destructor Documentation}{13}{subsection.3.8.1}
+\contentsline {subsubsection}{\numberline {3.8.1.1}Matcher}{13}{subsubsection.3.8.1.1}
+\contentsline {subsubsection}{\numberline {3.8.1.2}$\sim $Matcher}{13}{subsubsection.3.8.1.2}
+\contentsline {subsection}{\numberline {3.8.2}Member Function Documentation}{13}{subsection.3.8.2}
+\contentsline {subsubsection}{\numberline {3.8.2.1}match}{13}{subsubsection.3.8.2.1}
+\contentsline {section}{\numberline {3.9}SkinFinder Class Reference}{14}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}Constructor \& Destructor Documentation}{15}{subsection.3.9.1}
+\contentsline {subsubsection}{\numberline {3.9.1.1}SkinFinder}{15}{subsubsection.3.9.1.1}
+\contentsline {subsection}{\numberline {3.9.2}Member Function Documentation}{15}{subsection.3.9.2}
+\contentsline {subsubsection}{\numberline {3.9.2.1}compute}{15}{subsubsection.3.9.2.1}
+\contentsline {subsection}{\numberline {3.9.3}Member Data Documentation}{15}{subsection.3.9.3}
+\contentsline {subsubsection}{\numberline {3.9.3.1}backproj}{15}{subsubsection.3.9.3.1}
+\contentsline {subsubsection}{\numberline {3.9.3.2}blur}{15}{subsubsection.3.9.3.2}
+\contentsline {subsubsection}{\numberline {3.9.3.3}bw}{15}{subsubsection.3.9.3.3}
+\contentsline {subsubsection}{\numberline {3.9.3.4}contours}{15}{subsubsection.3.9.3.4}
+\contentsline {subsubsection}{\numberline {3.9.3.5}face\_\discretionary {-}{}{}center}{15}{subsubsection.3.9.3.5}
+\contentsline {subsubsection}{\numberline {3.9.3.6}facepixels}{15}{subsubsection.3.9.3.6}
+\contentsline {subsubsection}{\numberline {3.9.3.7}frame}{15}{subsubsection.3.9.3.7}
+\contentsline {subsubsection}{\numberline {3.9.3.8}hsv}{15}{subsubsection.3.9.3.8}
+\contentsline {subsubsection}{\numberline {3.9.3.9}mask}{15}{subsubsection.3.9.3.9}
+\contentsline {subsubsection}{\numberline {3.9.3.10}thresh}{15}{subsubsection.3.9.3.10}
+\contentsline {section}{\numberline {3.10}Source Class Reference}{16}{section.3.10}
+\contentsline {subsection}{\numberline {3.10.1}Constructor \& Destructor Documentation}{16}{subsection.3.10.1}
+\contentsline {subsubsection}{\numberline {3.10.1.1}Source}{16}{subsubsection.3.10.1.1}
+\contentsline {subsubsection}{\numberline {3.10.1.2}Source}{16}{subsubsection.3.10.1.2}
+\contentsline {subsubsection}{\numberline {3.10.1.3}Source}{16}{subsubsection.3.10.1.3}
+\contentsline {subsubsection}{\numberline {3.10.1.4}$\sim $Source}{16}{subsubsection.3.10.1.4}
+\contentsline {subsection}{\numberline {3.10.2}Member Function Documentation}{16}{subsection.3.10.2}
+\contentsline {subsubsection}{\numberline {3.10.2.1}grab}{16}{subsubsection.3.10.2.1}
+\contentsline {subsection}{\numberline {3.10.3}Member Data Documentation}{16}{subsection.3.10.3}
+\contentsline {subsubsection}{\numberline {3.10.3.1}size}{16}{subsubsection.3.10.3.1}
+\contentsline {section}{\numberline {3.11}Stabilizer Class Reference}{17}{section.3.11}
+\contentsline {subsection}{\numberline {3.11.1}Constructor \& Destructor Documentation}{17}{subsection.3.11.1}
+\contentsline {subsubsection}{\numberline {3.11.1.1}Stabilizer}{17}{subsubsection.3.11.1.1}
+\contentsline {subsubsection}{\numberline {3.11.1.2}$\sim $Stabilizer}{17}{subsubsection.3.11.1.2}
+\contentsline {subsection}{\numberline {3.11.2}Member Function Documentation}{17}{subsection.3.11.2}
+\contentsline {subsubsection}{\numberline {3.11.2.1}get\_\discretionary {-}{}{}state}{17}{subsubsection.3.11.2.1}
+\contentsline {subsubsection}{\numberline {3.11.2.2}is\_\discretionary {-}{}{}active}{17}{subsubsection.3.11.2.2}
+\contentsline {subsubsection}{\numberline {3.11.2.3}set\_\discretionary {-}{}{}callback}{17}{subsubsection.3.11.2.3}
+\contentsline {subsubsection}{\numberline {3.11.2.4}update}{17}{subsubsection.3.11.2.4}
+\contentsline {chapter}{\numberline {4}File Documentation}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}src/blob.cpp File Reference}{19}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Function Documentation}{19}{subsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.1.1}compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size}{19}{subsubsection.4.1.1.1}
+\contentsline {subsubsection}{\numberline {4.1.1.2}compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos}{19}{subsubsection.4.1.1.2}
+\contentsline {section}{\numberline {4.2}src/blob.h File Reference}{20}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Function Documentation}{20}{subsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.1.1}compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size}{20}{subsubsection.4.2.1.1}
+\contentsline {subsubsection}{\numberline {4.2.1.2}compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos}{20}{subsubsection.4.2.1.2}
+\contentsline {section}{\numberline {4.3}src/bodypart.cpp File Reference}{21}{section.4.3}
+\contentsline {section}{\numberline {4.4}src/bodypart.h File Reference}{22}{section.4.4}
+\contentsline {section}{\numberline {4.5}src/capture.cpp File Reference}{23}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Function Documentation}{23}{subsection.4.5.1}
+\contentsline {subsubsection}{\numberline {4.5.1.1}main}{23}{subsubsection.4.5.1.1}
+\contentsline {section}{\numberline {4.6}src/combiner.cpp File Reference}{24}{section.4.6}
+\contentsline {section}{\numberline {4.7}src/combiner.h File Reference}{25}{section.4.7}
+\contentsline {section}{\numberline {4.8}src/common.h File Reference}{26}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Define Documentation}{26}{subsection.4.8.1}
+\contentsline {subsubsection}{\numberline {4.8.1.1}CV\_\discretionary {-}{}{}NO\_\discretionary {-}{}{}BACKWARD\_\discretionary {-}{}{}COMPATIBILITY}{26}{subsubsection.4.8.1.1}
+\contentsline {subsubsection}{\numberline {4.8.1.2}SOLFEGE\_\discretionary {-}{}{}FILES}{26}{subsubsection.4.8.1.2}
+\contentsline {subsection}{\numberline {4.8.2}Typedef Documentation}{26}{subsection.4.8.2}
+\contentsline {subsubsection}{\numberline {4.8.2.1}contour}{26}{subsubsection.4.8.2.1}
+\contentsline {subsubsection}{\numberline {4.8.2.2}contours}{26}{subsubsection.4.8.2.2}
+\contentsline {section}{\numberline {4.9}src/finder.cpp File Reference}{27}{section.4.9}
+\contentsline {subsection}{\numberline {4.9.1}Function Documentation}{27}{subsection.4.9.1}
+\contentsline {subsubsection}{\numberline {4.9.1.1}main}{27}{subsubsection.4.9.1.1}
+\contentsline {section}{\numberline {4.10}src/histogram.cpp File Reference}{28}{section.4.10}
+\contentsline {section}{\numberline {4.11}src/histogram.h File Reference}{29}{section.4.11}
+\contentsline {section}{\numberline {4.12}src/matcher.cpp File Reference}{30}{section.4.12}
+\contentsline {section}{\numberline {4.13}src/matcher.h File Reference}{31}{section.4.13}
+\contentsline {subsection}{\numberline {4.13.1}Define Documentation}{31}{subsection.4.13.1}
+\contentsline {subsubsection}{\numberline {4.13.1.1}STATE\_\discretionary {-}{}{}MAX}{31}{subsubsection.4.13.1.1}
+\contentsline {subsubsection}{\numberline {4.13.1.2}STATE\_\discretionary {-}{}{}MIN}{31}{subsubsection.4.13.1.2}
+\contentsline {subsubsection}{\numberline {4.13.1.3}STATE\_\discretionary {-}{}{}THRESH}{31}{subsubsection.4.13.1.3}
+\contentsline {section}{\numberline {4.14}src/settings.h File Reference}{32}{section.4.14}
+\contentsline {subsection}{\numberline {4.14.1}Define Documentation}{33}{subsection.4.14.1}
+\contentsline {subsubsection}{\numberline {4.14.1.1}DEVICE}{33}{subsubsection.4.14.1.1}
+\contentsline {subsubsection}{\numberline {4.14.1.2}EXAMPLES\_\discretionary {-}{}{}PATH}{33}{subsubsection.4.14.1.2}
+\contentsline {subsubsection}{\numberline {4.14.1.3}FACEHAAR}{33}{subsubsection.4.14.1.3}
+\contentsline {subsubsection}{\numberline {4.14.1.4}HANDA}{33}{subsubsection.4.14.1.4}
+\contentsline {subsubsection}{\numberline {4.14.1.5}HANDB}{33}{subsubsection.4.14.1.5}
+\contentsline {subsubsection}{\numberline {4.14.1.6}HANDC}{33}{subsubsection.4.14.1.6}
+\contentsline {subsubsection}{\numberline {4.14.1.7}HANDD}{33}{subsubsection.4.14.1.7}
+\contentsline {subsubsection}{\numberline {4.14.1.8}HEAD}{33}{subsubsection.4.14.1.8}
+\contentsline {subsubsection}{\numberline {4.14.1.9}INFLATE\_\discretionary {-}{}{}SIZE}{33}{subsubsection.4.14.1.9}
+\contentsline {subsubsection}{\numberline {4.14.1.10}MAKE\_\discretionary {-}{}{}MOVIE}{33}{subsubsection.4.14.1.10}
+\contentsline {subsubsection}{\numberline {4.14.1.11}MIRROR}{33}{subsubsection.4.14.1.11}
+\contentsline {subsubsection}{\numberline {4.14.1.12}NEWTRAIN\_\discretionary {-}{}{}PATH}{33}{subsubsection.4.14.1.12}
+\contentsline {subsubsection}{\numberline {4.14.1.13}SKIN}{33}{subsubsection.4.14.1.13}
+\contentsline {subsubsection}{\numberline {4.14.1.14}THRESHOLD}{33}{subsubsection.4.14.1.14}
+\contentsline {subsubsection}{\numberline {4.14.1.15}TRAIN\_\discretionary {-}{}{}PATH}{33}{subsubsection.4.14.1.15}
+\contentsline {subsubsection}{\numberline {4.14.1.16}WORKSIZE}{33}{subsubsection.4.14.1.16}
+\contentsline {subsubsection}{\numberline {4.14.1.17}XWINDOWS}{33}{subsubsection.4.14.1.17}
+\contentsline {section}{\numberline {4.15}src/skinfinder.cpp File Reference}{34}{section.4.15}
+\contentsline {section}{\numberline {4.16}src/skinfinder.h File Reference}{35}{section.4.16}
+\contentsline {section}{\numberline {4.17}src/source.cpp File Reference}{36}{section.4.17}
+\contentsline {section}{\numberline {4.18}src/source.h File Reference}{37}{section.4.18}
+\contentsline {section}{\numberline {4.19}src/test.cpp File Reference}{38}{section.4.19}
+\contentsline {subsection}{\numberline {4.19.1}Function Documentation}{38}{subsection.4.19.1}
+\contentsline {subsubsection}{\numberline {4.19.1.1}main}{38}{subsubsection.4.19.1.1}
+\contentsline {subsubsection}{\numberline {4.19.1.2}size\_\discretionary {-}{}{}rounder}{38}{subsubsection.4.19.1.2}
+\contentsline {section}{\numberline {4.20}src/tools.cpp File Reference}{39}{section.4.20}
+\contentsline {subsection}{\numberline {4.20.1}Function Documentation}{39}{subsection.4.20.1}
+\contentsline {subsubsection}{\numberline {4.20.1.1}dilate\_\discretionary {-}{}{}contour}{39}{subsubsection.4.20.1.1}
+\contentsline {subsubsection}{\numberline {4.20.1.2}inflate\_\discretionary {-}{}{}contour}{39}{subsubsection.4.20.1.2}
+\contentsline {subsubsection}{\numberline {4.20.1.3}is\_\discretionary {-}{}{}number}{39}{subsubsection.4.20.1.3}
+\contentsline {subsubsection}{\numberline {4.20.1.4}load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands}{39}{subsubsection.4.20.1.4}
+\contentsline {subsubsection}{\numberline {4.20.1.5}rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat}{39}{subsubsection.4.20.1.5}
+\contentsline {subsubsection}{\numberline {4.20.1.6}round\_\discretionary {-}{}{}kernel}{39}{subsubsection.4.20.1.6}
+\contentsline {subsubsection}{\numberline {4.20.1.7}scale\_\discretionary {-}{}{}contour}{39}{subsubsection.4.20.1.7}
+\contentsline {subsubsection}{\numberline {4.20.1.8}scale\_\discretionary {-}{}{}contours}{39}{subsubsection.4.20.1.8}
+\contentsline {subsubsection}{\numberline {4.20.1.9}show\_\discretionary {-}{}{}mat}{39}{subsubsection.4.20.1.9}
+\contentsline {subsubsection}{\numberline {4.20.1.10}sub\_\discretionary {-}{}{}region}{39}{subsubsection.4.20.1.10}
+\contentsline {subsubsection}{\numberline {4.20.1.11}sum}{39}{subsubsection.4.20.1.11}
+\contentsline {section}{\numberline {4.21}src/tools.h File Reference}{40}{section.4.21}
+\contentsline {subsection}{\numberline {4.21.1}Function Documentation}{40}{subsection.4.21.1}
+\contentsline {subsubsection}{\numberline {4.21.1.1}dilate\_\discretionary {-}{}{}contour}{40}{subsubsection.4.21.1.1}
+\contentsline {subsubsection}{\numberline {4.21.1.2}inflate\_\discretionary {-}{}{}contour}{40}{subsubsection.4.21.1.2}
+\contentsline {subsubsection}{\numberline {4.21.1.3}is\_\discretionary {-}{}{}number}{40}{subsubsection.4.21.1.3}
+\contentsline {subsubsection}{\numberline {4.21.1.4}load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands}{40}{subsubsection.4.21.1.4}
+\contentsline {subsubsection}{\numberline {4.21.1.5}rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat}{40}{subsubsection.4.21.1.5}
+\contentsline {subsubsection}{\numberline {4.21.1.6}round\_\discretionary {-}{}{}kernel}{40}{subsubsection.4.21.1.6}
+\contentsline {subsubsection}{\numberline {4.21.1.7}scale\_\discretionary {-}{}{}contour}{40}{subsubsection.4.21.1.7}
+\contentsline {subsubsection}{\numberline {4.21.1.8}scale\_\discretionary {-}{}{}contours}{40}{subsubsection.4.21.1.8}
+\contentsline {subsubsection}{\numberline {4.21.1.9}show\_\discretionary {-}{}{}mat}{40}{subsubsection.4.21.1.9}
+\contentsline {subsubsection}{\numberline {4.21.1.10}sub\_\discretionary {-}{}{}region}{40}{subsubsection.4.21.1.10}
+\contentsline {subsubsection}{\numberline {4.21.1.11}sum}{40}{subsubsection.4.21.1.11}

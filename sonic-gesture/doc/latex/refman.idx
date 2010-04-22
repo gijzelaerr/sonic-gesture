@@ -1,0 +1,258 @@
+\indexentry{Blob@{Blob}|hyperpage}{5}
+\indexentry{Blob@{Blob}!Blob@{Blob}|hyperpage}{6}
+\indexentry{Blob@{Blob}!Blob@{Blob}|hyperpage}{6}
+\indexentry{Blob@{Blob}!Blob@{Blob}|hyperpage}{6}
+\indexentry{Blob@{Blob}!Blob@{Blob}|hyperpage}{6}
+\indexentry{Blob@{Blob}!Blob@{Blob}|hyperpage}{6}
+\indexentry{Blob@{Blob}!Blob@{Blob}|hyperpage}{6}
+\indexentry{Blob@{Blob}!area@{area}|hyperpage}{6}
+\indexentry{area@{area}!Blob@{Blob}|hyperpage}{6}
+\indexentry{Blob@{Blob}!center@{center}|hyperpage}{6}
+\indexentry{center@{center}!Blob@{Blob}|hyperpage}{6}
+\indexentry{Blob@{Blob}!contour@{contour}|hyperpage}{6}
+\indexentry{contour@{contour}!Blob@{Blob}|hyperpage}{6}
+\indexentry{Blob@{Blob}!position@{position}|hyperpage}{6}
+\indexentry{position@{position}!Blob@{Blob}|hyperpage}{6}
+\indexentry{BodyPart@{BodyPart}|hyperpage}{7}
+\indexentry{BodyPart@{BodyPart}!BodyPart@{BodyPart}|hyperpage}{7}
+\indexentry{BodyPart@{BodyPart}!BodyPart@{BodyPart}|hyperpage}{7}
+\indexentry{BodyPart@{BodyPart}!$\sim $BodyPart@{$\sim $BodyPart}|hyperpage}{7}
+\indexentry{$\sim $BodyPart@{$\sim $BodyPart}!BodyPart@{BodyPart}|hyperpage}{7}
+\indexentry{BodyPart@{BodyPart}!size@{size}|hyperpage}{7}
+\indexentry{size@{size}!BodyPart@{BodyPart}|hyperpage}{7}
+\indexentry{BodyPart@{BodyPart}!update@{update}|hyperpage}{7}
+\indexentry{update@{update}!BodyPart@{BodyPart}|hyperpage}{7}
+\indexentry{BodyPart@{BodyPart}!update@{update}|hyperpage}{7}
+\indexentry{update@{update}!BodyPart@{BodyPart}|hyperpage}{7}
+\indexentry{BodyPart@{BodyPart}!blob@{blob}|hyperpage}{7}
+\indexentry{blob@{blob}!BodyPart@{BodyPart}|hyperpage}{7}
+\indexentry{BodyPart@{BodyPart}!hog\_\discretionary {-}{}{}features@{hog\_\discretionary {-}{}{}features}|hyperpage}{7}
+\indexentry{hog\_\discretionary {-}{}{}features@{hog\_\discretionary {-}{}{}features}!BodyPart@{BodyPart}|hyperpage}{7}
+\indexentry{BodyPart@{BodyPart}!hog\_\discretionary {-}{}{}image@{hog\_\discretionary {-}{}{}image}|hyperpage}{7}
+\indexentry{hog\_\discretionary {-}{}{}image@{hog\_\discretionary {-}{}{}image}!BodyPart@{BodyPart}|hyperpage}{7}
+\indexentry{BodyParts@{BodyParts}|hyperpage}{8}
+\indexentry{BodyParts@{BodyParts}!draw\_\discretionary {-}{}{}in\_\discretionary {-}{}{}image@{draw\_\discretionary {-}{}{}in\_\discretionary {-}{}{}image}|hyperpage}{8}
+\indexentry{draw\_\discretionary {-}{}{}in\_\discretionary {-}{}{}image@{draw\_\discretionary {-}{}{}in\_\discretionary {-}{}{}image}!BodyParts@{BodyParts}|hyperpage}{8}
+\indexentry{BodyParts@{BodyParts}!update@{update}|hyperpage}{8}
+\indexentry{update@{update}!BodyParts@{BodyParts}|hyperpage}{8}
+\indexentry{BodyParts@{BodyParts}!head@{head}|hyperpage}{8}
+\indexentry{head@{head}!BodyParts@{BodyParts}|hyperpage}{8}
+\indexentry{BodyParts@{BodyParts}!left\_\discretionary {-}{}{}hand@{left\_\discretionary {-}{}{}hand}|hyperpage}{8}
+\indexentry{left\_\discretionary {-}{}{}hand@{left\_\discretionary {-}{}{}hand}!BodyParts@{BodyParts}|hyperpage}{8}
+\indexentry{BodyParts@{BodyParts}!right\_\discretionary {-}{}{}hand@{right\_\discretionary {-}{}{}hand}|hyperpage}{8}
+\indexentry{right\_\discretionary {-}{}{}hand@{right\_\discretionary {-}{}{}hand}!BodyParts@{BodyParts}|hyperpage}{8}
+\indexentry{Capture@{Capture}|hyperpage}{9}
+\indexentry{Capture@{Capture}!Capture@{Capture}|hyperpage}{9}
+\indexentry{Capture@{Capture}!Capture@{Capture}|hyperpage}{9}
+\indexentry{Capture@{Capture}!run@{run}|hyperpage}{9}
+\indexentry{run@{run}!Capture@{Capture}|hyperpage}{9}
+\indexentry{Combiner@{Combiner}|hyperpage}{10}
+\indexentry{Combiner@{Combiner}!Combiner@{Combiner}|hyperpage}{10}
+\indexentry{Combiner@{Combiner}!Combiner@{Combiner}|hyperpage}{10}
+\indexentry{Combiner@{Combiner}!add\_\discretionary {-}{}{}image@{add\_\discretionary {-}{}{}image}|hyperpage}{10}
+\indexentry{add\_\discretionary {-}{}{}image@{add\_\discretionary {-}{}{}image}!Combiner@{Combiner}|hyperpage}{10}
+\indexentry{Combiner@{Combiner}!render@{render}|hyperpage}{10}
+\indexentry{render@{render}!Combiner@{Combiner}|hyperpage}{10}
+\indexentry{Combiner@{Combiner}!images@{images}|hyperpage}{10}
+\indexentry{images@{images}!Combiner@{Combiner}|hyperpage}{10}
+\indexentry{Finder@{Finder}|hyperpage}{11}
+\indexentry{Finder@{Finder}!Finder@{Finder}|hyperpage}{11}
+\indexentry{Finder@{Finder}!Finder@{Finder}|hyperpage}{11}
+\indexentry{Finder@{Finder}!run@{run}|hyperpage}{11}
+\indexentry{run@{run}!Finder@{Finder}|hyperpage}{11}
+\indexentry{Histogram@{Histogram}|hyperpage}{12}
+\indexentry{Histogram@{Histogram}!Histogram@{Histogram}|hyperpage}{12}
+\indexentry{Histogram@{Histogram}!Histogram@{Histogram}|hyperpage}{12}
+\indexentry{Histogram@{Histogram}!$\sim $Histogram@{$\sim $Histogram}|hyperpage}{12}
+\indexentry{$\sim $Histogram@{$\sim $Histogram}!Histogram@{Histogram}|hyperpage}{12}
+\indexentry{Histogram@{Histogram}!backproject@{backproject}|hyperpage}{12}
+\indexentry{backproject@{backproject}!Histogram@{Histogram}|hyperpage}{12}
+\indexentry{Histogram@{Histogram}!update@{update}|hyperpage}{12}
+\indexentry{update@{update}!Histogram@{Histogram}|hyperpage}{12}
+\indexentry{Matcher@{Matcher}|hyperpage}{13}
+\indexentry{Matcher@{Matcher}!Matcher@{Matcher}|hyperpage}{13}
+\indexentry{Matcher@{Matcher}!Matcher@{Matcher}|hyperpage}{13}
+\indexentry{Matcher@{Matcher}!$\sim $Matcher@{$\sim $Matcher}|hyperpage}{13}
+\indexentry{$\sim $Matcher@{$\sim $Matcher}!Matcher@{Matcher}|hyperpage}{13}
+\indexentry{Matcher@{Matcher}!match@{match}|hyperpage}{13}
+\indexentry{match@{match}!Matcher@{Matcher}|hyperpage}{13}
+\indexentry{SkinFinder@{SkinFinder}|hyperpage}{14}
+\indexentry{SkinFinder@{SkinFinder}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!compute@{compute}|hyperpage}{15}
+\indexentry{compute@{compute}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!backproj@{backproj}|hyperpage}{15}
+\indexentry{backproj@{backproj}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!blur@{blur}|hyperpage}{15}
+\indexentry{blur@{blur}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!bw@{bw}|hyperpage}{15}
+\indexentry{bw@{bw}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!contours@{contours}|hyperpage}{15}
+\indexentry{contours@{contours}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!face\_\discretionary {-}{}{}center@{face\_\discretionary {-}{}{}center}|hyperpage}{15}
+\indexentry{face\_\discretionary {-}{}{}center@{face\_\discretionary {-}{}{}center}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!facepixels@{facepixels}|hyperpage}{15}
+\indexentry{facepixels@{facepixels}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!frame@{frame}|hyperpage}{15}
+\indexentry{frame@{frame}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!hsv@{hsv}|hyperpage}{15}
+\indexentry{hsv@{hsv}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!mask@{mask}|hyperpage}{15}
+\indexentry{mask@{mask}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{SkinFinder@{SkinFinder}!thresh@{thresh}|hyperpage}{15}
+\indexentry{thresh@{thresh}!SkinFinder@{SkinFinder}|hyperpage}{15}
+\indexentry{Source@{Source}|hyperpage}{16}
+\indexentry{Source@{Source}!Source@{Source}|hyperpage}{16}
+\indexentry{Source@{Source}!Source@{Source}|hyperpage}{16}
+\indexentry{Source@{Source}!Source@{Source}|hyperpage}{16}
+\indexentry{Source@{Source}!Source@{Source}|hyperpage}{16}
+\indexentry{Source@{Source}!Source@{Source}|hyperpage}{16}
+\indexentry{Source@{Source}!Source@{Source}|hyperpage}{16}
+\indexentry{Source@{Source}!$\sim $Source@{$\sim $Source}|hyperpage}{16}
+\indexentry{$\sim $Source@{$\sim $Source}!Source@{Source}|hyperpage}{16}
+\indexentry{Source@{Source}!grab@{grab}|hyperpage}{16}
+\indexentry{grab@{grab}!Source@{Source}|hyperpage}{16}
+\indexentry{Source@{Source}!size@{size}|hyperpage}{16}
+\indexentry{size@{size}!Source@{Source}|hyperpage}{16}
+\indexentry{Stabilizer@{Stabilizer}|hyperpage}{17}
+\indexentry{Stabilizer@{Stabilizer}!Stabilizer@{Stabilizer}|hyperpage}{17}
+\indexentry{Stabilizer@{Stabilizer}!Stabilizer@{Stabilizer}|hyperpage}{17}
+\indexentry{Stabilizer@{Stabilizer}!$\sim $Stabilizer@{$\sim $Stabilizer}|hyperpage}{17}
+\indexentry{$\sim $Stabilizer@{$\sim $Stabilizer}!Stabilizer@{Stabilizer}|hyperpage}{17}
+\indexentry{Stabilizer@{Stabilizer}!get\_\discretionary {-}{}{}state@{get\_\discretionary {-}{}{}state}|hyperpage}{17}
+\indexentry{get\_\discretionary {-}{}{}state@{get\_\discretionary {-}{}{}state}!Stabilizer@{Stabilizer}|hyperpage}{17}
+\indexentry{Stabilizer@{Stabilizer}!is\_\discretionary {-}{}{}active@{is\_\discretionary {-}{}{}active}|hyperpage}{17}
+\indexentry{is\_\discretionary {-}{}{}active@{is\_\discretionary {-}{}{}active}!Stabilizer@{Stabilizer}|hyperpage}{17}
+\indexentry{Stabilizer@{Stabilizer}!set\_\discretionary {-}{}{}callback@{set\_\discretionary {-}{}{}callback}|hyperpage}{17}
+\indexentry{set\_\discretionary {-}{}{}callback@{set\_\discretionary {-}{}{}callback}!Stabilizer@{Stabilizer}|hyperpage}{17}
+\indexentry{Stabilizer@{Stabilizer}!update@{update}|hyperpage}{17}
+\indexentry{update@{update}!Stabilizer@{Stabilizer}|hyperpage}{17}
+\indexentry{src/blob.cpp@{src/blob.cpp}|hyperpage}{19}
+\indexentry{blob.cpp@{blob.cpp}!compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size@{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size}|hyperpage}{19}
+\indexentry{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size@{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size}!blob.cpp@{blob.cpp}|hyperpage}{19}
+\indexentry{blob.cpp@{blob.cpp}!compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos@{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos}|hyperpage}{19}
+\indexentry{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos@{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos}!blob.cpp@{blob.cpp}|hyperpage}{19}
+\indexentry{src/blob.h@{src/blob.h}|hyperpage}{20}
+\indexentry{blob.h@{blob.h}!compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size@{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size}|hyperpage}{20}
+\indexentry{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size@{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size}!blob.h@{blob.h}|hyperpage}{20}
+\indexentry{blob.h@{blob.h}!compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos@{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos}|hyperpage}{20}
+\indexentry{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos@{compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos}!blob.h@{blob.h}|hyperpage}{20}
+\indexentry{src/bodypart.cpp@{src/bodypart.cpp}|hyperpage}{21}
+\indexentry{src/bodypart.h@{src/bodypart.h}|hyperpage}{22}
+\indexentry{src/capture.cpp@{src/capture.cpp}|hyperpage}{23}
+\indexentry{capture.cpp@{capture.cpp}!main@{main}|hyperpage}{23}
+\indexentry{main@{main}!capture.cpp@{capture.cpp}|hyperpage}{23}
+\indexentry{src/combiner.cpp@{src/combiner.cpp}|hyperpage}{24}
+\indexentry{src/combiner.h@{src/combiner.h}|hyperpage}{25}
+\indexentry{src/common.h@{src/common.h}|hyperpage}{26}
+\indexentry{common.h@{common.h}!CV\_\discretionary {-}{}{}NO\_\discretionary {-}{}{}BACKWARD\_\discretionary {-}{}{}COMPATIBILITY@{CV\_\discretionary {-}{}{}NO\_\discretionary {-}{}{}BACKWARD\_\discretionary {-}{}{}COMPATIBILITY}|hyperpage}{26}
+\indexentry{CV\_\discretionary {-}{}{}NO\_\discretionary {-}{}{}BACKWARD\_\discretionary {-}{}{}COMPATIBILITY@{CV\_\discretionary {-}{}{}NO\_\discretionary {-}{}{}BACKWARD\_\discretionary {-}{}{}COMPATIBILITY}!common.h@{common.h}|hyperpage}{26}
+\indexentry{common.h@{common.h}!SOLFEGE\_\discretionary {-}{}{}FILES@{SOLFEGE\_\discretionary {-}{}{}FILES}|hyperpage}{26}
+\indexentry{SOLFEGE\_\discretionary {-}{}{}FILES@{SOLFEGE\_\discretionary {-}{}{}FILES}!common.h@{common.h}|hyperpage}{26}
+\indexentry{common.h@{common.h}!contour@{contour}|hyperpage}{26}
+\indexentry{contour@{contour}!common.h@{common.h}|hyperpage}{26}
+\indexentry{common.h@{common.h}!contours@{contours}|hyperpage}{26}
+\indexentry{contours@{contours}!common.h@{common.h}|hyperpage}{26}
+\indexentry{src/finder.cpp@{src/finder.cpp}|hyperpage}{27}
+\indexentry{finder.cpp@{finder.cpp}!main@{main}|hyperpage}{27}
+\indexentry{main@{main}!finder.cpp@{finder.cpp}|hyperpage}{27}
+\indexentry{src/histogram.cpp@{src/histogram.cpp}|hyperpage}{28}
+\indexentry{src/histogram.h@{src/histogram.h}|hyperpage}{29}
+\indexentry{src/matcher.cpp@{src/matcher.cpp}|hyperpage}{30}
+\indexentry{src/matcher.h@{src/matcher.h}|hyperpage}{31}
+\indexentry{matcher.h@{matcher.h}!STATE\_\discretionary {-}{}{}MAX@{STATE\_\discretionary {-}{}{}MAX}|hyperpage}{31}
+\indexentry{STATE\_\discretionary {-}{}{}MAX@{STATE\_\discretionary {-}{}{}MAX}!matcher.h@{matcher.h}|hyperpage}{31}
+\indexentry{matcher.h@{matcher.h}!STATE\_\discretionary {-}{}{}MIN@{STATE\_\discretionary {-}{}{}MIN}|hyperpage}{31}
+\indexentry{STATE\_\discretionary {-}{}{}MIN@{STATE\_\discretionary {-}{}{}MIN}!matcher.h@{matcher.h}|hyperpage}{31}
+\indexentry{matcher.h@{matcher.h}!STATE\_\discretionary {-}{}{}THRESH@{STATE\_\discretionary {-}{}{}THRESH}|hyperpage}{31}
+\indexentry{STATE\_\discretionary {-}{}{}THRESH@{STATE\_\discretionary {-}{}{}THRESH}!matcher.h@{matcher.h}|hyperpage}{31}
+\indexentry{src/settings.h@{src/settings.h}|hyperpage}{32}
+\indexentry{settings.h@{settings.h}!DEVICE@{DEVICE}|hyperpage}{33}
+\indexentry{DEVICE@{DEVICE}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!EXAMPLES\_\discretionary {-}{}{}PATH@{EXAMPLES\_\discretionary {-}{}{}PATH}|hyperpage}{33}
+\indexentry{EXAMPLES\_\discretionary {-}{}{}PATH@{EXAMPLES\_\discretionary {-}{}{}PATH}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!FACEHAAR@{FACEHAAR}|hyperpage}{33}
+\indexentry{FACEHAAR@{FACEHAAR}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!HANDA@{HANDA}|hyperpage}{33}
+\indexentry{HANDA@{HANDA}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!HANDB@{HANDB}|hyperpage}{33}
+\indexentry{HANDB@{HANDB}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!HANDC@{HANDC}|hyperpage}{33}
+\indexentry{HANDC@{HANDC}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!HANDD@{HANDD}|hyperpage}{33}
+\indexentry{HANDD@{HANDD}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!HEAD@{HEAD}|hyperpage}{33}
+\indexentry{HEAD@{HEAD}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!INFLATE\_\discretionary {-}{}{}SIZE@{INFLATE\_\discretionary {-}{}{}SIZE}|hyperpage}{33}
+\indexentry{INFLATE\_\discretionary {-}{}{}SIZE@{INFLATE\_\discretionary {-}{}{}SIZE}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!MAKE\_\discretionary {-}{}{}MOVIE@{MAKE\_\discretionary {-}{}{}MOVIE}|hyperpage}{33}
+\indexentry{MAKE\_\discretionary {-}{}{}MOVIE@{MAKE\_\discretionary {-}{}{}MOVIE}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!MIRROR@{MIRROR}|hyperpage}{33}
+\indexentry{MIRROR@{MIRROR}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!NEWTRAIN\_\discretionary {-}{}{}PATH@{NEWTRAIN\_\discretionary {-}{}{}PATH}|hyperpage}{33}
+\indexentry{NEWTRAIN\_\discretionary {-}{}{}PATH@{NEWTRAIN\_\discretionary {-}{}{}PATH}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!SKIN@{SKIN}|hyperpage}{33}
+\indexentry{SKIN@{SKIN}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!THRESHOLD@{THRESHOLD}|hyperpage}{33}
+\indexentry{THRESHOLD@{THRESHOLD}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!TRAIN\_\discretionary {-}{}{}PATH@{TRAIN\_\discretionary {-}{}{}PATH}|hyperpage}{33}
+\indexentry{TRAIN\_\discretionary {-}{}{}PATH@{TRAIN\_\discretionary {-}{}{}PATH}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!WORKSIZE@{WORKSIZE}|hyperpage}{33}
+\indexentry{WORKSIZE@{WORKSIZE}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{settings.h@{settings.h}!XWINDOWS@{XWINDOWS}|hyperpage}{33}
+\indexentry{XWINDOWS@{XWINDOWS}!settings.h@{settings.h}|hyperpage}{33}
+\indexentry{src/skinfinder.cpp@{src/skinfinder.cpp}|hyperpage}{34}
+\indexentry{src/skinfinder.h@{src/skinfinder.h}|hyperpage}{35}
+\indexentry{src/source.cpp@{src/source.cpp}|hyperpage}{36}
+\indexentry{src/source.h@{src/source.h}|hyperpage}{37}
+\indexentry{src/test.cpp@{src/test.cpp}|hyperpage}{38}
+\indexentry{test.cpp@{test.cpp}!main@{main}|hyperpage}{38}
+\indexentry{main@{main}!test.cpp@{test.cpp}|hyperpage}{38}
+\indexentry{test.cpp@{test.cpp}!size\_\discretionary {-}{}{}rounder@{size\_\discretionary {-}{}{}rounder}|hyperpage}{38}
+\indexentry{size\_\discretionary {-}{}{}rounder@{size\_\discretionary {-}{}{}rounder}!test.cpp@{test.cpp}|hyperpage}{38}
+\indexentry{src/tools.cpp@{src/tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!dilate\_\discretionary {-}{}{}contour@{dilate\_\discretionary {-}{}{}contour}|hyperpage}{39}
+\indexentry{dilate\_\discretionary {-}{}{}contour@{dilate\_\discretionary {-}{}{}contour}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!inflate\_\discretionary {-}{}{}contour@{inflate\_\discretionary {-}{}{}contour}|hyperpage}{39}
+\indexentry{inflate\_\discretionary {-}{}{}contour@{inflate\_\discretionary {-}{}{}contour}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!is\_\discretionary {-}{}{}number@{is\_\discretionary {-}{}{}number}|hyperpage}{39}
+\indexentry{is\_\discretionary {-}{}{}number@{is\_\discretionary {-}{}{}number}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands@{load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands}|hyperpage}{39}
+\indexentry{load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands@{load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat@{rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat}|hyperpage}{39}
+\indexentry{rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat@{rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!round\_\discretionary {-}{}{}kernel@{round\_\discretionary {-}{}{}kernel}|hyperpage}{39}
+\indexentry{round\_\discretionary {-}{}{}kernel@{round\_\discretionary {-}{}{}kernel}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!scale\_\discretionary {-}{}{}contour@{scale\_\discretionary {-}{}{}contour}|hyperpage}{39}
+\indexentry{scale\_\discretionary {-}{}{}contour@{scale\_\discretionary {-}{}{}contour}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!scale\_\discretionary {-}{}{}contours@{scale\_\discretionary {-}{}{}contours}|hyperpage}{39}
+\indexentry{scale\_\discretionary {-}{}{}contours@{scale\_\discretionary {-}{}{}contours}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!show\_\discretionary {-}{}{}mat@{show\_\discretionary {-}{}{}mat}|hyperpage}{39}
+\indexentry{show\_\discretionary {-}{}{}mat@{show\_\discretionary {-}{}{}mat}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!sub\_\discretionary {-}{}{}region@{sub\_\discretionary {-}{}{}region}|hyperpage}{39}
+\indexentry{sub\_\discretionary {-}{}{}region@{sub\_\discretionary {-}{}{}region}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{tools.cpp@{tools.cpp}!sum@{sum}|hyperpage}{39}
+\indexentry{sum@{sum}!tools.cpp@{tools.cpp}|hyperpage}{39}
+\indexentry{src/tools.h@{src/tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!dilate\_\discretionary {-}{}{}contour@{dilate\_\discretionary {-}{}{}contour}|hyperpage}{40}
+\indexentry{dilate\_\discretionary {-}{}{}contour@{dilate\_\discretionary {-}{}{}contour}!tools.h@{tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!inflate\_\discretionary {-}{}{}contour@{inflate\_\discretionary {-}{}{}contour}|hyperpage}{40}
+\indexentry{inflate\_\discretionary {-}{}{}contour@{inflate\_\discretionary {-}{}{}contour}!tools.h@{tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!is\_\discretionary {-}{}{}number@{is\_\discretionary {-}{}{}number}|hyperpage}{40}
+\indexentry{is\_\discretionary {-}{}{}number@{is\_\discretionary {-}{}{}number}!tools.h@{tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands@{load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands}|hyperpage}{40}
+\indexentry{load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands@{load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands}!tools.h@{tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat@{rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat}|hyperpage}{40}
+\indexentry{rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat@{rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat}!tools.h@{tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!round\_\discretionary {-}{}{}kernel@{round\_\discretionary {-}{}{}kernel}|hyperpage}{40}
+\indexentry{round\_\discretionary {-}{}{}kernel@{round\_\discretionary {-}{}{}kernel}!tools.h@{tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!scale\_\discretionary {-}{}{}contour@{scale\_\discretionary {-}{}{}contour}|hyperpage}{40}
+\indexentry{scale\_\discretionary {-}{}{}contour@{scale\_\discretionary {-}{}{}contour}!tools.h@{tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!scale\_\discretionary {-}{}{}contours@{scale\_\discretionary {-}{}{}contours}|hyperpage}{40}
+\indexentry{scale\_\discretionary {-}{}{}contours@{scale\_\discretionary {-}{}{}contours}!tools.h@{tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!show\_\discretionary {-}{}{}mat@{show\_\discretionary {-}{}{}mat}|hyperpage}{40}
+\indexentry{show\_\discretionary {-}{}{}mat@{show\_\discretionary {-}{}{}mat}!tools.h@{tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!sub\_\discretionary {-}{}{}region@{sub\_\discretionary {-}{}{}region}|hyperpage}{40}
+\indexentry{sub\_\discretionary {-}{}{}region@{sub\_\discretionary {-}{}{}region}!tools.h@{tools.h}|hyperpage}{40}
+\indexentry{tools.h@{tools.h}!sum@{sum}|hyperpage}{40}
+\indexentry{sum@{sum}!tools.h@{tools.h}|hyperpage}{40}

@@ -147,7 +147,7 @@ vector<Mat> load_example_hands(const Size& target_size, const bool mirror) {
     return examples_mat;
 }
 
-Rect rect_in_mat(Rect rectange, Mat matrix) {
+Rect rect_in_mat(Rect rectange, const Mat& matrix) {
     // make sure the cutout_border is inside the borders of image
     int x = max(0, rectange.x);
     int y = max(0, rectange.y);

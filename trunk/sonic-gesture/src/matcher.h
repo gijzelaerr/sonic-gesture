@@ -38,7 +38,7 @@ class Matcher {
 public:
     Matcher(bool mirror=false);
     ~Matcher();
-    int match(vector<float> descriptors);
+    int match(const vector<float>& descriptors);
 };
 
 

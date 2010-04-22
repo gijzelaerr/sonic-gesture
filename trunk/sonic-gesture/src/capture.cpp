@@ -13,7 +13,7 @@ using namespace boost::posix_time;
 using namespace boost::gregorian;
 namespace fs = boost::filesystem;
 
-// Inherit from main program, since we want to do almost the same here
+
 class Capture {
 public:
     Capture();

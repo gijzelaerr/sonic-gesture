@@ -17,7 +17,7 @@ BodyPart::BodyPart() {
 BodyPart::~BodyPart() {};
 
 
-void BodyPart::update(Blob blob, const Mat& image) {
+void BodyPart::update(const Blob& blob, const Mat& image) {
     this->blob = blob;
     this->image = image;
     make_cutout();

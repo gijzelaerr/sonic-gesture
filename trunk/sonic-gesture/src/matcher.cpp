@@ -2,7 +2,6 @@
 //#include <iosfwd>
 
 #include "matcher.h"
-#include "stabilizer.h"
 #include <boost/algorithm/string/predicate.hpp>
 
 
@@ -79,7 +78,7 @@ Matcher::~Matcher() {
     delete stabilizer;
 };
 
-int Matcher::match(vector<float> other_descriptors) {
+int Matcher::match(const vector<float>& other_descriptors) {
     CvMat img_cvmat = (Mat)Mat(other_descriptors).t();
     int response = int(knn_matcher.find_nearest(&img_cvmat, 2, 0, 0, 0, 0));
     return this->stabilizer->update(response);

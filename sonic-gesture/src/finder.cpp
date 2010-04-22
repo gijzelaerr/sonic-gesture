@@ -10,9 +10,9 @@
 #include "combiner.h"
 
 
-class VideoPipe {
+class Finder {
 public:
-    VideoPipe(const Source& source);
+    Finder(const Source& source);
     void run();
 
 private:
@@ -33,14 +33,15 @@ private:
     void init();
     void grab();
     bool step();
+    void draw_fps(int fps);
 };
 
-VideoPipe::VideoPipe(const Source& source) {
+Finder::Finder(const Source& source) {
     this->source = source;
     init();
 }
 
-void VideoPipe::init() {
+void Finder::init() {
     skinFinder = new SkinFinder();
     left_matcher = new Matcher();
     right_matcher = new Matcher(true);
@@ -71,14 +72,14 @@ void VideoPipe::init() {
     black = Mat(source.size, CV_8UC3, Scalar(0, 0, 0));
 }
 
-void VideoPipe::grab() {
+void Finder::grab() {
     big = source.grab();
     assert(big.data);
     resize(big, small_, Size(), scale, scale);
     assert(small_.data);
 }
 
-bool VideoPipe::step() {
+bool Finder::step() {
     double t = (double)getTickCount();
     grab();
 
@@ -106,24 +107,34 @@ bool VideoPipe::step() {
     // draw the stuff
     visuals = bodyparts.draw_in_image();
     combined = this->combiner->render();
-    imshow("Sonic Gesture", combined);
 
     t = ((double)getTickCount() - t)*1000/getTickFrequency();
     int wait = MIN(40, MAX(40-(int)t, 4)); // Wait max of 40 ms, min of 4;
+
+    draw_fps(1000/t);
+    imshow("Sonic Gesture", combined);
 
     if(waitKey(wait) >= 0)
         return false;
     return true;
 }
 
-void VideoPipe::run() {
+void Finder::draw_fps(int fps) {
+    std::string s;
+    std::stringstream out;
+    out << fps << " fps";
+    s = out.str();
+    putText(combined, s, Point(5, 12), FONT_HERSHEY_SIMPLEX, 0.4, Scalar(255, 255, 255), 1);
+}
+
+void Finder::run() {
     while (this->step()){};
 }
 
 int main(int, char**) {
     Source source = Source(DEVICE);
-    VideoPipe videoPipe = VideoPipe(source);
-    videoPipe.run();
+    Finder finder = Finder(source);
+    finder.run();
     return EXIT_SUCCESS;
 
 }

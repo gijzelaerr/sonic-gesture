@@ -12,7 +12,7 @@ using namespace cv;
 class Source {
 public:
     Source();
-    Source(const int& device);
+    Source(int device);
     Source(const string& movie);
     ~Source();
     Mat& grab();

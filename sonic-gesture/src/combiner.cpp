@@ -5,7 +5,7 @@
 
 Combiner::Combiner() {};
 
-Combiner::Combiner(const Size& frame_size, const int& num_of_win_in_x) {
+Combiner::Combiner(const Size& frame_size, int num_of_win_in_x) {
     this->frame_size = frame_size;
     this->num_of_win_in_x = num_of_win_in_x;
     }

@@ -11,7 +11,7 @@ Source::Source() {
  
 }
 
-Source::Source(const int& device) {
+Source::Source(int device) {
     cout << "opening device " << device << "." << endl;
     cap = VideoCapture(device);
     init();

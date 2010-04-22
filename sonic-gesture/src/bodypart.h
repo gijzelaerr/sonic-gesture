@@ -14,7 +14,7 @@ class BodyPart {
 public:
     BodyPart();
     ~BodyPart();
-    void update(Blob blob, const Mat& image);
+    void update(const Blob& blob, const Mat& image);
     void update(const Mat& image);
     Size size();
     Blob blob;

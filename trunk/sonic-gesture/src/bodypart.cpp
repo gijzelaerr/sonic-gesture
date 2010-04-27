@@ -18,8 +18,7 @@ BodyPart::BodyPart() {
     const int stateparms = 6; // x, y, vx, vy, w, h
     const int measureparms = 4; // x, y, w, h
     const float dt = 1.0; // time between frames, constant for movie
-    
-    kalman.init(stateparms, measureparms);
+ 
     float f[stateparms][stateparms] = {
         {1, 0, dt, 0, 0, 0},
         {0, 1, 0, dt, 0, 0},
@@ -28,8 +27,22 @@ BodyPart::BodyPart() {
         {0, 0, 0, 0, 1, 0},
         {0, 0, 0, 0, 0, 1}
     };
-    Mat F = Mat(stateparms, stateparms, CV_32FC1, f);
-    kalman.transitionMatrix = F;
+    transition = Mat(stateparms, stateparms, CV_32FC1, f);
+    
+
+    kalman.init(stateparms, measureparms); 
+    kalman.transitionMatrix = transition;
+    
+    // initialization, taken from example
+    //setIdentity(kalman.measurementMatrix, Scalar(1.0));
+    //setIdentity(kalman.processNoiseCov, Scalar(1e-5));
+    //setIdentity(kalman.measurementNoiseCov, Scalar(1e-1));
+    //setIdentity(kalman.errorCovPost, Scalar(1));
+    //randu(kalman.statePost, Scalar(0), Scalar(0.1));
+    
+    //randu(kalman.statePre, Scalar(0), Scalar(0.1));
+    //setIdentity(kalman.errorCovPre, Scalar(1));
+    //setIdentity(kalman.gain, Scalar(1));
 };
 
 
@@ -49,24 +62,26 @@ void BodyPart::update(const Mat& image) {
 };
 
 void BodyPart::kalman_correct() {
-    const int stateparms = 6; // x, y, vx, vy, w, h
+    //const int stateparms = 6; // x, y, vx, vy, w, h
     const int measureparms = 4; // x, y, w, h    
     int x = blob.center.x;
     int y = blob.center.y;
     int w = blob.position.width;
     int h = blob.position.height;
     float m[1][measureparms] = {{x, y, w, h}};
-    Mat z_k = Mat(1, measureparms, CV_32FC1, m).t();
-    kalman.correct(z_k);
-}
+    measurement = Mat(1, measureparms, CV_32FC1, m).t();
+    kalman.correct(measurement);
+    kalman_predict();
+};
 
 void BodyPart::kalman_predict() {    
-    Mat y_k = kalman.predict();
-    Size predicted_size = Size(y_k.at<int>(0, 2), y_k.at<int>(0, 3));
-    Point predicted_center = Point(y_k.at<int>(0, 0), y_k.at<int>(0, 1));
-}
+    Mat y_k = kalman.predict();   
+    Point predicted_center = Point(y_k.at<float>(0, 0), y_k.at<float>(0, 1));
+    Size predicted_size = Size(y_k.at<float>(0, 4), y_k.at<float>(0, 5));
+    cout << predicted_center.x << endl;
+    cout << predicted_size.width << endl;
+};
     
-
 void BodyPart::make_cutout() {
     vector <vector<Point> > contours_tmp;
     mask = Mat(image.size(), CV_8U, Scalar(0));
@@ -77,8 +92,7 @@ void BodyPart::make_cutout() {
     Rect cut = rect_in_mat(blob.position, binary); // make sure we cut inside binary
     cutout = binary(cut);
     cvtColor(cutout, hog_image, CV_BGR2GRAY);
-}
-
+};
 
 void BodyPart::compute_hog() {
     resize(hog_image, sized, Size(64,128), 0, 0, INTER_NEAREST);
@@ -90,7 +104,7 @@ void BodyPart::compute_hog() {
 
 Size BodyPart::size() {
     return cutout.size();
-}
+};
 
 void BodyParts::update(const vector<vector<Point> > contours, Point face_center, const Mat& image) {
     vector<Blob> blobs, tmp_blobs;

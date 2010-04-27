@@ -2,14 +2,34 @@
 #include "bodypart.h"
 #include "blob.h"
 #include "settings.h"
+#include "tools.h"
 
+#include <iostream>
+using std::cout;
+using std::endl;
 
 BodyPart::BodyPart() {    
-    // hog settings
+    // hog stuff
     winStride = Size(8, 8);
     padding = Size(0, 0);
     hog = HOGDescriptor();
-    kalman.init(4, 4);
+
+    // kalman stuff
+    const int stateparms = 6; // x, y, vx, vy, w, h
+    const int measureparms = 4; // x, y, w, h
+    const float dt = 1.0; // time between frames, constant for movie
+    
+    kalman.init(stateparms, measureparms);
+    float f[stateparms][stateparms] = {
+        {1, 0, dt, 0, 0, 0},
+        {0, 1, 0, dt, 0, 0},
+        {0, 0, 1, 0, 0, 0},
+        {0, 0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 1, 0},
+        {0, 0, 0, 0, 0, 1}
+    };
+    Mat F = Mat(stateparms, stateparms, CV_32FC1, f);
+    kalman.transitionMatrix = F;
 };
 
 
@@ -18,53 +38,54 @@ BodyPart::~BodyPart() {};
 
 void BodyPart::update(const Blob& blob, const Mat& image) {
     this->blob = blob;
-    this->image = image;
-    kalmanate();
-    make_cutout();
-    compute_hog();
+    this->update(image);
 };
 
 void BodyPart::update(const Mat& image) {
     this->image = image;
-    kalmanate();
+    kalman_correct();
     make_cutout();
     compute_hog();
 };
 
-void BodyPart::kalmanate() {
+void BodyPart::kalman_correct() {
+    const int stateparms = 6; // x, y, vx, vy, w, h
+    const int measureparms = 4; // x, y, w, h    
     int x = blob.center.x;
     int y = blob.center.y;
     int w = blob.position.width;
     int h = blob.position.height;
-    int m[1][4] = {{x, y, w, h}};
-    Mat M = Mat(4, 1, CV_32FC1, m).t();
-    //Mat p = kalman.predict();
-    //kalman.correct(M);
-
-
+    float m[1][measureparms] = {{x, y, w, h}};
+    Mat z_k = Mat(1, measureparms, CV_32FC1, m).t();
+    kalman.correct(z_k);
 }
 
+void BodyPart::kalman_predict() {    
+    Mat y_k = kalman.predict();
+    Size predicted_size = Size(y_k.at<int>(0, 2), y_k.at<int>(0, 3));
+    Point predicted_center = Point(y_k.at<int>(0, 0), y_k.at<int>(0, 1));
+}
+    
 
 void BodyPart::make_cutout() {
+    vector <vector<Point> > contours_tmp;
     mask = Mat(image.size(), CV_8U, Scalar(0));
     binary = Mat(image.size(), CV_8U, Scalar(0));
     contours_tmp.push_back(blob.contour);
     drawContours( mask, contours_tmp, -1, Scalar(255), CV_FILLED);
     image.copyTo(binary, mask);
-    cutout = binary(blob.position);
+    Rect cut = rect_in_mat(blob.position, binary); // make sure we cut inside binary
+    cutout = binary(cut);
     cvtColor(cutout, hog_image, CV_BGR2GRAY);
 }
 
 
 void BodyPart::compute_hog() {
-    resize(hog_image, sized, Size(64,128));
+    resize(hog_image, sized, Size(64,128), 0, 0, INTER_NEAREST);
     //hog.compute(sized, hog_features, winStride, padding, locations);
     equalizeHist(sized, sized);
     hog.compute(sized, hog_features);
 };
-
-
-
 
 
 Size BodyPart::size() {

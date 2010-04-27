@@ -24,18 +24,19 @@ public:
 private:
     Mat image, mask, binary, sized, cutout;
     int inflate_size;
-    vector<vector<Point> > contours_tmp;
-    KalmanFilter kalman;
     void make_cutout();
     void compute_hog();
-    void kalmanate();
+    void kalman_correct();
+    void kalman_predict();
     
     //hog stuff
     HOGDescriptor hog;
     vector<Point> locations;    
     Size winStride;
     Size padding;
-
+    
+    //kaman stuff
+    KalmanFilter kalman;
 };
 
 

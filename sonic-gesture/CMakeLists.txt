@@ -30,6 +30,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 #include_directories(${GTEST_INCLUDE_DIRS})
 #include_directories(${PROJECT_SOURCE_DIR})
 
+
 add_executable (finder src/finder.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/matcher.cpp src/matcher.h)
 target_link_libraries (finder  ${OpenCV_LIBS})
 target_link_libraries(finder ${Boost_LIBRARIES})

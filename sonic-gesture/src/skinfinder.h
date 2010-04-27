@@ -26,6 +26,7 @@ private:
     CascadeClassifier haar;
     vector<Rect> faces;
     Rect face;
+    int frame_counter;
     void prepare();
     void find_face();
     void make_histogram();

@@ -121,11 +121,12 @@ bool Finder::step() {
     return true;
 }
 
-void Finder::draw_fps(int num, Mat image) {
+void Finder::draw_fps(int delay) {
+    double fps = 1000.0 / delay;
     std::string s;
     std::stringstream out;
     out.precision(1);
-    out << std::fixed << num << " fps";
+    out << std::fixed << fps << " fps";
     s = out.str();
     putText(combined, s, Point(5, 12), FONT_HERSHEY_SIMPLEX, 0.4, Scalar(255, 255, 255), 1);
 }

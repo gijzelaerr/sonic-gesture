@@ -230,5 +230,10 @@ Mat BodyParts::draw_in_image() {
         cs.push_back(right_hand.blob.contour);
         drawContours( visuals, cs, -1, Scalar( 255, 0, 0 ));
     }
+
+    cout << right_hand.pred_center.x << endl;
+    cout << right_hand.pred_center.y << endl;
+    //ellipse(visuals, right_hand.pred_center, right_hand.pred_size, 0, 0, 360, Scalar(0, 255, 255), 1);
+
     return visuals;
 };

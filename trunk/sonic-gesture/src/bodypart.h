@@ -19,10 +19,14 @@ public:
     Size size();
     Blob blob;
     vector<float> hog_features;
-    Mat hog_image;
-    
+    Mat hog_image, sized;
+    Point pred_center;
+    Size pred_size;
+
+
+
 private:
-    Mat image, mask, binary, sized, cutout;
+    Mat image, mask, binary, cutout;
     int inflate_size;
     void make_cutout();
     void compute_hog();

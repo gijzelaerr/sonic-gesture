@@ -85,7 +85,7 @@ void Capture::init() {
 void Capture::grab() {
     big = source.grab();
     assert(big.data);
-    resize(big, small_, Size(), scale, scale);
+    resize(big, small_, small_size, 0, 0, INTER_NEAREST);
     assert(small_.data);
 }
 

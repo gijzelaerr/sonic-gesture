@@ -148,19 +148,17 @@ vector<Mat> load_example_hands(const Size& target_size, const bool mirror) {
 }
 
 Rect rect_in_mat(Rect rectange, const Mat& matrix) {
-    // make sure the cutout_border is inside the borders of image
+    // return maximum size of rectangle inside the borders of matrix
     int x = max(0, rectange.x);
     int y = max(0, rectange.y);
-    int width, height;
-    if (rectange.width+rectange.x > matrix.cols) {
-        width = matrix.cols - x;
-    } else {
-        width = rectange.width;
-    }
-    if (rectange.height + rectange.y > matrix.rows) {
-        height = matrix.rows - y;
-    } else {
-        height = rectange.height;
-    }
-    return Rect(x, y, width, height);
+    int w = rectange.width;
+    int h = rectange.height;
+    
+    if (x+w > matrix.cols) 
+        w = matrix.cols - x;
+     
+    if (y+h > matrix.rows) 
+        h = matrix.rows - y;
+
+    return Rect(x, y, w, h);
 }

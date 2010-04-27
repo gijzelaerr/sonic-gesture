@@ -18,6 +18,8 @@ SkinFinder::SkinFinder() {
     // construct kernel for morhp
     int dia = WORKSIZE/20 + 1;
     kernel = round_kernel(dia);
+    
+    frame_counter = 0;
 }
 
 vector<vector<Point> > SkinFinder::compute(const Mat& frame) {
@@ -32,6 +34,10 @@ void SkinFinder::prepare() {
 }
 
 void SkinFinder::find_face() {
+    if ((frame_counter % 10) != 0)
+        return;
+        
+    frame_counter = 0;
     assert(frame.data);
     haar.detectMultiScale(frame, faces, 1.3, 3, CV_HAAR_DO_CANNY_PRUNING +
         CV_HAAR_FIND_BIGGEST_OBJECT, Size(WORKSIZE/10, WORKSIZE/10) );
@@ -81,4 +87,5 @@ void SkinFinder::step() {
     make_backproject();
     make_mask();
     find_contours();
+    frame_counter++;
 }

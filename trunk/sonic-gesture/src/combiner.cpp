@@ -3,6 +3,8 @@
 #include "combiner.h"
 
 
+using std::cout;
+using std::endl;
 
 Combiner::Combiner(const Size& frame_size, int num_of_win_in_x) {
     this->frame_size = frame_size;
@@ -28,12 +30,14 @@ Mat Combiner::render() {
         current = *images.at(i);
         assert(current.data);
 
+        // TODO: resizing is very slow, visuals is now big size, resize every time
         if (current.size() != frame_size) {
             assert(frame_size.height>0);
             assert(frame_size.width>0);
-            resize(current, temp, frame_size);
+            resize(current, temp, frame_size, 0, 0, INTER_NEAREST);
             current = temp;
         }
+        
         xoffset = (i % num_of_win_in_x) * frame_size.width;
         yoffset = (i / num_of_win_in_x) * frame_size.height;
 

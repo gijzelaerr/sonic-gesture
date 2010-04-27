@@ -75,19 +75,21 @@ void Finder::init() {
 void Finder::grab() {
     big = source.grab();
     assert(big.data);
-    resize(big, small_, Size(), scale, scale);
+    // INTER_NEAREST is faster, INTER_LINEAR is better
+    resize(big, small_, small_size, 0, 0, INTER_NEAREST);
     assert(small_.data);
 }
 
 bool Finder::step() {
-    double t = (double)getTickCount();
+    double t = (double)getTickCount(); 
+    
     grab();
 
     // find the bodyparts
     contours skins_small = skinFinder->compute(small_);
     contours skins = scale_contours(skins_small, float(1)/scale);
     bodyparts.update(skins, skinFinder->face_center, big);
-
+ 
     // interpretate the bodyparts
     int left_index = left_matcher->match(bodyparts.left_hand.hog_features);
     int right_index = right_matcher->match(bodyparts.right_hand.hog_features);
@@ -111,7 +113,7 @@ bool Finder::step() {
     t = ((double)getTickCount() - t)*1000/getTickFrequency();
     int wait = MIN(40, MAX(40-(int)t, 4)); // Wait max of 40 ms, min of 4;
 
-    draw_fps(1000/t);
+    draw_fps(t+wait);
     imshow("Sonic Gesture", combined);
 
     if(waitKey(wait) >= 0)
@@ -119,21 +121,23 @@ bool Finder::step() {
     return true;
 }
 
-void Finder::draw_fps(int fps) {
+void Finder::draw_fps(int delay) {
+    double fps = 1000.0 / delay;
     std::string s;
     std::stringstream out;
-    out << fps << " fps";
+    out.precision(1);
+    out << std::fixed << fps << " fps";
     s = out.str();
     putText(combined, s, Point(5, 12), FONT_HERSHEY_SIMPLEX, 0.4, Scalar(255, 255, 255), 1);
 }
 
 void Finder::run() {
-    //while (this->step()){};
+    while (this->step()){};
 
     //short run for valgrind:
-    for(int i=0; i < 10; i++) {
-        this->step();
-    }
+    //for(int i=0; i < 10; i++) {
+    //    this->step();
+    //}
 }
 
 int main(int, char**) {

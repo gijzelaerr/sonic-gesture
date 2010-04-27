@@ -76,7 +76,7 @@ void Finder::grab() {
     big = source.grab();
     assert(big.data);
     // INTER_NEAREST is faster, INTER_LINEAR is better
-    resize(big, small_, small_size, 0, 0, INTER_NEAREST);
+    resize(big, small_, small_size, 0, 0, INTER_LINEAR);
     assert(small_.data);
 }
 
@@ -121,12 +121,11 @@ bool Finder::step() {
     return true;
 }
 
-void Finder::draw_fps(int delay) {
-    double fps = 1000.0 / delay;
+void Finder::draw_fps(int num, Mat image) {
     std::string s;
     std::stringstream out;
     out.precision(1);
-    out << std::fixed << fps << " fps";
+    out << std::fixed << num << " fps";
     s = out.str();
     putText(combined, s, Point(5, 12), FONT_HERSHEY_SIMPLEX, 0.4, Scalar(255, 255, 255), 1);
 }

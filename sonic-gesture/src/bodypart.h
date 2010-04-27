@@ -37,6 +37,7 @@ private:
     
     //kaman stuff
     KalmanFilter kalman;
+    Mat state, measurement, transition;
 };
 
 

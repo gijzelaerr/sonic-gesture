@@ -1,9 +1,8 @@
 #include <iostream>
 
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
-
-#define HAAR "/usr/local/share/opencv/haarcascades/haarcascade_frontalface_default.xml"
+#include "cv.h"
+#include "highgui.h"
+#include "settings.h"
 
 using namespace cv;
 using namespace std;
@@ -18,9 +17,9 @@ void draw_num(int num, Mat image) {
 }
 
 int main (int argc, char * const argv[]) {
-    VideoCapture cap = VideoCapture(0);
+    VideoCapture cap = VideoCapture(DEVICE);
     
-    CascadeClassifier clasfr = CascadeClassifier(HAAR);
+    CascadeClassifier clasfr = CascadeClassifier(FACEHAAR);
     Mat frame, small, measurement;
     vector<Rect> faces;
     Rect face;

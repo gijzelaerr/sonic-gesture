@@ -39,6 +39,11 @@ add_executable (capture src/capture.cpp src/skinfinder.cpp src/source.cpp src/hi
 target_link_libraries (capture  ${OpenCV_LIBS})
 target_link_libraries(capture ${Boost_LIBRARIES})
 
+add_executable (kalmantest src/kalmantest.cpp)
+target_link_libraries (kalmantest  ${OpenCV_LIBS})
+target_link_libraries(kalmantest ${Boost_LIBRARIES})
+
+
 
 
 #add_test(AllTestsInRun run_test)

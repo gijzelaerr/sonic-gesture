@@ -19,22 +19,18 @@ BodyPart::BodyPart() {
     const int measureparms = 1; // x, y, w, h
     const float dt = 1.0; // time between frames, constant for movie
  
+    float f[stateparms][stateparms] = {
+        {1, 1},
+        {0, 1}
+    };
+
     kalman.init(stateparms, measureparms);
-    //float f[stateparms][stateparms] = {
-    //    {1, 0, dt, 0, 0, 0},
-    //    {0, 1, 0, dt, 0, 0},
-    //    {0, 0, 1, 0, 0, 0},
-    //    {0, 0, 0, 1, 0, 0},
-    //    {0, 0, 0, 0, 1, 0},
-    //    {0, 0, 0, 0, 0, 1}
-    //};
-    float f[2][2] = {{1, 1}, {0, 1}};
     kalman.transitionMatrix = Mat(stateparms, stateparms, CV_32FC1, f);
     setIdentity(kalman.measurementMatrix, Scalar(1.0));
     setIdentity(kalman.processNoiseCov, Scalar(1));
     setIdentity(kalman.measurementNoiseCov, Scalar(1));
     setIdentity(kalman.errorCovPost, Scalar(1));
-    randn(kalman.statePost, Scalar(0), Scalar(500));
+    randn(kalman.statePost, Scalar(0), Scalar(320));
 };
 
 
@@ -61,29 +57,16 @@ void BodyPart::kalman_correct() {
     int y = blob.center.y;
     int w = blob.position.width;
     int h = blob.position.height;
-    //float m[1][measureparms] = {{x, y, w, h}};
-    float m[1][measureparms] = {{x}};
+
+    float m[1][measureparms] = {{(float)x}};
     measurement = Mat(1, measureparms, CV_32FC1, m).t();
-    cout << measurement.at<float>(0, 0) << endl;
     kalman.correct(measurement);
-    cout << kalman.statePost.at<float>(0, 0) << endl;
 
 };
 
 void BodyPart::kalman_predict() {
     kalman.predict();
-    cout << endl;
     cout << kalman.statePre.at<float>(0, 0) << endl;
-//    cout << kalman.statePre.at<float>(0, 1) << endl;
-//    cout << kalman.statePre.at<float>(0, 2) << endl;
-//    cout << kalman.statePre.at<float>(0, 3) << endl;
-//    cout << kalman.statePre.at<float>(0, 4) << endl;
-//    cout << kalman.statePre.at<float>(0, 5) << endl;
-//    cout << kalman.statePre.at<float>(0, 6) << endl;
-    //Point predicted_center = Point(kalman.statePre.at<float>(0, 0), kalman.statePre.at<float>(0, 1));
-    //Size predicted_size = Size(kalman.statePre.at<float>(0, 4), kalman.statePre.at<float>(0, 5));
-    //cout << predicted_center.x << endl;
-    //cout << predicted_size.width << endl;
 };
     
 void BodyPart::make_cutout() {

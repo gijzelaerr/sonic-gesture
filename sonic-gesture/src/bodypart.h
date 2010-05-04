@@ -40,7 +40,7 @@ private:
     Size padding;
     
     //kaman stuff
-    KalmanFilter kalman;
+    KalmanFilter* kalman;
     Mat state, measurement, transition;
 };
 

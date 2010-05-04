@@ -14,27 +14,29 @@ BodyPart::BodyPart() {
     padding = Size(0, 0);
     hog = HOGDescriptor();
 
-    // kalman stuff
-    const int stateparms = 2; // x, y, vx, vy, w, h
-    const int measureparms = 1; // x, y, w, h
-    const float dt = 1.0; // time between frames, constant for movie
- 
+    const int stateparms = 4;
+    const int measureparms = 2;
+    
     float f[stateparms][stateparms] = {
-        {1, 1},
-        {0, 1}
+        {1, 0, 1, 0},
+        {0, 1, 0, 1},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1},
     };
+    
+    kalman = new KalmanFilter();
+    kalman->init(stateparms, measureparms); 
+    kalman->transitionMatrix = Mat(stateparms, stateparms, CV_32FC1, f);
+    setIdentity(kalman->measurementMatrix, Scalar(1.0));
+    setIdentity(kalman->processNoiseCov, Scalar(1.0));
+    setIdentity(kalman->measurementNoiseCov, Scalar(1.0));
+    setIdentity(kalman->errorCovPost, Scalar(1.0));
+    randu(kalman->statePost, Scalar(0), Scalar(320));};
 
-    kalman.init(stateparms, measureparms);
-    kalman.transitionMatrix = Mat(stateparms, stateparms, CV_32FC1, f);
-    setIdentity(kalman.measurementMatrix, Scalar(1.0));
-    setIdentity(kalman.processNoiseCov, Scalar(1));
-    setIdentity(kalman.measurementNoiseCov, Scalar(1));
-    setIdentity(kalman.errorCovPost, Scalar(1));
-    randn(kalman.statePost, Scalar(0), Scalar(320));
+
+BodyPart::~BodyPart() {
+    delete kalman;
 };
-
-
-BodyPart::~BodyPart() {};
 
 
 void BodyPart::update(const Blob& blob, const Mat& image) {
@@ -51,22 +53,17 @@ void BodyPart::update(const Mat& image) {
 };
 
 void BodyPart::kalman_correct() {
-    //const int stateparms = 6; // x, y, vx, vy, w, h
-    const int measureparms = 1; // x, y, w, h
-    int x = blob.center.x;
-    int y = blob.center.y;
-    int w = blob.position.width;
-    int h = blob.position.height;
-
-    float m[1][measureparms] = {{(float)x}};
-    measurement = Mat(1, measureparms, CV_32FC1, m).t();
-    kalman.correct(measurement);
-
+    float m[1][2] = {{blob.center.x, blob.center.y}};
+    measurement = Mat(1, 2, CV_32FC1, m).t();
+    kalman->correct(measurement);
+    cout << "measure " << measurement.at<float>(0, 0) << " " << measurement.at<float>(0, 1) << endl;
+    cout << "predict " << kalman->statePre.at<float>(0, 0) << " " << kalman->statePre.at<float>(0, 1) << endl;
+    cout << "post " << kalman->statePost.at<float>(0, 0) << " " << kalman->statePost.at<float>(0, 1) << endl;
 };
 
 void BodyPart::kalman_predict() {
-    kalman.predict();
-    cout << kalman.statePre.at<float>(0, 0) << endl;
+    kalman->predict();
+
 };
     
 void BodyPart::make_cutout() {

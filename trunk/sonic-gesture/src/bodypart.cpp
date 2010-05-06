@@ -11,7 +11,9 @@ using std::endl;
 const int stateparms = 6;
 const int measureparms = 4;
 
-BodyPart::BodyPart() {    
+BodyPart::BodyPart() {
+    visible = false;
+    
     // hog stuff
     winStride = Size(8, 8);
     padding = Size(0, 0);
@@ -47,6 +49,7 @@ BodyPart::~BodyPart() {
 
 
 void BodyPart::update(const Blob& blob, const Mat& image) {
+    visible = true;
     this->image = image;
     this->blob = blob;
     this->position = blob.position;
@@ -58,6 +61,8 @@ void BodyPart::update(const Blob& blob, const Mat& image) {
 };
 
 void BodyPart::update(const Mat& image) {
+    if (!visible)
+        return;
     this->image = image;
     kalman_predict();
     make_cutout();
@@ -127,7 +132,7 @@ Size BodyPart::size() {
     return cutout.size();
 };
 
-void BodyParts::update(const vector<vector<Point> > contours, Point face_center, const Mat& image) {
+void BodyParts::update(contours contours_, Point face_center, const Mat& image) {
     vector<Blob> blobs, tmp_blobs;
     this->image = image;
     Blob blob;
@@ -136,8 +141,12 @@ void BodyParts::update(const vector<vector<Point> > contours, Point face_center,
     int right_pos = -1;
 
     // first make blobs
-    for (unsigned int i = 0; i < contours.size(); i++) {
-        blobs.push_back(Blob(contours.at(i), INFLATE_SIZE));
+    for (unsigned int i = 0; i < contours_.size(); i++) {
+        contour contour_ = contours_.at(i);
+        if (contour_.size() > 0) {
+            assert(contour_.size() > 0);
+            blobs.push_back(Blob(contour_, INFLATE_SIZE));
+        }
     }    
 
     // sort the limbs on size
@@ -223,9 +232,12 @@ Mat BodyParts::draw_in_image() {
 
     Mat visuals, mask;
     vector<vector<Point> > contours;
-    
-    contours.push_back(head.blob.contour);
+
+    if (head.visible > 0)
+        contours.push_back(head.blob.contour);
+    if (left_hand.visible > 0)
     contours.push_back(left_hand.blob.contour);
+    if (right_hand.visible > 0)
     contours.push_back(right_hand.blob.contour);
 
     mask = Mat(image.size(), CV_8U, Scalar(0));

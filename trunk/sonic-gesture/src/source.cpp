@@ -30,7 +30,7 @@ Source::~Source() {
 void Source::init() {
     if(!cap.isOpened()) {
         cout << "couldn't open capture device!\n";
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     cap >> frame;

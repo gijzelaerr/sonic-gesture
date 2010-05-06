@@ -28,12 +28,11 @@ void Blob::init() {
 
 // returns a binary mask for contour, mask size is of image size
 Mat Blob::mask(const Mat& image) {
+    assert (contour.size() > 0);
     vector <vector<Point> > contours_tmp;
     Mat maskmat = Mat(image.size(), CV_8U, Scalar(0));
-    if (contour.size() > 0) {
-        contours_tmp.push_back(contour);
-        drawContours( maskmat, contours_tmp, -1, Scalar(255), CV_FILLED);
-    };
+    contours_tmp.push_back(contour);
+    drawContours( maskmat, contours_tmp, -1, Scalar(255), CV_FILLED);
     return maskmat;
 }
 

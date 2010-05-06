@@ -162,3 +162,29 @@ Rect rect_in_mat(Rect rectange, const Mat& matrix) {
 
     return Rect(x, y, w, h);
 }
+
+void print_mat(Mat matrix) {
+    vector<Mat> planes;
+    split(matrix, planes);
+    Size s = matrix.size();
+    int cns = matrix.channels();
+
+    cout << "channels: " << cns;
+    cout << " type: " << matrix.type() << endl;
+    Mat c;
+    float e;
+
+    for (unsigned int cn = 0; cn < cns; cn++) {
+        c = planes.at(cn);
+        if (cns > 1) {
+            cout << "channel " << cns << endl;
+        }
+        for (int x = 0; x < s.width; x++) {
+            for (int y = 0; y < s.height; y++) {
+                e = matrix.at<float>(x, y);
+                cout << e << "\t";
+            };
+            cout << endl;
+        };
+    };
+};

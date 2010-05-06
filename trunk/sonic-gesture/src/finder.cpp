@@ -132,11 +132,11 @@ void Finder::draw_fps(int delay) {
 }
 
 void Finder::run() {
-    //while (this->step()){};
+    while (this->step()){};
 
-    for(int i=0; i < 10; i++) {
-        this->step();
-    }
+    //for(int i=0; i < 10; i++) {
+    //    this->step();
+    //}
 }
 
 int main(int, char**) {

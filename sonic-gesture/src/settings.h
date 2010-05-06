@@ -21,8 +21,8 @@
 
 
 // What (webcam) device or movie to use.
-//#define DEVICE 0
-#define DEVICE DATA_DIR + "/movies/gijs_train_movie.mov"
+#define DEVICE 0
+//#define DEVICE DATA_DIR + "/movies/gijs_train_movie.mov"
 //#define DEVICE DATA_DIR + "/movies/gijs_train_lefti.avi"
 //#define DEVICE DATA_DIR + "/movies/heiligenacht.mp4"
 //#define DEVICE DATA_DIR + "/movies/friend.mov"
@@ -30,7 +30,7 @@
 #define MAKE_MOVIE TRUE
 
 // window size parameters
-#define WORKSIZE 300
+#define WORKSIZE 350
 #define XWINDOWS 2
 
 // Limb settings

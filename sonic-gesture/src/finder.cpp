@@ -89,10 +89,15 @@ bool Finder::step() {
     contours skins_small = skinFinder->compute(small_);
     contours skins = scale_contours(skins_small, float(1)/scale);
     bodyparts.update(skins, skinFinder->face_center, big);
- 
+
+    int left_index = -1;
+    int right_index = -1;
+    
     // interpretate the bodyparts
-    int left_index = left_matcher->match(bodyparts.left_hand.sized_hog_features);
-    int right_index = right_matcher->match(bodyparts.right_hand.sized_hog_features);
+    if (bodyparts.left_hand.visible)
+        left_index = left_matcher->match(bodyparts.left_hand.sized_hog_features);
+    if (bodyparts.left_hand.visible)
+        right_index = right_matcher->match(bodyparts.right_hand.sized_hog_features);
 
     if (left_index > -1) {
         current_left = hands_left.at(left_index);

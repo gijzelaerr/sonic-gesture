@@ -22,6 +22,7 @@ public:
     Mat sized_hog_image, hog_image;
     Rect position, prediction;
     Mat locate_result, last_good_cutout;
+    bool visible;
 
 
 private:

@@ -23,6 +23,7 @@ Blob::Blob(const vector<Point>& contour, double inflate_size) {
 void Blob::init() {
     Mat m = Mat(contour);
     position = boundingRect(m);
+    area = position.area();
     center = Point(position.x + (position.width/2), position.y + (position.height/2));
 }
 

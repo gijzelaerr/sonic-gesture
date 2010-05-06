@@ -33,8 +33,17 @@ void Source::init() {
         exit(1);
     }
 
-    int width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
-    int height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+    cap >> frame;
+    assert(frame.data);
+    
+    // doesn't work for webcam somehow
+    //int width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    //int height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+    int width = frame.cols;
+    int height = frame.rows;
+    
+    assert(width > 0);
+    assert(height > 0);
     size = Size(width, height);
 };
 

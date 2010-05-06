@@ -18,10 +18,9 @@ public:
     void update(const Mat& image);
     Size size();
     Blob blob;
-    vector<float> hog_features;
-    Mat hog_image, sized;
-    Point pred_center;
-    Size pred_size;
+    vector<float> sized_hog_features, hog_features;
+    Mat sized_hog_image, hog_image;
+    Rect prediction;
 
 
 
@@ -41,7 +40,6 @@ private:
     
     //kaman stuff
     KalmanFilter* kalman;
-    Mat state, measurement, transition;
 };
 
 

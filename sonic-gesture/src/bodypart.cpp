@@ -8,30 +8,36 @@
 using std::cout;
 using std::endl;
 
+const int stateparms = 6;
+const int measureparms = 4;
+
 BodyPart::BodyPart() {    
     // hog stuff
     winStride = Size(8, 8);
     padding = Size(0, 0);
     hog = HOGDescriptor();
 
-    const int stateparms = 4;
-    const int measureparms = 2;
-    
-    float f[stateparms][stateparms] = {
-        {1, 0, 1, 0},
-        {0, 1, 0, 1},
-        {0, 0, 1, 0},
-        {0, 0, 0, 1},
-    };
-    
     kalman = new KalmanFilter();
-    kalman->init(stateparms, measureparms); 
-    kalman->transitionMatrix = Mat(stateparms, stateparms, CV_32FC1, f);
-    setIdentity(kalman->measurementMatrix, Scalar(1.0));
-    setIdentity(kalman->processNoiseCov, Scalar(1.0));
-    setIdentity(kalman->measurementNoiseCov, Scalar(1.0));
-    setIdentity(kalman->errorCovPost, Scalar(1.0));
-    randu(kalman->statePost, Scalar(0), Scalar(320));};
+    // kalman stuff
+
+    float f[stateparms][stateparms] = {
+        {1, 0, 0, 0, 1, 0},
+        {0, 1, 0, 0, 0, 1},
+        {0, 0, 1, 0, 0, 0},
+        {0, 0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 1, 0},
+        {0, 0, 0, 0, 0, 1},
+    };
+
+    kalman->init(stateparms, measureparms);
+    Mat transmat = Mat(stateparms, stateparms, CV_32FC1, f);
+    transmat.copyTo(kalman->transitionMatrix);
+    setIdentity(kalman->measurementMatrix, Scalar(1));
+    setIdentity(kalman->processNoiseCov, Scalar(1));
+    setIdentity(kalman->measurementNoiseCov, Scalar(5));
+    setIdentity(kalman->errorCovPost, Scalar(3));
+    randu(kalman->statePost, Scalar(0), Scalar(1));
+};
 
 
 BodyPart::~BodyPart() {
@@ -52,20 +58,27 @@ void BodyPart::update(const Mat& image) {
     compute_hog();
 };
 
-void BodyPart::kalman_correct() {
-    float m[1][2] = {{blob.center.x, blob.center.y}};
-    measurement = Mat(1, 2, CV_32FC1, m).t();
-    kalman->correct(measurement);
-    cout << "measure " << measurement.at<float>(0, 0) << " " << measurement.at<float>(0, 1) << endl;
-    cout << "predict " << kalman->statePre.at<float>(0, 0) << " " << kalman->statePre.at<float>(0, 1) << endl;
-    cout << "post " << kalman->statePost.at<float>(0, 0) << " " << kalman->statePost.at<float>(0, 1) << endl;
-};
 
 void BodyPart::kalman_predict() {
     kalman->predict();
-
+    int x = kalman->statePre.at<float>(0, 0);
+    int y = kalman->statePre.at<float>(0, 1);
+    int w = kalman->statePre.at<float>(0, 2);
+    int h = kalman->statePre.at<float>(0, 3);
+    prediction = Rect(x, y, w, h);
+    prediction = rect_in_mat(prediction, image);
 };
-    
+
+void BodyPart::kalman_correct() {
+    float a = blob.position.x;
+    float b = blob.position.y;
+    int c = blob.position.width;
+    int d = blob.position.height;
+    float m[1][measureparms] = {{a, b, c, d}};
+    Mat measurement = Mat(1, measureparms, CV_32FC1, m).t();
+    kalman->correct(measurement);
+};
+
 void BodyPart::make_cutout() {
     vector <vector<Point> > contours_tmp;
     mask = Mat(image.size(), CV_8U, Scalar(0));
@@ -79,10 +92,11 @@ void BodyPart::make_cutout() {
 };
 
 void BodyPart::compute_hog() {
-    resize(hog_image, sized, Size(64,128), 0, 0, INTER_NEAREST);
-    //hog.compute(sized, hog_features, winStride, padding, locations);
-    equalizeHist(sized, sized);
-    hog.compute(sized, hog_features);
+    resize(hog_image, sized_hog_image, Size(64,128), 0, 0, INTER_NEAREST);
+    equalizeHist(sized_hog_image, sized_hog_image);
+    equalizeHist(hog_image, hog_image);
+    hog.compute(sized_hog_image, sized_hog_features);
+    hog.compute(hog_image, hog_features);
 };
 
 
@@ -206,18 +220,17 @@ Mat BodyParts::draw_in_image() {
     if (left_hand.blob.contour.size() > 0) {
         vector<vector<Point> > cs;
         cs.push_back(left_hand.blob.contour);
-        drawContours( visuals, cs, -1, Scalar( 0, 255, 0 ));
+        drawContours( visuals, cs, -1, Scalar( 255, 0, 0 ));
     }
     
     if (right_hand.blob.contour.size() > 0) {
         vector<vector<Point> > cs;
         cs.push_back(right_hand.blob.contour);
-        drawContours( visuals, cs, -1, Scalar( 255, 0, 0 ));
+        drawContours( visuals, cs, -1, Scalar( 0, 255, 0 ));
     }
 
-    //cout << right_hand.pred_center.x << endl;
-    //cout << right_hand.pred_center.y << endl;
-    //ellipse(visuals, right_hand.pred_center, right_hand.pred_size, 0, 0, 360, Scalar(0, 255, 255), 1);
-
+    rectangle(visuals, left_hand.prediction, Scalar(255, 0, 0));
+    rectangle(visuals, right_hand.prediction, Scalar(0, 255, 0));
+    rectangle(visuals, head.prediction, Scalar(0, 0, 255));
     return visuals;
 };

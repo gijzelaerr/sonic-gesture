@@ -115,7 +115,7 @@ bool Capture::step(string image_name) {
         cout << "saving " << hand_file.string() << endl;
         cout << "saving " << orig_file.string() << endl;
         assert(imwrite(orig_file.string(), big)); 
-        assert(imwrite(hand_file.string(), bodyparts.left_hand.sized));
+        assert(imwrite(hand_file.string(), bodyparts.left_hand.sized_hog_image));
         return false;
     }
     return true;

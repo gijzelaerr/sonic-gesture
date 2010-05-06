@@ -55,6 +55,7 @@ public:
     BodyPart right_hand;
 private:
     Mat image;
+    Point face_center;
 };
 
 #endif

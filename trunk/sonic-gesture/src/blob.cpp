@@ -22,11 +22,17 @@ Blob::Blob(const vector<Point>& contour, double inflate_size) {
 
 void Blob::init() {
     Mat m = Mat(contour);
-    //minEnclosingCircle(m, center, radius);
-    //RotatedRect s = minAreaRect(m);
     position = boundingRect(m);
-    area = position.area();
     center = Point(position.x + (position.width/2), position.y + (position.height/2));
+}
+
+// returns a binary mask for contour, mask size is of image size
+Mat Blob::mask(const Mat& image) {
+    vector <vector<Point> > contours_tmp;
+    Mat maskmat = Mat(image.size(), CV_8U, Scalar(0));
+    contours_tmp.push_back(contour);
+    drawContours( maskmat, contours_tmp, -1, Scalar(255), CV_FILLED);
+    return maskmat;
 }
 
 

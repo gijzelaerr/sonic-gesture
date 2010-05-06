@@ -91,8 +91,8 @@ bool Finder::step() {
     bodyparts.update(skins, skinFinder->face_center, big);
  
     // interpretate the bodyparts
-    int left_index = left_matcher->match(bodyparts.left_hand.hog_features);
-    int right_index = right_matcher->match(bodyparts.right_hand.hog_features);
+    int left_index = left_matcher->match(bodyparts.left_hand.sized_hog_features);
+    int right_index = right_matcher->match(bodyparts.right_hand.sized_hog_features);
 
     if (left_index > -1) {
         current_left = hands_left.at(left_index);

@@ -21,8 +21,8 @@ BodyPart::BodyPart() {
     // kalman stuff
 
     float f[stateparms][stateparms] = {
-        {1, 0, 0, 0, 1, 0},
-        {0, 1, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0.1, 0},
+        {0, 1, 0, 0, 0, 0.1},
         {0, 0, 1, 0, 0, 0},
         {0, 0, 0, 1, 0, 0},
         {0, 0, 0, 0, 1, 0},
@@ -36,6 +36,7 @@ BodyPart::BodyPart() {
     setIdentity(kalman->processNoiseCov, Scalar(1));
     setIdentity(kalman->measurementNoiseCov, Scalar(5));
     setIdentity(kalman->errorCovPost, Scalar(3));
+    setIdentity(kalman->gain, Scalar(0e-15));
     randu(kalman->statePost, Scalar(0), Scalar(1));
 };
 
@@ -46,16 +47,23 @@ BodyPart::~BodyPart() {
 
 
 void BodyPart::update(const Blob& blob, const Mat& image) {
+    this->image = image;
     this->blob = blob;
-    this->update(image);
+    this->position = blob.position;
+    kalman_predict();
+    make_cutout();
+    compute_hog();
+    kalman_correct(position);
+    last_good_cutout = cutout;
 };
 
 void BodyPart::update(const Mat& image) {
     this->image = image;
     kalman_predict();
-    kalman_correct();
     make_cutout();
     compute_hog();
+    locate();
+    kalman_correct(position);
 };
 
 
@@ -69,24 +77,17 @@ void BodyPart::kalman_predict() {
     prediction = rect_in_mat(prediction, image);
 };
 
-void BodyPart::kalman_correct() {
-    float a = blob.position.x;
-    float b = blob.position.y;
-    int c = blob.position.width;
-    int d = blob.position.height;
-    float m[1][measureparms] = {{a, b, c, d}};
-    Mat measurement = Mat(1, measureparms, CV_32FC1, m).t();
-    kalman->correct(measurement);
+void BodyPart::kalman_correct(Rect measurement) {
+    float m[1][measureparms] = {{measurement.x, measurement.y,
+            measurement.width, measurement.height}};
+    Mat measurementMatrix = Mat(1, measureparms, CV_32FC1, m).t();
+    kalman->correct(measurementMatrix);
 };
 
 void BodyPart::make_cutout() {
-    vector <vector<Point> > contours_tmp;
-    mask = Mat(image.size(), CV_8U, Scalar(0));
-    binary = Mat(image.size(), CV_8U, Scalar(0));
-    contours_tmp.push_back(blob.contour);
-    drawContours( mask, contours_tmp, -1, Scalar(255), CV_FILLED);
+    mask = blob.mask(image);
     image.copyTo(binary, mask);
-    Rect cut = rect_in_mat(blob.position, binary); // make sure we cut inside binary
+    Rect cut = rect_in_mat(blob.position, binary);
     cutout = binary(cut);
     cvtColor(cutout, hog_image, CV_BGR2GRAY);
 };
@@ -96,7 +97,29 @@ void BodyPart::compute_hog() {
     equalizeHist(sized_hog_image, sized_hog_image);
     equalizeHist(hog_image, hog_image);
     hog.compute(sized_hog_image, sized_hog_features);
-    hog.compute(hog_image, hog_features);
+
+    //HOGDescriptor h = HOGDescriptor()
+    //hog.compute(hog_image, hog_features, hog_image.size(), Size());
+
+};
+
+void BodyPart::locate() {
+    Rect search_rect = Rect(prediction.x-prediction.width/2,
+            prediction.y-prediction.height/2, prediction.width*2,
+            prediction.height*2);
+    search_rect = rect_in_mat(search_rect, image);
+    Mat search = image(search_rect);
+
+    matchTemplate(search, last_good_cutout, locate_result, CV_TM_SQDIFF);
+    double min;
+    double max;
+    Point minloc;
+    Point maxloc;
+    minMaxLoc(locate_result, &min, &max, &minloc, &maxloc);
+    Rect new_pos = Rect(minloc.x - prediction.width/2,
+                        minloc.y - prediction.height/2,
+                        prediction.width, prediction.height);
+    this->position = new_pos;
 };
 
 
@@ -197,6 +220,7 @@ void BodyParts::update(const vector<vector<Point> > contours, Point face_center,
 };
 
 Mat BodyParts::draw_in_image() {
+
     Mat visuals, mask;
     vector<vector<Point> > contours;
     
@@ -232,5 +256,6 @@ Mat BodyParts::draw_in_image() {
     rectangle(visuals, left_hand.prediction, Scalar(255, 0, 0));
     rectangle(visuals, right_hand.prediction, Scalar(0, 255, 0));
     rectangle(visuals, head.prediction, Scalar(0, 0, 255));
+
     return visuals;
 };

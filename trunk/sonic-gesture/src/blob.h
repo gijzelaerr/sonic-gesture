@@ -11,10 +11,12 @@ public:\
     Blob();
     Blob(const vector<Point>& contour);
     Blob(const vector<Point>& contour, double inflate_size);
+    Mat mask(const Mat& image);
     Rect position;
     Point center;
     int area;
     vector<Point> contour;
+
     
 private:
     void init();

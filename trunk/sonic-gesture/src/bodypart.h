@@ -20,8 +20,8 @@ public:
     Blob blob;
     vector<float> sized_hog_features, hog_features;
     Mat sized_hog_image, hog_image;
-    Rect prediction;
-
+    Rect position, prediction;
+    Mat locate_result, last_good_cutout;
 
 
 private:
@@ -29,8 +29,9 @@ private:
     int inflate_size;
     void make_cutout();
     void compute_hog();
-    void kalman_correct();
+    void kalman_correct(Rect measurement);
     void kalman_predict();
+    void locate();
     
     //hog stuff
     HOGDescriptor hog;

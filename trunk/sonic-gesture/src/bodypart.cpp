@@ -112,8 +112,15 @@ void BodyPart::locate() {
     Rect search_rect = Rect(prediction.x-prediction.width/2,
             prediction.y-prediction.height/2, prediction.width*2,
             prediction.height*2);
+
     search_rect = rect_in_mat(search_rect, image);
     Mat search = image(search_rect);
+
+    // going to search outside of image
+    if (last_good_cutout.cols > search.cols ||last_good_cutout.rows > search.rows ) {
+        this->visible = false;
+        return;
+    };
 
     matchTemplate(search, last_good_cutout, locate_result, CV_TM_SQDIFF);
     double min;
@@ -135,6 +142,7 @@ Size BodyPart::size() {
 void BodyParts::update(contours contours_, Point face_center, const Mat& image) {
     vector<Blob> blobs, tmp_blobs;
     this->image = image;
+    this->face_center = face_center;
     Blob blob;
     int head_pos = -1;
     int left_pos = -1;
@@ -269,5 +277,6 @@ Mat BodyParts::draw_in_image() {
     rectangle(visuals, right_hand.prediction, Scalar(0, 255, 0));
     rectangle(visuals, head.prediction, Scalar(0, 0, 255));
 
+    circle(visuals, face_center, 10, CV_RGB(255, 255, 255));
     return visuals;
 };

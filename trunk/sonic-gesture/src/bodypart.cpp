@@ -153,7 +153,10 @@ void BodyParts::update(contours contours_, Point face_center, const Mat& image) 
         contour contour_ = contours_.at(i);
         if (contour_.size() > 0) {
             assert(contour_.size() > 0);
-            blobs.push_back(Blob(contour_, INFLATE_SIZE));
+            blob = Blob(contour_, INFLATE_SIZE);
+            // TODO: this is just a small filter to remove noice
+            if (blob.area > MIN_BLOB_SIZE)
+                blobs.push_back(blob);
         }
     }    
 

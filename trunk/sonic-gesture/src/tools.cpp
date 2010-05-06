@@ -160,6 +160,9 @@ Rect rect_in_mat(Rect rectange, const Mat& matrix) {
     if (y+h > matrix.rows) 
         h = matrix.rows - y;
 
+    w = max(0, w);
+    h = max(0, h);    
+    
     return Rect(x, y, w, h);
 }
 
@@ -174,7 +177,7 @@ void print_mat(Mat matrix) {
     Mat c;
     float e;
 
-    for (unsigned int cn = 0; cn < cns; cn++) {
+    for (int cn = 0; cn < cns; cn++) {
         c = planes.at(cn);
         if (cns > 1) {
             cout << "channel " << cns << endl;

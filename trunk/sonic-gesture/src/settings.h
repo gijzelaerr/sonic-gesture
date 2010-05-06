@@ -21,10 +21,10 @@
 
 
 // What (webcam) device or movie to use.
-//#define DEVICE 0
+#define DEVICE 0
 //#define DEVICE DATA_DIR + "/movies/gijs_train_movie.mov"
 //#define DEVICE DATA_DIR + "/movies/gijs_train_lefti.avi"
-#define DEVICE DATA_DIR + "/movies/heiligenacht.mp4"
+//#define DEVICE DATA_DIR + "/movies/heiligenacht.mp4"
 //#define DEVICE DATA_DIR + "/movies/friend.mov"
 
 #define MAKE_MOVIE TRUE
@@ -38,5 +38,8 @@
 
 // threshold for probabilistic image to binary image
 #define THRESHOLD 20
+
+// minimum blob size in square pixels
+#define MIN_BLOB_SIZE 1000
 
 #endif

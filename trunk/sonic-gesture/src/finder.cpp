@@ -95,9 +95,9 @@ bool Finder::step() {
     int right_index = -1;
     
     // interpretate the bodyparts
-    if (bodyparts.left_hand.visible)
+    if (bodyparts.left_hand.state != NOT_VISIBLE)
         left_index = left_matcher->match(bodyparts.left_hand.sized_hog_features);
-    if (bodyparts.left_hand.visible)
+    if (bodyparts.right_hand.state != NOT_VISIBLE)
         right_index = right_matcher->match(bodyparts.right_hand.sized_hog_features);
 
     if (left_index > -1) {

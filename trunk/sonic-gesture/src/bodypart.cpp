@@ -5,14 +5,14 @@
 #include "tools.h"
 
 #include <iostream>
-using std::cout;
-using std::endl;
+using namespace std;
+
 
 const int stateparms = 6;
 const int measureparms = 4;
 
 BodyPart::BodyPart() {
-    visible = false;
+    state = NOT_VISIBLE;
     
     // hog stuff
     winStride = Size(8, 8);
@@ -39,7 +39,7 @@ BodyPart::BodyPart() {
     setIdentity(kalman->measurementNoiseCov, Scalar(5));
     setIdentity(kalman->errorCovPost, Scalar(3));
     setIdentity(kalman->gain, Scalar(0e-15));
-    randu(kalman->statePost, Scalar(0), Scalar(1));
+    randu(kalman->statePost, Scalar(1), Scalar(100));
 };
 
 
@@ -49,7 +49,7 @@ BodyPart::~BodyPart() {
 
 
 void BodyPart::update(const Blob& blob, const Mat& image) {
-    visible = true;
+    state = FOUND_COLOR;
     this->image = image;
     this->blob = blob;
     this->position = blob.position;
@@ -61,8 +61,11 @@ void BodyPart::update(const Blob& blob, const Mat& image) {
 };
 
 void BodyPart::update(const Mat& image) {
-    if (!visible)
+    // we can't do anything if we don't have some previous knowledge
+    if (state == NOT_VISIBLE)
         return;
+
+    state = FOUND_TEMPLATE;
     this->image = image;
     kalman_predict();
     make_cutout();
@@ -91,6 +94,7 @@ void BodyPart::kalman_correct(Rect measurement) {
 
 void BodyPart::make_cutout() {
     mask = blob.mask(image);
+    binary = Mat(image.size(), image.type(), Scalar(0));
     image.copyTo(binary, mask);
     Rect cut = rect_in_mat(blob.position, binary);
     cutout = binary(cut);
@@ -109,29 +113,37 @@ void BodyPart::compute_hog() {
 };
 
 void BodyPart::locate() {
-    Rect search_rect = Rect(prediction.x-prediction.width/2,
-            prediction.y-prediction.height/2, prediction.width*2,
-            prediction.height*2);
+    Rect search_rect = Rect(prediction.x - WORKSIZE/20,
+                            prediction.y - WORKSIZE/20,
+                            prediction.width + WORKSIZE/10,
+                            prediction.height + WORKSIZE/10);
 
     search_rect = rect_in_mat(search_rect, image);
     Mat search = image(search_rect);
 
-    // going to search outside of image
-    if (last_good_cutout.cols > search.cols ||last_good_cutout.rows > search.rows ) {
-        this->visible = false;
+    // if going to search outside of image
+    if (last_good_cutout.cols > search.cols || last_good_cutout.rows > search.rows ) {
+        state = NOT_VISIBLE;
         return;
     };
 
-    matchTemplate(search, last_good_cutout, locate_result, CV_TM_SQDIFF);
+    matchTemplate(search, last_good_cutout, locate_result, CV_TM_SQDIFF_NORMED);
     double min;
     double max;
     Point minloc;
     Point maxloc;
     minMaxLoc(locate_result, &min, &max, &minloc, &maxloc);
-    Rect new_pos = Rect(minloc.x - prediction.width/2,
-                        minloc.y - prediction.height/2,
+    Rect new_pos = Rect(minloc.x + search_rect.x,
+                        minloc.y + search_rect.y,
                         prediction.width, prediction.height);
+
+    if (min > 0.7) {
+        state = NOT_VISIBLE;
+        return;
+    }
+    
     this->position = new_pos;
+    //cout << fixed << min << endl;
 };
 
 
@@ -154,9 +166,11 @@ void BodyParts::update(contours contours_, Point face_center, const Mat& image) 
         if (contour_.size() > 0) {
             assert(contour_.size() > 0);
             blob = Blob(contour_, INFLATE_SIZE);
-            // TODO: this is just a small filter to remove noice
-            if (blob.area > MIN_BLOB_SIZE)
+            // A filter to remove noice, (small objects)
+
+            if (blob.area > MIN_BLOB_SIZE) {
                 blobs.push_back(blob);
+            }
         }
     }    
 
@@ -244,42 +258,47 @@ Mat BodyParts::draw_in_image() {
     Mat visuals, mask;
     vector<vector<Point> > contours;
 
-    if (head.visible > 0)
+    if (head.state == FOUND_COLOR)
         contours.push_back(head.blob.contour);
-    if (left_hand.visible > 0)
+    if (left_hand.state == FOUND_COLOR)
     contours.push_back(left_hand.blob.contour);
-    if (right_hand.visible > 0)
+    if (right_hand.state == FOUND_COLOR)
     contours.push_back(right_hand.blob.contour);
 
     mask = Mat(image.size(), CV_8U, Scalar(0));
     drawContours( mask, contours, -1, Scalar(255), CV_FILLED);
     
     this->image.copyTo(visuals);
-    convertScaleAbs(visuals, visuals, 0.2);
-    this->image.copyTo(visuals, mask);
+    //convertScaleAbs(visuals, visuals, 0.2);
+    //this->image.copyTo(visuals, mask);
     
-    if (head.blob.contour.size() > 0) {
-        vector<vector<Point> > cs;
-        cs.push_back(head.blob.contour);
-        drawContours( visuals, cs, -1, Scalar( 0, 0, 255 ));
-    }
-    
-    if (left_hand.blob.contour.size() > 0) {
-        vector<vector<Point> > cs;
-        cs.push_back(left_hand.blob.contour);
-        drawContours( visuals, cs, -1, Scalar( 255, 0, 0 ));
-    }
-    
-    if (right_hand.blob.contour.size() > 0) {
-        vector<vector<Point> > cs;
-        cs.push_back(right_hand.blob.contour);
-        drawContours( visuals, cs, -1, Scalar( 0, 255, 0 ));
-    }
+//    if (head.state == FOUND_COLOR) {
+//        vector<vector<Point> > cs;
+//        cs.push_back(head.blob.contour);
+//        drawContours( visuals, cs, -1, Scalar( 80, 80, 255 ));
+//    }
+//
+//    if (left_hand.state == FOUND_COLOR) {
+//        vector<vector<Point> > cs;
+//        cs.push_back(left_hand.blob.contour);
+//        drawContours( visuals, cs, -1, Scalar( 255, 80, 80 ));
+//    }
+//
+//    if (right_hand.state == FOUND_COLOR) {
+//        vector<vector<Point> > cs;
+//        cs.push_back(right_hand.blob.contour);
+//        drawContours( visuals, cs, -1, Scalar( 80, 255, 80 ));
+//    }
 
-    rectangle(visuals, left_hand.prediction, Scalar(255, 0, 0));
-    rectangle(visuals, right_hand.prediction, Scalar(0, 255, 0));
-    rectangle(visuals, head.prediction, Scalar(0, 0, 255));
-
+    if (left_hand.state != NOT_VISIBLE) {
+        rectangle(visuals, left_hand.prediction, Scalar(255, 0, 0));
+    }
+    if (right_hand.state != NOT_VISIBLE) {
+        rectangle(visuals, right_hand.prediction, Scalar(0, 255, 0));
+    }
+    if (head.state != NOT_VISIBLE) {
+        rectangle(visuals, head.prediction, Scalar(0, 0, 255));
+    }
     circle(visuals, face_center, 10, CV_RGB(255, 255, 255));
     return visuals;
 };

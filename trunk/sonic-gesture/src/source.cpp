@@ -4,8 +4,8 @@
 #include "source.h"
 #include "settings.h"
 
-using namespace std;
 using std::cout;
+using std::endl;
 
 Source::Source() {
  
@@ -52,6 +52,11 @@ Mat& Source::grab() {
     if (!frame.data) {
         cout << "end of movie" << endl;
         exit(EXIT_SUCCESS);
+    }
+    //Mat flip;
+    if(MIRROR) {
+        flip(frame, frame, 1);
+
     }
     return frame;
 }

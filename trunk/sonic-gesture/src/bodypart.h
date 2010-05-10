@@ -7,6 +7,7 @@
 #include "cvaux.h"
 #include "blob.h"
 
+enum State {NOT_VISIBLE, FOUND_COLOR, FOUND_TEMPLATE};
 
 using namespace cv;
 
@@ -22,7 +23,7 @@ public:
     Mat sized_hog_image, hog_image;
     Rect position, prediction;
     Mat locate_result, last_good_cutout;
-    bool visible;
+    State state;
 
 
 private:

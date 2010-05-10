@@ -96,7 +96,8 @@ bool Capture::step(string image_name) {
     // find the bodyparts
     contours skins_small = skinFinder->compute(small_);
     contours skins = scale_contours(skins_small, float(1)/scale);
-    bodyparts.update(skins, skinFinder->face_center, big);
+    Point face_center = Point(skinFinder->face_center.x/scale, skinFinder->face_center.y/scale);
+    bodyparts.update(skins, face_center, big);
 
     // draw the stuff
     visuals = bodyparts.draw_in_image();

@@ -5,7 +5,8 @@
 #include "cmake.h"
 
 // flip image or not
-#define MIRROR false
+#define MIRROR true
+
 
 // where to find everything
 #define SKIN DATA_DIR + "/hand/skin.png"
@@ -40,6 +41,6 @@
 #define THRESHOLD 20
 
 // minimum blob size in square pixels
-#define MIN_BLOB_SIZE 1000
+#define MIN_BLOB_SIZE (WORKSIZE/5)*(WORKSIZE/5)
 
 #endif

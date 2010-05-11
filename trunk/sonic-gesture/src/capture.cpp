@@ -48,12 +48,7 @@ Capture::Capture(const Source& source) {
 }
 
 void Capture::init() {
-    Loader loader = Loader();
-    fs::path dataset = fs::path(DATASET);
-    assert(exists(dataset));
-    loader.load(dataset, source.size);
-    examples = loader.examples_left;
-     
+   
     skinFinder = new SkinFinder();
     black = Mat(source.size, CV_8UC3, Scalar(0, 0, 0));
     
@@ -64,6 +59,13 @@ void Capture::init() {
     assert(small_size.width > 0);
     assert(small_size.height > 0);
 
+    // load the examples
+    Loader loader = Loader();
+    fs::path dataset = fs::path(DATASET);
+    assert(exists(dataset));
+    loader.load(dataset, small_size);
+    examples = loader.examples_left;
+    
     // what images to show
     combiner = new Combiner(small_size, XWINDOWS);
     combiner->add_image(skinFinder->frame);
@@ -71,13 +73,15 @@ void Capture::init() {
     combiner->add_image(current);
     
     // where to store files
-    fs::path train_path(NEWTRAIN_PATH);
-    assert(fs::exists(train_path));
+    fs::path store_path = dataset / "incoming";
+    if (!fs::exists(store_path)) {
+        assert(create_directory(store_path));
+    };
  
     //construct new directory name
     ptime now = second_clock::local_time();
     date today = now.date();
-    current_train_path = train_path / to_simple_string(now);
+    current_train_path = store_path / to_simple_string(now);
     original_path = current_train_path / "original/";
     
     // make sure this directory _doens't_ exists, so we don't overwrite
@@ -117,12 +121,16 @@ bool Capture::step(string image_name) {
     if (inpoet == 27) // escape
         exit(EXIT_FAILURE);
     else if (inpoet == 32) { //space
+        if (bodyparts.left_hand.state == NOT_VISIBLE) {
+            cout << " NO HAND IN IMAGE!" << endl;
+            return true;
+        }
         fs::path hand_file =  current_train_path / image_name;
         fs::path orig_file = original_path / image_name;
         cout << "saving " << hand_file.string() << endl;
         cout << "saving " << orig_file.string() << endl;
-        assert(imwrite(orig_file.string(), big)); 
-        assert(imwrite(hand_file.string(), bodyparts.left_hand.sized_hog_image));
+        assert(imwrite(orig_file.string() + ".jpg", big)); 
+        assert(imwrite(hand_file.string() + ".jpg", bodyparts.left_hand.sized_hog_image));
         return false;
     }
     return true;
@@ -133,8 +141,7 @@ void Capture::run() {
     for(unsigned int i=0; i < examples.size(); i++) {
         //set current example to show
         current = examples.at(i);
-        while (this->step(int2string(i))) {
-        };
+        while (this->step(int2string(i)));
     }
 }
 

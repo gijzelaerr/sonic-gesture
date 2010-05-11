@@ -4,6 +4,7 @@
 #include "bodypart.h"
 #include "skinfinder.h"
 #include "combiner.h"
+#include "loader.h"
 
 #include "boost/filesystem.hpp"
 #include "boost/date_time/gregorian/gregorian.hpp"
@@ -47,8 +48,13 @@ Capture::Capture(const Source& source) {
 }
 
 void Capture::init() {
+    Loader loader = Loader();
+    fs::path dataset = fs::path(DATASET);
+    assert(exists(dataset));
+    loader.load(dataset, source.size);
+    examples = loader.examples_left;
+     
     skinFinder = new SkinFinder();
-    examples = load_example_hands(source.size, false);
     black = Mat(source.size, CV_8UC3, Scalar(0, 0, 0));
     
     // do size and scale stuff
@@ -64,12 +70,11 @@ void Capture::init() {
     combiner->add_image(visuals);
     combiner->add_image(current);
     
-    string expstr[] = SOLFEGE_FILES;
-    names = vector<string>(expstr, expstr + sizeof(expstr)/sizeof(*expstr));
-    
-    fs::path train_path(NEWTRAIN_PATH );
+    // where to store files
+    fs::path train_path(NEWTRAIN_PATH);
     assert(fs::exists(train_path));
-    
+ 
+    //construct new directory name
     ptime now = second_clock::local_time();
     date today = now.date();
     current_train_path = train_path / to_simple_string(now);
@@ -78,6 +83,7 @@ void Capture::init() {
     // make sure this directory _doens't_ exists, so we don't overwrite
     assert(!fs::exists(current_train_path));
     
+    // create the new directory
     assert(create_directory(current_train_path));
     assert(create_directory(original_path));
 };
@@ -125,9 +131,9 @@ bool Capture::step(string image_name) {
 void Capture::run() {
     string image_name;
     for(unsigned int i=0; i < examples.size(); i++) {
+        //set current example to show
         current = examples.at(i);
-        image_name = names.at(i);
-        while (this->step(image_name)) {
+        while (this->step(int2string(i))) {
         };
     }
 }

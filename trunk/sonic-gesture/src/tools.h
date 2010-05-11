@@ -19,5 +19,5 @@ bool is_number(const string& s);
 vector<Mat> load_example_hands(const Size& target_size, bool mirror);
 Rect rect_in_mat(Rect rectange, const Mat& matrix);
 void print_mat(Mat matrix);
-
+string int2string(int integer);
 #endif

@@ -191,3 +191,11 @@ void print_mat(Mat matrix) {
         };
     };
 };
+
+string int2string(int integer) {
+    std::stringstream str;
+    str << integer;
+    std::string result;
+    str >> result;
+    return result;
+};

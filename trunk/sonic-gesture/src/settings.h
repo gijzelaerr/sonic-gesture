@@ -5,8 +5,7 @@
 #include "cmake.h"
 
 // flip image or not
-#define MIRROR true
-
+#define MIRROR true 
 
 // where to find everything
 #define SKIN DATA_DIR + "/hand/skin.png"
@@ -42,5 +41,8 @@
 
 // minimum blob size in square pixels
 #define MIN_BLOB_SIZE (WORKSIZE/5)*(WORKSIZE/5)
+
+// which dataset to use
+#define DATASET DATA_DIR + "/sets/inout28/"
 
 #endif

@@ -269,26 +269,26 @@ Mat BodyParts::draw_in_image() {
     drawContours( mask, contours, -1, Scalar(255), CV_FILLED);
     
     this->image.copyTo(visuals);
-    //convertScaleAbs(visuals, visuals, 0.2);
-    //this->image.copyTo(visuals, mask);
+    convertScaleAbs(visuals, visuals, 0.2);
+    this->image.copyTo(visuals, mask);
     
-//    if (head.state == FOUND_COLOR) {
-//        vector<vector<Point> > cs;
-//        cs.push_back(head.blob.contour);
-//        drawContours( visuals, cs, -1, Scalar( 80, 80, 255 ));
-//    }
-//
-//    if (left_hand.state == FOUND_COLOR) {
-//        vector<vector<Point> > cs;
-//        cs.push_back(left_hand.blob.contour);
-//        drawContours( visuals, cs, -1, Scalar( 255, 80, 80 ));
-//    }
-//
-//    if (right_hand.state == FOUND_COLOR) {
-//        vector<vector<Point> > cs;
-//        cs.push_back(right_hand.blob.contour);
-//        drawContours( visuals, cs, -1, Scalar( 80, 255, 80 ));
-//    }
+    if (head.state == FOUND_COLOR) {
+        vector<vector<Point> > cs;
+        cs.push_back(head.blob.contour);
+        drawContours( visuals, cs, -1, Scalar( 80, 80, 255 ));
+    }
+
+    if (left_hand.state == FOUND_COLOR) {
+        vector<vector<Point> > cs;
+        cs.push_back(left_hand.blob.contour);
+        drawContours( visuals, cs, -1, Scalar( 255, 80, 80 ));
+    }
+
+    if (right_hand.state == FOUND_COLOR) {
+        vector<vector<Point> > cs;
+        cs.push_back(right_hand.blob.contour);
+        drawContours( visuals, cs, -1, Scalar( 80, 255, 80 ));
+    }
 
     if (left_hand.state != NOT_VISIBLE) {
         rectangle(visuals, left_hand.prediction, Scalar(255, 0, 0));

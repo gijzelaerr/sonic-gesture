@@ -7,23 +7,23 @@
 
 
 // mirror: should the training images be mirrored, default is left hand
-Matcher::Matcher(bool mirror) {
+Matcher::Matcher(bool mirror, vector<int> example_labels) {
     // initialize the HOG parameters
     winStride = Size(8, 8);
     padding = Size(0, 0);
     hog = HOGDescriptor();
 
-    // construct a vector of the image file names
-    char const* solfege_str[] = SOLFEGE_FILES;
-    vector<string> solfege(solfege_str, solfege_str + sizeof (solfege_str)/sizeof (*solfege_str));
+
 
     // create a stabilizer
-    stabilizer = new Stabilizer(solfege.size());
+    stabilizer = new Stabilizer(example_labels.size());
     
     // we keep track of which is the first, so we can extract size info from image
     bool first = true;
 
-    fs::path train_path(TRAIN_PATH);
+    fs::path data_path(DATASET);
+    fs::path train_path = data_path / "train";
+    assert(fs::exists(data_path));
     assert(fs::exists(train_path));
 
     vector<fs::path> train_folders;
@@ -43,12 +43,12 @@ Matcher::Matcher(bool mirror) {
         fs::path train_set = train_folders.at(train_folder);
 
         //loop over images in folders
-        for(unsigned int i=0; i < solfege.size(); i++) {
-            int imgnum = train_folder * solfege.size() + i;
+        for(unsigned int i=0; i < example_labels.size(); i++) {
+            int imgnum = train_folder * example_labels.size() + i;
 
-            labels.push_back(i);
-
-            fs::path hand_path = train_set / solfege.at(i);
+            labels.push_back(example_labels.at(i));
+            
+            fs::path hand_path = train_set / (int2string(i) + ".jpg");
             assert(fs::exists(hand_path));
 
             handimg = imread(hand_path.file_string(), 0);
@@ -57,7 +57,7 @@ Matcher::Matcher(bool mirror) {
 
             // initialize the matrix with info from first hand
             if(first) {
-                train = Mat(descriptors.size(), train_folders.size() * solfege.size(), CV_32FC1);
+                train = Mat(descriptors.size(), train_folders.size() * example_labels.size(), CV_32FC1);
                 first = false;
             }
 

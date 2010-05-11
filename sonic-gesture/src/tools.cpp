@@ -125,28 +125,6 @@ bool is_number(const string& str) {
     return true;
 }
 
-vector<Mat> load_example_hands(const Size& target_size, const bool mirror) {
-    // the file names of example and train
-    string expstr[] = SOLFEGE_FILES;
-    vector<string> examples(expstr, expstr + sizeof (expstr)/sizeof (*expstr));
-    vector<Mat> examples_mat;
-
-    fs::path examples_path(EXAMPLES_PATH );
-    assert(fs::exists(examples_path));
-
-    for(unsigned int i =0; i < examples.size(); i++) {
-        string image_file = examples.at(i);
-        fs::path image_path = examples_path / image_file;
-        assert(fs::exists(image_path));
-        Mat example_mat = imread(image_path.string(), 1);
-        if(mirror) flip(example_mat, example_mat, 1);
-        Mat temp;
-        resize(example_mat, temp, target_size);
-        examples_mat.push_back(temp);
-    }
-    return examples_mat;
-}
-
 Rect rect_in_mat(Rect rectange, const Mat& matrix) {
     // return maximum size of rectangle inside the borders of matrix
     int x = max(0, rectange.x);

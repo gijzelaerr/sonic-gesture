@@ -8,6 +8,7 @@
 #include "skinfinder.h"
 #include "matcher.h"
 #include "combiner.h"
+#include "loader.h"
 
 
 class Finder {
@@ -43,11 +44,6 @@ Finder::Finder(const Source& source) {
 
 void Finder::init() {
     skinFinder = new SkinFinder();
-    left_matcher = new Matcher();
-    right_matcher = new Matcher(true);
-
-    hands_left = load_example_hands(source.size, false);
-    hands_right = load_example_hands(source.size, true);
 
     // do size and scale stuff
     scale = float(WORKSIZE) / source.size.height;
@@ -56,6 +52,18 @@ void Finder::init() {
     assert(small_size.width > 0);
     assert(small_size.height > 0);
 
+    // load the examples
+    Loader loader = Loader();
+    fs::path dataset = fs::path(DATASET);
+    assert(exists(dataset));
+    loader.load(dataset, small_size);
+    hands_left = loader.examples_left;
+    hands_right = loader.examples_right;
+
+    // load the actual classifier
+    left_matcher = new Matcher(false, loader.labels);
+    right_matcher = new Matcher(true, loader.labels);    
+    
     // what images to show
     combiner = new Combiner(small_size, XWINDOWS);
     combiner->add_image(skinFinder->frame);

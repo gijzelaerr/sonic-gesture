@@ -29,14 +29,14 @@ class Matcher {
     HOGDescriptor hog;
     vector<Point> locations;
     vector<float> descriptors;
+    vector<float> labels;
     Mat handimg;
     Mat train;
     Mat labels_mat;
-    vector<float> labels;
     Stabilizer* stabilizer;
 
 public:
-    Matcher(bool mirror=false);
+    Matcher(bool mirror, vector<int> labels);
     ~Matcher();
     int match(const vector<float>& descriptors);
 };

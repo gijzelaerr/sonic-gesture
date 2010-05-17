@@ -1,25 +1,52 @@
 
-#include <iostream>
+#include <Qt/QtCore>
+
 #include <highgui.h>
 #include "source.h"
 
-using std::cout;
-using std::endl;
+#include <iostream>
+using namespace std;
 
 Source::Source() {
+    loadImage(QString("/home/gijs/Work/sonic-gesture/sonic-gesture/data/resources/background.jpg"));
 }
 
 Source::Source(int device) {
-    cout << "opening device " << device << "." << endl;
-    cap = VideoCapture(device);
+    loadCam(device);
+}
+
+Source::Source(const QString& file) {
+    QFile* qfile = new QFile(file);
+
+    if (!qfile->exists()) {
+        // TODO: use a QT signal or something
+        exit(EXIT_FAILURE);
+    }
+
+    if (file.endsWith("png", Qt::CaseInsensitive)  || file.endsWith("jpg", Qt::CaseInsensitive)) {
+        loadImage(file);
+    } else {
+        loadMovie(file);
+    };
+};
+
+void Source::loadCam(int device) {
+    cap = cv::VideoCapture(device);
     mirror = true;
     init();
 }
 
-Source::Source(const string& movie) {
-    cout << "opening movie " << movie << "." << endl;
-    // TODO: add check if file exists
-    cap = VideoCapture(movie);
+void Source::loadImage(const QString& file) {
+    cout << file.toStdString() << endl;
+    frame = cv::imread(file.toStdString());
+    image = true;
+    mirror = false;
+    size = frame.size();
+};
+
+void Source::loadMovie(const QString& file) {
+    cap = VideoCapture(file.toStdString());
+    image = false;
     mirror = false;
     init();
 }
@@ -29,7 +56,7 @@ Source::~Source() {
 
 void Source::init() {
     if(!cap.isOpened()) {
-        cout << "couldn't open capture device!\n";
+        // TODO: raise qt exception or something
         exit(EXIT_FAILURE);
     }
 
@@ -48,15 +75,15 @@ void Source::init() {
 };
 
 Mat& Source::grab() {
-    cap >> frame;
-    if (!frame.data) {
-        cout << "end of movie" << endl;
+    if(!image)
+        cap >> frame;
+
+    // TODO: end of movie, use QT signal or soemthing
+    if (!frame.data)
         exit(EXIT_SUCCESS);
-    }
-    //Mat flip;
-    if(mirror) {
+
+    if(mirror)
         flip(frame, frame, 1);
 
-    }
     return frame;
 }

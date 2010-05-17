@@ -35,13 +35,13 @@ include_directories(${Boost_INCLUDE_DIRS})
 #include_directories(${PROJECT_SOURCE_DIR})
 
 
-add_executable (finder src/finder.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/matcher.cpp src/matcher.h src/loader.cpp src/loader.h)
-target_link_libraries (finder  ${OpenCV_LIBS})
-target_link_libraries(finder ${Boost_LIBRARIES})
-
-add_executable (capture src/capture.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/loader.cpp src/loader.h)
-target_link_libraries (capture  ${OpenCV_LIBS})
-target_link_libraries(capture ${Boost_LIBRARIES})
+#add_executable (finder src/finder.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/matcher.cpp src/matcher.h src/loader.cpp src/loader.h)
+#target_link_libraries (finder  ${OpenCV_LIBS})
+#target_link_libraries(finder ${Boost_LIBRARIES})
+#
+#add_executable (capture src/capture.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/loader.cpp src/loader.h)
+#target_link_libraries (capture  ${OpenCV_LIBS})
+#target_link_libraries(capture ${Boost_LIBRARIES})
 
 QT4_WRAP_CPP(QTGUI_MOC src/qcvimage.h src/mainwindow.h)
 QT4_ADD_RESOURCES(QTGUI_REC resources.qrc)
@@ -55,11 +55,11 @@ target_link_libraries(qtgui ${QT_LIBRARIES})
 #target_link_libraries(run_test ${GTEST_BOTH_LIBRARIES})
 
 # what to install where
-install (TARGETS finder DESTINATION bin)
-#install (TARGETS capture DESTINATION bin)
-install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/examples" DESTINATION data PATTERN ".svn" EXCLUDE)
-install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/haar" DESTINATION data PATTERN ".svn" EXCLUDE)
-install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/hand" DESTINATION data PATTERN ".svn" EXCLUDE)
+#install (TARGETS finder DESTINATION bin)
+##install (TARGETS capture DESTINATION bin)
+#install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/examples" DESTINATION data PATTERN ".svn" EXCLUDE)
+#install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/haar" DESTINATION data PATTERN ".svn" EXCLUDE)
+#install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/hand" DESTINATION data PATTERN ".svn" EXCLUDE)
 
 # include required windows DLL's
 IF(WIN32)

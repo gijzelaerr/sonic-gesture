@@ -4,7 +4,7 @@
 
 
 QCVImage::QCVImage(QWidget *parent) : QWidget(parent) {
-    source = new Source(0);
+    source = new Source();
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(grab()));
     grab();

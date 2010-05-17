@@ -19,7 +19,7 @@ MainWindow::MainWindow() {
 void MainWindow::openFile() {
     QString fileName = QFileDialog::getOpenFileName(this);
     if (!fileName.isEmpty())
-        loadSource(Source(fileName.toStdString()));
+        loadSource(Source(fileName));
 };
 
 void MainWindow::openDevice() {

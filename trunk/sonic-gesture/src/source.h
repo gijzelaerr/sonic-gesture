@@ -5,22 +5,27 @@
 #include "cv.h"
 #include "highgui.h"
 
+#include "Qt/QtCore"
+
 using namespace cv;
 
 class Source {
 public:
     Source();
     Source(int device);
-    Source(const string& movie);
+    Source(const QString &file);
     ~Source();
     Mat& grab();
     Size size;
 
 private:
-    bool mirror;
+    bool mirror, image;
     Mat frame;
     VideoCapture cap;
     void init();
+    void loadCam(int device);
+    void loadMovie(const QString& file);
+    void loadImage(const QString& file);
 };
 
 #endif

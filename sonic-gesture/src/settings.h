@@ -4,9 +4,6 @@
 
 #include "cmake.h"
 
-// flip image or not
-#define MIRROR true 
-
 // where to find haar file
 #define FACEHAAR DATA_DIR + "/storage/haarcascade_frontalface_alt.xml"
 
@@ -27,12 +24,13 @@
 #define INFLATE_SIZE 1.1
 
 // threshold for probabilistic image to binary image
-#define THRESHOLD 20
+#define THRESHOLD 30
 
 // minimum blob size in square pixels
-#define MIN_BLOB_SIZE (WORKSIZE/5)*(WORKSIZE/5)
+#define MIN_BLOB_SIZE (WORKSIZE/10)*(WORKSIZE/10)
 
 // which dataset to use
 #define DATASET DATA_DIR + "/sets/inout28/"
 
+#define NN 3
 #endif

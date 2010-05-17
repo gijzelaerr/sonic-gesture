@@ -2,18 +2,17 @@
 #include <iostream>
 #include <highgui.h>
 #include "source.h"
-#include "settings.h"
 
 using std::cout;
 using std::endl;
 
 Source::Source() {
- 
 }
 
 Source::Source(int device) {
     cout << "opening device " << device << "." << endl;
     cap = VideoCapture(device);
+    mirror = true;
     init();
 }
 
@@ -21,6 +20,7 @@ Source::Source(const string& movie) {
     cout << "opening movie " << movie << "." << endl;
     // TODO: add check if file exists
     cap = VideoCapture(movie);
+    mirror = false;
     init();
 }
 
@@ -54,7 +54,7 @@ Mat& Source::grab() {
         exit(EXIT_SUCCESS);
     }
     //Mat flip;
-    if(MIRROR) {
+    if(mirror) {
         flip(frame, frame, 1);
 
     }

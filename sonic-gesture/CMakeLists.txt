@@ -43,10 +43,11 @@ add_executable (capture src/capture.cpp src/skinfinder.cpp src/source.cpp src/hi
 target_link_libraries (capture  ${OpenCV_LIBS})
 target_link_libraries(capture ${Boost_LIBRARIES})
 
-QT4_WRAP_CPP(QTTEST_MOC_FILES src/qttest.h)
-add_executable (qttest src/qttest.cpp src/qttest.h src/source.cpp src/source.h ${QTTEST_MOC_FILES})
-target_link_libraries (qttest ${OpenCV_LIBS})
-target_link_libraries(qttest ${QT_LIBRARIES})
+QT4_WRAP_CPP(QTGUI_MOC src/qcvimage.h src/mainwindow.h)
+QT4_ADD_RESOURCES(QTGUI_REC resources.qrc)
+add_executable (qtgui src/qcvimage.cpp src/mainwindow.cpp src/mainwindow.h src/qcvimage.h src/source.cpp src/source.h ${QTGUI_MOC} ${QTGUI_REC})
+target_link_libraries (qtgui ${OpenCV_LIBS})
+target_link_libraries(qtgui ${QT_LIBRARIES})
 
 #add_test(AllTestsInRun run_test)
 #target_link_libraries(run ${GTEST_BOTH_LIBRARIES})

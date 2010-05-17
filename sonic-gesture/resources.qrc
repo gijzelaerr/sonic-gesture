@@ -1,0 +1,5 @@
+ <!DOCTYPE RCC><RCC version="1.0">
+ <qresource>
+     <file alias="open.png">data/resources/open.png</file>
+ </qresource>
+ </RCC>

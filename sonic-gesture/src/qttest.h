@@ -30,7 +30,6 @@ private:
     QPushButton* button;
     Source* source;
     QImage qframe;
-    QPainter* painter;
     QTimer* timer;
     void paintEvent(QPaintEvent* e);
 

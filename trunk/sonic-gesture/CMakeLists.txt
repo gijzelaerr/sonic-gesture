@@ -5,8 +5,12 @@ enable_testing(true)
 project( "sonic-gesture" )
 find_package( OpenCV REQUIRED )  
 find_package( Boost COMPONENTS filesystem system date_time REQUIRED )
-
 #find_package(GTest REQUIRED)
+
+find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED )
+include(${QT_USE_FILE})
+#   add_executable(myexe main.cpp)
+
 
 # OpenCV 2.0 doesn't compile 64 bit on mac
 #IF(${APPLE} )#AND ${OpenCV_VERSION_MAJOR} EQUAL 2 AND ${OpenCV_VERSION_MINOR} EQUAL 0)
@@ -39,6 +43,10 @@ add_executable (capture src/capture.cpp src/skinfinder.cpp src/source.cpp src/hi
 target_link_libraries (capture  ${OpenCV_LIBS})
 target_link_libraries(capture ${Boost_LIBRARIES})
 
+QT4_WRAP_CPP(QTTEST_MOC_FILES src/qttest.h)
+add_executable (qttest src/qttest.cpp src/qttest.h src/source.cpp src/source.h ${QTTEST_MOC_FILES})
+target_link_libraries (qttest ${OpenCV_LIBS})
+target_link_libraries(qttest ${QT_LIBRARIES})
 
 #add_test(AllTestsInRun run_test)
 #target_link_libraries(run ${GTEST_BOTH_LIBRARIES})

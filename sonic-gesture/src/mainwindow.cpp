@@ -1,5 +1,5 @@
 
-#include <Qt/QtGui>
+#include <QtGui>
 
 #include "mainwindow.h"
 #include "qcvimage.h"
@@ -37,11 +37,16 @@ void MainWindow::about() {
 }
 
 void MainWindow::createActions() {
-    openAct = new QAction(QIcon(":open.png"), tr("&Open..."), this);
-    openAct->setShortcuts(QKeySequence::Open);
-    openAct->setStatusTip(tr("Open an existing file"));
-    connect(openAct, SIGNAL(triggered()), this, SLOT(openFile()));
+    openFileAct = new QAction(QIcon(":film.png"), tr("&Open file..."), this);
+    openFileAct->setShortcuts(QKeySequence::Open);
+    openFileAct->setStatusTip(tr("Open a recorded movie"));
+    connect(openFileAct, SIGNAL(triggered()), this, SLOT(openFile()));
 
+    openDeviceAct = new QAction(QIcon(":camera.png"), tr("&Open device..."), this);
+    openDeviceAct->setShortcuts(QKeySequence::Open);
+    openDeviceAct->setStatusTip(tr("Open a device"));
+    connect(openFileAct, SIGNAL(triggered()), this, SLOT(openDevice()));    
+    
     aboutAct = new QAction(tr("About Sonic Gesture"), this);
     aboutAct->setStatusTip(tr("Show Sonic Gesture's About box"));
     connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
@@ -49,7 +54,8 @@ void MainWindow::createActions() {
 
 void MainWindow::createMenus() {
     fileMenu = menuBar()->addMenu(tr("&File"));
-    fileMenu->addAction(openAct);
+    fileMenu->addAction(openFileAct);
+    fileMenu->addAction(openDeviceAct);    
     fileMenu->addSeparator();
     //fileMenu->addAction(exitAct);
 
@@ -61,7 +67,8 @@ void MainWindow::createMenus() {
 
  void MainWindow::createToolBars() {
      fileToolBar = addToolBar(tr("File"));
-     fileToolBar->addAction(openAct);
+     fileToolBar->addAction(openFileAct);
+     fileToolBar->addAction(openDeviceAct);
 }
 
 void MainWindow::createStatusBar() {

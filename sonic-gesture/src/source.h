@@ -5,7 +5,8 @@
 #include "cv.h"
 #include "highgui.h"
 
-#include "Qt/QtCore"
+//#include "Qt/QtCore"
+#include <QtCore>
 
 using namespace cv;
 
@@ -13,6 +14,7 @@ class Source {
 public:
     Source();
     Source(int device);
+    Source(const string& file);
     Source(const QString &file);
     ~Source();
     Mat& grab();

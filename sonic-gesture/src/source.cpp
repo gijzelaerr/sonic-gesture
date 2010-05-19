@@ -1,5 +1,5 @@
 
-#include <Qt/QtCore>
+#include <QtCore>
 
 #include <highgui.h>
 #include "source.h"
@@ -8,12 +8,29 @@
 using namespace std;
 
 Source::Source() {
-    loadImage(QString("/home/gijs/Work/sonic-gesture/sonic-gesture/data/resources/background.jpg"));
+    loadImage(QString("/Users/gijs/Work/sonic-gesture/sonic-gesture/data/resources/background.jpg"));
 }
 
 Source::Source(int device) {
     loadCam(device);
 }
+
+Source::Source(const string& file) {
+    QString qstr = QString(file.c_str());
+    QFile* qfile = new QFile(qstr);
+    
+    if (!qfile->exists()) {
+        // TODO: use a QT signal or something
+        exit(EXIT_FAILURE);
+    }
+    
+    if (qstr.endsWith("png", Qt::CaseInsensitive)  || qstr.endsWith("jpg", Qt::CaseInsensitive)) {
+        loadImage(qstr);
+    } else {
+        loadMovie(qstr);
+    };
+};
+
 
 Source::Source(const QString& file) {
     QFile* qfile = new QFile(file);

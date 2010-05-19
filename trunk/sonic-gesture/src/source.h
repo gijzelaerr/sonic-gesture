@@ -5,8 +5,7 @@
 #include "cv.h"
 #include "highgui.h"
 
-//#include "Qt/QtCore"
-#include <QtCore>
+#include <Qt/QtCore>
 
 using namespace cv;
 

@@ -1,50 +1,23 @@
 #ifndef _MAINWINDOW_H
-#define	_MAINWINDOW_H
+#define _MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
-#include "source.h"
 
-class QAction;
-class QMenu;
-class QCVImage;
+namespace Ui {
+    class MainWindow;
+}
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
-
 public:
-    MainWindow();
+    MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
-private slots:
-    void openFile();
-    void openDevice();
-    void about();
+protected:
+    void changeEvent(QEvent *e);
 
 private:
-    void createActions();
-    void createMenus();
-    void createToolBars();
-    void createStatusBar();
-    void readSettings();
-    void writeSettings();
-    void loadSource(Source source);
-
-
-    QCVImage* cvImage;
-
-    QMenu *fileMenu;
-    QMenu *settingsMenu;
-    QMenu *helpMenu;
-
-    QToolBar *fileToolBar;
-    QToolBar *settingsToolBar;
-
-    QAction *openFileAct;
-    QAction *openDeviceAct;
-    QAction *exitAct;
-    QAction *aboutAct;
-    QAction *aboutQtAct;
+    Ui::MainWindow *ui;
 };
 
-
-#endif
-
+#endif // MAINWINDOW_H

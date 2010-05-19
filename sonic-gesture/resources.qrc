@@ -1,7 +1,0 @@
- <!DOCTYPE RCC><RCC version="1.0">
- <qresource>
-     <file alias="film.png">data/resources/icons/film.png</file>
-     <file alias="camera.png">data/resources/icons/camera.png</file>
-     <file alias="background.jpg">data/resources/background.jpg</file>
- </qresource>
- </RCC>

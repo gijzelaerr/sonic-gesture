@@ -38,8 +38,8 @@ private:
     QToolBar *fileToolBar;
     QToolBar *settingsToolBar;
 
-    QAction *openAct;
-    QAction *saveAct;
+    QAction *openFileAct;
+    QAction *openDeviceAct;
     QAction *exitAct;
     QAction *aboutAct;
     QAction *aboutQtAct;

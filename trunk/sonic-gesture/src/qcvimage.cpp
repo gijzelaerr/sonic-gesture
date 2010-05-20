@@ -37,6 +37,7 @@ void QCVImage::paintEvent(QPaintEvent* e) {
     const unsigned char* data = (unsigned char*)(rgb.data);
     //frame.step;
     qframe = QImage(data, rgb.cols, rgb.rows, QImage::Format_RGB888);
+    qframe = qframe.scaled(this->size(), Qt::KeepAspectRatio);
     painter.drawImage(QPoint(0, 0),qframe);
 };
 

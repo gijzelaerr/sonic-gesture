@@ -25,7 +25,7 @@ public:
 
 private:
     Mat bgr, rgb;
-    Source* source;
+    Source source;
     QImage qframe;
     QTimer* timer;
     void paintEvent(QPaintEvent* e);

@@ -1,84 +1,80 @@
 
-#include <QtCore>
-
-#include <highgui.h>
+#include <Qt/QtCore>
+#include <qt4/QtGui/qimage.h>
+#include "highgui.h"
 #include "source.h"
 
-#include <iostream>
-using namespace std;
 
-Source::Source() {
-    loadImage(QString("/Users/gijs/Work/sonic-gesture/sonic-gesture/data/resources/background.jpg"));
+
+bool Source::open(int device) {
+    cap = cv::VideoCapture(device);
+    mirror = true;
+    return init();
 }
 
-Source::Source(int device) {
-    loadCam(device);
-}
-
-Source::Source(const string& file) {
+bool Source::open(const std::string& file) {
     QString qstr = QString(file.c_str());
-    QFile* qfile = new QFile(qstr);
-    
-    if (!qfile->exists()) {
-        // TODO: use a QT signal or something
-        exit(EXIT_FAILURE);
-    }
-    
-    if (qstr.endsWith("png", Qt::CaseInsensitive)  || qstr.endsWith("jpg", Qt::CaseInsensitive)) {
-        loadImage(qstr);
-    } else {
-        loadMovie(qstr);
-    };
+    return open(qstr);
 };
 
-
-Source::Source(const QString& file) {
+bool Source::open(const QString& file) {
     QFile* qfile = new QFile(file);
 
     if (!qfile->exists()) {
-        // TODO: use a QT signal or something
-        exit(EXIT_FAILURE);
+        setError(qfile->errorString());
+        return false;
     }
+        
 
-    if (file.endsWith("png", Qt::CaseInsensitive)  || file.endsWith("jpg", Qt::CaseInsensitive)) {
-        loadImage(file);
-    } else {
-        loadMovie(file);
-    };
+    if (file.endsWith("png", Qt::CaseInsensitive)  || file.endsWith("jpg", Qt::CaseInsensitive))
+        return loadImage(file);
+    else
+        return loadMovie(file);
 };
 
-void Source::loadCam(int device) {
-    cap = cv::VideoCapture(device);
-    mirror = true;
-    init();
+bool Source::open(const QImage& qimage) {
+    cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC3, cv::Scalar(0, 0 ,0));
+    const uchar* blaat = (const uchar*)qimage.bits();
+    mat.data = (uchar*)blaat;
+    cv::cvtColor(mat, mat, CV_RGB2BGR);
+    return loadImage(mat);
 }
 
-void Source::loadImage(const QString& file) {
-    cout << file.toStdString() << endl;
+
+bool Source::loadImage(const cv::Mat& mat) {
+    frame = mat;
+    image = true;
+    mirror = false;
+    size = frame.size();
+    return true;
+};
+
+bool Source::loadImage(const QString& file) {
     frame = cv::imread(file.toStdString());
     image = true;
     mirror = false;
     size = frame.size();
+    return true;
 };
 
-void Source::loadMovie(const QString& file) {
-    cap = VideoCapture(file.toStdString());
+bool Source::loadMovie(const QString& file) {
+    cap = cv::VideoCapture(file.toStdString());
     image = false;
     mirror = false;
-    init();
+    return init();
 }
 
-Source::~Source() {
-};
-
-void Source::init() {
+bool Source::init() {
     if(!cap.isOpened()) {
-        // TODO: raise qt exception or something
-        exit(EXIT_FAILURE);
+        setError("can't open the capture device");
+        return false;
     }
 
     cap >> frame;
-    assert(frame.data);
+    if ((frame.data == NULL)) {
+        setError("can't grab from capture device");
+        return false;
+    };
     
     // doesn't work for webcam somehow
     //int width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
@@ -88,19 +84,23 @@ void Source::init() {
     
     assert(width > 0);
     assert(height > 0);
-    size = Size(width, height);
+    size = cv::Size(width, height);
+    return true;
 };
 
-Mat& Source::grab() {
+bool Source::grab() {
     if(!image)
         cap >> frame;
 
-    // TODO: end of movie, use QT signal or soemthing
     if (!frame.data)
-        exit(EXIT_SUCCESS);
+        return false;
 
     if(mirror)
-        flip(frame, frame, 1);
+        cv::flip(frame, frame, 1);
 
-    return frame;
+    return true;
+}
+
+void Source::setError(QString str) {
+    this->error = str;
 }

@@ -32,5 +32,8 @@
 // which dataset to use
 #define DATASET DATA_DIR + "/sets/inout28/"
 
+// temporary here
+#define STARTSCREEN DATA_DIR + "../qt/images/background.jpg"
+
 #define NN 3
 #endif

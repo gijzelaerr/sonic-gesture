@@ -9,15 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>929</width>
+    <height>771</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Sonic Gesture</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
+   <iconset>
     <normaloff>:/icons/icons/thumb_up.png</normaloff>:/icons/icons/thumb_up.png</iconset>
   </property>
   <property name="iconSize">
@@ -26,16 +26,83 @@
     <height>20</height>
    </size>
   </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextUnderIcon</enum>
+  </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>50</y>
+      <width>511</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QCVImage" name="widget" native="true"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/icons/pauze movie</normaloff>:/icons/pauze movie</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/icons/play movie</normaloff>:/icons/play movie</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="horizontalSlider">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>929</width>
      <height>25</height>
     </rect>
    </property>
@@ -127,19 +194,19 @@
   <action name="actionFinder_View">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/icons/finder</normaloff>:/icons/finder</iconset>
+     <normaloff>:/icons/finder view</normaloff>:/icons/finder view</iconset>
    </property>
    <property name="text">
-    <string>Finder View</string>
+    <string>Finder view</string>
    </property>
   </action>
   <action name="actionCapture_View">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/icons/capture</normaloff>:/icons/capture</iconset>
+     <normaloff>:/icons/capture view</normaloff>:/icons/capture view</iconset>
    </property>
    <property name="text">
-    <string>Capture View</string>
+    <string>Capture view</string>
    </property>
   </action>
   <action name="actionRecord_original_movie">
@@ -151,7 +218,7 @@
      <normaloff>:/icons/record input</normaloff>:/icons/record input</iconset>
    </property>
    <property name="text">
-    <string>Record original input</string>
+    <string>Record input</string>
    </property>
   </action>
   <action name="actionRecord_visual_output">
@@ -160,13 +227,13 @@
      <normaloff>:/icons/record output</normaloff>:/icons/record output</iconset>
    </property>
    <property name="text">
-    <string>Record sonic output</string>
+    <string>Record output</string>
    </property>
   </action>
   <action name="actionSource_view">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/icons/normal</normaloff>:/icons/normal</iconset>
+     <normaloff>:/icons/normal view</normaloff>:/icons/normal view</iconset>
    </property>
    <property name="text">
     <string>Source view</string>
@@ -199,6 +266,14 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCVImage</class>
+   <extends>QWidget</extends>
+   <header>qcvimage.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>

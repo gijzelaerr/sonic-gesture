@@ -13,4 +13,7 @@
     <file alias="camera">icons/camera.png</file>
     <file alias="film">icons/film.png</file>
   </qresource>
+  <qresource prefix="images">
+    <file alias="startscreen">images/background.jpg</file>
+  </qresource>
 </RCC>

@@ -154,7 +154,8 @@ void Finder::run() {
 }
 
 int main(int, char**) {
-    Source source = Source(DEVICE);
+    Source source;
+    source.open(DEVICE);
     Finder finder = Finder(source);
     finder.run();
     return EXIT_SUCCESS;

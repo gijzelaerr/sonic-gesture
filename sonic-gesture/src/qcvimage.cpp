@@ -1,10 +1,10 @@
 
 #include "qcvimage.h"
 #include "source.h"
-
+#include "settings.h"
 
 QCVImage::QCVImage(QWidget *parent) : QWidget(parent) {
-    source = new Source();
+    source.open(STARTSCREEN);
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(grab()));
     grab();
@@ -15,7 +15,8 @@ QCVImage::QCVImage(QWidget *parent) : QWidget(parent) {
 QCVImage::~QCVImage() {};
 
 void QCVImage::grab() {
-    bgr = source->grab();
+    bool code = source.grab();
+    bgr = source.frame;
     this->update();
 }
 
@@ -25,7 +26,7 @@ void QCVImage::setProps() {
 }
 
 void QCVImage::setSource(Source& source) {
-    *(this->source) = source;
+    this->source = source;
     grab();
     setProps();
 }
@@ -33,7 +34,7 @@ void QCVImage::setSource(Source& source) {
 void QCVImage::paintEvent(QPaintEvent* e) {
     QPainter painter(this);
     cvtColor(bgr, rgb, CV_BGR2RGB);
-    const unsigned char * data = (unsigned char *)(rgb.data);
+    const unsigned char* data = (unsigned char*)(rgb.data);
     //frame.step;
     qframe = QImage(data, rgb.cols, rgb.rows, QImage::Format_RGB888);
     painter.drawImage(QPoint(0, 0),qframe);

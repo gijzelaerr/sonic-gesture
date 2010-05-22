@@ -4,9 +4,9 @@
 #include "settings.h"
 
 QCVImage::QCVImage(QWidget *parent) : QWidget(parent) {
-    source.open(STARTSCREEN);
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(grab()));
+    source = new Source();
     grab();
     setProps();
     timer->start(40);
@@ -15,8 +15,8 @@ QCVImage::QCVImage(QWidget *parent) : QWidget(parent) {
 QCVImage::~QCVImage() {};
 
 void QCVImage::grab() {
-    bool code = source.grab();
-    bgr = source.frame;
+    bool code = source->grab();
+    bgr = source->frame;
     this->update();
 }
 
@@ -25,7 +25,7 @@ void QCVImage::setProps() {
     this->setMinimumSize(bgr.cols, bgr.rows);
 }
 
-void QCVImage::setSource(Source& source) {
+void QCVImage::setSource(Source* source) {
     this->source = source;
     grab();
     setProps();

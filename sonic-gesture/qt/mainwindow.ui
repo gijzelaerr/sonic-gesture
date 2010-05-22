@@ -35,12 +35,12 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QCVImage" name="widget" native="true"/>
+     <widget class="QCVImage" name="CVWindow" native="true"/>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="pauzeButton">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -54,7 +54,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="continueButton">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -68,7 +68,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QSlider" name="horizontalSlider">
+       <widget class="QSlider" name="positionSlider">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -249,6 +249,16 @@
     <string>Stop record</string>
    </property>
   </action>
+  <action name="actionPauze_playback">
+   <property name="text">
+    <string>Pauze playback</string>
+   </property>
+  </action>
+  <action name="actionContinue_playback">
+   <property name="text">
+    <string>Continue playback</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -261,5 +271,196 @@
  <resources>
   <include location="resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionOpen_Video</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openVideo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOpen_Device_2</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openDevice()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFinder_View</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>finderView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRecord_original_movie</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>recordInput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRecord_visual_output</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>recordOutput()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSource_view</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sourceView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStart_Record</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>startRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStop_record</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>stopRecord()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pauzeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pauze()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>32</x>
+     <y>482</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>play()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>482</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>positionSlider</sender>
+   <signal>sliderReleased()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changePosition()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>408</x>
+     <y>482</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>openVideo()</slot>
+  <slot>openDevice()</slot>
+  <slot>finderView()</slot>
+  <slot>captureView()</slot>
+  <slot>sourceView()</slot>
+  <slot>recordInput()</slot>
+  <slot>recordOutput()</slot>
+  <slot>pauze()</slot>
+  <slot>play()</slot>
+  <slot>changePosition()</slot>
+  <slot>startRecord()</slot>
+  <slot>stopRecord()</slot>
+ </slots>
 </ui>

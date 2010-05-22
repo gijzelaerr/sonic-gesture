@@ -5,56 +5,18 @@
 #include "skinfinder.h"
 #include "combiner.h"
 #include "loader.h"
+#include "capture.h"
 
-#include "boost/filesystem.hpp"
-#include "boost/date_time/gregorian/gregorian.hpp"
-#include "boost/date_time/posix_time/posix_time.hpp"
+Capture::Capture() {};
 
-using namespace boost::posix_time;
-using namespace boost::gregorian;
-namespace fs = boost::filesystem;
+Capture::Capture(const Size& size) {
 
-
-class Capture {
-public:
-    Capture(const Source& source);
-    void run();
-    
-private:
-    BodyParts bodyparts;
-    SkinFinder* skinFinder;
-    Combiner* combiner;
-
-    Source source;
-    Mat big;
-    Mat small_, visuals, combined;
-    Size big_size, small_size;
-    float scale;
-    vector<Mat> examples;
-    Mat current, black;
-
-    vector<string> names;
-    fs::path current_train_path;
-    fs::path original_path;
-    
-    void init();
-    void grab();
-    bool step(string image_name);
-};
-
-Capture::Capture(const Source& source) {
-    this->source = source;
-    init();
-}
-
-void Capture::init() {
-   
     skinFinder = new SkinFinder();
-    black = Mat(source.size, CV_8UC3, Scalar(0, 0, 0));
+    black = Mat(size, CV_8UC3, Scalar(0, 0, 0));
     
     // do size and scale stuff
-    scale = float(WORKSIZE) / source.size.height;
-    int small_width = int(source.size.width * scale);
+    scale = float(WORKSIZE) / size.height;
+    int small_width = int(size.width * scale);
     small_size = Size(small_width, WORKSIZE);
     assert(small_size.width > 0);
     assert(small_size.height > 0);
@@ -90,19 +52,23 @@ void Capture::init() {
     // create the new directory
     assert(create_directory(current_train_path));
     assert(create_directory(original_path));
+
+    counter = 0;
 };
 
-void Capture::grab() {
-    big = source.grab();
+bool Capture::step(const Mat& big) {
+    double t = (double)getTickCount();
+
+    if (counter >= examples.size())
+        return false;
+
     assert(big.data);
     resize(big, small_, small_size, 0, 0, INTER_NEAREST);
     assert(small_.data);
-}
 
-bool Capture::step(string image_name) {
-    double t = (double)getTickCount();
-    grab();
-
+    current = examples.at(counter);
+    string image_name = int2string(counter);
+    
     // find the bodyparts
     contours skins_small = skinFinder->compute(small_);
     contours skins = scale_contours(skins_small, float(1)/scale);
@@ -112,12 +78,12 @@ bool Capture::step(string image_name) {
     // draw the stuff
     visuals = bodyparts.draw_in_image();
     combined = this->combiner->render();
-    imshow("Sonic Gesture Capturing train data", combined);
+    //imshow("Sonic Gesture Capturing train data", combined);
 
     t = ((double)getTickCount() - t)*1000/getTickFrequency();
     int wait = MIN(40, MAX(40-(int)t, 4)); // Wait max of 40 ms, min of 4;
 
-   int inpoet = waitKey(wait);
+    int inpoet = waitKey(wait);
     if (inpoet == 27) // escape
         exit(EXIT_FAILURE);
     else if (inpoet == 32) { //space
@@ -131,23 +97,9 @@ bool Capture::step(string image_name) {
         cout << "saving " << orig_file.string() << endl;
         assert(imwrite(orig_file.string() + ".jpg", big)); 
         assert(imwrite(hand_file.string() + ".jpg", bodyparts.left_hand.sized_hog_image));
+        counter++;
         return false;
     }
     return true;
-}
-
-void Capture::run() {
-    string image_name;
-    for(unsigned int i=0; i < examples.size(); i++) {
-        //set current example to show
-        current = examples.at(i);
-        while (this->step(int2string(i)));
-    }
-}
-
-int main(int argc, char** argv) {
-    Capture cap = Capture(DEVICE);
-    cap.run();
-    return (EXIT_SUCCESS);
 }
 

@@ -4,6 +4,12 @@
 #include <QtGui/QMainWindow>
 
 #include "qcvimage.h"
+#include "finder.h"
+#include "capture.h"
+
+
+enum viewModeType { NORMAL, FINDER, CAPTURE };
+enum recModeType { INPUT, OUTPUT };
 
 namespace Ui {
     class MainWindow;
@@ -15,13 +21,23 @@ public:
     MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
-protected:
-    void changeEvent(QEvent* e);
-
 private:
     Ui::MainWindow* ui;
     Source* source;
+    viewModeType viewMode;
+    recModeType recMode;
+    QTimer* timer;
+    Mat whatWeSee;
+    QString moviePath;
+    Finder finder;
+    Capture capture;
+    
     void loadFile(const QString &fileName);
+    void readSettings();
+    void writeSettings();
+
+ protected:
+     void closeEvent(QCloseEvent *event);
 
 private slots:
     void openVideo();
@@ -34,8 +50,8 @@ private slots:
     void pauze();
     void play();
     void changePosition();
-    void startRecord();
-    void stopRecord();
+    void record();
+    void heartBeat();
 };
 
 #endif // MAINWINDOW_H

@@ -84,10 +84,10 @@ bool Source::init() {
     };
     
     // doesn't work for webcam somehow
-    int width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
-    int height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
-    //int width = frame.cols;
-    //int height = frame.rows;
+    //int width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    //int height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+    int width = frame.cols;
+    int height = frame.rows;
     
     assert(width > 0);
     assert(height > 0);

@@ -21,18 +21,15 @@ Q_OBJECT
 public:
     QCVImage(QWidget* parent = 0);
     ~QCVImage();
-    void setSource(Source* source);
-
+    void setImage(Mat* bgr);
+    
 private:
-    Mat bgr, rgb;
+    Mat* bgr;
+    Mat rgb;
     Source* source;
     QImage qframe;
-    QTimer* timer;
-    void paintEvent(QPaintEvent* e);
-    void setProps();
 
-public slots:
-    void grab();
+    void paintEvent(QPaintEvent* e);
 };
 
 #endif	/* _QTTEST_H */

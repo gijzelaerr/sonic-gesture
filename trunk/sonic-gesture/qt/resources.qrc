@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file alias="record">icons/bullet_red.png</file>
     <file alias="normal view">icons/eye.png</file>
     <file alias="thumbup">icons/thumb_up.png</file>
     <file alias="play movie">icons/control_play_blue.png</file>

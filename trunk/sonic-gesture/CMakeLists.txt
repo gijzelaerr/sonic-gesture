@@ -34,20 +34,12 @@ include_directories(${Boost_INCLUDE_DIRS})
 #include_directories(${GTEST_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR})
 
-add_executable (finder src/finder.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/matcher.cpp src/matcher.h src/loader.cpp src/loader.h)
-target_link_libraries (finder  ${OpenCV_LIBS})
-target_link_libraries(finder ${Boost_LIBRARIES})
-target_link_libraries(finder ${QT_LIBRARIES})
-
-#add_executable (capture src/capture.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/loader.cpp src/loader.h ${QTGUI_MOC} ${QTGUI_REC})
-#target_link_libraries (capture  ${OpenCV_LIBS})
-#target_link_libraries(capture ${Boost_LIBRARIES})
-
 QT4_WRAP_CPP(QTGUI_CPP src/qcvimage.h src/mainwindow.h)
 QT4_WRAP_UI(QTGUI_UI qt/mainwindow.ui)
 QT4_ADD_RESOURCES(QTGUI_RES qt/resources.qrc)
-add_executable (qtgui src/qcvimage.cpp src/main.cpp src/mainwindow.cpp src/mainwindow.h src/qcvimage.h src/source.cpp src/source.h ${QTGUI_CPP} ${QTGUI_RES} ${QTGUI_UI})
+add_executable (qtgui src/qcvimage.cpp src/finder.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/matcher.cpp src/matcher.h src/loader.cpp src/loader.h src/main.cpp src/mainwindow.cpp src/mainwindow.h src/qcvimage.h src/source.cpp src/source.h src/capture.cpp src/capture.h ${QTGUI_CPP} ${QTGUI_RES} ${QTGUI_UI})
 target_link_libraries (qtgui ${OpenCV_LIBS})
+target_link_libraries(qtgui ${Boost_LIBRARIES})
 target_link_libraries(qtgui ${QT_LIBRARIES})
 
 #add_test(AllTestsInRun run_test)

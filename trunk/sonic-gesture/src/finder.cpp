@@ -4,50 +4,21 @@
 #include "tools.h"
 #include "bodypart.h"
 #include "common.h"
-#include "source.h"
 #include "skinfinder.h"
 #include "matcher.h"
 #include "combiner.h"
 #include "loader.h"
+#include "finder.h"
 
+Finder::Finder() {};
 
-class Finder {
-public:
-    Finder(const Source& source);
-    void run();
-
-private:
-    BodyParts bodyparts;
-    SkinFinder* skinFinder;
-    Combiner* combiner;
-    Matcher* left_matcher;
-    Matcher* right_matcher;
-
-    Source source;
-    Mat big;
-    Mat small_, visuals, combined;
-    Size big_size, small_size;
-    float scale;
-    vector<Mat> hands_left, hands_right;
-    Mat current_left, current_right, black;
-
-    void init();
-    void grab();
-    bool step();
-    void draw_fps(int fps);
-};
-
-Finder::Finder(const Source& source) {
-    this->source = source;
-    init();
-}
-
-void Finder::init() {
+Finder::Finder(const Size& size) {
     skinFinder = new SkinFinder();
 
     // do size and scale stuff
-    scale = float(WORKSIZE) / source.size.height;
-    int small_width = int(source.size.width * scale);
+    big_size = size;
+    scale = float(WORKSIZE) / size.height;
+    int small_width = int(size.width * scale);
     small_size = Size(small_width, WORKSIZE);
     assert(small_size.width > 0);
     assert(small_size.height > 0);
@@ -77,21 +48,28 @@ void Finder::init() {
     combiner->add_image(current_right);
     //combiner.add_image(skinFinder.mask);
 
-    black = Mat(source.size, CV_8UC3, Scalar(0, 0, 0));
+    black = Mat(size, CV_8UC3, Scalar(0, 0, 0));
 }
 
-void Finder::grab() {
-    big = source.grab();
-    assert(big.data);
+Finder::~Finder() {
+    delete left_matcher;
+    delete right_matcher;
+    delete combiner;
+    delete skinFinder;
+}
+
+bool Finder::step(Mat& big) {
+
+    double t = (double)getTickCount();
+
+    if (!big.data)
+        return false;
+    
+    this->big = big;
+
     // INTER_NEAREST is faster, INTER_LINEAR is better
     resize(big, small_, small_size, 0, 0, INTER_LINEAR);
     assert(small_.data);
-}
-
-bool Finder::step() {
-    double t = (double)getTickCount(); 
-    
-    grab();
 
     // find the bodyparts
     contours skins_small = skinFinder->compute(small_);
@@ -128,10 +106,6 @@ bool Finder::step() {
     int wait = MIN(40, MAX(40-(int)t, 4)); // Wait max of 40 ms, min of 4;
 
     draw_fps(t+wait);
-    imshow("Sonic Gesture", combined);
-
-    if(waitKey(wait) >= 0)
-        return false;
     return true;
 }
 
@@ -145,19 +119,4 @@ void Finder::draw_fps(int delay) {
     putText(combined, s, Point(5, 12), FONT_HERSHEY_SIMPLEX, 0.4, Scalar(255, 255, 255), 1);
 }
 
-void Finder::run() {
-    while (this->step()){};
 
-    //for(int i=0; i < 10; i++) {
-    //    this->step();
-    //}
-}
-
-int main(int, char**) {
-    Source source;
-    source.open(DEVICE);
-    Finder finder = Finder(source);
-    finder.run();
-    return EXIT_SUCCESS;
-
-}

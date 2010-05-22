@@ -19,13 +19,13 @@ class QCVImage: public QWidget
 Q_OBJECT
 
 public:
-    QCVImage(QWidget *parent = 0);
+    QCVImage(QWidget* parent = 0);
     ~QCVImage();
-    void setSource(Source& source);
+    void setSource(Source* source);
 
 private:
     Mat bgr, rgb;
-    Source source;
+    Source* source;
     QImage qframe;
     QTimer* timer;
     void paintEvent(QPaintEvent* e);

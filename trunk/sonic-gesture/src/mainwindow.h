@@ -29,8 +29,8 @@ private:
     QTimer* timer;
     Mat whatWeSee;
     QString moviePath;
-    Finder finder;
-    Capture capture;
+    Finder* finder;
+    Capture* capture;
     
     void loadFile(const QString &fileName);
     void readSettings();

@@ -13,7 +13,8 @@ public:
     Finder();
     Finder(const cv::Size& size);
     ~Finder();
-    
+
+    void init(const cv::Size& size);
     bool step(cv::Mat& big);
     cv::Mat combined;
     

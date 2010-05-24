@@ -20,6 +20,7 @@ class Capture {
 public:
     Capture();
     Capture(const cv::Size& Size);
+    void init(const cv::Size& Size);
     bool step(const Mat& big);
     Mat combined;
 

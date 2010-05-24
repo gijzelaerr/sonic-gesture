@@ -10,6 +10,10 @@
 Capture::Capture() {};
 
 Capture::Capture(const Size& size) {
+    init(size);
+};
+
+void Capture::init(const Size& size) {
 
     skinFinder = new SkinFinder();
     black = Mat(size, CV_8UC3, Scalar(0, 0, 0));

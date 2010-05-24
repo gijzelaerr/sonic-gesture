@@ -6,8 +6,8 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     source = new Source();
-    finder = Finder(source->size);
-    capture = Capture(source->size);
+    finder = new Finder(source->size);
+    capture = new Capture(source->size);
     whatWeSee = source->frame;
     ui->CVWindow->setImage(&whatWeSee);
     viewMode = NORMAL;
@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow() {
     delete ui;
     delete source;
+    delete finder;
+    delete capture;
 }
 
 
@@ -38,8 +40,8 @@ void MainWindow::openVideo() {
 
 void MainWindow::loadFile(const QString &fileName) {
     source->open(fileName);
-    finder = Finder(source->size);
-    capture = Capture(source->size);
+    finder->init(source->size);
+    capture->init(source->size);
 
     ui->pauzeButton->setEnabled(true);
     ui->continueButton->setEnabled(false);
@@ -49,8 +51,8 @@ void MainWindow::loadFile(const QString &fileName) {
 
 void MainWindow::openDevice() {
     source->open(0);
-    finder = Finder(source->size);
-    capture = Capture(source->size);
+    finder->init(source->size);
+    capture->init(source->size);
 
     ui->pauzeButton->setEnabled(false);
     ui->continueButton->setEnabled(false);
@@ -106,21 +108,18 @@ void MainWindow::heartBeat() {
     source->grab();
     switch (viewMode) {
         case FINDER:
-            finder.step(source->frame);
-            whatWeSee = finder.combined;
-            ui->CVWindow->setImage(&whatWeSee);
+            finder->step(source->frame);
+            whatWeSee = finder->combined;
             break;
         case CAPTURE:
-            capture.step(source->frame);
-            whatWeSee = capture.combined;
-            ui->CVWindow->setImage(&whatWeSee);
+            capture->step(source->frame);
+            whatWeSee = capture->combined;
             break;
         default:
             whatWeSee = source->frame;
             break;
     }
-    imshow("testje", whatWeSee);
-    waitKey(40);
+    ui->CVWindow->setImage(&whatWeSee);
     ui->CVWindow->update();
 }
 

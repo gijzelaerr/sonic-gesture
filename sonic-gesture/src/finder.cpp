@@ -13,6 +13,10 @@
 Finder::Finder() {};
 
 Finder::Finder(const Size& size) {
+    init(size);
+}
+
+void Finder::init(const Size& size) {
     skinFinder = new SkinFinder();
 
     // do size and scale stuff
@@ -59,7 +63,6 @@ Finder::~Finder() {
 }
 
 bool Finder::step(Mat& big) {
-
     double t = (double)getTickCount();
 
     if (!big.data)

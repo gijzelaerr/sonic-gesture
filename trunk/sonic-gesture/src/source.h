@@ -5,7 +5,7 @@
 #include "cv.h"
 #include "highgui.h"
 #include <string>
-#include <Qt/QtCore>
+#include <QtCore>
 
 class Source {
 public:

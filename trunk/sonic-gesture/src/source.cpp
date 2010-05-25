@@ -1,6 +1,6 @@
 
-#include <Qt/QtCore>
-#include <qt4/QtGui/qimage.h>
+#include <QtCore>
+#include <QtGui/qimage.h>
 #include "highgui.h"
 #include "source.h"
 #include "settings.h"

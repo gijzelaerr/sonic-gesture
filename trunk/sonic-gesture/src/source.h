@@ -20,8 +20,13 @@ public:
     bool grab();
     QString lastError();
 
+    bool setPos(double position);
+    double getPos();
+
+
     cv::Size size;
     cv::Mat frame;
+    int frameCount;
     
 private:
 

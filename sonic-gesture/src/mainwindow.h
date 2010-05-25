@@ -9,7 +9,9 @@
 
 
 enum viewModeType { NORMAL, FINDER, CAPTURE };
+enum sourceModeType { IMAGE, MOVIE, DEVICE };
 enum recModeType { INPUT, OUTPUT };
+enum videoStateType { PLAY, PAUZE };
 
 namespace Ui {
     class MainWindow;
@@ -26,6 +28,8 @@ private:
     Source* source;
     viewModeType viewMode;
     recModeType recMode;
+    videoStateType videoState;
+    sourceModeType sourceMode;
     QTimer* timer;
     Mat whatWeSee;
     QString moviePath;

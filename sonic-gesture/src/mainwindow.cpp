@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QtGui/QFileDialog>
+#include <QtGui/QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -12,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->CVWindow->setImage(&whatWeSee);
     viewMode = NORMAL;
     recMode = OUTPUT;
+    videoState = PLAY;
+    sourceMode = IMAGE;
     
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(heartBeat()));
@@ -30,7 +33,8 @@ MainWindow::~MainWindow() {
 
 void MainWindow::openVideo() {
     QDir bla;
-    QString fileName = QFileDialog::getOpenFileName(this, "Open Movie", moviePath, "Movies (*.asf *.mp4 *.mpeg *.wmv *.mpg *.mov *.avi)");
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Movie", moviePath,
+            "Movies (*.asf *.mp4 *.mpeg *.wmv *.mpg *.mov *.avi)");
          if (!fileName.isEmpty()) {
              moviePath = bla.absoluteFilePath(fileName);
              loadFile(fileName);
@@ -47,6 +51,7 @@ void MainWindow::loadFile(const QString &fileName) {
     ui->continueButton->setEnabled(false);
     ui->positionSlider->setEnabled(true);
 
+    sourceMode = MOVIE;
 }
 
 void MainWindow::openDevice() {
@@ -57,6 +62,8 @@ void MainWindow::openDevice() {
     ui->pauzeButton->setEnabled(false);
     ui->continueButton->setEnabled(false);
     ui->positionSlider->setEnabled(false);
+
+    sourceMode = DEVICE;
 };
 
 void MainWindow::finderView() {
@@ -93,18 +100,37 @@ void MainWindow::recordOutput() {
 };
 
 void MainWindow::pauze() {
+    videoState = PAUZE;
+    ui->pauzeButton->setEnabled(false);
+    ui->continueButton->setEnabled(true);
 };
 
 void MainWindow::play() {
+    videoState = PLAY;
+    ui->pauzeButton->setEnabled(true);
+    ui->continueButton->setEnabled(false);
 };
 
 void MainWindow::changePosition() {
+    double pos = (double)(ui->positionSlider->sliderPosition()) / ui->positionSlider->maximum();
+    //cout << pos << endl;
+    //QString double_string;
+    //double_string.setNum(pos);
+    //QMessageBox::StandardButton ret =
+    //QMessageBox::warning(this, "bla", double_string, QMessageBox::Ok);
+    source->setPos(pos);
 };
 
 void MainWindow::record() {
 };
 
 void MainWindow::heartBeat() {
+    if (videoState != PLAY)
+        return;
+
+    if ((sourceMode == MOVIE) && !ui->positionSlider->isSliderDown())
+        ui->positionSlider->setSliderPosition(source->getPos() * ui->positionSlider->maximum());
+
     source->grab();
     switch (viewMode) {
         case FINDER:

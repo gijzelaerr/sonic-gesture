@@ -87,7 +87,7 @@
      <x>0</x>
      <y>0</y>
      <width>714</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -106,6 +106,8 @@
     <addaction name="actionFinder_View"/>
     <addaction name="actionCapture_View"/>
     <addaction name="actionSource_view"/>
+    <addaction name="separator"/>
+    <addaction name="actionFullscreen"/>
    </widget>
    <widget class="QMenu" name="menuRecord">
     <property name="title">
@@ -153,6 +155,8 @@
    <addaction name="actionRecord_visual_output"/>
    <addaction name="separator"/>
    <addaction name="actionRecord"/>
+   <addaction name="separator"/>
+   <addaction name="actionFullscreen"/>
   </widget>
   <action name="actionOpen_Video">
    <property name="icon">
@@ -209,10 +213,10 @@
     <bool>true</bool>
    </property>
    <property name="checked">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="resources.qrc">
@@ -227,7 +231,7 @@
     <bool>true</bool>
    </property>
    <property name="checked">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="resources.qrc">
@@ -298,6 +302,15 @@
   <action name="actionContinue_playback">
    <property name="text">
     <string>Continue playback</string>
+   </property>
+  </action>
+  <action name="actionFullscreen">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/fullscreen</normaloff>:/icons/fullscreen</iconset>
+   </property>
+   <property name="text">
+    <string>Fullscreen</string>
    </property>
   </action>
  </widget>

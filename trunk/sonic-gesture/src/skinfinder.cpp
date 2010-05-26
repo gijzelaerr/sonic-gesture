@@ -1,24 +1,14 @@
 
 
 #include "skinfinder.h"
-#include "settings.h"
 #include "tools.h"
-#include "boost/filesystem.hpp"
 
-namespace fs = boost::filesystem;
 
-SkinFinder::SkinFinder() {
+SkinFinder::SkinFinder(const QString& haarfile, int probToBinThresh) {
     // load haar wavelet face finder
-    fs::path haar_path(FACEHAAR);
-    assert(fs::exists(haar_path));
-    haar = CascadeClassifier(FACEHAAR);
-
+    haar = CascadeClassifier(haarfile.toStdString());
+    this->probToBinThresh = probToBinThresh;
     histogram = Histogram();
-
-    // construct kernel for morhp
-    int dia = WORKSIZE/20 + 1;
-    kernel = round_kernel(dia);
-    
     frame_counter = 0;
 }
 
@@ -40,7 +30,7 @@ void SkinFinder::find_face() {
     frame_counter = 0;
     assert(frame.data);
     haar.detectMultiScale(frame, faces, 1.3, 3, CV_HAAR_DO_CANNY_PRUNING +
-        CV_HAAR_FIND_BIGGEST_OBJECT, Size(WORKSIZE/10, WORKSIZE/10) );
+        CV_HAAR_FIND_BIGGEST_OBJECT, Size(frame.rows/10, frame.rows/10) );
 
     if (faces.size() > 0) {
         face = faces.at(0);
@@ -69,9 +59,8 @@ void SkinFinder::make_mask() {
     assert(backproj.data);
     normalize(backproj, backproj, 0, 255, NORM_MINMAX);
     GaussianBlur( backproj, blur, Size(31, 31), 0);
-    threshold(blur, thresh, THRESHOLD, 255, THRESH_BINARY);
+    threshold(blur, thresh, probToBinThresh, 255, THRESH_BINARY);
     morphologyEx(thresh, mask, MORPH_CLOSE, Mat());
-    //dilate(th, mask, kernel, Point(ceil(dia/2.0), ceil(dia/2.0)));
 }
 
 void SkinFinder::find_contours() {

@@ -6,6 +6,7 @@
 #include "qcvimage.h"
 #include "finder.h"
 #include "capture.h"
+#include "settings.h"
 
 
 enum viewModeType { NORMAL, FINDER, CAPTURE };
@@ -32,18 +33,15 @@ private:
     sourceModeType sourceMode;
     QTimer* timer;
     Mat whatWeSee;
-    QString moviePath;
     Finder* finder;
     Capture* capture;
-    
-    void loadFile(const QString &fileName);
-    void readSettings();
-    void writeSettings();
+    Settings* settings;
 
  protected:
      void closeEvent(QCloseEvent *event);
 
 private slots:
+    void loadFile(const QString &fileName);
     void openVideo();
     void openDevice();
     void finderView();

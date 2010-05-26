@@ -11,6 +11,7 @@ class Source {
 public:
     Source();
     ~Source();
+    bool open(const char* file);
     bool open(int device);
     bool open(const std::string& file);
     bool open(const QImage& qimage);

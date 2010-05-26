@@ -1,37 +1,36 @@
 
 #include <iostream>
-#include "settings.h"
 #include "tools.h"
 #include "bodypart.h"
-#include "common.h"
 #include "skinfinder.h"
 #include "matcher.h"
 #include "combiner.h"
 #include "loader.h"
 #include "finder.h"
+#include "common.h"
+
 
 Finder::Finder() {};
 
 Finder::Finder(const Size& size) {
-    init(size);
-}
+    load(size);
+};
 
-void Finder::init(const Size& size) {
-    skinFinder = new SkinFinder();
-
+void Finder::load(const Size& size) {
+    settings = Settings::getInstance();
+    SkinFinder(settings->haarFile, settings->probToBinThresh);
+    
     // do size and scale stuff
     big_size = size;
-    scale = float(WORKSIZE) / size.height;
+    scale = float(settings->cvWorkWinHight) / size.height;
     int small_width = int(size.width * scale);
-    small_size = Size(small_width, WORKSIZE);
+    small_size = Size(small_width, settings->cvWorkWinHight);
     assert(small_size.width > 0);
     assert(small_size.height > 0);
 
     // load the examples
     Loader loader = Loader();
-    fs::path dataset = fs::path(DATASET);
-    assert(exists(dataset));
-    loader.load(dataset, small_size);
+    loader.load(settings->dataSet, small_size);
     hands_left = loader.examples_left;
     hands_right = loader.examples_right;
 
@@ -40,7 +39,7 @@ void Finder::init(const Size& size) {
     right_matcher = new Matcher(true, loader.labels);    
     
     // what images to show
-    combiner = new Combiner(small_size, XWINDOWS);
+    combiner = new Combiner(small_size, settings->cvWorkWinInX);
     combiner->add_image(skinFinder->frame);
     //combiner.add_image(skinFinder.hsv);
     //combiner.add_image(skinFinder.bw);

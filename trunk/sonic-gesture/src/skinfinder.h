@@ -3,14 +3,14 @@
 #define	_SKINFINDER_H
 
 #include "histogram.h"
-
+#include <QtCore/QString>
 
 using namespace cv;
 using namespace std;
 
 class SkinFinder {
 public:
-    SkinFinder();
+    SkinFinder(const QString& haarfile, int probToBinThresh); // probToBinThresh=30
     vector<vector<Point> > compute(const Mat& frame);
     vector<vector<Point> > contours;
 
@@ -27,6 +27,7 @@ private:
     vector<Rect> faces;
     Rect face;
     int frame_counter;
+    int probToBinThresh;
     void prepare();
     void find_face();
     void make_histogram();

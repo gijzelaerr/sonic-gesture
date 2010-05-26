@@ -2,7 +2,7 @@
 #include "cv.h"
 
 
-#include "settings.h"
+//#include "settings.h"
 #include "source.h"
 #include "skinfinder.h"
 #include "bodypart.h"

@@ -1,37 +1,34 @@
 
-
 #include "loader.h"
 #include "tools.h"
-#include <iostream>
+
 #include <fstream>
 
-using namespace std;
+void Loader::load(QDir location, Size size) {
+    assert(location.exists());
+    QDir examplesPath = QDir(location.absolutePath() + "/examples");
+    QDir labelsPath = QDir(location.absolutePath() + "/labels.txt");
+    assert(examplesPath.exists());
+    assert(labelsPath.exists());
+    load_examples(examplesPath, size);
 
-void Loader::load(path location, Size size) {
-    assert(exists(location));
-    path examples_path = location / "examples";
-    path labels_path = location / "labels.txt";
-    assert(exists(examples_path));
-    assert(exists(labels_path));
-    load_examples(examples_path, size);
-
-    load_labels(labels_path);
+    load_labels(labelsPath);
     assert(labels.size() == examples_left.size());
     assert(labels.size() == examples_right.size());
 };
 
-void Loader::load_examples(path examples_path, Size size) {
+void Loader::load_examples(QDir examples_path, Size size) {
     int i = 0;
-    path file_path;
+    QDir file_path;
     examples_left.clear();
     examples_right.clear();
     while(true) {
         Mat left, right, tmp;
-        file_path = examples_path / (int2string(i++) + ".jpg");
-        if (!exists(file_path)) {
+        file_path = QDir(examples_path.absolutePath() + QString("/%1.jpg").arg(i++));
+        if (!file_path.exists()) {
             break;
         }
-        tmp = imread(file_path.string());
+        tmp = imread(file_path.absolutePath().toStdString());
         resize(tmp, left, size);
         flip(left, right, 1);
         examples_left.push_back(left);
@@ -41,11 +38,11 @@ void Loader::load_examples(path examples_path, Size size) {
 
 };
 
-void Loader::load_labels(path labels_path) {
+void Loader::load_labels(QDir labels_path) {
     ifstream file;
     string lineread;
     int i;
-    file.open(labels_path.string().c_str(), ifstream::in);
+    file.open(labels_path.absolutePath().toStdString().c_str(), ifstream::in);
     assert(file);
 
     while(std::getline(file, lineread)) {

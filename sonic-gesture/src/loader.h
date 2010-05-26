@@ -4,22 +4,18 @@
 
 #include "cv.h"
 #include "highgui.h"
-#include "boost/filesystem.hpp"
-#include <vector>
-
-using namespace boost::filesystem;
-using namespace cv;
+#include <QtCore/QDir>
 
 class Loader {
 public:
-    void load(path location, Size size);
-    vector<Mat> examples_left, examples_right;
-    vector<int> labels;
+    void load(QDir location, cv::Size size);
+    std::vector<cv::Mat> examples_left, examples_right;
+    std::vector<int> labels;
     
 private:
-    void load_examples(path examples, Size size);
-    void load_labels(path labels);
-    path location;
+    void load_examples(QDir examples, cv::Size size);
+    void load_labels(QDir labels);
+    QDir location;
 };
 
 #endif

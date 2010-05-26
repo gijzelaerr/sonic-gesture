@@ -2,8 +2,9 @@
 #ifndef _TOOLS_H
 #define	_TOOLS_H
 
-#include "common.h"
+#include "cv.h"
 
+using namespace std;
 using namespace cv;
 
 float sum(const vector<float>& x);

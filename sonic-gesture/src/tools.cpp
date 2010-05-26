@@ -5,7 +5,7 @@
 #include "highgui.h"
 
 #include "tools.h"
-#include "settings.h"
+//#include "settings.h"
 
 using namespace cv;
 using namespace std;
@@ -73,7 +73,7 @@ vector<Point> scale_contour(vector<Point> contour,float scale) {
 // increase the size of a contour. Window_size is required to know max size
 // Doing many findContours is quite slow. hm.
 vector<Point> dilate_contour(const vector<Point>& contour, Size window_size) {
-    int dia = WORKSIZE/10 + 1;
+    int dia = window_size.height/10 + 1;
     vector<vector<Point> > contours;
     vector<vector<Point> > contours_new;
     Mat binary(window_size, CV_8U, Scalar(0));

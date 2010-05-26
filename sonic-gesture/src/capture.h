@@ -2,25 +2,28 @@
 #ifndef _CAPTURE_H
 #define	_CAPTURE_H
 
-#include <vector>
-#include <string>
+//#include <vector>
+//#include <string>
 #include "cv.h"
 #include "bodypart.h"
 #include "combiner.h"
+#include "settings.h"
 
-#include "boost/filesystem.hpp"
-#include "boost/date_time/gregorian/gregorian.hpp"
-#include "boost/date_time/posix_time/posix_time.hpp"
+#include <QtCore/QDir>
 
-using namespace boost::posix_time;
-using namespace boost::gregorian;
-namespace fs = boost::filesystem;
+//#include "boost/filesystem.hpp"
+//#include "boost/date_time/gregorian/gregorian.hpp"
+//#include "boost/date_time/posix_time/posix_time.hpp"
+
+//using namespace boost::posix_time;
+//using namespace boost::gregorian;
+//namespace fs = boost::filesystem;
 
 class Capture {
 public:
     Capture();
     Capture(const cv::Size& Size);
-    void init(const cv::Size& Size);
+    void load(const cv::Size& Size);
     bool step(const Mat& big);
     Mat combined;
 
@@ -28,6 +31,7 @@ private:
     BodyParts bodyparts;
     SkinFinder* skinFinder;
     Combiner* combiner;
+    Settings* settings;
 
     cv::Mat big;
     cv::Mat small_, visuals;
@@ -38,8 +42,8 @@ private:
     int counter;
 
     vector<string> names;
-    fs::path current_train_path;
-    fs::path original_path;
+    QDir currentTrainPath;
+    QDir originalPath;
 
 };
 

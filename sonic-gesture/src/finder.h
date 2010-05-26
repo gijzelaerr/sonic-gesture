@@ -7,18 +7,20 @@
 #include "skinfinder.h"
 #include "matcher.h"
 #include "combiner.h"
+#include "settings.h"
 
 class Finder {
 public:
     Finder();
-    Finder(const cv::Size& size);
     ~Finder();
 
-    void init(const cv::Size& size);
+    Finder(const Size& size);
+    void load(const cv::Size& size);
     bool step(cv::Mat& big);
     cv::Mat combined;
     
 private:
+    Settings* settings;
     BodyParts bodyparts;
     SkinFinder* skinFinder;
     Combiner* combiner;
@@ -32,7 +34,6 @@ private:
     vector<cv::Mat> hands_left, hands_right;
     cv::Mat current_left, current_right, black;
 
-    void init();
     void draw_fps(int fps);
 };
 

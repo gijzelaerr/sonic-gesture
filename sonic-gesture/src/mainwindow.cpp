@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     source = new Source();
     finder = new Finder(source->size);
     capture = new Capture(source->size);
+    settings = Settings::getInstance();
     whatWeSee = source->frame;
     ui->CVWindow->setImage(&whatWeSee);
     viewMode = NORMAL;
@@ -19,8 +20,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(heartBeat()));
     timer->start(25);
-
-    readSettings();
 }
 
 MainWindow::~MainWindow() {
@@ -28,15 +27,16 @@ MainWindow::~MainWindow() {
     delete source;
     delete finder;
     delete capture;
+    delete settings;
 }
 
 
 void MainWindow::openVideo() {
     QDir bla;
-    QString fileName = QFileDialog::getOpenFileName(this, "Open Movie", moviePath,
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Movie", settings->moviePath,
             "Movies (*.asf *.mp4 *.mpeg *.wmv *.mpg *.mov *.avi)");
          if (!fileName.isEmpty()) {
-             moviePath = bla.absoluteFilePath(fileName);
+             settings->moviePath = bla.absoluteFilePath(fileName);
              loadFile(fileName);
          }
 };
@@ -44,8 +44,8 @@ void MainWindow::openVideo() {
 
 void MainWindow::loadFile(const QString &fileName) {
     source->open(fileName);
-    finder->init(source->size);
-    capture->init(source->size);
+    finder->load(source->size);
+    capture->load(source->size);
 
     ui->pauzeButton->setEnabled(true);
     ui->continueButton->setEnabled(false);
@@ -56,8 +56,8 @@ void MainWindow::loadFile(const QString &fileName) {
 
 void MainWindow::openDevice() {
     source->open(0);
-    finder->init(source->size);
-    capture->init(source->size);
+    finder->load(source->size);
+    capture->load(source->size);
 
     ui->pauzeButton->setEnabled(false);
     ui->continueButton->setEnabled(false);
@@ -150,15 +150,5 @@ void MainWindow::heartBeat() {
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
-    writeSettings();
-}
+};
 
- void MainWindow::readSettings()  {
-     QSettings settings("Gijs Molenaar", "Sonic Gesture");
-     moviePath = settings.value("moviePath", ".").toString();
- }
-
- void MainWindow::writeSettings() {
-     QSettings settings("Gijs Molenaar", "Sonic Gesture");
-     settings.setValue("moviePath", moviePath);
- }

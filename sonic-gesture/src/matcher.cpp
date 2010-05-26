@@ -1,63 +1,61 @@
 
-//#include <iosfwd>
-
 #include "matcher.h"
-#include <boost/algorithm/string/predicate.hpp>
-
-
+#include "highgui.h"
+#include "tools.h"
+#include <QtCore/QDir>
 
 // mirror: should the training images be mirrored, default is left hand
-Matcher::Matcher(bool mirror, vector<int> example_labels) {
+Matcher::Matcher(bool mirror, vector<int> labels) {
+
+    settings = Settings::getInstance();
+    
     // initialize the HOG parameters
     winStride = Size(8, 8);
     padding = Size(0, 0);
     hog = HOGDescriptor();
 
-
-
     // create a stabilizer
-    stabilizer = new Stabilizer(example_labels.size());
+    stabilizer = new Stabilizer(labels.size());
     
     // we keep track of which is the first, so we can extract size info from image
     bool first = true;
 
-    fs::path data_path(DATASET);
-    fs::path train_path = data_path / "train";
-    assert(fs::exists(data_path));
-    assert(fs::exists(train_path));
+    QDir data_path(settings->dataSet);
+    QDir train_path(settings->dataSet + "/train");
+    assert(data_path.exists());
+    assert(train_path.exists());
 
-    vector<fs::path> train_folders;
-    fs::directory_iterator end_iter;
-    for ( fs::directory_iterator dir_itr( train_path ); dir_itr != end_iter; ++dir_itr ) {
-        fs::path train_set = dir_itr->path();
+    QStringList trainSets;
+    QStringList trainList = train_path.entryList();
+    for (int i = 0; i < trainList.size(); ++i) {
+         QString trainSet = trainList.at(i);
+         if (trainSet.startsWith("."))
+             continue;
+         trainSets.append(trainSet);
 
-        // skip hidden files
-        if (boost::starts_with(train_set.filename(), ".")) continue;
-        train_folders.push_back(train_set);
-    }
-    
-    assert(train_folders.size()>0);
+    };
+    assert(trainSets.size()>0);
 
     // loop over folders
-    for(unsigned int train_folder=0; train_folder < train_folders.size(); train_folder++) {
-        fs::path train_set = train_folders.at(train_folder);
+    for(unsigned int trainNum=0; trainNum < trainSets.size(); trainNum++) {
+        QString trainSet = trainSets.at(trainNum);
 
         //loop over images in folders
-        for(unsigned int i=0; i < example_labels.size(); i++) {
-            int imgnum = train_folder * example_labels.size() + i;
+        for(unsigned int i=0; i < labels.size(); i++) {
+            int imgnum = trainNum * labels.size() + i;
 
-            labels.push_back(example_labels.at(i));
+            this->labels.push_back(labels.at(i));
             
-            fs::path hand_path = train_set / (int2string(i) + ".jpg");
-            assert(fs::exists(hand_path));
+            QDir handPath(trainSet + QString("/%1.jpg").arg(i));
+            assert(handPath.exists());
 
-            handimg = imread(hand_path.file_string(), 0);
+            handimg = cv::imread(handPath.absolutePath().toStdString(), 0);
             if(mirror) flip(handimg, handimg, 1);
             hog.compute(handimg, descriptors, winStride, padding, locations);
 
             // initialize the matrix with info from first hand
             if(first) {
-                train = Mat(descriptors.size(), train_folders.size() * example_labels.size(), CV_32FC1);
+                train = Mat(descriptors.size(), trainSets.size() * labels.size(), CV_32FC1);
                 first = false;
             }
 
@@ -80,7 +78,7 @@ Matcher::~Matcher() {
 
 int Matcher::match(const vector<float>& other_descriptors) {
     CvMat img_cvmat = (Mat)Mat(other_descriptors).t();
-    int response = int(knn_matcher.find_nearest(&img_cvmat, NN, 0, 0, 0, 0));
+    int response = int(knn_matcher.find_nearest(&img_cvmat, settings->kNeirNeigh, 0, 0, 0, 0));
     return this->stabilizer->update(response);
     //return response;
 }

@@ -1,13 +1,17 @@
 #ifndef _MATCHER_H
 #define	_MATCHER_H
 
+#include "settings.h"
+
+#include "ml.h"
+#include "cvaux.h"
+
+using namespace std;
+using namespace cv;
+
 #define STATE_MAX 10
 #define STATE_MIN 0
 #define STATE_THRESH 8
-
-#include "common.h"
-
-using namespace std;
 
 class Stabilizer {
 public:
@@ -24,6 +28,12 @@ private:
 };
 
 class Matcher {
+public:
+    Matcher(bool mirror, vector<int> labels);
+    ~Matcher();
+    int match(const vector<float>& descriptors);
+
+private:
     KNearest knn_matcher;
     Size winStride, padding;
     HOGDescriptor hog;
@@ -34,11 +44,7 @@ class Matcher {
     Mat train;
     Mat labels_mat;
     Stabilizer* stabilizer;
-
-public:
-    Matcher(bool mirror, vector<int> labels);
-    ~Matcher();
-    int match(const vector<float>& descriptors);
+    Settings* settings;
 };
 
 

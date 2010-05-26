@@ -3,10 +3,10 @@
 #include <QtGui/qimage.h>
 #include "highgui.h"
 #include "source.h"
-#include "settings.h"
+#include <iostream>
 
 Source::Source() {
-    open(STARTSCREEN);
+    open(":startscreen");
 }
 
 Source::~Source() {
@@ -17,6 +17,10 @@ bool Source::open(int device) {
     mirror = true;
     image = false;
     return init();
+}
+
+bool Source::open(const char* file) {
+    std::cout << file << std::endl;
 }
 
 bool Source::open(const std::string& file) {

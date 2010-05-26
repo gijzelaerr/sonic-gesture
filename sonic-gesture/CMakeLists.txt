@@ -4,9 +4,8 @@ enable_testing(true)
 
 project( "sonic-gesture" )
 find_package( OpenCV REQUIRED )  
-find_package( Boost COMPONENTS filesystem system date_time REQUIRED )
-
 find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED )
+
 include(${QT_USE_FILE})
 
 # where can we find data
@@ -20,17 +19,15 @@ configure_file (
   )
 
 include_directories(${PROJECT_BINARY_DIR})
-include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR})
 
 QT4_WRAP_CPP(SONICGESTURE_CPP src/qcvimage.h src/mainwindow.h src/application.h)
 QT4_WRAP_UI(SONICGESTURE_UI qt/mainwindow.ui)
 QT4_ADD_RESOURCES(SONICGESTURE_RES qt/resources.qrc)
 
-add_executable (sonicgesture src/qcvimage.cpp src/finder.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/matcher.cpp src/matcher.h src/loader.cpp src/loader.h src/main.cpp src/mainwindow.cpp src/mainwindow.h src/qcvimage.h src/capture.cpp src/capture.h src/application.cpp src/application.h ${SONICGESTURE_CPP} ${SONICGESTURE_RES} ${SONICGESTURE_UI})
+add_executable (sonicgesture src/qcvimage.cpp src/finder.cpp src/skinfinder.cpp src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.h src/settings.cpp src/skinfinder.h src/source.h src/histogram.h src/combiner.h src/tools.h src/bodypart.cpp src/bodypart.h src/blob.cpp src/blob.h src/matcher.cpp src/matcher.h src/loader.cpp src/loader.h src/main.cpp src/mainwindow.cpp src/mainwindow.h src/qcvimage.h src/capture.cpp src/capture.h src/application.cpp src/application.h src/recorder.cpp src/recorder.h ${SONICGESTURE_CPP} ${SONICGESTURE_RES} ${SONICGESTURE_UI})
 
 target_link_libraries (sonicgesture ${OpenCV_LIBS})
-target_link_libraries(sonicgesture ${Boost_LIBRARIES})
 target_link_libraries(sonicgesture ${QT_LIBRARIES})
 
 # what to install where
@@ -44,9 +41,6 @@ IF(WIN32)
 	file(GLOB OPENCV_LIBS "${OpenCV_DIR}/bin/*.dll")
     INSTALL(FILES
         ${OPENCV_LIBS}
-		${BOOST_DATETIME_LIBS}
-		${BOOST_FILESYSTEM_LIBS}
-		${BOOST_SYSTEM_LIBS}
         DESTINATION bin
     )
 ENDIF(WIN32)

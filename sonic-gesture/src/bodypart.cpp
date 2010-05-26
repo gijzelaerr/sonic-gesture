@@ -1,7 +1,7 @@
 
 #include "bodypart.h"
 #include "blob.h"
-#include "settings.h"
+#include "common.h"
 #include "tools.h"
 
 #include <iostream>
@@ -113,10 +113,10 @@ void BodyPart::compute_hog() {
 };
 
 void BodyPart::locate() {
-    Rect search_rect = Rect(prediction.x - WORKSIZE/20,
-                            prediction.y - WORKSIZE/20,
-                            prediction.width + WORKSIZE/10,
-                            prediction.height + WORKSIZE/10);
+    Rect search_rect = Rect(prediction.x - prediction.width/20,
+                            prediction.y - prediction.height/20,
+                            prediction.width + prediction.width/10,
+                            prediction.height + prediction.height/10);
 
     search_rect = rect_in_mat(search_rect, image);
     Mat search = image(search_rect);
@@ -151,6 +151,13 @@ Size BodyPart::size() {
     return cutout.size();
 };
 
+BodyParts::BodyParts() {
+    settings = Settings::getInstance();
+}
+
+BodyParts::~BodyParts() {
+}
+
 void BodyParts::update(contours contours_, Point face_center, const Mat& image) {
     vector<Blob> blobs, tmp_blobs;
     this->image = image;
@@ -165,10 +172,10 @@ void BodyParts::update(contours contours_, Point face_center, const Mat& image) 
         contour contour_ = contours_.at(i);
         if (contour_.size() > 0) {
             assert(contour_.size() > 0);
-            blob = Blob(contour_, INFLATE_SIZE);
+            blob = Blob(contour_, settings->limbInflationRatio);
             // A filter to remove noice, (small objects)
 
-            if (blob.area > MIN_BLOB_SIZE) {
+            if (blob.area > settings->minBlobSize) {
                 blobs.push_back(blob);
             }
         }

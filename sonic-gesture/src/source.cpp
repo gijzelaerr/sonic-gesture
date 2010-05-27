@@ -35,9 +35,8 @@ bool Source::open(const QFileInfo& fileinfo) {
 
 bool Source::open(const QImage& qimage) {
     assert(qimage.height() > 0);
-    cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC3, cv::Scalar(0, 0 ,0));
-    mat.data = (uchar*)qimage.bits();
-    //cv::cvtColor(mat, mat, CV_RGB2BGR);
+    cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC3, (uchar*)qimage.bits(), qimage.bytesPerLine());
+    cv::cvtColor(mat, mat, CV_RGB2BGR);
     return loadImage(mat);
 }
 

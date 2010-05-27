@@ -143,7 +143,6 @@ void BodyPart::locate() {
     }
     
     this->position = new_pos;
-    //cout << fixed << min << endl;
 };
 
 

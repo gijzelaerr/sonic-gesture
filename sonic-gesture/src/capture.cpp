@@ -48,11 +48,13 @@ void Capture::load(const Size& size) {
     }
 
     QString now = QDateTime::currentDateTime().toString("yyyy.MM.dd.hh.mm.ss");
+
     QDir currentTrainPath(storePath.path() + "/" + now);
+
     QDir originalPath(currentTrainPath.path() + "/original");
 
     assert(!currentTrainPath.exists());
-    assert(storePath.mkdir("now"));
+    assert(storePath.mkdir(now));
     assert(currentTrainPath.mkdir("original"));
 
     counter = 0;

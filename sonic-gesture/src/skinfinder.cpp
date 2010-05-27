@@ -6,8 +6,8 @@
 
 SkinFinder::SkinFinder(const QFileInfo& haarfile, int probToBinThresh) {
     // load haar wavelet face finder
-    std::cout << haarfile.path().toStdString() << std::endl;
-    haar = CascadeClassifier(haarfile.path().toStdString());
+    assert(haarfile.exists());
+    haar = CascadeClassifier(haarfile.filePath().toStdString());
     this->probToBinThresh = probToBinThresh;
     histogram = Histogram();
     frame_counter = 0;

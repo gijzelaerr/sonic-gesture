@@ -46,10 +46,10 @@ Matcher::Matcher(bool mirror, vector<int> labels) {
 
             this->labels.push_back(labels.at(i));
             
-            QDir handPath(trainSet + QString("/%1.jpg").arg(i));
+            QFileInfo handPath(train_path.path() + QString("/%1/%2.jpg").arg(trainSet).arg(i));
             assert(handPath.exists());
 
-            handimg = cv::imread(handPath.absolutePath().toStdString(), 0);
+            handimg = cv::imread(handPath.filePath().toStdString(), 0);
             if(mirror) flip(handimg, handimg, 1);
             hog.compute(handimg, descriptors, winStride, padding, locations);
 
@@ -65,7 +65,7 @@ Matcher::Matcher(bool mirror, vector<int> labels) {
         }
     }
     train = train.t();
-    labels_mat = Mat(labels);
+    labels_mat = Mat(this->labels);
     knn_matcher = KNearest();
     cout << "traing matcher with " << train.rows << " examples with " <<
             train.cols << " features..." << endl;
@@ -103,7 +103,6 @@ int Stabilizer::update(int state) {
         if (i == state) {
             new_val = min(this->states.at(i)+1, STATE_MAX);
             this->states.at(i) = new_val;
-            //cout << "update " << i << " with " << new_val;
             if ((new_val >= STATE_THRESH) && (!this->active)) {
                 this->trigger(true, i);
             }

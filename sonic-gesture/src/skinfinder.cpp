@@ -2,11 +2,12 @@
 
 #include "skinfinder.h"
 #include "tools.h"
+#include <iostream>
 
-
-SkinFinder::SkinFinder(const QString& haarfile, int probToBinThresh) {
+SkinFinder::SkinFinder(const QFileInfo& haarfile, int probToBinThresh) {
     // load haar wavelet face finder
-    haar = CascadeClassifier(haarfile.toStdString());
+    std::cout << haarfile.path().toStdString() << std::endl;
+    haar = CascadeClassifier(haarfile.path().toStdString());
     this->probToBinThresh = probToBinThresh;
     histogram = Histogram();
     frame_counter = 0;

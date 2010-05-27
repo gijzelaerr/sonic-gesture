@@ -1,4 +1,5 @@
 
+#include "cmake.h"
 #include "settings.h"
 
 Settings* Settings::m_pSettings = NULL;
@@ -24,27 +25,29 @@ void Settings::destroy() {
  m_pSettings=NULL;
 }
 
-void Settings::save()  {
-     moviePath = qSettings->value("moviePath", ".").toString();
-     dataPath = qSettings->value("dataPath", ".").toString();
-     dataSet = qSettings->value("dataSet", ".").toString();
+void Settings::load()  {
+     moviePath = QDir(qSettings->value("moviePath", ".").toString());
+     dataPath = QDir(qSettings->value("dataPath", QString(DATA_DIR)).toString());
+     dataSet = qSettings->value("dataSet", dataPath.path() + "/dataset").toString();
      cvWorkWinHight = qSettings->value("cvWorkWinHight", 300).toInt();
      cvWorkWinInX = qSettings->value("cvWorkWinInX", 2).toInt();
      limbInflationRatio = qSettings->value("limbInflationRatio", 1.1).toDouble();
      probToBinThresh = qSettings->value("probToBinThresh", 30).toInt();
      kNeirNeigh = qSettings->value("kNeirNeigh", 3).toInt();
+
+     haarFile = QFileInfo(dataPath.path() + "storage/haarcascade_frontalface_alt.xml");
+     minBlobSize = (cvWorkWinHight/10)*(cvWorkWinHight/10);
  };
 
- void Settings::load() {
-     qSettings->setValue("moviePath", moviePath);
-     qSettings->setValue("dataPath", dataPath);
-     qSettings->setValue("dataSet", dataSet);
+ void Settings::save() {
+     qSettings->setValue("moviePath", moviePath.absolutePath());
+     qSettings->setValue("dataPath", dataPath.absolutePath());
+     qSettings->setValue("dataSet", dataSet.absolutePath());
      qSettings->setValue("cvWorkWinHight", cvWorkWinHight);
      qSettings->setValue("cvWorkWinInX", cvWorkWinInX);
      qSettings->setValue("limbInflationRatio", limbInflationRatio);
      qSettings->setValue("probToBinThresh", probToBinThresh);
      qSettings->setValue("kNeirNeigh", kNeirNeigh);
 
-     haarFile = dataPath + "/storage/haarcascade_frontalface_alt.xml";
-     minBlobSize = (cvWorkWinHight/10)*(cvWorkWinHight/10);
+
 };

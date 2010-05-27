@@ -4,13 +4,14 @@
 
 #include "histogram.h"
 #include <QtCore/QString>
+#include <QtCore/QDir>
 
 using namespace cv;
 using namespace std;
 
 class SkinFinder {
 public:
-    SkinFinder(const QString& haarfile, int probToBinThresh); // probToBinThresh=30
+    SkinFinder(const QFileInfo& haarfile, int probToBinThresh); // probToBinThresh=30
     vector<vector<Point> > compute(const Mat& frame);
     vector<vector<Point> > contours;
 

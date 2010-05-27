@@ -6,10 +6,10 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+    settings = Settings::getInstance();
     source = new Source();
     finder = new Finder(source->size);
     capture = new Capture(source->size);
-    settings = Settings::getInstance();
     whatWeSee = source->frame;
     ui->CVWindow->setImage(&whatWeSee);
     viewMode = NORMAL;
@@ -33,7 +33,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::openVideo() {
     QDir bla;
-    QString fileName = QFileDialog::getOpenFileName(this, "Open Movie", settings->moviePath,
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Movie", settings->moviePath.path(),
             "Movies (*.asf *.mp4 *.mpeg *.wmv *.mpg *.mov *.avi)");
          if (!fileName.isEmpty()) {
              settings->moviePath = bla.absoluteFilePath(fileName);

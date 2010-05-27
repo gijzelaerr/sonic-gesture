@@ -1,12 +1,14 @@
-
+#include <iostream>
 #include <QtCore>
-#include <QtGui/qimage.h>
+#include <QtGui/QImage>
 #include "highgui.h"
 #include "source.h"
-#include <iostream>
+
 
 Source::Source() {
-    open(":startscreen");
+    //QImage qimage;
+    //assert(qimage.load());
+    open(QImage(":images/startscreen"));
 }
 
 Source::~Source() {
@@ -17,10 +19,6 @@ bool Source::open(int device) {
     mirror = true;
     image = false;
     return init();
-}
-
-bool Source::open(const char* file) {
-    std::cout << file << std::endl;
 }
 
 bool Source::open(const std::string& file) {
@@ -44,6 +42,7 @@ bool Source::open(const QString& file) {
 };
 
 bool Source::open(const QImage& qimage) {
+    assert(qimage.height() > 0);
     cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC3, cv::Scalar(0, 0 ,0));
     const uchar* blaat = (const uchar*)qimage.bits();
     mat.data = (uchar*)blaat;

@@ -5,17 +5,16 @@
 #include "cv.h"
 #include "highgui.h"
 #include <string>
-#include <QtCore>
+#include <QtCore/QFileInfo>
+#include <QtGui/QImage>
 
 class Source {
 public:
     Source();
     ~Source();
-    bool open(const char* file);
     bool open(int device);
-    bool open(const std::string& file);
     bool open(const QImage& qimage);
-    bool open(const QString& file);
+    bool open(const QFileInfo& file);
     bool open(const cv::Mat& image);
 
     bool grab();
@@ -33,14 +32,15 @@ private:
 
     bool init();
     bool loadCam(int device);
-    bool loadMovie(const QString& file);
-    bool loadImage(const QString& file);
+    bool loadMovie(const QFileInfo& file);
+    bool loadImage(const QFileInfo& file);
     bool loadImage(const cv::Mat& file);
     void setError(QString error);
 
     bool mirror, image;
     cv::VideoCapture cap;
     QString error;
+    QImage qimage_storage;
 
 };
 

@@ -113,11 +113,6 @@ void MainWindow::play() {
 
 void MainWindow::changePosition() {
     double pos = (double)(ui->positionSlider->sliderPosition()) / ui->positionSlider->maximum();
-    //cout << pos << endl;
-    //QString double_string;
-    //double_string.setNum(pos);
-    //QMessageBox::StandardButton ret =
-    //QMessageBox::warning(this, "bla", double_string, QMessageBox::Ok);
     source->setPos(pos);
 };
 

@@ -43,10 +43,16 @@ bool Source::open(const QString& file) {
 
 bool Source::open(const QImage& qimage) {
     assert(qimage.height() > 0);
-    cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC3, cv::Scalar(0, 0 ,0));
+
+    //const unsigned char* data = (unsigned char*)(rgb.data);
+    //qframe = QImage(data, rgb.cols, rgb.rows, QImage::Format_RGB888);
+
+    //cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC3, cv::Scalar(0, 0 ,0));
+    cv::Mat mat = cv::Mat(10, 10, CV_8UC3, cv::Scalar(0, 0 ,0));
     const uchar* blaat = (const uchar*)qimage.bits();
-    mat.data = (uchar*)blaat;
-    cv::cvtColor(mat, mat, CV_RGB2BGR);
+    //mat.data = (uchar*)blaat;
+    mat.data = (uchar*)qimage.bits();
+    //cv::cvtColor(mat, mat, CV_RGB2BGR);
     return loadImage(mat);
 }
 

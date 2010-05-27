@@ -1,6 +1,7 @@
 
 #include "cmake.h"
 #include "settings.h"
+#include <iostream>
 
 Settings* Settings::m_pSettings = NULL;
 
@@ -35,7 +36,9 @@ void Settings::load()  {
      probToBinThresh = qSettings->value("probToBinThresh", 30).toInt();
      kNeirNeigh = qSettings->value("kNeirNeigh", 3).toInt();
 
-     haarFile = QFileInfo(dataPath.path() + "storage/haarcascade_frontalface_alt.xml");
+     QString haar(dataPath.absolutePath() + QString("/storage/haarcascade_frontalface_alt.xml"));
+     std::cout << haar.toStdString() << std::endl;
+     haarFile = QFileInfo(haar);
      minBlobSize = (cvWorkWinHight/10)*(cvWorkWinHight/10);
  };
 

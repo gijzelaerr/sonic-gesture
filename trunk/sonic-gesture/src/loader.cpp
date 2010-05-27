@@ -8,13 +8,12 @@
 void Loader::load(QDir location, Size size) {
     assert(location.exists());
 
-    QDir examplesPath(location.absolutePath() + "/examples");
+    QDir examplesPath(location.path() + "/examples");
     assert(examplesPath.exists());
     load_examples(examplesPath, size);
 
-    QFileInfo labelsPath(location.absolutePath() + "/labels.txt");
-    //std::cout << labelsPath.absolutePath().toStdString() << endl;
-    //assert(labelsPath.exists());
+    QFileInfo labelsPath(location.path() + "/labels.txt");
+    assert(labelsPath.exists());
     load_labels(labelsPath);
 
 
@@ -24,15 +23,16 @@ void Loader::load(QDir location, Size size) {
 
 void Loader::load_examples(QDir examples_path, Size size) {
     int i = 0;
-    QDir file_path;
+    QFileInfo file_path;
     examples_left.clear();
     examples_right.clear();
     while(true) {
         Mat left, right, tmp;
-        file_path = QDir(examples_path.absolutePath() + QString("/%1.jpg").arg(i++));
+        file_path = QFileInfo(examples_path.path() + QString("/%1.jpg").arg(i++));
         if (!file_path.exists())
-            continue;
-        tmp = imread(file_path.absolutePath().toStdString());
+            break;
+        tmp = imread(file_path.filePath().toStdString());
+        assert(tmp.data);
         resize(tmp, left, size);
         flip(left, right, 1);
         examples_left.push_back(left);
@@ -46,7 +46,7 @@ void Loader::load_labels(QFileInfo labels_path) {
     ifstream file;
     string lineread;
     int i;
-    file.open(labels_path.absolutePath().toStdString().c_str(), ifstream::in);
+    file.open(labels_path.filePath().toStdString().c_str(), ifstream::in);
     assert(file);
 
     while(std::getline(file, lineread)) {

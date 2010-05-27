@@ -14,7 +14,7 @@ public:
     
 private:
     void load_examples(QDir examples, cv::Size size);
-    void load_labels(QDir labels);
+    void load_labels(QFileInfo labels);
     QDir location;
 };
 

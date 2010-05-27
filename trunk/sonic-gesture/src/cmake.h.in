@@ -3,6 +3,6 @@
 #define	_CMAKE_H
 
 // set by CMAKE
-#define DATA_DIR std::string("@DATA_DIR@")
+#define DATA_DIR "@DATA_DIR@"
 
 #endif

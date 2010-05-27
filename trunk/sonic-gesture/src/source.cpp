@@ -1,14 +1,13 @@
 #include <iostream>
-#include <QtCore>
 #include <QtGui/QImage>
+#include <qt4/QtCore/qfileinfo.h>
 #include "highgui.h"
 #include "source.h"
 
 
 Source::Source() {
-    //QImage qimage;
-    //assert(qimage.load());
-    open(QImage(":images/startscreen"));
+    qimage_storage = QImage(":images/startscreen");
+    open(qimage_storage);
 }
 
 Source::~Source() {
@@ -21,36 +20,22 @@ bool Source::open(int device) {
     return init();
 }
 
-bool Source::open(const std::string& file) {
-    QString qstr = QString(file.c_str());
-    return open(qstr);
-};
-
-bool Source::open(const QString& file) {
-    QFile* qfile = new QFile(file);
-
-    if (!qfile->exists()) {
-        setError(qfile->errorString());
+bool Source::open(const QFileInfo& fileinfo) {
+    if (!fileinfo.exists()) {
+        setError("file doesn't exists");
         return false;
     }
-        
 
-    if (file.endsWith("png", Qt::CaseInsensitive)  || file.endsWith("jpg", Qt::CaseInsensitive))
-        return loadImage(file);
+    if (fileinfo.fileName().endsWith("png", Qt::CaseInsensitive) ||
+            fileinfo.fileName().endsWith("jpg", Qt::CaseInsensitive))
+        return loadImage(fileinfo);
     else
-        return loadMovie(file);
+        return loadMovie(fileinfo);
 };
 
 bool Source::open(const QImage& qimage) {
     assert(qimage.height() > 0);
-
-    //const unsigned char* data = (unsigned char*)(rgb.data);
-    //qframe = QImage(data, rgb.cols, rgb.rows, QImage::Format_RGB888);
-
-    //cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC3, cv::Scalar(0, 0 ,0));
-    cv::Mat mat = cv::Mat(10, 10, CV_8UC3, cv::Scalar(0, 0 ,0));
-    const uchar* blaat = (const uchar*)qimage.bits();
-    //mat.data = (uchar*)blaat;
+    cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC3, cv::Scalar(0, 0 ,0));
     mat.data = (uchar*)qimage.bits();
     //cv::cvtColor(mat, mat, CV_RGB2BGR);
     return loadImage(mat);
@@ -65,16 +50,16 @@ bool Source::loadImage(const cv::Mat& mat) {
     return true;
 };
 
-bool Source::loadImage(const QString& file) {
-    frame = cv::imread(file.toStdString());
+bool Source::loadImage(const QFileInfo& file) {
+    frame = cv::imread(file.filePath().toStdString());
     image = true;
     mirror = false;
     size = frame.size();
     return true;
 };
 
-bool Source::loadMovie(const QString& file) {
-    cap = cv::VideoCapture(file.toStdString());
+bool Source::loadMovie(const QFileInfo& file) {
+    cap = cv::VideoCapture(file.filePath().toStdString());
     image = false;
     mirror = false;
     return init();

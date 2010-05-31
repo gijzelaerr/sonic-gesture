@@ -15,12 +15,14 @@ using namespace cv;
 
 class Stabilizer {
 public:
-    Stabilizer(int state_num=1);
+    Stabilizer();
+    Stabilizer(int state_num);
     ~Stabilizer();
     int update(int state);
     int get_state();
     void set_callback();
     bool is_active();
+
 private:
     void trigger(bool active, int state);
     bool active;
@@ -29,8 +31,9 @@ private:
 
 class Matcher {
 public:
-    Matcher(bool mirror, vector<int> labels);
+    Matcher();
     ~Matcher();
+    Matcher(bool mirror, vector<int> labels);
     int match(const vector<float>& descriptors);
 
 private:
@@ -43,7 +46,7 @@ private:
     Mat handimg;
     Mat train;
     Mat labels_mat;
-    Stabilizer* stabilizer;
+    Stabilizer stabilizer;
     Settings* settings;
 };
 

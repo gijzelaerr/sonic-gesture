@@ -11,6 +11,8 @@ using namespace std;
 
 class SkinFinder {
 public:
+    SkinFinder();
+    ~SkinFinder();
     SkinFinder(const QFileInfo& haarfile, int probToBinThresh); // probToBinThresh=30
     vector<vector<Point> > compute(const Mat& frame);
     vector<vector<Point> > contours;

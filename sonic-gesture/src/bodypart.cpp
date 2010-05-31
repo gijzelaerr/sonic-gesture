@@ -19,7 +19,7 @@ BodyPart::BodyPart() {
     padding = Size(0, 0);
     hog = HOGDescriptor();
 
-    kalman = new KalmanFilter();
+    //kalman = new KalmanFilter();
     // kalman stuff
 
     float f[stateparms][stateparms] = {
@@ -31,20 +31,20 @@ BodyPart::BodyPart() {
         {0, 0, 0, 0, 0, 1},
     };
 
-    kalman->init(stateparms, measureparms);
+    kalman.init(stateparms, measureparms);
     Mat transmat = Mat(stateparms, stateparms, CV_32FC1, f);
-    transmat.copyTo(kalman->transitionMatrix);
-    setIdentity(kalman->measurementMatrix, Scalar(1));
-    setIdentity(kalman->processNoiseCov, Scalar(1));
-    setIdentity(kalman->measurementNoiseCov, Scalar(5));
-    setIdentity(kalman->errorCovPost, Scalar(3));
-    setIdentity(kalman->gain, Scalar(0e-15));
-    randu(kalman->statePost, Scalar(1), Scalar(100));
+    transmat.copyTo(kalman.transitionMatrix);
+    setIdentity(kalman.measurementMatrix, Scalar(1));
+    setIdentity(kalman.processNoiseCov, Scalar(1));
+    setIdentity(kalman.measurementNoiseCov, Scalar(5));
+    setIdentity(kalman.errorCovPost, Scalar(3));
+    setIdentity(kalman.gain, Scalar(0e-15));
+    randu(kalman.statePost, Scalar(1), Scalar(100));
 };
 
 
 BodyPart::~BodyPart() {
-    delete kalman;
+    //delete kalman;
 };
 
 
@@ -76,11 +76,11 @@ void BodyPart::update(const Mat& image) {
 
 
 void BodyPart::kalman_predict() {
-    kalman->predict();
-    int x = kalman->statePre.at<float>(0, 0);
-    int y = kalman->statePre.at<float>(0, 1);
-    int w = kalman->statePre.at<float>(0, 2);
-    int h = kalman->statePre.at<float>(0, 3);
+    kalman.predict();
+    int x = kalman.statePre.at<float>(0, 0);
+    int y = kalman.statePre.at<float>(0, 1);
+    int w = kalman.statePre.at<float>(0, 2);
+    int h = kalman.statePre.at<float>(0, 3);
     prediction = Rect(x, y, w, h);
     prediction = rect_in_mat(prediction, image);
 };
@@ -89,7 +89,7 @@ void BodyPart::kalman_correct(Rect measurement) {
     float m[1][measureparms] = {{measurement.x, measurement.y,
             measurement.width, measurement.height}};
     Mat measurementMatrix = Mat(1, measureparms, CV_32FC1, m).t();
-    kalman->correct(measurementMatrix);
+    kalman.correct(measurementMatrix);
 };
 
 void BodyPart::make_cutout() {

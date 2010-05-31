@@ -22,6 +22,7 @@ Settings::~Settings() {
 }
 
 void Settings::destroy() {
+ m_pSettings->save();
  delete m_pSettings;
  m_pSettings=NULL;
 }
@@ -40,6 +41,8 @@ void Settings::load()  {
      std::cout << haar.toStdString() << std::endl;
      haarFile = QFileInfo(haar);
      minBlobSize = (cvWorkWinHight/10)*(cvWorkWinHight/10);
+
+     FPS = 25;
  };
 
  void Settings::save() {
@@ -51,6 +54,6 @@ void Settings::load()  {
      qSettings->setValue("limbInflationRatio", limbInflationRatio);
      qSettings->setValue("probToBinThresh", probToBinThresh);
      qSettings->setValue("kNeirNeigh", kNeirNeigh);
-
+     qSettings->sync();
 
 };

@@ -1,11 +1,15 @@
 #include "recorder.h"
 
-Recorder::Recorder(const std::string& filename, double fps, cv::Size frameSize) {
+Recorder::Recorder() {
+    // TODO: disable writer
+};
+
+Recorder::Recorder(const QString& filename, double fps, cv::Size frameSize) {
     open(filename, fps, frameSize);
 };
 
-bool Recorder::open(const std::string& filename, double fps, cv::Size frameSize) {
-    return writer.open(filename, CV_FOURCC('M','J','P','G'), fps, frameSize, true);
+bool Recorder::open(const QString& filename, double fps, cv::Size frameSize) {
+    return writer.open(filename.toStdString(), CV_FOURCC('M','J','P','G'), fps, frameSize, true);
 };
 
 bool Recorder::isOpened() {
@@ -13,6 +17,7 @@ bool Recorder::isOpened() {
 };
 
 void Recorder::putFrame(const cv::Mat& frame) {
-    writer << frame;
+    if (isOpened())
+        writer << frame;
 };
 

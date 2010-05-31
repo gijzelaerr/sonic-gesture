@@ -4,13 +4,14 @@
 #include "cv.h"
 #include "highgui.h"
 
-
+#include <QtCore/QString>
 
 class Recorder {
 public:
-    Recorder(const std::string& filename, double fps, cv::Size frameSize);
+    Recorder();
+    Recorder(const QString& filename, double fps, cv::Size frameSize);
     void putFrame(const cv::Mat& frame);
-    bool open(const std::string& filename, double fps, cv::Size frameSize);
+    bool open(const QString& filename, double fps, cv::Size frameSize);
     bool isOpened();
 
 private:

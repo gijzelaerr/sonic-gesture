@@ -40,6 +40,9 @@ public:
 
     // matcher parameters
     int kNeirNeigh;
+
+    // frames per second
+    double FPS;
     
 private:
     void load();

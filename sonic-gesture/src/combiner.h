@@ -8,6 +8,7 @@ using namespace cv;
 
 class Combiner {
 public:
+    Combiner();
     Combiner(const Size& frame_size, int num_of_win_in_x);
     Mat render();
     void add_image(Mat& image);

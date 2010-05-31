@@ -15,13 +15,16 @@ void QCVImage::setImage(Mat* bgr) {
     //this->resize(bgr->cols, bgr->rows);
     //this->setMinimumSize(bgr->cols, bgr->rows);
     //this->setMaximumSize(bgr->cols, bgr->rows);
+    update();
 }
 
 void QCVImage::paintEvent(QPaintEvent* e) {
     QPainter painter(this);
     cvtColor(*bgr, rgb, CV_BGR2RGB);
-    qframe = QImage((unsigned char*)(rgb.data), rgb.cols, rgb.rows, QImage::Format_RGB888);
+    qframe = QImage((const unsigned char*)(rgb.data), rgb.cols, rgb.rows, QImage::Format_RGB888);
     qframe = qframe.scaled(this->size(), Qt::KeepAspectRatio);
-    painter.drawImage(QPoint(0, 0),qframe);
+    int wskip = (this->width() - qframe.width())/2;
+    int hskip = (this->height() - qframe.height())/2;
+    painter.drawImage(QPoint(wskip, hskip),qframe);
 };
 

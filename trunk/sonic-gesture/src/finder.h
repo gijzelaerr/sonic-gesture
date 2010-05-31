@@ -12,8 +12,6 @@
 class Finder {
 public:
     Finder();
-    ~Finder();
-
     Finder(const Size& size);
     void load(const cv::Size& size);
     bool step(cv::Mat& big);
@@ -22,10 +20,10 @@ public:
 private:
     Settings* settings;
     BodyParts bodyparts;
-    SkinFinder* skinFinder;
-    Combiner* combiner;
-    Matcher* left_matcher;
-    Matcher* right_matcher;
+    SkinFinder skinFinder;
+    Combiner combiner;
+    Matcher left_matcher;
+    Matcher right_matcher;
 
     cv::Mat big;
     cv::Mat small_, visuals;

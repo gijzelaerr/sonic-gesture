@@ -7,12 +7,13 @@
 #include "finder.h"
 #include "capture.h"
 #include "settings.h"
+#include "recorder.h"
 
 
 enum viewModeType { NORMAL, FINDER, CAPTURE };
 enum sourceModeType { IMAGE, MOVIE, DEVICE };
 enum recModeType { INPUT, OUTPUT };
-enum videoStateType { PLAY, PAUZE };
+enum videoStateType { RECORD, PLAY, PAUZE };
 
 namespace Ui {
     class MainWindow;
@@ -26,16 +27,21 @@ public:
 
 private:
     Ui::MainWindow* ui;
-    Source* source;
+    Source source;
+    Finder finder;
+    Capture capture;
+    Settings* settings;
+    Recorder recorder;
+
     viewModeType viewMode;
     recModeType recMode;
     videoStateType videoState;
     sourceModeType sourceMode;
+
     QTimer* timer;
+
     Mat whatWeSee;
-    Finder* finder;
-    Capture* capture;
-    Settings* settings;
+
 
  protected:
      void closeEvent(QCloseEvent *event);
@@ -53,7 +59,11 @@ private slots:
     void play();
     void changePosition();
     void record();
+    void stopRecord();
+    void startRecord();
     void heartBeat();
+    void fullscreen();
+    void setSliderPosition(int position);
 };
 
 #endif // MAINWINDOW_H

@@ -10,7 +10,8 @@
 #include "common.h"
 
 
-Finder::Finder() {};
+Finder::Finder() {
+};
 
 Finder::Finder(const Size& size) {
     load(size);
@@ -35,31 +36,25 @@ void Finder::load(const Size& size) {
     hands_right = loader.examples_right;
 
     // load the actual classifier
-    left_matcher = new Matcher(false, loader.labels);
-    right_matcher = new Matcher(true, loader.labels);    
+    left_matcher = Matcher(false, loader.labels);
+    right_matcher = Matcher(true, loader.labels);
     
     // what images to show
-    combiner = new Combiner(small_size, settings->cvWorkWinInX);
-    combiner->add_image(skinFinder->frame);
+    combiner = Combiner(small_size, settings->cvWorkWinInX);
+    combiner.add_image(skinFinder.frame);
     //combiner.add_image(skinFinder.hsv);
     //combiner.add_image(skinFinder.bw);
     //combiner.add_image(skinFinder.backproj);
-    //combiner->add_image(skinFinder->blur);
+    //combiner.add_image(skinfinderblur);
     //combiner.add_image(skinFinder.thresh);
-    combiner->add_image(visuals);
-    combiner->add_image(current_left);
-    combiner->add_image(current_right);
+    combiner.add_image(visuals);
+    combiner.add_image(current_left);
+    combiner.add_image(current_right);
     //combiner.add_image(skinFinder.mask);
 
     black = Mat(size, CV_8UC3, Scalar(0, 0, 0));
 }
 
-Finder::~Finder() {
-    delete left_matcher;
-    delete right_matcher;
-    delete combiner;
-    delete skinFinder;
-}
 
 bool Finder::step(Mat& big) {
     double t = (double)getTickCount();
@@ -74,9 +69,9 @@ bool Finder::step(Mat& big) {
     assert(small_.data);
 
     // find the bodyparts
-    contours skins_small = skinFinder->compute(small_);
+    contours skins_small = skinFinder.compute(small_);
     contours skins = scale_contours(skins_small, float(1)/scale);
-    Point face_center = Point(skinFinder->face_center.x/scale, skinFinder->face_center.y/scale);
+    Point face_center = Point(skinFinder.face_center.x/scale, skinFinder.face_center.y/scale);
     bodyparts.update(skins, face_center, big);
 
     int left_index = -1;
@@ -84,9 +79,9 @@ bool Finder::step(Mat& big) {
     
     // interpretate the bodyparts
     if (bodyparts.left_hand.state != NOT_VISIBLE)
-        left_index = left_matcher->match(bodyparts.left_hand.sized_hog_features);
+        left_index = left_matcher.match(bodyparts.left_hand.sized_hog_features);
     if (bodyparts.right_hand.state != NOT_VISIBLE)
-        right_index = right_matcher->match(bodyparts.right_hand.sized_hog_features);
+        right_index = right_matcher.match(bodyparts.right_hand.sized_hog_features);
 
     if (left_index > -1) {
         current_left = hands_left.at(left_index);
@@ -102,7 +97,7 @@ bool Finder::step(Mat& big) {
 
     // draw the stuff
     visuals = bodyparts.draw_in_image();
-    combined = this->combiner->render();
+    combined = this->combiner.render();
 
     t = ((double)getTickCount() - t)*1000/getTickFrequency();
     int wait = MIN(40, MAX(40-(int)t, 4)); // Wait max of 40 ms, min of 4;

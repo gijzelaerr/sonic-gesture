@@ -39,7 +39,7 @@ private:
     Size padding;
     
     //kaman stuff
-    KalmanFilter* kalman;
+    KalmanFilter kalman;
 
     void make_cutout();
     void compute_hog();

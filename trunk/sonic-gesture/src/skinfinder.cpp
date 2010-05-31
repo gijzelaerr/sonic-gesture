@@ -4,6 +4,13 @@
 #include "tools.h"
 #include <iostream>
 
+SkinFinder::SkinFinder() {
+};
+
+
+SkinFinder::~SkinFinder() {
+};
+
 SkinFinder::SkinFinder(const QFileInfo& haarfile, int probToBinThresh) {
     // load haar wavelet face finder
     assert(haarfile.exists());

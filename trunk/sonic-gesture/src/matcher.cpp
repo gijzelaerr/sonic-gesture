@@ -4,6 +4,15 @@
 #include "tools.h"
 #include <QtCore/QDir>
 
+Matcher::Matcher() {
+}
+
+Matcher::~Matcher() {
+    // TODO: somehow this is already detroyed before we come here....
+    this->knn_matcher = KNearest();
+}
+
+
 // mirror: should the training images be mirrored, default is left hand
 Matcher::Matcher(bool mirror, vector<int> labels) {
 
@@ -15,7 +24,7 @@ Matcher::Matcher(bool mirror, vector<int> labels) {
     hog = HOGDescriptor();
 
     // create a stabilizer
-    stabilizer = new Stabilizer(labels.size());
+    stabilizer = Stabilizer(labels.size());
     
     // we keep track of which is the first, so we can extract size info from image
     bool first = true;
@@ -72,14 +81,10 @@ Matcher::Matcher(bool mirror, vector<int> labels) {
     knn_matcher.train(train, labels_mat);
 }
 
-Matcher::~Matcher() {
-    delete stabilizer;
-};
-
 int Matcher::match(const vector<float>& other_descriptors) {
     CvMat img_cvmat = (Mat)Mat(other_descriptors).t();
     int response = int(knn_matcher.find_nearest(&img_cvmat, settings->kNeirNeigh, 0, 0, 0, 0));
-    return this->stabilizer->update(response);
+    return this->stabilizer.update(response);
     //return response;
 }
 
@@ -90,9 +95,13 @@ Stabilizer::Stabilizer(int state_num) {
     }
 };
 
-Stabilizer::~Stabilizer() {
-};
+Stabilizer::Stabilizer() {
+    states.clear();
+}
 
+Stabilizer::~Stabilizer() {
+    states.clear();
+};
 
 // update stabilizer with new measurement. Decrease all non-measured states
 int Stabilizer::update(int state) {

@@ -58,7 +58,13 @@ bool Source::loadImage(const QFileInfo& file) {
 };
 
 bool Source::loadMovie(const QFileInfo& file) {
-    cap = cv::VideoCapture(file.filePath().toStdString());
+    try {
+        cap = cv::VideoCapture(file.filePath().toStdString());
+    } catch (cv::Exception) {
+        setError("An exception has accurred");
+        return false;
+    }
+
     image = false;
     mirror = false;
     return init();
@@ -77,12 +83,24 @@ double Source::getPos() {
 }
 
 bool Source::init() {
-    if(!cap.isOpened()) {
-        setError("can't open the capture device");
+    try {
+        if(!cap.isOpened()) {
+            setError("The device or movie is not openable");
+            return false;
+        };
+    } catch (cv::Exception) {
+        setError("An exception has accurred");
         return false;
-    }
+    };
 
-    cap >> frame;
+
+    try {
+        cap >> frame;
+    } catch (cv::Exception) {
+        setError("An exception has accurred");
+        return false;
+    };
+
     if ((frame.data == NULL)) {
         setError("can't grab from capture device");
         return false;
@@ -114,10 +132,18 @@ bool Source::init() {
 
 bool Source::grab() {
     if(!image)
+        try {
         cap >> frame;
-
-    if (!frame.data)
+    } catch (cv::Exception) {
+        setError("can't grab frame");
         return false;
+    }
+
+
+    if (!frame.data) {
+        setError("can't grab frame");
+        return false;
+    }
 
     if(mirror)
         cv::flip(frame, frame, 1);
@@ -127,4 +153,8 @@ bool Source::grab() {
 
 void Source::setError(QString str) {
     this->error = str;
+}
+
+QString Source::lastError() {
+    return this->error;
 }

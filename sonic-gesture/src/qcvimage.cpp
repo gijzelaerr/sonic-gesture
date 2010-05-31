@@ -1,5 +1,5 @@
 
-#include <qt4/QtGui/qwidget.h>
+#include <QtGui/qwidget.h>
 
 #include "qcvimage.h"
 #include "source.h"

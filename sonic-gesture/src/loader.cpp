@@ -5,8 +5,11 @@
 #include <iostream>
 #include <fstream>
 
+#include <QtCore/QDebug>
+
 void Loader::load(QDir location, Size size) {
-    assert(location.exists());
+    if(!location.exists())
+        qDebug() << location.path();
 
     QDir examplesPath(location.path() + "/examples");
     assert(examplesPath.exists());

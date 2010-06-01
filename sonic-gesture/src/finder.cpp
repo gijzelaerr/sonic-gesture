@@ -8,19 +8,18 @@
 #include "loader.h"
 #include "finder.h"
 #include "common.h"
+#include <QtDebug>
 
 
 Finder::Finder() {
-};
-
-Finder::Finder(const Size& size) {
-    load(size);
-};
-
-void Finder::load(const Size& size) {
     settings = Settings::getInstance();
-    SkinFinder(settings->haarFile, settings->probToBinThresh);
-    
+};
+
+bool Finder::init(const Size& size) {
+    if (!skinFinder.init()){
+        qDebug() << QString("cant initialize skinFinder");
+        return false;
+    }
     // do size and scale stuff
     big_size = size;
     scale = float(settings->cvWorkWinHight) / size.height;
@@ -53,6 +52,8 @@ void Finder::load(const Size& size) {
     //combiner.add_image(skinFinder.mask);
 
     black = Mat(size, CV_8UC3, Scalar(0, 0, 0));
+
+    return true;
 }
 
 
@@ -69,7 +70,11 @@ bool Finder::step(Mat& big) {
     assert(small_.data);
 
     // find the bodyparts
-    contours skins_small = skinFinder.compute(small_);
+    if (!skinFinder.compute(small_)) {
+        setError(skinFinder.error);
+        return false;
+    }
+    contours skins_small = skinFinder.contours;
     contours skins = scale_contours(skins_small, float(1)/scale);
     Point face_center = Point(skinFinder.face_center.x/scale, skinFinder.face_center.y/scale);
     bodyparts.update(skins, face_center, big);
@@ -114,6 +119,11 @@ void Finder::draw_fps(int delay) {
     out << std::fixed << fps << " fps";
     s = out.str();
     putText(combined, s, Point(5, 12), FONT_HERSHEY_SIMPLEX, 0.4, Scalar(255, 255, 255), 1);
+}
+
+void Finder::setError(QString error) {
+    this->error = error;
+    qDebug() << error;
 }
 
 

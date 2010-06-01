@@ -12,10 +12,10 @@
 class Finder {
 public:
     Finder();
-    Finder(const Size& size);
-    void load(const cv::Size& size);
+    bool init(const cv::Size& size);
     bool step(cv::Mat& big);
     cv::Mat combined;
+    QString error;
     
 private:
     Settings* settings;
@@ -33,6 +33,7 @@ private:
     cv::Mat current_left, current_right, black;
 
     void draw_fps(int fps);
+    void setError(QString);
 };
 
 

@@ -1,24 +1,21 @@
 
-#include "source.h"
-#include "bodypart.h"
-#include "skinfinder.h"
-#include "combiner.h"
-#include "loader.h"
+
 #include "capture.h"
+#include "loader.h"
 #include "tools.h"
-
 #include <QtCore/QDateTime>
+#include <QtDebug>
 
-Capture::Capture() {};
-
-Capture::Capture(const Size& size) {
-    load(size);
+Capture::Capture() {
+    settings = Settings::getInstance();
 };
 
-void Capture::load(const Size& size) {
-    settings = Settings::getInstance();
+bool Capture::init(const Size& size) {
+    if (!skinFinder.init()){
+        qDebug() << QString("cant initialize skinFinder");
+        return false;
+    };
 
-    skinFinder = new SkinFinder(settings->haarFile, settings->probToBinThresh);
     black = Mat(size, CV_8UC3, Scalar(0, 0, 0));
     
     // do size and scale stuff
@@ -36,10 +33,10 @@ void Capture::load(const Size& size) {
     examples = loader.examples_left;
     
     // what images to show
-    combiner = new Combiner(small_size, settings->cvWorkWinInX);
-    combiner->add_image(skinFinder->frame);
-    combiner->add_image(visuals);
-    combiner->add_image(current);
+    combiner = Combiner(small_size, settings->cvWorkWinInX);
+    combiner.add_image(skinFinder.frame);
+    combiner.add_image(visuals);
+    combiner.add_image(current);
     
     // where to store files
     QDir storePath(dataSet.path() + "/incoming");
@@ -58,11 +55,11 @@ void Capture::load(const Size& size) {
     assert(currentTrainPath.mkdir("original"));
 
     counter = 0;
+
+    return true;
 };
 
 bool Capture::step(const Mat& big) {
-    double t = (double)getTickCount();
-
     if (counter >= examples.size())
         return false;
 
@@ -73,38 +70,47 @@ bool Capture::step(const Mat& big) {
     current = examples.at(counter);
     
     // find the bodyparts
-    contours skins_small = skinFinder->compute(small_);
+    if (!skinFinder.compute(small_)) {
+        setError(skinFinder.error);
+        return false;
+    }
+    contours skins_small = skinFinder.contours;
+
     contours skins = scale_contours(skins_small, float(1)/scale);
-    Point face_center = Point(skinFinder->face_center.x/scale, skinFinder->face_center.y/scale);
+    Point face_center = Point(skinFinder.face_center.x/scale, skinFinder.face_center.y/scale);
     bodyparts.update(skins, face_center, big);
 
     // draw the stuff
     visuals = bodyparts.draw_in_image();
-    combined = this->combiner->render();
-    //imshow("Sonic Gesture Capturing train data", combined);
+    combined = this->combiner.render();
+}
 
-    t = ((double)getTickCount() - t)*1000/getTickFrequency();
-    int wait = MIN(40, MAX(40-(int)t, 4)); // Wait max of 40 ms, min of 4;
-
-    int inpoet = waitKey(wait);
-    if (inpoet == 27) // escape
-        exit(EXIT_FAILURE);
-    else if (inpoet == 32) { //space
-        if (bodyparts.left_hand.state == NOT_VISIBLE) {
-            //std::cout << " NO HAND IN IMAGE!" << std::endl;
-            return true;
-        }
-
-        QFile handFile(currentTrainPath.path() + "/%1.jpg");
-        QFile origFile(originalPath.path() + "/%1.jpg");
-
-        assert(imwrite(currentTrainPath.path().toStdString(), big));
-        assert(imwrite(originalPath.path().toStdString() + ".jpg",
-                bodyparts.left_hand.sized_hog_image));
-        
-        counter++;
+bool Capture::saveImage() {
+    if (bodyparts.left_hand.state == NOT_VISIBLE) {
+        qDebug() << QString("No hand in image!");
         return false;
     }
+
+    QFile handFile(currentTrainPath.path() + "/%1.jpg");
+    QFile origFile(originalPath.path() + "/%1.jpg");
+
+    if (!imwrite(currentTrainPath.path().toStdString(), big)) {
+        setError("can't write original image");
+        return false;
+    }
+
+    if (!imwrite(originalPath.path().toStdString() + ".jpg",
+                 bodyparts.left_hand.sized_hog_image)) {
+        setError("can't write cutout image");
+        return false;
+    }
+
+    counter++;
     return true;
+};
+
+void Capture::setError(QString error) {
+    this->error = error;
+    qDebug() << error;
 }
 

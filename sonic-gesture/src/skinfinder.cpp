@@ -3,27 +3,32 @@
 #include "skinfinder.h"
 #include "tools.h"
 #include <iostream>
+#include <QtDebug>
 
 SkinFinder::SkinFinder() {
-};
-
-
-SkinFinder::~SkinFinder() {
-};
-
-SkinFinder::SkinFinder(const QFileInfo& haarfile, int probToBinThresh) {
-    // load haar wavelet face finder
-    assert(haarfile.exists());
-    haar = CascadeClassifier(haarfile.filePath().toStdString());
-    this->probToBinThresh = probToBinThresh;
+    settings = Settings::getInstance();
     histogram = Histogram();
     frame_counter = 0;
+};
+
+bool SkinFinder::init() {
+    if (!settings->haarFile.exists()) {
+        setError(QString("%1 doesn't exists").arg(settings->haarFile.path()));
+        return false;
+    };
+
+    haar = CascadeClassifier(settings->haarFile.filePath().toStdString());
+    if (haar.empty()) {
+        setError("haar file is empty");
+        return false;
+    };
+
+    return true;
 }
 
-vector<vector<Point> > SkinFinder::compute(const Mat& frame) {
+bool SkinFinder::compute(const Mat& frame) {
     this->frame = frame;
-    step();
-    return contours;
+    return step();
 }
 
 void SkinFinder::prepare() {
@@ -67,7 +72,7 @@ void SkinFinder::make_mask() {
     assert(backproj.data);
     normalize(backproj, backproj, 0, 255, NORM_MINMAX);
     GaussianBlur( backproj, blur, Size(31, 31), 0);
-    threshold(blur, thresh, probToBinThresh, 255, THRESH_BINARY);
+    threshold(blur, thresh, settings->probToBinThresh, 255, THRESH_BINARY);
     morphologyEx(thresh, mask, MORPH_CLOSE, Mat());
 }
 
@@ -77,7 +82,7 @@ void SkinFinder::find_contours() {
 }
 
 // perform all actions required to find contours
-void SkinFinder::step() {
+bool SkinFinder::step() {
     prepare();
     find_face();
     make_histogram();
@@ -85,4 +90,10 @@ void SkinFinder::step() {
     make_mask();
     find_contours();
     frame_counter++;
+    return true;
+}
+
+void SkinFinder::setError(QString error) {
+    this->error = error;
+    qDebug() << error;
 }

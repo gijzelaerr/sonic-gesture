@@ -3,6 +3,8 @@
 
 #include <QtGui/QFileDialog>
 #include <QtGui/QMessageBox>
+#include <QtDebug>
+#include <QKeyEvent>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -213,3 +215,13 @@ void MainWindow::heartBeat() {
 void MainWindow::closeEvent(QCloseEvent *event) {
 };
 
+void MainWindow::keyPressEvent(QKeyEvent* event) {
+    event->accept();
+
+    // if space is pressed
+    if ((event->key() == 32)  && (viewMode == CAPTURE)) {
+        if (!capture.saveImage()) {
+            QMessageBox::warning(this, tr("Can't store image"), capture.error, QMessageBox::Ok);
+        };
+    };
+};

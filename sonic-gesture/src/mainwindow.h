@@ -44,7 +44,8 @@ private:
 
 
  protected:
-     void closeEvent(QCloseEvent *event);
+     void closeEvent(QCloseEvent* event);
+     void keyPressEvent(QKeyEvent* event);
 
 private slots:
     void loadFile(const QString &fileName);
@@ -64,6 +65,7 @@ private slots:
     void heartBeat();
     void fullscreen();
     void setSliderPosition(int position);
+
 };
 
 #endif // MAINWINDOW_H

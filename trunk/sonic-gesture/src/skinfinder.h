@@ -3,6 +3,7 @@
 #define	_SKINFINDER_H
 
 #include "histogram.h"
+#include "settings.h"
 #include <QtCore/QString>
 #include <QtCore/QDir>
 
@@ -12,9 +13,10 @@ using namespace std;
 class SkinFinder {
 public:
     SkinFinder();
-    ~SkinFinder();
-    SkinFinder(const QFileInfo& haarfile, int probToBinThresh); // probToBinThresh=30
-    vector<vector<Point> > compute(const Mat& frame);
+    bool init();
+    bool compute(const Mat& frame);
+
+    // the resulting contours
     vector<vector<Point> > contours;
 
     // required to know which con
@@ -23,7 +25,10 @@ public:
     // images used in the steps. public so can be used for visualization
     Mat frame, hsv, bw, facepixels, backproj, mask, blur, thresh;
 
+    QString error;
+
 private:
+    Settings* settings;
     Mat kernel;
     Histogram histogram;
     CascadeClassifier haar;
@@ -31,6 +36,7 @@ private:
     Rect face;
     int frame_counter;
     int probToBinThresh;
+
     void prepare();
     void find_face();
     void make_histogram();
@@ -38,7 +44,8 @@ private:
     void make_mask();
     void find_contours();
     void find_limbs();
-    void step();
+    bool step();
+    void setError(QString);
 };
 
 

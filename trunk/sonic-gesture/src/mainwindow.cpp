@@ -6,12 +6,15 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
     settings = Settings::getInstance();
-    //source = new Source();
-    finder = Finder(source.size);
-    capture = Capture(source.size);
+    finder.init(source.size);
+    capture.init(source.size);
     whatWeSee = source.frame;
+
     ui->CVWindow->setImage(&whatWeSee);
+
+    // set start flags
     viewMode = NORMAL;
     recMode = OUTPUT;
     videoState = PLAY;
@@ -46,8 +49,8 @@ void MainWindow::loadFile(const QString &fileName) {
        return;
     }
 
-    finder.load(source.size);
-    capture.load(source.size);
+    finder.init(source.size);
+    capture.init(source.size);
 
     ui->pauzeButton->setEnabled(true);
     ui->continueButton->setEnabled(false);
@@ -63,8 +66,8 @@ void MainWindow::openDevice() {
         return;
     }
 
-    finder.load(source.size);
-    capture.load(source.size);
+    finder.init(source.size);
+    capture.init(source.size);
 
     ui->pauzeButton->setEnabled(false);
     ui->continueButton->setEnabled(false);
@@ -175,6 +178,7 @@ void MainWindow::heartBeat() {
     if ((sourceMode == MOVIE) && !ui->positionSlider->isSliderDown())
         setSliderPosition(source.getPos());
 
+    // if we can't grab, reset to test screen
     if (!source.grab()) {
         source = Source();
         videoState = PLAY;
@@ -193,13 +197,18 @@ void MainWindow::heartBeat() {
         default:
             whatWeSee = source.frame;
             break;
-    }
+    };
 
-    if (videoState == RECORD)
-        recorder.putFrame(whatWeSee);
+    if (videoState == RECORD) {
+        if (recMode == OUTPUT) {
+            recorder.putFrame(whatWeSee);
+        } else {
+            recorder.putFrame(source.frame);
+        };
+    };
 
     ui->CVWindow->setImage(&whatWeSee);
-}
+};
 
 void MainWindow::closeEvent(QCloseEvent *event) {
 };

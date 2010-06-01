@@ -37,9 +37,7 @@ void Settings::load()  {
      probToBinThresh = qSettings->value("probToBinThresh", 30).toInt();
      kNeirNeigh = qSettings->value("kNeirNeigh", 3).toInt();
 
-     QString haar(dataPath.absolutePath() + QString("/storage/haarcascade_frontalface_alt.xml"));
-     std::cout << haar.toStdString() << std::endl;
-     haarFile = QFileInfo(haar);
+     haarFile = QFileInfo(dataPath.path() + QString("/storage/haarcascade_frontalface_alt.xml"));
      minBlobSize = (cvWorkWinHight/10)*(cvWorkWinHight/10);
 
      FPS = 25;

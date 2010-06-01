@@ -45,10 +45,8 @@ bool Capture::init(const Size& size) {
     }
 
     QString now = QDateTime::currentDateTime().toString("yyyy.MM.dd.hh.mm.ss");
-
-    QDir currentTrainPath(storePath.path() + "/" + now);
-
-    QDir originalPath(currentTrainPath.path() + "/original");
+    currentTrainPath = QDir(storePath.path() + "/" + now);
+    originalPath = QDir(currentTrainPath.path() + "/original");
 
     assert(!currentTrainPath.exists());
     assert(storePath.mkdir(now));
@@ -60,6 +58,8 @@ bool Capture::init(const Size& size) {
 };
 
 bool Capture::step(const Mat& big) {
+    this->big = big;
+
     if (counter >= examples.size())
         return false;
 
@@ -83,31 +83,39 @@ bool Capture::step(const Mat& big) {
     // draw the stuff
     visuals = bodyparts.draw_in_image();
     combined = this->combiner.render();
+    draw_message();
 }
 
 bool Capture::saveImage() {
     if (bodyparts.left_hand.state == NOT_VISIBLE) {
-        qDebug() << QString("No hand in image!");
+        setError("No hand in image!");
         return false;
     }
 
-    QFile handFile(currentTrainPath.path() + "/%1.jpg");
-    QFile origFile(originalPath.path() + "/%1.jpg");
+    QFileInfo handFile(currentTrainPath.absolutePath() + QString("/%1.jpg").arg(counter));
+    QFileInfo origFile(originalPath.absolutePath() + QString("/%1.jpg").arg(counter));
 
-    if (!imwrite(currentTrainPath.path().toStdString(), big)) {
-        setError("can't write original image");
+    if (!imwrite(origFile.filePath().toStdString(), big)) {
+        setError(QString("can't write original image:\n%1").arg(origFile.filePath()));
         return false;
     }
 
-    if (!imwrite(originalPath.path().toStdString() + ".jpg",
+    if (!imwrite(handFile.filePath().toStdString() + ".jpg",
                  bodyparts.left_hand.sized_hog_image)) {
-        setError("can't write cutout image");
+        setError(QString("can't write cutout image:\n%1").arg(handFile.filePath()));
         return false;
     }
 
     counter++;
     return true;
 };
+
+void Capture::draw_message() {
+    putText(combined, "press space to store left hand for training",
+            Point(5, 15), FONT_HERSHEY_SIMPLEX, 0.7, Scalar(255, 255, 255), 2);
+    putText(combined, "press r to reset",
+            Point(5, 30), FONT_HERSHEY_SIMPLEX, 0.7, Scalar(255, 255, 255), 2);
+}
 
 void Capture::setError(QString error) {
     this->error = error;

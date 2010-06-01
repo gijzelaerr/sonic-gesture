@@ -1,8 +1,6 @@
 
 #include "loader.h"
 #include "tools.h"
-
-#include <iostream>
 #include <fstream>
 
 #include <QtCore/QDebug>

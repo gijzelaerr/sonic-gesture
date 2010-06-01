@@ -38,6 +38,7 @@ private:
     QDir originalPath;
 
     void setError(QString);
+    void draw_message();
 
 };
 

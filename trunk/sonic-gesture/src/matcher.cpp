@@ -3,6 +3,7 @@
 #include "highgui.h"
 #include "tools.h"
 #include <QtCore/QDir>
+#include <QtDebug>
 
 Matcher::Matcher() {
 }
@@ -76,8 +77,8 @@ Matcher::Matcher(bool mirror, vector<int> labels) {
     train = train.t();
     labels_mat = Mat(this->labels);
     knn_matcher = KNearest();
-    cout << "traing matcher with " << train.rows << " examples with " <<
-            train.cols << " features..." << endl;
+    qDebug() << "traing matcher with " << train.rows << " examples with " <<
+            train.cols << " features...";
     knn_matcher.train(train, labels_mat);
 }
 

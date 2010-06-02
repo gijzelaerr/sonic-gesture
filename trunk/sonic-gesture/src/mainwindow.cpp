@@ -8,8 +8,12 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-
     settings = Settings::getInstance();
+
+    // make sure only ME gets keys
+    grabKeyboard();
+
+    startScreen();
     finder.init(source.size);
     capture.init(source.size);
     whatWeSee = source.frame;
@@ -19,8 +23,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // set start flags
     viewMode = NORMAL;
     recMode = OUTPUT;
-    videoState = PLAY;
-    sourceMode = IMAGE;
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(heartBeat()));
@@ -38,7 +40,7 @@ void MainWindow::openVideo() {
             "Movies (*.asf *.mp4 *.mpeg *.wmv *.mpg *.mov *.avi)");
          if (!fileName.isEmpty()) {
             QFileInfo fileInfo(fileName);
-            settings->moviePath = fileInfo.filePath();
+            settings->moviePath = fileInfo.absolutePath();
             loadFile(fileName);
          }
 };
@@ -54,12 +56,15 @@ void MainWindow::loadFile(const QString &fileName) {
     finder.init(source.size);
     capture.init(source.size);
 
-    ui->pauzeButton->setEnabled(true);
-    ui->continueButton->setEnabled(false);
+    ui->pauzeButton->setEnabled(false);
+    ui->continueButton->setEnabled(true);
     ui->positionSlider->setEnabled(true);
     ui->recordButton->setEnabled(true);
 
+    videoState = PAUZE;
     sourceMode = MOVIE;
+    stopRecord();
+    step();
 }
 
 void MainWindow::openDevice() {
@@ -75,15 +80,28 @@ void MainWindow::openDevice() {
     ui->continueButton->setEnabled(false);
     ui->positionSlider->setEnabled(false);
     ui->recordButton->setEnabled(true);
-
+    videoState = PLAY;
+    stopRecord();
     sourceMode = DEVICE;
 };
+
+void MainWindow::startScreen() {
+    stopRecord();
+    source = Source();
+    videoState = PLAY;
+    sourceMode = IMAGE;
+    ui->pauzeButton->setEnabled(false);
+    ui->continueButton->setEnabled(false);
+    ui->positionSlider->setEnabled(false);
+    ui->recordButton->setEnabled(false);
+}
 
 void MainWindow::finderView() {
     viewMode = FINDER;
     ui->actionFinder_View->setChecked(true);
     ui->actionCapture_View->setChecked(false);
     ui->actionSource_view->setChecked(false);
+    step();
 };
 
 void MainWindow::captureView() {
@@ -91,6 +109,7 @@ void MainWindow::captureView() {
     ui->actionFinder_View->setChecked(false);
     ui->actionCapture_View->setChecked(true);
     ui->actionSource_view->setChecked(false);
+    step();
 };
 
 void MainWindow::sourceView() {
@@ -98,6 +117,7 @@ void MainWindow::sourceView() {
     ui->actionFinder_View->setChecked(false);
     ui->actionCapture_View->setChecked(false);
     ui->actionSource_view->setChecked(true);
+    step();
 };
 
 void MainWindow::recordInput() {
@@ -130,7 +150,7 @@ void MainWindow::changePosition() {
 };
 
 void MainWindow::record() {
-    if (videoState == RECORD) {
+    if (recording) {
         stopRecord();
     } else {
        startRecord();
@@ -140,22 +160,25 @@ void MainWindow::record() {
 void MainWindow::stopRecord() {
     ui->recordButton->setChecked(false);
     recorder = Recorder();
-    play();
+    recording = false;
+
 }
 
 void MainWindow::startRecord() {
     QString fileName = QFileDialog::getSaveFileName(this, "Record Movie",
               settings->moviePath.path(), "Movies (*.avi)");
-         if (!fileName.isEmpty()) {
-             if (!fileName.endsWith("avi"))
-                 fileName = fileName + ".avi";
-             QFileInfo fileInfo(fileName);
-             settings->moviePath = fileInfo.filePath();
-             recorder = Recorder(fileName,settings->FPS, whatWeSee.size());
-         }
-    ui->recordButton->setChecked(true);
-    videoState = RECORD;
-}
+     if (fileName.isEmpty())
+        return;
+
+     if (!fileName.endsWith("avi"))
+         fileName = fileName + ".avi";
+
+     QFileInfo fileInfo(fileName);
+     settings->moviePath = fileInfo.absoluteDir();
+     recorder = Recorder(fileName,settings->FPS, whatWeSee.size());
+     ui->recordButton->setChecked(true);
+     recording = true;
+};
 
 void MainWindow::fullscreen() {
     bool status = ui->actionFullscreen->isChecked();
@@ -169,7 +192,7 @@ void MainWindow::fullscreen() {
     }
 }
 
-void MainWindow::setSliderPosition(int position) {
+void MainWindow::setSliderPosition(double position) {
     ui->positionSlider->setSliderPosition(position * ui->positionSlider->maximum());
 }
 
@@ -177,14 +200,17 @@ void MainWindow::heartBeat() {
     if (videoState == PAUZE)
         return;
 
-    if ((sourceMode == MOVIE) && !ui->positionSlider->isSliderDown())
-        setSliderPosition(source.getPos());
+    step();
+};
 
+
+void MainWindow::step() {
+    if ((sourceMode == MOVIE) && (!ui->positionSlider->isSliderDown())) {
+        setSliderPosition(source.getPos());
+    }
     // if we can't grab, reset to test screen
     if (!source.grab()) {
-        source = Source();
-        videoState = PLAY;
-        sourceMode = IMAGE;
+        startScreen();
     }
 
     switch (viewMode) {
@@ -201,7 +227,7 @@ void MainWindow::heartBeat() {
             break;
     };
 
-    if (videoState == RECORD) {
+    if (recording) {
         if (recMode == OUTPUT) {
             recorder.putFrame(whatWeSee);
         } else {
@@ -220,6 +246,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event) {
 
     // if space is pressed
     if ((event->key() == 32)  && (viewMode == CAPTURE)) {
+        qDebug() << source.getAbsolutePos() << "# action";
         if (!capture.saveImage()) {
             QMessageBox::warning(this, tr("Can't store image"), capture.error, QMessageBox::Ok);
         };

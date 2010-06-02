@@ -1,8 +1,10 @@
 #include <iostream>
 #include <QtGui/QImage>
 #include <QtCore/qfileinfo.h>
+#include <QtDebug>
 #include "highgui.h"
 #include "source.h"
+#include "tools.h"
 
 
 Source::Source() {
@@ -35,9 +37,7 @@ bool Source::open(const QFileInfo& fileinfo) {
 
 bool Source::open(const QImage& qimage) {
     assert(qimage.height() > 0);
-    cv::Mat mat = cv::Mat(qimage.height(), qimage.width(), CV_8UC3, (uchar*)qimage.bits(), qimage.bytesPerLine());
-    cv::cvtColor(mat, mat, CV_RGB2BGR);
-    return loadImage(mat);
+    return loadImage(qimage2mat(qimage));
 }
 
 
@@ -71,15 +71,16 @@ bool Source::loadMovie(const QFileInfo& file) {
 }
 
 bool Source::setPos(double position) {
-    //cap.set(CV_CAP_PROP_POS_AVI_RATIO, position);
-    //return (getPos() == position);
-
-    cap.set(CV_CAP_PROP_POS_FRAMES, position * CV_CAP_PROP_FRAME_COUNT);
+    cap.set(CV_CAP_PROP_POS_FRAMES, position * cap.get(CV_CAP_PROP_FRAME_COUNT));
     return true;
 }
 
 double Source::getPos() {
     return cap.get(CV_CAP_PROP_POS_AVI_RATIO);
+}
+
+double Source::getAbsolutePos() {
+    return cap.get(CV_CAP_PROP_POS_FRAMES);
 }
 
 bool Source::init() {

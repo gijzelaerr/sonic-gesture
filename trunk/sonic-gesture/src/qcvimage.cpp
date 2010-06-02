@@ -3,7 +3,7 @@
 
 #include "qcvimage.h"
 #include "source.h"
-//#include "settings.h"
+#include "tools.h"
 
 QCVImage::QCVImage(QWidget *parent) : QWidget(parent) {
 };
@@ -20,8 +20,7 @@ void QCVImage::setImage(Mat* bgr) {
 
 void QCVImage::paintEvent(QPaintEvent* e) {
     QPainter painter(this);
-    cvtColor(*bgr, rgb, CV_BGR2RGB);
-    qframe = QImage((const unsigned char*)(rgb.data), rgb.cols, rgb.rows, QImage::Format_RGB888);
+    qframe = mat2qimage(*bgr);
     qframe = qframe.scaled(this->size(), Qt::KeepAspectRatio);
     int wskip = (this->width() - qframe.width())/2;
     int hskip = (this->height() - qframe.height())/2;

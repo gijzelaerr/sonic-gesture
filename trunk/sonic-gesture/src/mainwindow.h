@@ -13,7 +13,7 @@
 enum viewModeType { NORMAL, FINDER, CAPTURE };
 enum sourceModeType { IMAGE, MOVIE, DEVICE };
 enum recModeType { INPUT, OUTPUT };
-enum videoStateType { RECORD, PLAY, PAUZE };
+enum videoStateType { PLAY, PAUZE };
 
 namespace Ui {
     class MainWindow;
@@ -37,11 +37,16 @@ private:
     recModeType recMode;
     videoStateType videoState;
     sourceModeType sourceMode;
+    bool recording;
 
     QTimer* timer;
 
     Mat whatWeSee;
 
+    void step();
+    void stopRecord();
+    void startRecord();
+    void startScreen();
 
  protected:
      void closeEvent(QCloseEvent* event);
@@ -60,12 +65,9 @@ private slots:
     void play();
     void changePosition();
     void record();
-    void stopRecord();
-    void startRecord();
     void heartBeat();
     void fullscreen();
-    void setSliderPosition(int position);
-
+    void setSliderPosition(double position);
 };
 
 #endif // MAINWINDOW_H

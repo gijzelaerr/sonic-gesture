@@ -3,7 +3,7 @@
 #define	_TOOLS_H
 
 #include "cv.h"
-
+#include <QtGui/QImage>
 using namespace std;
 using namespace cv;
 
@@ -20,4 +20,6 @@ bool is_number(const string& s);
 Rect rect_in_mat(Rect rectange, const Mat& matrix);
 void print_mat(Mat matrix);
 string int2string(int integer);
+Mat qimage2mat(const QImage& qimage);
+QImage mat2qimage(const Mat& mat);
 #endif

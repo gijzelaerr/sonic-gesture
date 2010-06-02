@@ -22,6 +22,7 @@ public:
 
     bool setPos(double position);
     double getPos();
+    double getAbsolutePos();
 
 
     cv::Size size;

@@ -121,7 +121,7 @@ void MainWindow::sourceView() {
 };
 
 void MainWindow::recordInput() {
-    recMode = INPUT;
+    recMode = INPUT_;
     ui->actionRecord_original_movie->setChecked(true);
     ui->actionRecord_visual_output->setChecked(false);
 };

@@ -12,7 +12,7 @@
 
 enum viewModeType { NORMAL, FINDER, CAPTURE };
 enum sourceModeType { IMAGE, MOVIE, DEVICE };
-enum recModeType { INPUT, OUTPUT };
+enum recModeType { INPUT_, OUTPUT };
 enum videoStateType { PLAY, PAUZE };
 
 namespace Ui {

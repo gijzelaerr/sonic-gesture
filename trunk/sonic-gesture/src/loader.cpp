@@ -36,6 +36,7 @@ bool Loader::load(QDir location, Size size) {
         setError("number of labels is not equal to number of examples!");
         return false;
     };
+    return true;
 };
 
 bool Loader::load_examples(QDir examples_path, Size size) {

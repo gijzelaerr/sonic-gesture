@@ -39,6 +39,7 @@
       <property name="styleSheet">
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
+      <zorder></zorder>
      </widget>
     </item>
     <item>
@@ -52,7 +53,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset>
           <normaloff>:/icons/pauze movie</normaloff>:/icons/pauze movie</iconset>
         </property>
        </widget>
@@ -66,7 +67,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset>
           <normaloff>:/icons/play movie</normaloff>:/icons/play movie</iconset>
         </property>
        </widget>
@@ -80,7 +81,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset>
           <normaloff>:/icons/record</normaloff>:/icons/record</iconset>
         </property>
         <property name="checkable">
@@ -111,7 +112,7 @@
      <x>0</x>
      <y>0</y>
      <width>714</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -178,8 +179,11 @@
    <addaction name="actionFullscreen"/>
   </widget>
   <action name="actionOpen_Video">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset>
      <normaloff>:/icons/film</normaloff>:/icons/film</iconset>
    </property>
    <property name="text">
@@ -192,8 +196,11 @@
    </property>
   </action>
   <action name="actionOpen_Device_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset>
      <normaloff>:/icons/camera</normaloff>:/icons/camera</iconset>
    </property>
    <property name="text">
@@ -208,7 +215,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset>
      <normaloff>:/icons/finder view</normaloff>:/icons/finder view</iconset>
    </property>
    <property name="text">
@@ -220,7 +227,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset>
      <normaloff>:/icons/capture view</normaloff>:/icons/capture view</iconset>
    </property>
    <property name="text">
@@ -238,7 +245,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset>
      <normaloff>:/icons/record input</normaloff>:/icons/record input</iconset>
    </property>
    <property name="text">
@@ -253,7 +260,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset>
      <normaloff>:/icons/record output</normaloff>:/icons/record output</iconset>
    </property>
    <property name="text">
@@ -271,7 +278,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset>
      <normaloff>:/icons/normal view</normaloff>:/icons/normal view</iconset>
    </property>
    <property name="text">
@@ -288,7 +295,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset>
      <normaloff>:/icons/fullscreen</normaloff>:/icons/fullscreen</iconset>
    </property>
    <property name="text">
@@ -304,9 +311,7 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>actionOpen_Video</sender>

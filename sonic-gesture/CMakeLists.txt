@@ -18,7 +18,7 @@ configure_file ("${PROJECT_SOURCE_DIR}/cmake.h.in" "${PROJECT_BINARY_DIR}/cmake.
 include_directories(${PROJECT_BINARY_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
 
-QT4_WRAP_CPP(SONICGESTURE_CPP src/qcvimage.h src/mainwindow.h src/application.h)
+QT4_WRAP_CPP(SONICGESTURE_CPP src/qcvimage.h src/mainwindow.h src/application.h src/settingscreen.h)
 QT4_WRAP_UI(SONICGESTURE_UI qt/mainwindow.ui qt/settingscreen.ui)
 QT4_ADD_RESOURCES(SONICGESTURE_RES qt/resources.qrc)
 

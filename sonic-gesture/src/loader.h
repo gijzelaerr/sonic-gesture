@@ -8,13 +8,15 @@
 
 class Loader {
 public:
-    void load(QDir location, cv::Size size);
+    bool load(QDir location, cv::Size size);
     std::vector<cv::Mat> examples_left, examples_right;
     std::vector<int> labels;
+    QString error;
     
 private:
-    void load_examples(QDir examples, cv::Size size);
-    void load_labels(QFileInfo labels);
+    bool load_examples(QDir examples, cv::Size size);
+    bool load_labels(QFileInfo labels);
+    void setError(QString error);
     QDir location;
 };
 

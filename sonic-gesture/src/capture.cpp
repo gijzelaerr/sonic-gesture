@@ -28,7 +28,11 @@ bool Capture::init(const Size& size) {
     // load the examples
     Loader loader = Loader();
     QDir dataSet = QDir(settings-> dataSet);
-    assert(dataSet.exists());
+    if (!dataSet.exists()) {
+        setError(QString("datset doesn't exists: %1").arg((dataSet.absolutePath())));
+        return false;
+    }
+
     loader.load(dataSet, small_size);
     examples = loader.examples_left;
     

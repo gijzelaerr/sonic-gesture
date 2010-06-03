@@ -13,6 +13,7 @@ Source::Source() {
 }
 
 Source::~Source() {
+    //cap.release();
 }
 
 bool Source::open(int device) {
@@ -152,10 +153,11 @@ bool Source::grab() {
     return true;
 }
 
+void Source::close() {
+    cap.release();
+};
+
 void Source::setError(QString str) {
     this->error = str;
 }
 
-QString Source::lastError() {
-    return this->error;
-}

@@ -12,12 +12,13 @@
 
 
 Finder::Finder() {
+    ready = false;
     settings = Settings::getInstance();
 };
 
 bool Finder::init(const Size& size) {
     if (!skinFinder.init()){
-        qDebug() << QString("cant initialize skinFinder");
+        setError(QString("cant initialize skinFinder"));
         return false;
     }
     // do size and scale stuff
@@ -30,7 +31,11 @@ bool Finder::init(const Size& size) {
 
     // load the examples
     Loader loader = Loader();
-    loader.load(settings->dataSet, small_size);
+    if (!loader.load(settings->dataSet, small_size)) {
+        setError(QString(loader.error));
+        return false;
+    };
+
     hands_left = loader.examples_left;
     hands_right = loader.examples_right;
 
@@ -53,12 +58,16 @@ bool Finder::init(const Size& size) {
 
     black = Mat(size, CV_8UC3, Scalar(0, 0, 0));
 
+    ready = true;
     return true;
 }
 
 
 bool Finder::step(Mat& big) {
     double t = (double)getTickCount();
+
+    if (!ready)
+        return false;
 
     if (!big.data)
         return false;

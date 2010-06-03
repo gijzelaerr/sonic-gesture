@@ -4,25 +4,41 @@
 #include <fstream>
 
 #include <QtCore/QDebug>
+#include <QtDebug>
 
-void Loader::load(QDir location, Size size) {
-    if(!location.exists())
-        qDebug() << location.path();
+bool Loader::load(QDir location, Size size) {
+    if(!location.exists()) {
+        setError(QString("location %1 doesn't exists").arg(location.absolutePath()));
+        return false;
+    };
 
     QDir examplesPath(location.path() + "/examples");
-    assert(examplesPath.exists());
-    load_examples(examplesPath, size);
+    if(!examplesPath.exists()) {
+        setError(QString("location %1 doesn't exists").arg(examplesPath.absolutePath()));
+        return false;
+    };
 
     QFileInfo labelsPath(location.path() + "/labels.txt");
-    assert(labelsPath.exists());
-    load_labels(labelsPath);
+    if(!labelsPath.exists()) {
+        setError(QString("location %1 doesn't exists").arg(labelsPath.absolutePath()));
+        return false;
+    };
 
+    if(!load_examples(examplesPath, size)) {
+        return false;
+    };
 
-    assert(labels.size() == examples_left.size());
-    assert(labels.size() == examples_right.size());
+    if(!load_labels(labelsPath)) {
+        return false;
+    };
+
+    if (labels.size() != examples_left.size() || labels.size() != examples_right.size()) {
+        setError("number of labels is not equal to number of examples!");
+        return false;
+    };
 };
 
-void Loader::load_examples(QDir examples_path, Size size) {
+bool Loader::load_examples(QDir examples_path, Size size) {
     int i = 0;
     QFileInfo file_path;
     examples_left.clear();
@@ -39,16 +55,18 @@ void Loader::load_examples(QDir examples_path, Size size) {
         examples_left.push_back(left);
         examples_right.push_back(right);
     };
-    
-
+    return true;
 };
 
-void Loader::load_labels(QFileInfo labels_path) {
+bool Loader::load_labels(QFileInfo labels_path) {
+    if (!labels_path.isReadable()) {
+        setError(QString("file %1 is not readable").arg(labels_path.filePath()));
+        return false;
+    }
     ifstream file;
     string lineread;
     int i;
     file.open(labels_path.filePath().toStdString().c_str(), ifstream::in);
-    assert(file);
 
     while(std::getline(file, lineread)) {
         istringstream myStream(lineread);
@@ -59,4 +77,10 @@ void Loader::load_labels(QFileInfo labels_path) {
         }
         
     };
+    return true;
 };
+
+void Loader::setError(QString error) {
+    qDebug() << error;
+    this->error = error;
+}

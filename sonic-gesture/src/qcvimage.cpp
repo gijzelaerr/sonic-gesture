@@ -19,8 +19,7 @@ void QCVImage::setImage(Mat* bgr) {
 }
 
 void QCVImage::paintEvent(QPaintEvent* e) {
-    return;
-	QPainter painter(this);
+    QPainter painter(this);
     qframe = mat2qimage(*bgr);
     qframe = qframe.scaled(this->size(), Qt::KeepAspectRatio);
     int wskip = (this->width() - qframe.width())/2;

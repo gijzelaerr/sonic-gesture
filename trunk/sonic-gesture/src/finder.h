@@ -31,6 +31,7 @@ private:
     float scale;
     vector<cv::Mat> hands_left, hands_right;
     cv::Mat current_left, current_right, black;
+    bool ready;
 
     void draw_fps(int fps);
     void setError(QString);

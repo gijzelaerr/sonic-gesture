@@ -16,19 +16,17 @@ public:
     bool open(const QImage& qimage);
     bool open(const QFileInfo& file);
     bool open(const cv::Mat& image);
-
     bool grab();
-    QString lastError();
-
     bool setPos(double position);
     double getPos();
     double getAbsolutePos();
-
+    void close();
 
     cv::Size size;
     cv::Mat frame;
     int frameCount;
-    
+    QString error;
+
 private:
 
     bool init();
@@ -40,7 +38,6 @@ private:
 
     bool mirror, image;
     cv::VideoCapture cap;
-    QString error;
     QImage qimage_storage;
 
 };

@@ -14,8 +14,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     grabKeyboard();
 
     startScreen();
-    finder.init(source.size);
-    capture.init(source.size);
+
+    // initialize finder and capture, check if they start
+    if (!finder.init(source.size) || !capture.init(source.size)) {
+        QMessageBox::warning(this, tr("Can't initialize finder"), finder.error, QMessageBox::Ok);
+    }
+
     whatWeSee = source.frame;
 
     ui->CVWindow->setImage(&whatWeSee);
@@ -42,19 +46,22 @@ void MainWindow::openVideo() {
             QFileInfo fileInfo(fileName);
             settings->moviePath = fileInfo.absolutePath();
             loadFile(fileName);
-         }
+        };
 };
 
 
 void MainWindow::loadFile(const QString &fileName) {
-
+    source.close();
     if (!source.open(fileName)) {
-        QMessageBox::warning(this, tr("Can't open file"), source.lastError(), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Can't open file"), source.error, QMessageBox::Ok);
        return;
     }
 
     finder.init(source.size);
     capture.init(source.size);
+
+    ui->actionOpen_Video->setChecked(true);
+    ui->actionOpen_Device_2->setChecked(false);
 
     ui->pauzeButton->setEnabled(false);
     ui->continueButton->setEnabled(true);
@@ -68,13 +75,17 @@ void MainWindow::loadFile(const QString &fileName) {
 }
 
 void MainWindow::openDevice() {
+    source.close();
     if (!source.open(0)) {
-        QMessageBox::warning(this, tr("Can't open file"), source.lastError(), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Can't open file"), source.error, QMessageBox::Ok);
         return;
     }
 
     finder.init(source.size);
     capture.init(source.size);
+
+    ui->actionOpen_Video->setChecked(false);
+    ui->actionOpen_Device_2->setChecked(true);
 
     ui->pauzeButton->setEnabled(false);
     ui->continueButton->setEnabled(false);
@@ -94,6 +105,8 @@ void MainWindow::startScreen() {
     ui->continueButton->setEnabled(false);
     ui->positionSlider->setEnabled(false);
     ui->recordButton->setEnabled(false);
+    ui->actionOpen_Video->setChecked(false);
+    ui->actionOpen_Device_2->setChecked(false);
 }
 
 void MainWindow::finderView() {

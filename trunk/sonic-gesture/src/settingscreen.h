@@ -7,10 +7,9 @@
 
 
 
-class SettingsScreen : public QDialog { Q_OBJECT
+class SettingScreen : public QDialog { Q_OBJECT
 public:
-    SettingsScreen(QWidget* parent = 0);
-    ~SettingsScreen();
+    SettingScreen(QWidget* parent = 0);
 
 private:
     Ui::Dialog* ui;

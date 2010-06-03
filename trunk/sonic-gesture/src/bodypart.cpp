@@ -281,30 +281,30 @@ Mat BodyParts::draw_in_image() {
     if (head.state == FOUND_COLOR) {
         vector<vector<Point> > cs;
         cs.push_back(head.blob.contour);
-        drawContours( visuals, cs, -1, Scalar( 80, 80, 255 ));
+        drawContours( visuals, cs, -1, Scalar( 100, 100, 255 ));
     }
 
     if (left_hand.state == FOUND_COLOR) {
         vector<vector<Point> > cs;
         cs.push_back(left_hand.blob.contour);
-        drawContours( visuals, cs, -1, Scalar( 255, 80, 80 ));
+        drawContours( visuals, cs, -1, Scalar( 100, 255, 255 ));
     }
 
     if (right_hand.state == FOUND_COLOR) {
         vector<vector<Point> > cs;
         cs.push_back(right_hand.blob.contour);
-        drawContours( visuals, cs, -1, Scalar( 80, 255, 80 ));
+        drawContours( visuals, cs, -1, Scalar( 100, 255, 100 ));
     }
 
     if (left_hand.state != NOT_VISIBLE) {
-        rectangle(visuals, left_hand.prediction, Scalar(255, 0, 0));
+        rectangle(visuals, left_hand.prediction, Scalar(0, 255, 255));
     }
     if (right_hand.state != NOT_VISIBLE) {
         rectangle(visuals, right_hand.prediction, Scalar(0, 255, 0));
     }
-    if (head.state != NOT_VISIBLE) {
-        rectangle(visuals, head.prediction, Scalar(0, 0, 255));
-    }
-    circle(visuals, face_center, 10, CV_RGB(255, 255, 255));
+    //if (head.state != NOT_VISIBLE) {
+    //    rectangle(visuals, head.prediction, Scalar(0, 0, 255));
+    //}
+    circle(visuals, face_center, 3, CV_RGB(255, 255, 255), 3);
     return visuals;
 };

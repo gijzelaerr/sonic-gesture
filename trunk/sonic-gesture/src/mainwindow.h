@@ -8,12 +8,12 @@
 #include "capture.h"
 #include "settings.h"
 #include "recorder.h"
+#include "source.h"
 
 
-enum viewModeType { NORMAL, FINDER, CAPTURE };
-enum sourceModeType { IMAGE, MOVIE, DEVICE };
-enum recModeType { INPUT_, OUTPUT };
-enum videoStateType { PLAY, PAUZE };
+enum ViewModeType { NORMAL, FINDER, CAPTURE };
+enum RecModeType { INPUT_, OUTPUT };
+enum VideoStateType { PLAY, PAUZE };
 
 namespace Ui {
     class MainWindow;
@@ -33,10 +33,10 @@ private:
     Settings* settings;
     Recorder recorder;
 
-    viewModeType viewMode;
-    recModeType recMode;
-    videoStateType videoState;
-    sourceModeType sourceMode;
+    ViewModeType viewMode;
+    RecModeType recMode;
+    VideoStateType videoState;
+    SourceModeType sourceMode;
     bool recording;
 
     QTimer* timer;

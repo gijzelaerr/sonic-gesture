@@ -69,7 +69,6 @@ void MainWindow::loadFile(const QString &fileName) {
     ui->recordButton->setEnabled(true);
 
     videoState = PAUZE;
-    sourceMode = MOVIE;
     stopRecord();
     step();
 }
@@ -93,14 +92,12 @@ void MainWindow::openDevice() {
     ui->recordButton->setEnabled(true);
     videoState = PLAY;
     stopRecord();
-    sourceMode = DEVICE;
 };
 
 void MainWindow::startScreen() {
     stopRecord();
     source = Source();
     videoState = PLAY;
-    sourceMode = IMAGE;
     ui->pauzeButton->setEnabled(false);
     ui->continueButton->setEnabled(false);
     ui->positionSlider->setEnabled(false);
@@ -218,7 +215,7 @@ void MainWindow::heartBeat() {
 
 
 void MainWindow::step() {
-    if ((sourceMode == MOVIE) && (!ui->positionSlider->isSliderDown())) {
+    if ((source.sourceMode == MOVIE) && (!ui->positionSlider->isSliderDown())) {
         setSliderPosition(source.getPos());
     }
     // if we can't grab, reset to test screen
@@ -259,7 +256,17 @@ void MainWindow::keyPressEvent(QKeyEvent* event) {
 
     // if space is pressed
     if ((event->key() == 32)  && (viewMode == CAPTURE)) {
-        qDebug() << source.getAbsolutePos() << "# action";
+        if (source.sourceMode == MOVIE) {
+            double pos = source.getAbsolutePos();
+            qDebug() << pos;
+            QString where = source.movieLocation.path();
+            QString movieName = source.movieLocation.fileName();
+            QStringList split = movieName.split(".");
+            split.removeLast();
+            QFileInfo labelFile(where + "/" + split.join(".") + "_labels.txt");
+            qDebug() << labelFile.filePath();
+        }
+
         if (!capture.saveImage()) {
             QMessageBox::warning(this, tr("Can't store image"), capture.error, QMessageBox::Ok);
         };

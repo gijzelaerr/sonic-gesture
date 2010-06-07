@@ -18,9 +18,10 @@ Source::~Source() {
 
 bool Source::open(int device) {
     cap = cv::VideoCapture(device);
-    mirror = true;
-    image = false;
+    sourceMode = DEVICE;
+    movieLocation = QFileInfo();
     return init();
+
 }
 
 bool Source::open(const QFileInfo& fileinfo) {
@@ -44,16 +45,16 @@ bool Source::open(const QImage& qimage) {
 
 bool Source::loadImage(const cv::Mat& mat) {
     frame = mat;
-    image = true;
-    mirror = false;
+    sourceMode = IMAGE;
+    movieLocation = QFileInfo();
     size = frame.size();
     return true;
 };
 
 bool Source::loadImage(const QFileInfo& file) {
     frame = cv::imread(file.filePath().toStdString());
-    image = true;
-    mirror = false;
+    sourceMode = IMAGE;
+    movieLocation = QFileInfo();
     size = frame.size();
     return true;
 };
@@ -66,8 +67,8 @@ bool Source::loadMovie(const QFileInfo& file) {
         return false;
     }
 
-    image = false;
-    mirror = false;
+    sourceMode = MOVIE;
+    movieLocation = file;
     return init();
 }
 
@@ -133,21 +134,21 @@ bool Source::init() {
 };
 
 bool Source::grab() {
-    if(!image)
+    if (sourceMode != IMAGE) {
         try {
-        cap >> frame;
-    } catch (cv::Exception) {
-        setError("can't grab frame");
-        return false;
-    }
-
+            cap >> frame;
+        } catch (cv::Exception) {
+            setError("can't grab frame");
+            return false;
+        };
+    };
 
     if (!frame.data) {
         setError("can't grab frame");
         return false;
     }
 
-    if(mirror)
+    if(sourceMode == DEVICE)
         cv::flip(frame, frame, 1);
 
     return true;

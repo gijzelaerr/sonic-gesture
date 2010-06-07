@@ -8,6 +8,8 @@
 #include <QtCore/QFileInfo>
 #include <QtGui/QImage>
 
+enum SourceModeType { MOVIE, DEVICE, IMAGE };
+
 class Source {
 public:
     Source();
@@ -24,8 +26,9 @@ public:
 
     cv::Size size;
     cv::Mat frame;
-    int frameCount;
     QString error;
+    SourceModeType sourceMode;
+    QFileInfo movieLocation;
 
 private:
 
@@ -36,7 +39,7 @@ private:
     bool loadImage(const cv::Mat& file);
     void setError(QString error);
 
-    bool mirror, image;
+
     cv::VideoCapture cap;
     QImage qimage_storage;
 

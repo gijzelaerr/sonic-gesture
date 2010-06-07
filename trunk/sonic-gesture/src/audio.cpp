@@ -6,7 +6,7 @@ Audio::Audio() {
 }
 
 bool Audio::send(int left, int right, float leftPos, float rightPos) {
-    if (lo_send(connection, "/sonicgesture","iidd", left, right, leftPos, rightPos) == -1) {
+    if (lo_send(connection, "/sonicgesture","iiff", left, right, leftPos, rightPos) == -1) {
         qDebug() << "OSC error " << lo_address_errno(connection) << ": " << lo_address_errstr(connection);
         return false;
     };

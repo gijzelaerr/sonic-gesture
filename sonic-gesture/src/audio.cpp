@@ -2,7 +2,7 @@
 #include <QDebug>
 
 Audio::Audio() {
-    connection = lo_address_new(NULL, "7770");
+    connection = lo_address_new(NULL, "6666");
 }
 
 bool Audio::send(int left, int right, float leftPos, float rightPos) {

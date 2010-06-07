@@ -6,6 +6,7 @@
 #include <QtDebug>
 #include <QKeyEvent>
 
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     settings = Settings::getInstance();

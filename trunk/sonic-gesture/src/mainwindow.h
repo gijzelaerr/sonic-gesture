@@ -35,6 +35,7 @@ private:
     Recorder recorder;
     Labeler labeler;
 
+
     ViewModeType viewMode;
     RecModeType recMode;
     VideoStateType videoState;

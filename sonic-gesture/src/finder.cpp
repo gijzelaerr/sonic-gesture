@@ -109,6 +109,11 @@ bool Finder::step(Mat& big) {
         current_right= black;
     }
 
+    float lefty = float(bodyparts.left_hand.position.y-(bodyparts.left_hand.position.height/2))/big_size.height;
+    float righty = float(bodyparts.right_hand.position.y-(bodyparts.right_hand.position.height/2))/big_size.height;
+    audioOut(left_index, right_index, lefty, righty);
+
+
     // draw the stuff
     visuals = bodyparts.draw_in_image();
     combined = this->combiner.render();
@@ -136,3 +141,6 @@ void Finder::setError(QString error) {
 }
 
 
+void Finder::audioOut(int left, int right, float leftPos, float rightPos) {
+    qDebug() << " " << left << " " << right << " " << leftPos << " " << rightPos;
+}

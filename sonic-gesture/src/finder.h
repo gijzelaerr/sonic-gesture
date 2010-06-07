@@ -8,6 +8,7 @@
 #include "matcher.h"
 #include "combiner.h"
 #include "settings.h"
+#include "audio.h"
 
 class Finder {
 public:
@@ -24,6 +25,7 @@ private:
     Combiner combiner;
     Matcher left_matcher;
     Matcher right_matcher;
+    Audio audio;
 
     cv::Mat big;
     cv::Mat small_, visuals;
@@ -35,6 +37,7 @@ private:
 
     void draw_fps(int fps);
     void setError(QString);
+    void audioOut(int left, int right, float leftPos, float rightPos);
 };
 
 

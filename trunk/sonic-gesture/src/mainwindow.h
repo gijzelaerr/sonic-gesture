@@ -9,6 +9,7 @@
 #include "settings.h"
 #include "recorder.h"
 #include "source.h"
+#include "labeler.h"
 
 
 enum ViewModeType { NORMAL, FINDER, CAPTURE };
@@ -32,6 +33,7 @@ private:
     Capture capture;
     Settings* settings;
     Recorder recorder;
+    Labeler labeler;
 
     ViewModeType viewMode;
     RecModeType recMode;

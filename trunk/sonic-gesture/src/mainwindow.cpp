@@ -59,6 +59,7 @@ void MainWindow::loadFile(const QString &fileName) {
 
     finder.init(source.size);
     capture.init(source.size);
+    labeler.init(source.movieLocation);
 
     ui->actionOpen_Video->setChecked(true);
     ui->actionOpen_Device_2->setChecked(false);
@@ -104,6 +105,7 @@ void MainWindow::startScreen() {
     ui->recordButton->setEnabled(false);
     ui->actionOpen_Video->setChecked(false);
     ui->actionOpen_Device_2->setChecked(false);
+    ui->positionSlider->setSliderPosition(0);
 }
 
 void MainWindow::finderView() {
@@ -221,6 +223,7 @@ void MainWindow::step() {
     // if we can't grab, reset to test screen
     if (!source.grab()) {
         startScreen();
+        return;
     }
 
     switch (viewMode) {
@@ -229,7 +232,14 @@ void MainWindow::step() {
             whatWeSee = finder.combined;
             break;
         case CAPTURE:
-            capture.step(source.frame);
+            if (!capture.step(source.frame)) {
+                if (source.sourceMode == MOVIE) {
+                    pauze();
+                } else {
+                    startScreen();
+                    sourceView();
+                };
+            };
             whatWeSee = capture.combined;
             break;
         default:
@@ -248,27 +258,28 @@ void MainWindow::step() {
     ui->CVWindow->setImage(&whatWeSee);
 };
 
+
 void MainWindow::closeEvent(QCloseEvent *event) {
 };
+
 
 void MainWindow::keyPressEvent(QKeyEvent* event) {
     event->accept();
 
     // if space is pressed
     if ((event->key() == 32)  && (viewMode == CAPTURE)) {
+        // if we are in a movie
         if (source.sourceMode == MOVIE) {
-            double pos = source.getAbsolutePos();
-            qDebug() << pos;
-            QString where = source.movieLocation.path();
-            QString movieName = source.movieLocation.fileName();
-            QStringList split = movieName.split(".");
-            split.removeLast();
-            QFileInfo labelFile(where + "/" + split.join(".") + "_labels.txt");
-            qDebug() << labelFile.filePath();
+            // add label, check if it is okay
+            if (!labeler.add(source.getAbsolutePos())) {
+               QMessageBox::warning(this, tr("Can't write label"), labeler.error, QMessageBox::Ok);
+               return;
+            }
         }
 
         if (!capture.saveImage()) {
             QMessageBox::warning(this, tr("Can't store image"), capture.error, QMessageBox::Ok);
+            return;
         };
     };
 };

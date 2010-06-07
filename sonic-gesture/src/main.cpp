@@ -5,8 +5,7 @@
 
 
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     Application a(argc, argv);
     MainWindow w;
     w.show();

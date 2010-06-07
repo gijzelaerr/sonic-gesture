@@ -18,6 +18,9 @@ configure_file ("${PROJECT_SOURCE_DIR}/cmake.h.in" "${PROJECT_BINARY_DIR}/cmake.
 include_directories(${PROJECT_BINARY_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
 
+###
+### QT STUFF
+###
 QT4_WRAP_CPP(SONICGESTURE_CPP src/qcvimage.h src/mainwindow.h src/application.h src/settingscreen.h)
 QT4_WRAP_UI(SONICGESTURE_UI qt/mainwindow.ui qt/settingscreen.ui)
 QT4_ADD_RESOURCES(SONICGESTURE_RES qt/resources.qrc)
@@ -26,19 +29,52 @@ SET(SONICGESTURE_SOURCE src/qcvimage.cpp src/finder.cpp src/skinfinder.cpp
     src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.cpp
     src/bodypart.cpp src/blob.cpp src/matcher.cpp src/loader.cpp src/main.cpp
     src/mainwindow.cpp src/capture.cpp src/application.cpp src/recorder.cpp
-    src/settingscreen.cpp)
+    src/settingscreen.cpp src/labeler.cpp)
 
 SET(SONICGESTURE_HEADERS src/settings.h src/skinfinder.h src/source.h src/histogram.h
     src/combiner.h src/tools.h src/bodypart.h src/blob.h src/matcher.h src/loader.h
     src/mainwindow.h src/qcvimage.h src/capture.h src/application.h src/recorder.h
-    src/settingscreen.h)
+    src/settingscreen.h src/labeler.h)
 
-add_executable (sonicgesture ${SONICGESTURE_HEADERS} ${SONICGESTURE_SOURCE} ${SONICGESTURE_CPP} ${SONICGESTURE_RES} ${SONICGESTURE_UI})
+###
+### SONIC GESTURE
+###
+add_executable ( sonicgesture
+    ${SONICGESTURE_HEADERS}
+    ${SONICGESTURE_SOURCE}
+    ${SONICGESTURE_CPP}
+    ${SONICGESTURE_RES}
+    ${SONICGESTURE_UI}
+)
 
-target_link_libraries (sonicgesture ${OpenCV_LIBS})
-target_link_libraries(sonicgesture ${QT_LIBRARIES})
+target_link_libraries (sonicgesture
+    ${OpenCV_LIBS}
+    ${QT_LIBRARIES}
+)
 
-# what to install where
+###
+### EXTRACTOR
+###
+add_executable (extractor
+    src/extractor.cpp
+    src/settings.cpp
+    src/source.cpp
+    src/skinfinder.cpp
+    src/bodypart.cpp
+    src/tools.cpp
+    src/histogram.cpp
+    src/blob.cpp
+    ${SONICGESTURE_RES}
+)
+
+target_link_libraries (extractor
+    ${OpenCV_LIBS}
+    ${QT_LIBRARIES}
+)
+
+###
+### INSTALLATION STUFF
+###
 install (TARGETS sonicgesture DESTINATION bin)
 install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/sets" DESTINATION data PATTERN ".svn" EXCLUDE)
 install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/storage" DESTINATION data PATTERN ".svn" EXCLUDE)

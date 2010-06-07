@@ -142,5 +142,6 @@ void Finder::setError(QString error) {
 
 
 void Finder::audioOut(int left, int right, float leftPos, float rightPos) {
-    qDebug() << " " << left << " " << right << " " << leftPos << " " << rightPos;
+    //qDebug() << " " << left << " " << right << " " << leftPos << " " << rightPos;
+    audio.send(left,  right,  leftPos,  rightPos);
 }

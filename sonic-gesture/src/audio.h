@@ -6,7 +6,7 @@
 class Audio {
 public:
     Audio();
-    bool send();
+    bool send(int left, int right, float leftPos, float rightPos);
 private:
     lo_address connection;
 };

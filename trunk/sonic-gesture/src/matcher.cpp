@@ -31,6 +31,8 @@ Matcher::Matcher(bool mirror, vector<int> labels) {
     bool first = true;
 
     QDir data_path(settings->dataSet);
+    qDebug() << "using dataset " << data_path.path();
+
     QDir train_path(settings->dataSet.path() + "/train");
     assert(data_path.exists());
     assert(train_path.exists());

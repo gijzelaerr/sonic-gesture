@@ -5,6 +5,7 @@
 #include <QtGui/QMessageBox>
 #include <QtDebug>
 #include <QKeyEvent>
+#include <QTime>
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -22,16 +23,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
 
     whatWeSee = source.frame;
-
     ui->CVWindow->setImage(&whatWeSee);
 
     // set start flags
     viewMode = NORMAL;
     recMode = INPUT_;
 
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(heartBeat()));
-    timer->start(1000/settings->FPS);
+    // call hearbeat to initialize image
+    heartBeat();
+
 }
 
 MainWindow::~MainWindow() {
@@ -72,7 +72,12 @@ void MainWindow::loadFile(const QString &fileName) {
 
     videoState = PAUZE;
     stopRecord();
+
+    // do one step so we see something on the screen
     step();
+
+    if (!timer->isActive())
+        heartBeat();
 }
 
 void MainWindow::openDevice() {
@@ -94,6 +99,9 @@ void MainWindow::openDevice() {
     ui->recordButton->setEnabled(true);
     videoState = PLAY;
     stopRecord();
+
+    if (!timer->isActive())
+        heartBeat();
 };
 
 void MainWindow::startScreen() {
@@ -155,6 +163,9 @@ void MainWindow::play() {
     videoState = PLAY;
     ui->pauzeButton->setEnabled(true);
     ui->continueButton->setEnabled(false);
+
+    if (!timer->isActive())
+        heartBeat();
 };
 
 void MainWindow::changePosition() {
@@ -213,7 +224,14 @@ void MainWindow::heartBeat() {
     if (videoState == PAUZE)
         return;
 
+    QTime t;
+    t.start();
     step();
+    int elapsed = t.elapsed();
+    int MINWAIT = 1;
+    int wait = settings->FPS-MINWAIT/1000 - elapsed;
+    wait = MAX(wait, MINWAIT);
+    timer->singleShot(wait, this, SLOT(heartBeat()));
 };
 
 
@@ -256,7 +274,7 @@ void MainWindow::step() {
         };
     };
 
-    ui->CVWindow->setImage(&whatWeSee);
+    ui->CVWindow->update();
 };
 
 

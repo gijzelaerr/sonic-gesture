@@ -97,6 +97,14 @@ void BodyPart::make_cutout() {
     binary = Mat(image.size(), image.type(), Scalar(0));
     image.copyTo(binary, mask);
     Rect cut = rect_in_mat(blob.position, binary);
+
+    assert(0 <= cut.x);
+    assert(0 <= cut.width);
+    assert(cut.x + cut.width <= binary.cols);
+    assert(0 <= cut.y);
+    assert(0 <= cut.height);
+    assert(cut.y + cut.height <= binary.rows);
+
     cutout = binary(cut);
     cvtColor(cutout, hog_image, CV_BGR2GRAY);
 };

@@ -14,7 +14,7 @@ bool Application::notify(QObject *rec, QEvent *ev) {
     } catch (...) {
         qDebug() << "Unknown exception!" << endl;
         return false;
-        //abort();
+        abort();
     }
 };
 

@@ -135,6 +135,9 @@ bool Source::init() {
 
 bool Source::grab() {
     if (sourceMode != IMAGE) {
+        if (cap.get(CV_CAP_PROP_POS_FRAMES) == (cap.get(CV_CAP_PROP_FRAME_COUNT)-2))
+            setPos(0);
+
         try {
             cap >> frame;
         } catch (cv::Exception) {
@@ -144,6 +147,8 @@ bool Source::grab() {
     };
 
     if (!frame.data) {
+        double a = cap.get(CV_CAP_PROP_POS_FRAMES);
+        double b = cap.get(CV_CAP_PROP_FRAME_COUNT)-1;
         setError("can't grab frame");
         return false;
     }

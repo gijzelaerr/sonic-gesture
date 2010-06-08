@@ -76,8 +76,7 @@ void MainWindow::loadFile(const QString &fileName) {
     // do one step so we see something on the screen
     step();
 
-    if (!timer->isActive())
-        heartBeat();
+    heartBeat();
 }
 
 void MainWindow::openDevice() {
@@ -100,8 +99,7 @@ void MainWindow::openDevice() {
     videoState = PLAY;
     stopRecord();
 
-    if (!timer->isActive())
-        heartBeat();
+    heartBeat();
 };
 
 void MainWindow::startScreen() {
@@ -164,8 +162,7 @@ void MainWindow::play() {
     ui->pauzeButton->setEnabled(true);
     ui->continueButton->setEnabled(false);
 
-    if (!timer->isActive())
-        heartBeat();
+    heartBeat();
 };
 
 void MainWindow::changePosition() {
@@ -225,15 +222,14 @@ void MainWindow::heartBeat() {
     if (videoState == PAUZE)
         return;
 
-    QTime t;
-    t.start();
+    time.restart();
     step();
-    int elapsed = t.elapsed();
-    int MINWAIT = 4;
+    int elapsed = time.elapsed();
+    int MINWAIT = 35;
     int wait = (1000/settings->FPS-MINWAIT) - elapsed;
     wait = MAX(wait, MINWAIT);
-    qDebug() << wait;
-    timer->singleShot(wait, this, SLOT(heartBeat()));
+    //qDebug() << elapsed << " " << wait;
+    QTimer::singleShot(wait, this, SLOT(heartBeat()));
 };
 
 

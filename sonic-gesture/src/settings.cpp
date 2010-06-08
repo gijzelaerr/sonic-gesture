@@ -40,7 +40,7 @@ void Settings::load()  {
      haarFile = QFileInfo(dataPath.path() + QString("/storage/haarcascade_frontalface_alt.xml"));
      minBlobSize = (cvWorkWinHight/20)*(cvWorkWinHight/20);
 
-     FPS = 10;
+     FPS = 20;
  };
 
  void Settings::save() {

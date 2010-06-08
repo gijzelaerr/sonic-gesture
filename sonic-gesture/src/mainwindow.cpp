@@ -229,9 +229,10 @@ void MainWindow::heartBeat() {
     t.start();
     step();
     int elapsed = t.elapsed();
-    int MINWAIT = 1;
+    int MINWAIT = 4;
     int wait = (1000/settings->FPS-MINWAIT) - elapsed;
     wait = MAX(wait, MINWAIT);
+    qDebug() << wait;
     timer->singleShot(wait, this, SLOT(heartBeat()));
 };
 

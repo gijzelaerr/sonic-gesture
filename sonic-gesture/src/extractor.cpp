@@ -89,8 +89,8 @@ int main(int argc, char *argv[]) {
             continue;
 
         if (source.getAbsolutePos() == labels.at(counter)) {
-            QFileInfo store(outputDir.absolutePath() + QString("/%1.jpg").arg(counter));
 
+            QFileInfo store(outputDir.absolutePath() + QString("/%1.jpg").arg(counter));
             std::cout << "writing " << store.filePath().toStdString() << std::endl;
             if (!imwrite(store.filePath().toStdString(), bodyparts.left_hand.sized_hog_image)) {
                 std::cout << "can't write image " << store.filePath().toStdString() << endl;

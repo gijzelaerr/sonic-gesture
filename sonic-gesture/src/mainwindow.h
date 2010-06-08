@@ -2,6 +2,7 @@
 #define _MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QTime>
 
 #include "qcvimage.h"
 #include "finder.h"
@@ -42,8 +43,7 @@ private:
     SourceModeType sourceMode;
     bool recording;
 
-    QTimer* timer;
-
+    QTime time;
     Mat whatWeSee;
 
     void step();

@@ -127,20 +127,32 @@ bool is_number(const string& str) {
 
 Rect rect_in_mat(Rect rectange, const Mat& matrix) {
     // return maximum size of rectangle inside the borders of matrix
-    int x = max(0, rectange.x);
-    int y = max(0, rectange.y);
-    int w = rectange.width;
-    int h = rectange.height;
-    
-    if (x+w > matrix.cols) 
+    int x,y,w,h;
+
+    x = max(0, rectange.x);
+    x = min(x, matrix.cols);
+
+    y = max(0, rectange.y);
+    y = min(y, matrix.rows);
+
+    w = rectange.width;
+    if (x+w >= matrix.cols)
         w = matrix.cols - x;
-     
-    if (y+h > matrix.rows) 
+
+    h = rectange.height;
+    if (y+h >= matrix.rows)
         h = matrix.rows - y;
 
     w = max(0, w);
-    h = max(0, h);    
-    
+    h = max(0, h);
+
+    assert(0 <= x);
+    assert(0 <= w);
+    assert(x + w <= matrix.cols);
+    assert(0 <= y);
+    assert(0 <= h);
+    assert(y + h <= matrix.rows);
+
     return Rect(x, y, w, h);
 }
 

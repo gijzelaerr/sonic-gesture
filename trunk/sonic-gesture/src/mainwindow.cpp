@@ -199,7 +199,8 @@ void MainWindow::startRecord() {
 
      QFileInfo fileInfo(fileName);
      settings->moviePath = fileInfo.absoluteDir();
-     recorder = Recorder(fileName,settings->FPS, whatWeSee.size());
+     if (!recorder.open(fileName,settings->FPS, whatWeSee.size()))
+         QMessageBox::warning(this, tr("Can't save to file file"), tr("sorry, don't know why"), QMessageBox::Ok);
      ui->recordButton->setChecked(true);
      recording = true;
 };
@@ -229,7 +230,7 @@ void MainWindow::heartBeat() {
     step();
     int elapsed = t.elapsed();
     int MINWAIT = 1;
-    int wait = settings->FPS-MINWAIT/1000 - elapsed;
+    int wait = (1000/settings->FPS-MINWAIT) - elapsed;
     wait = MAX(wait, MINWAIT);
     timer->singleShot(wait, this, SLOT(heartBeat()));
 };

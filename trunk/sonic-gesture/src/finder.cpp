@@ -48,12 +48,12 @@ bool Finder::init(const Size& size) {
     combiner.add_image(skinFinder.frame);
     //combiner.add_image(skinFinder.hsv);
     //combiner.add_image(skinFinder.bw);
-    combiner.add_image(skinFinder.backproj);
-    combiner.add_image(skinFinder.blur);
-    combiner.add_image(skinFinder.thresh);
-    //combiner.add_image(visuals);
-    //combiner.add_image(current_left);
-    //combiner.add_image(current_right);
+    //combiner.add_image(skinFinder.backproj);
+    //combiner.add_image(skinFinder.blur);
+    //combiner.add_image(skinFinder.thresh);
+    combiner.add_image(visuals);
+    combiner.add_image(current_left);
+    combiner.add_image(current_right);
     //combiner.add_image(skinFinder.mask);
 
     black = Mat(size, CV_8UC3, Scalar(0, 0, 0));

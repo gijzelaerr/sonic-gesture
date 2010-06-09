@@ -56,6 +56,8 @@ void SkinFinder::find_face() {
 }
 
 void SkinFinder::make_histogram() {
+    if ((frame_counter % 10) != 0)
+        return;
     assert(hsv.data);
     if (!(face == Rect())) {
         facepixels = hsv(face);

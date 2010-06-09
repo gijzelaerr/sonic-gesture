@@ -11,6 +11,7 @@ public:
     ~Labeler();
 
     bool init(QFileInfo& movie);
+    void close();
     bool add(double moment);
     QString error;
 

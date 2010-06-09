@@ -30,11 +30,14 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     };
 
-    if (!outputDir.exists()) {
-        std::cout << "output directory " << outputDir.path().toStdString() << " doesn't exists, creating..." << std::endl;
-        if (!outputDir.mkpath(outputDir.absolutePath())) {
-            std::cout << "can't make directory" << outputDir.path().toStdString() << std::endl;
-        }
+    if (outputDir.exists()) {
+        std::cout << outputDir.absolutePath().toStdString() << " already exists!" << std::endl;
+        return EXIT_FAILURE;
+    };
+
+    std::cout << "creating output directory " << outputDir.absolutePath().toStdString() << std::endl;
+    if (!outputDir.mkpath(outputDir.absolutePath())) {
+        std::cout << "can't make directory" << outputDir.absolutePath().toStdString() << std::endl;
     };
 
     // load settings
@@ -75,7 +78,10 @@ int main(int argc, char *argv[]) {
         if(!source.grab())
             break;
 
-        resize(source.frame, small_, small_size, 0, 0, INTER_LINEAR);
+        if (counter == labels.size())
+            break;
+
+        resize(source.frame, small_, small_size, 0, 0);
         if (!skinFinder.compute(small_)) {
             std::cout << skinFinder.error.toStdString() << std::endl;
             return EXIT_FAILURE;

@@ -30,13 +30,13 @@ void Settings::destroy() {
 void Settings::load()  {
      moviePath = QDir(qSettings->value("moviePath", ".").toString());
      dataPath = QDir(qSettings->value("dataPath", QString(DATA_DIR)).toString());
-     dataSet = qSettings->value("dataSet", dataPath.path() + "/sets/gijs_kamer_inout28").toString();
+     dataSet = qSettings->value("dataSet", dataPath.path() + "/sets/ivo_uva_inout28").toString();
      cvWorkWinHight = qSettings->value("cvWorkWinHight", 200).toInt();
-     cvWorkWinInX = qSettings->value("cvWorkWinInX", 3).toInt();
+     cvWorkWinInX = qSettings->value("cvWorkWinInX", 2).toInt();
      limbInflationRatio = qSettings->value("limbInflationRatio", 1.1).toDouble();
      probToBinThresh = qSettings->value("probToBinThresh", 30).toInt();
      kNeirNeigh = qSettings->value("kNeirNeigh", 3).toInt();
-     deviceId = qSettings->value("deviceId", 1).toInt();
+     deviceId = qSettings->value("deviceId", 0).toInt();
      blur = qSettings->value("blur", 31).toInt(); // 31 untill now
 
      haarFile = QFileInfo(dataPath.path() + QString("/storage/haarcascade_frontalface_alt.xml"));

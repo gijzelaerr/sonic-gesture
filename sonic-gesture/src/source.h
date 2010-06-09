@@ -23,6 +23,7 @@ public:
     double getPos();
     double getAbsolutePos();
     void close();
+    void startScreen();
 
     cv::Size size;
     cv::Mat frame;

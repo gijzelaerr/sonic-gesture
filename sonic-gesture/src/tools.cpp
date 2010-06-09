@@ -201,5 +201,5 @@ Mat qimage2mat(const QImage& qimage) {
 QImage mat2qimage(const Mat& mat) {
     Mat rgb;
     cvtColor(mat, rgb, CV_BGR2RGB);
-    return QImage((const unsigned char*)(rgb.data), rgb.cols, rgb.rows, QImage::Format_RGB888);
+    return QImage((const unsigned char*)(rgb.data), rgb.cols, rgb.rows, rgb.step, QImage::Format_RGB888);
 };

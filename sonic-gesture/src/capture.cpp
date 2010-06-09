@@ -87,7 +87,7 @@ bool Capture::step(const Mat& big) {
     // draw the stuff
     visuals = bodyparts.draw_in_image();
     combined = this->combiner.render();
-    draw_message();
+    //draw_message();
     return true;
 }
 

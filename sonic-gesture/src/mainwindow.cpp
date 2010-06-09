@@ -75,13 +75,14 @@ void MainWindow::loadFile(const QString &fileName) {
 
     // do one step so we see something on the screen
     step();
+    ui->CVWindow->setImage(&whatWeSee);
 
     heartBeat();
 }
 
 void MainWindow::openDevice() {
     source.close();
-    if (!source.open(0)) {
+    if (!source.open(settings->deviceId)) {
         QMessageBox::warning(this, tr("Can't open file"), source.error, QMessageBox::Ok);
         return;
     }
@@ -99,12 +100,16 @@ void MainWindow::openDevice() {
     videoState = PLAY;
     stopRecord();
 
+    // do one step so we see something on the screen
+    step();
+    ui->CVWindow->setImage(&whatWeSee);
+
     heartBeat();
 };
 
 void MainWindow::startScreen() {
     stopRecord();
-    source = Source();
+    source.startScreen();
     videoState = PLAY;
     ui->pauzeButton->setEnabled(false);
     ui->continueButton->setEnabled(false);
@@ -113,6 +118,10 @@ void MainWindow::startScreen() {
     ui->actionOpen_Video->setChecked(false);
     ui->actionOpen_Device_2->setChecked(false);
     ui->positionSlider->setSliderPosition(0);
+
+    // do one step so we see something on the screen
+    //step();
+    //ui->CVWindow->setImage(&whatWeSee);
 }
 
 void MainWindow::finderView() {
@@ -225,7 +234,7 @@ void MainWindow::heartBeat() {
     time.restart();
     step();
     int elapsed = time.elapsed();
-    int MINWAIT = 35;
+    int MINWAIT = 40;
     int wait = (1000/settings->FPS-MINWAIT) - elapsed;
     wait = MAX(wait, MINWAIT);
     //qDebug() << elapsed << " " << wait;

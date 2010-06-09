@@ -9,11 +9,14 @@
 
 Source::Source() {
     qimage_storage = QImage(":images/startscreen");
-    open(qimage_storage);
 }
 
 Source::~Source() {
     //cap.release();
+}
+
+void Source::startScreen() {
+     open(qimage_storage);
 }
 
 bool Source::open(int device) {
@@ -135,6 +138,7 @@ bool Source::init() {
 
 bool Source::grab() {
     if (sourceMode != IMAGE) {
+        // loop video
         if (cap.get(CV_CAP_PROP_POS_FRAMES) == (cap.get(CV_CAP_PROP_FRAME_COUNT)-2))
             setPos(0);
 
@@ -147,8 +151,6 @@ bool Source::grab() {
     };
 
     if (!frame.data) {
-        double a = cap.get(CV_CAP_PROP_POS_FRAMES);
-        double b = cap.get(CV_CAP_PROP_FRAME_COUNT)-1;
         setError("can't grab frame");
         return false;
     }

@@ -1,6 +1,7 @@
 
 #include <QtGui/qwidget.h>
-
+#include <QDesktopWidget>
+#include <QApplication>
 #include "qcvimage.h"
 #include "source.h"
 #include "tools.h"
@@ -12,7 +13,13 @@ QCVImage::~QCVImage() {};
 
 void QCVImage::setImage(Mat* bgr) {
     this->bgr = bgr;
-    this->setMinimumSize(bgr->cols, bgr->rows);
+    this->setMinimumSize(200, 200);
+
+    // TODO: make this more nice
+    QDesktopWidget* desktop = QApplication::desktop();
+    const QRect  geom = desktop->screenGeometry();
+    this->setMaximumSize(geom.width(), geom.height());
+    //this->setMaximumSize(200, 200);
     update();
 }
 

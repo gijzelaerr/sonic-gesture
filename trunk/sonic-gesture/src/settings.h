@@ -43,6 +43,12 @@ public:
 
     // frames per second
     double FPS;
+
+    // which camera to use
+    int deviceId;
+
+    // amount of blurring of probabilistic skin image
+    int blur;
     
 private:
     void load();

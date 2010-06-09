@@ -305,10 +305,10 @@ Mat BodyParts::draw_in_image() {
     }
 
     if (left_hand.state != NOT_VISIBLE) {
-        rectangle(visuals, left_hand.prediction, Scalar(0, 255, 255));
+        rectangle(visuals, left_hand.prediction, Scalar(0, 255, 255), 3);
     }
     if (right_hand.state != NOT_VISIBLE) {
-        rectangle(visuals, right_hand.prediction, Scalar(0, 255, 0));
+        rectangle(visuals, right_hand.prediction, Scalar(0, 255, 0), 3);
     }
     //if (head.state != NOT_VISIBLE) {
     //    rectangle(visuals, head.prediction, Scalar(0, 0, 255));

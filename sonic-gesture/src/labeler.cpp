@@ -7,11 +7,14 @@
 #include <QDebug>
 
 Labeler::Labeler() {
-    first = true;
     labelFile = NULL;
 };
 
 Labeler::~Labeler() {
+    close();
+};
+
+void Labeler::close() {
     if (labelFile != NULL && labelFile->isOpen()) {
         labelFile->close();
         delete labelFile;
@@ -19,6 +22,8 @@ Labeler::~Labeler() {
 };
 
 bool Labeler::init(QFileInfo& movie) {
+    close();
+    first = true;
     QString where = movie.path();
     QString movieName = movie.fileName();
     QStringList split = movieName.split(".");

@@ -42,6 +42,8 @@ bool Capture::init(const Size& size) {
     combiner.add_image(visuals);
     combiner.add_image(current);
     
+    // don't safe images for now, we use extractor for that
+    /*
     // where to store files
     QDir storePath(dataSet.path() + "/incoming");
     if (!storePath.exists()) {
@@ -55,7 +57,7 @@ bool Capture::init(const Size& size) {
     assert(!currentTrainPath.exists());
     assert(storePath.mkdir(now));
     assert(currentTrainPath.mkdir("original"));
-
+    */
     counter = 0;
 
     return true;
@@ -97,6 +99,8 @@ bool Capture::saveImage() {
         return false;
     }
 
+    // don't safe images for now, we use extractor for that
+    /*
     QFileInfo handFile(currentTrainPath.absolutePath() + QString("/%1.jpg").arg(counter));
     QFileInfo origFile(originalPath.absolutePath() + QString("/%1.jpg").arg(counter));
 
@@ -109,7 +113,7 @@ bool Capture::saveImage() {
                  bodyparts.left_hand.sized_hog_image)) {
         setError(QString("can't write cutout image:\n%1").arg(handFile.filePath()));
         return false;
-    }
+    }*/
 
     counter++;
     return true;

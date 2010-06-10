@@ -1,10 +1,10 @@
-#How to build Sonic Gesture
 
 = Requirements =
-  * OpenCV 2.0 (or maybe SVN)
-  * Boost C++ libraries
+  * OpenCV 2.1
+  * QT
   * cmake
   * Subversion
+  * Liblo
 
 = Building = 
   * $ svn checkout https://sonic-gesture.googlecode.com/svn/trunk/ sonic-gesture
@@ -14,7 +14,7 @@
   * $ cmake ..
   * $ make
 
-This will result in 3 binaries; train, capture and run.
+This will result in 2 binaries, extractor, sonicgesture. You want to run sonicgesture.
 
 = Usage =
 Use capture to capture images for training. Use train to store the training images in a classifier. Use run to actually start recognizing. 

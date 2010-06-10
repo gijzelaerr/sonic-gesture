@@ -1,0 +1,6 @@
+int fourCC_code = CV_FOURCC('M','J','P','G'); // M-JPEG codec (may not
+be reliable).
+int fourCC_code = CV_FOURCC('P','I','M','1'); // MPEG 1 codec.
+int fourCC_code = CV_FOURCC('D','I','V','3'); // MPEG 4.3 codec.
+int fourCC_code = CV_FOURCC('I','2','6','3'); // H263I codec.
+int fourCC_code = CV_FOURCC('F','L','V','1'); // FLV1 codec.

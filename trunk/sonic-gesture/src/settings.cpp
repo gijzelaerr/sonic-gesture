@@ -34,7 +34,7 @@ void Settings::load()  {
      cvWorkWinHight = qSettings->value("cvWorkWinHight", 200).toInt();
      cvWorkWinInX = qSettings->value("cvWorkWinInX", 2).toInt();
      limbInflationRatio = qSettings->value("limbInflationRatio", 1.1).toDouble();
-     probToBinThresh = qSettings->value("probToBinThresh", 30).toInt();
+     probToBinThresh = qSettings->value("probToBinThresh", 20).toInt(); // was 30!!!
      kNeirNeigh = qSettings->value("kNeirNeigh", 3).toInt();
      deviceId = qSettings->value("deviceId", 0).toInt();
      blur = qSettings->value("blur", 31).toInt(); // 31 untill now

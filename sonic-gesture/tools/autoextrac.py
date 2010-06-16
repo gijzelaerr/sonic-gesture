@@ -8,14 +8,15 @@ here = os.path.dirname(__file__)
 
 if len(sys.argv) != 3:
     print "usage: %s <extractor path> <dir_with_movies>" % sys.argv[0]
+    sys.exit(1)
 else:
-    extractor = [sys.argv[1]
+    extractor = sys.argv[1]
     moviedir = sys.argv[2]
 
 if not os.access(extractor, os.X_OK):
     raise Exception("extractor not found: %s" % extractor)
 
-if not os.access(movedir, os.X_OK):
+if not os.access(moviedir, os.X_OK):
     raise Exception("moviedir not found: %s" % moviedir)
 
 
@@ -35,7 +36,7 @@ for movie in movies:
         raise Exception("can't access %s" % labels_path)
 
     if os.access(output_path, os.F_OK):
-        print("output %s already exists, skipping") 
+        print("%s already exists, skipping" % output_path) 
         continue
 
     print("doing %s" % movie)

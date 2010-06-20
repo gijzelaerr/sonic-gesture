@@ -61,8 +61,15 @@ Matcher::Matcher(bool mirror, vector<int> labels) {
             QFileInfo handPath(train_path.path() + QString("/%1/%2.jpg").arg(trainSet).arg(i));
             assert(handPath.exists());
 
-            handimg = cv::imread(handPath.filePath().toStdString(), 0);
+            string handPathString = handPath.filePath().toStdString();
+            handimg = cv::imread(handPathString, 0);
             if(mirror) flip(handimg, handimg, 1);
+
+            // TODO: make error handling, set error, return false, bla bla
+            if (!handimg.data) {
+                std::cout << "ERROR: can't read image: " << handPathString << std::endl;
+                return;
+            };
             hog.compute(handimg, descriptors, winStride, padding, locations);
 
             // initialize the matrix with info from first hand

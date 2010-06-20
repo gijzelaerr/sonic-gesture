@@ -22,6 +22,10 @@ if not os.access(moviedir, os.X_OK):
 
 movies = [x for x in os.listdir(moviedir) if x.endswith('.avi')]
 
+if len(movies) == 0:
+    print "no movies in %s" % moviedir
+    sys.exit(1)
+
 for movie in movies:
     session = movie.split('.')[0]
     labels = session + '_labels.txt'

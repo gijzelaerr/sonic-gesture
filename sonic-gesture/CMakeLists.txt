@@ -70,6 +70,30 @@ target_link_libraries (extractor
 )
 
 ###
+### PERFORMANCE
+###
+add_executable (performance
+    src/performance.cpp
+    src/settings.cpp
+    src/source.cpp
+    src/skinfinder.cpp
+    src/bodypart.cpp
+    src/tools.cpp
+    src/histogram.cpp
+    src/blob.cpp
+    src/matcher.cpp
+    src/loader.cpp
+    ${SONICGESTURE_RES}
+)
+
+target_link_libraries (performance
+    ${OpenCV_LIBS}
+    ${QT_LIBRARIES}
+)
+
+
+
+###
 ### INSTALLATION STUFF
 ###
 install (TARGETS sonicgesture DESTINATION bin)

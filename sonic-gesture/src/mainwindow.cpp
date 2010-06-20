@@ -197,8 +197,11 @@ void MainWindow::stopRecord() {
 void MainWindow::startRecord() {
     QString fileName = QFileDialog::getSaveFileName(this, "Record Movie",
               settings->moviePath.path(), "Movies (*.avi)");
-     if (fileName.isEmpty())
+    if (fileName.isEmpty()) {
+        recording = false;
+        ui->recordButton->setChecked(false);
         return;
+    };
 
      if (!fileName.endsWith("avi"))
          fileName = fileName + ".avi";
@@ -233,6 +236,7 @@ void MainWindow::heartBeat() {
 
     time.restart();
     step();
+    //waitKey(10);
     int elapsed = time.elapsed();
     int MINWAIT = 40;
     int wait = (1000/settings->FPS-MINWAIT) - elapsed;

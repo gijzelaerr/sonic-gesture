@@ -1,2 +1,2 @@
-usr/bin/sonicgesture
-usr/share/sonicgesture
+debian/sonicgesture/usr/bin/sonicgesture
+debian/sonicgesture/usr/share/sonicgesture

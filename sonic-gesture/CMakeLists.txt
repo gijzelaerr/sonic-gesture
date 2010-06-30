@@ -125,10 +125,10 @@ IF(WIN32)
     )
 ENDIF(WIN32)
 
-IF(UNIX)
+IF(UNIX AND NOT APPLE)
     CPACK_GENERATOR("DEB")
     set(CPACK_DEBIAN_PACKAGE_DEPENDS "libcv4 libcvaux4 libhighgui4 liblo7 libqt4-gui libqt4-core")
-ENDIF(UNIX)
+ENDIF(UNIX AND NOT APPLE)
 
 IF(APPLE)
     CPACK_GENERATOR("Bundle")

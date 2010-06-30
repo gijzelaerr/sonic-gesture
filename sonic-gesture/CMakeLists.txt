@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
 
-enable_testing(true)
-
 project( "sonic-gesture" )
 find_package( OpenCV REQUIRED )  
 find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED )
@@ -10,15 +8,18 @@ include(${QT_USE_FILE})
 
 # where can we find data
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
-set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/data")
-
-# workaround to link to liblo
+#set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/data")
+set(DATA_DIR "/usr/share/sonicgesture")
+include_directories(${PROJECT_SOURCE_DIR})
 
 #pass cmake config to source
-configure_file ("${PROJECT_SOURCE_DIR}/cmake.h.in" "${PROJECT_BINARY_DIR}/cmake.h")
+configure_file ("${PROJECT_SOURCE_DIR}/cmake.h.in" "${PROJECT_BINARY_DIR}/src/cmake.h")
 
+# include generated files
+include_directories("${PROJECT_BINARY_DIR}/src")
+
+#include generated QT files
 include_directories(${PROJECT_BINARY_DIR})
-include_directories(${PROJECT_SOURCE_DIR})
 
 #build 32 bit for OSX
 set(CMAKE_OSX_ARCHITECTURES "i386")
@@ -26,18 +27,19 @@ set(CMAKE_OSX_ARCHITECTURES "i386")
 ###
 ### QT STUFF
 ###
-QT4_WRAP_CPP(SONICGESTURE_CPP src/qcvimage.h src/mainwindow.h src/application.h src/settingscreen.h)
-QT4_WRAP_UI(SONICGESTURE_UI qt/mainwindow.ui qt/settingscreen.ui)
-QT4_ADD_RESOURCES(SONICGESTURE_RES qt/resources.qrc)
+qt4_wrap_cpp (SONICGESTURE_CPP src/qcvimage.h src/mainwindow.h src/application.h src/settingscreen.h)
+qt4_wrap_ui (SONICGESTURE_UI qt/mainwindow.ui qt/settingscreen.ui)
+qt4_add_resources (SONICGESTURE_RES qt/resources.qrc)
 
-SET(SONICGESTURE_SOURCE src/qcvimage.cpp src/finder.cpp src/skinfinder.cpp
+# all source files
+set(SONICGESTURE_SOURCE src/qcvimage.cpp src/finder.cpp src/skinfinder.cpp
     src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.cpp
     src/bodypart.cpp src/blob.cpp src/matcher.cpp src/loader.cpp src/main.cpp
     src/mainwindow.cpp src/capture.cpp src/application.cpp src/recorder.cpp
     src/settingscreen.cpp src/labeler.cpp src/audio.cpp)
 
 ###
-### SONIC GESTURE
+### BUILD SONIC GESTURE
 ###
 add_executable ( sonicgesture
     ${SONICGESTURE_SOURCE}
@@ -53,7 +55,7 @@ target_link_libraries (sonicgesture
 )
 
 ###
-### EXTRACTOR
+### BUILD EXTRACTOR
 ###
 add_executable (extractor
     src/extractor.cpp
@@ -73,7 +75,7 @@ target_link_libraries (extractor
 )
 
 ###
-### PERFORMANCE
+### BUILD PERFORMANCE
 ###
 add_executable (performance
     src/performance.cpp
@@ -95,7 +97,6 @@ target_link_libraries (performance
 )
 
 
-
 ###
 ### INSTALLATION STUFF
 ###
@@ -112,6 +113,7 @@ SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/data/installer/icon.bmp")
 SET(CPACK_PACKAGE_VERSION_MAJOR "0")
 SET(CPACK_PACKAGE_VERSION_MINOR "0")
 SET(CPACK_PACKAGE_VERSION_PATCH "1")
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 
 # the same for all architechtures
 install (TARGETS sonicgesture DESTINATION bin)
@@ -134,8 +136,10 @@ IF(UNIX AND NOT APPLE)
     install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/sets" DESTINATION share/${CPACK_PACKAGE_NAME} PATTERN ".svn" EXCLUDE)
     install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/storage" DESTINATION share/${CPACK_PACKAGE_NAME} PATTERN ".svn" EXCLUDE)
 
+    # only use this when building package!
+
     set(CPACK_GENERATOR "DEB")
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libcv4 libcvaux4 libhighgui4 liblo7 libqt4-gui libqt4-core")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libopencv0, liblo7, libqt4-gui, libqt4-core")
 ENDIF(UNIX AND NOT APPLE)
 
 IF(APPLE)

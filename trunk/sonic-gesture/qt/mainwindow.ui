@@ -39,7 +39,6 @@
       <property name="styleSheet">
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
-      <zorder></zorder>
      </widget>
     </item>
     <item>
@@ -53,7 +52,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="resources.qrc">
           <normaloff>:/icons/pauze movie</normaloff>:/icons/pauze movie</iconset>
         </property>
        </widget>
@@ -67,7 +66,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="resources.qrc">
           <normaloff>:/icons/play movie</normaloff>:/icons/play movie</iconset>
         </property>
        </widget>
@@ -81,7 +80,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="resources.qrc">
           <normaloff>:/icons/record</normaloff>:/icons/record</iconset>
         </property>
         <property name="checkable">
@@ -96,6 +95,9 @@
        <widget class="QSlider" name="positionSlider">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -183,7 +185,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/film</normaloff>:/icons/film</iconset>
    </property>
    <property name="text">
@@ -200,7 +202,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/camera</normaloff>:/icons/camera</iconset>
    </property>
    <property name="text">
@@ -215,7 +217,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/finder view</normaloff>:/icons/finder view</iconset>
    </property>
    <property name="text">
@@ -227,7 +229,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/capture view</normaloff>:/icons/capture view</iconset>
    </property>
    <property name="text">
@@ -245,7 +247,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/record input</normaloff>:/icons/record input</iconset>
    </property>
    <property name="text">
@@ -260,7 +262,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/record output</normaloff>:/icons/record output</iconset>
    </property>
    <property name="text">
@@ -278,7 +280,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/normal view</normaloff>:/icons/normal view</iconset>
    </property>
    <property name="text">
@@ -295,7 +297,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/fullscreen</normaloff>:/icons/fullscreen</iconset>
    </property>
    <property name="text">
@@ -309,9 +311,14 @@
    <extends>QWidget</extends>
    <header>qcvimage.h</header>
    <container>1</container>
+   <slots>
+    <slot>about()</slot>
+   </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionOpen_Video</sender>
@@ -443,7 +450,7 @@
   </connection>
   <connection>
    <sender>positionSlider</sender>
-   <signal>sliderReleased()</signal>
+   <signal>sliderMoved(int)</signal>
    <receiver>MainWindow</receiver>
    <slot>changePosition()</slot>
    <hints>
@@ -505,6 +512,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openVideo()</slot>
@@ -519,5 +542,6 @@
   <slot>changePosition()</slot>
   <slot>record()</slot>
   <slot>fullscreen()</slot>
+  <slot>about()</slot>
  </slots>
 </ui>

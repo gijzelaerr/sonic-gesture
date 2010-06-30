@@ -177,6 +177,7 @@ void MainWindow::play() {
 void MainWindow::changePosition() {
     double pos = (double)(ui->positionSlider->sliderPosition()) / ui->positionSlider->maximum();
     source.setPos(pos);
+    qDebug() << pos;
 };
 
 void MainWindow::record() {
@@ -227,7 +228,9 @@ void MainWindow::fullscreen() {
 }
 
 void MainWindow::setSliderPosition(double position) {
-    ui->positionSlider->setSliderPosition(position * ui->positionSlider->maximum());
+    if (!ui->positionSlider->isSliderDown()) {
+        ui->positionSlider->setSliderPosition(position * ui->positionSlider->maximum());
+    };
 }
 
 void MainWindow::heartBeat() {
@@ -236,12 +239,11 @@ void MainWindow::heartBeat() {
 
     time.restart();
     step();
-    //waitKey(10);
     int elapsed = time.elapsed();
-    int MINWAIT = 40;
-    int wait = (1000/settings->FPS-MINWAIT) - elapsed;
+    int MINWAIT = 4;
+    int wait = (1000/settings->FPS) - elapsed;
     wait = MAX(wait, MINWAIT);
-    //qDebug() << elapsed << " " << wait;
+    qDebug() << elapsed << "\t" << wait;
     QTimer::singleShot(wait, this, SLOT(heartBeat()));
 };
 
@@ -313,3 +315,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event) {
         };
     };
 };
+
+void MainWindow::about() {
+   QMessageBox::about(this, tr("About Sonic Gesture"),
+          //tr("This is <b>Sonic Gesture</b>. More info at <a href=\"http://code.google.com/p/sonic-gesture/\">the website</a>")
+                      tr("bla")
+   );
+}

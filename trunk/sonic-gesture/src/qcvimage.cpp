@@ -7,6 +7,7 @@
 #include "tools.h"
 
 QCVImage::QCVImage(QWidget *parent) : QWidget(parent) {
+    this->setAutoFillBackground(false);
 };
 
 QCVImage::~QCVImage() {};

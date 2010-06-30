@@ -96,12 +96,7 @@ target_link_libraries (performance
 ###
 ### INSTALLATION STUFF
 ###
-install (TARGETS sonicgesture DESTINATION bin)
-install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/sets" DESTINATION data PATTERN ".svn" EXCLUDE)
-install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/storage" DESTINATION data PATTERN ".svn" EXCLUDE)
-
-INCLUDE(CPack)
-SET(CPACK_PACKAGE_NAME "sonic-gesture")
+SET(CPACK_PACKAGE_NAME "sonicgesture")
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Sonic Gesture")
 SET(CPACK_PACKAGE_DESCRIPTION "Sonic Gesture - translating sound into gestures")
 SET(CPACK_PACKAGE_VENDOR "Gijs Molenaar")
@@ -116,7 +111,11 @@ SET(CPACK_PACKAGE_VERSION_MINOR "0")
 SET(CPACK_PACKAGE_VERSION_PATCH "1")
 
 IF(WIN32)
-    CPACK_GENERATOR("NSIS")
+    install (TARGETS sonicgesture DESTINATION bin)
+    install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/sets" DESTINATION data PATTERN ".svn" EXCLUDE)
+    install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/storage" DESTINATION data PATTERN ".svn" EXCLUDE)
+
+    set(CPACK_GENERATOR "NSIS")
     # include required windows DLL's
 	file(GLOB OPENCV_LIBS "${OpenCV_DIR}/bin/*.dll")
     INSTALL(FILES
@@ -126,11 +125,20 @@ IF(WIN32)
 ENDIF(WIN32)
 
 IF(UNIX AND NOT APPLE)
-    CPACK_GENERATOR("DEB")
+    install (TARGETS sonicgesture DESTINATION bin)
+    install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/sets" DESTINATION /share/${CPACK_PACKAGE_NAME} PATTERN ".svn" EXCLUDE)
+    install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/storage" DESTINATION /share/${CPACK_PACKAGE_NAME} PATTERN ".svn" EXCLUDE)
+
+    set(CPACK_GENERATOR "DEB")
     set(CPACK_DEBIAN_PACKAGE_DEPENDS "libcv4 libcvaux4 libhighgui4 liblo7 libqt4-gui libqt4-core")
 ENDIF(UNIX AND NOT APPLE)
 
 IF(APPLE)
-    CPACK_GENERATOR("Bundle")
+    install (TARGETS sonicgesture DESTINATION bin)
+    install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/sets" DESTINATION /share/${CPACK_PACKAGE_NAME} PATTERN ".svn" EXCLUDE)
+    install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/storage" DESTINATION /share/${CPACK_PACKAGE_NAME} PATTERN ".svn" EXCLUDE)
+
+    set(CPACK_GENERATOR "Bundle")
 ENDIF(APPLE)
 
+INCLUDE(CPack)

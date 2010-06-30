@@ -177,7 +177,6 @@ void MainWindow::play() {
 void MainWindow::changePosition() {
     double pos = (double)(ui->positionSlider->sliderPosition()) / ui->positionSlider->maximum();
     source.setPos(pos);
-    qDebug() << pos;
 };
 
 void MainWindow::record() {
@@ -243,7 +242,7 @@ void MainWindow::heartBeat() {
     int MINWAIT = 4;
     int wait = (1000/settings->FPS) - elapsed;
     wait = MAX(wait, MINWAIT);
-    qDebug() << elapsed << "\t" << wait;
+    //qDebug() << elapsed << "\t" << wait;
     QTimer::singleShot(wait, this, SLOT(heartBeat()));
 };
 

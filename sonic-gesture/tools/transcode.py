@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 cores = 4
+codec = "mjpeg"
 
 import sys
 import os
@@ -9,7 +10,7 @@ from multiprocessing import Pool
 
 
 def transcode((source, destination)):
-    cmd = ["/usr/bin/transcode", "-i", source, "-y" "ffmpeg", "-o", destination, "-F wmv2"]
+    cmd = ["/usr/bin/transcode", "-i", source, "-y" "ffmpeg", "-o", destination, "-F", codec]
     return subprocess.call(cmd)
 
 def main():
@@ -27,8 +28,9 @@ def main():
         destionation = "small_" + movie
         jobs.append((source, destionation))
 
-    pool = Pool(processes=cores)
-    vals = pool.map(transcode, jobs, chunksize=1)
+    results = map(transcode, jobs)
+    #pool = Pool(processes=cores)
+    #vals = pool.map(transcode, jobs, chunksize=1)
 
 
 if __name__ == '__main__':

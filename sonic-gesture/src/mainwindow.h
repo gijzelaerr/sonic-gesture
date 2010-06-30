@@ -71,6 +71,7 @@ private slots:
     void heartBeat();
     void fullscreen();
     void setSliderPosition(double position);
+    void about();
 };
 
 #endif // MAINWINDOW_H

@@ -1,0 +1,395 @@
+\begin{theindex}
+
+  \item {$\sim $BodyPart}
+    \subitem {BodyPart}, \hyperpage{7}
+  \item {$\sim $Histogram}
+    \subitem {Histogram}, \hyperpage{12}
+  \item {$\sim $Matcher}
+    \subitem {Matcher}, \hyperpage{13}
+  \item {$\sim $Source}
+    \subitem {Source}, \hyperpage{16}
+  \item {$\sim $Stabilizer}
+    \subitem {Stabilizer}, \hyperpage{17}
+
+  \indexspace
+
+  \item {add\_\discretionary {-}{}{}image}
+    \subitem {Combiner}, \hyperpage{10}
+  \item {area}
+    \subitem {Blob}, \hyperpage{6}
+
+  \indexspace
+
+  \item {backproj}
+    \subitem {SkinFinder}, \hyperpage{15}
+  \item {backproject}
+    \subitem {Histogram}, \hyperpage{12}
+  \item {Blob}, \hyperpage{5}
+    \subitem {area}, \hyperpage{6}
+    \subitem {Blob}, \hyperpage{6}
+    \subitem {center}, \hyperpage{6}
+    \subitem {contour}, \hyperpage{6}
+    \subitem {position}, \hyperpage{6}
+  \item {blob}
+    \subitem {BodyPart}, \hyperpage{7}
+  \item {blob.cpp}
+    \subitem {compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size}, 
+		\hyperpage{19}
+    \subitem {compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos}, 
+		\hyperpage{19}
+  \item {blob.h}
+    \subitem {compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size}, 
+		\hyperpage{20}
+    \subitem {compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos}, 
+		\hyperpage{20}
+  \item {blur}
+    \subitem {SkinFinder}, \hyperpage{15}
+  \item {BodyPart}, \hyperpage{7}
+    \subitem {$\sim $BodyPart}, \hyperpage{7}
+    \subitem {blob}, \hyperpage{7}
+    \subitem {BodyPart}, \hyperpage{7}
+    \subitem {hog\_\discretionary {-}{}{}features}, \hyperpage{7}
+    \subitem {hog\_\discretionary {-}{}{}image}, \hyperpage{7}
+    \subitem {size}, \hyperpage{7}
+    \subitem {update}, \hyperpage{7}
+  \item {BodyParts}, \hyperpage{8}
+    \subitem {draw\_\discretionary {-}{}{}in\_\discretionary {-}{}{}image}, 
+		\hyperpage{8}
+    \subitem {head}, \hyperpage{8}
+    \subitem {left\_\discretionary {-}{}{}hand}, \hyperpage{8}
+    \subitem {right\_\discretionary {-}{}{}hand}, \hyperpage{8}
+    \subitem {update}, \hyperpage{8}
+  \item {bw}
+    \subitem {SkinFinder}, \hyperpage{15}
+
+  \indexspace
+
+  \item {Capture}, \hyperpage{9}
+    \subitem {Capture}, \hyperpage{9}
+    \subitem {run}, \hyperpage{9}
+  \item {capture.cpp}
+    \subitem {main}, \hyperpage{23}
+  \item {center}
+    \subitem {Blob}, \hyperpage{6}
+  \item {Combiner}, \hyperpage{10}
+    \subitem {add\_\discretionary {-}{}{}image}, \hyperpage{10}
+    \subitem {Combiner}, \hyperpage{10}
+    \subitem {images}, \hyperpage{10}
+    \subitem {render}, \hyperpage{10}
+  \item {common.h}
+    \subitem {contour}, \hyperpage{26}
+    \subitem {contours}, \hyperpage{26}
+    \subitem {CV\_\discretionary {-}{}{}NO\_\discretionary {-}{}{}BACKWARD\_\discretionary {-}{}{}COMPATIBILITY}, 
+		\hyperpage{26}
+    \subitem {SOLFEGE\_\discretionary {-}{}{}FILES}, \hyperpage{26}
+  \item {compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}size}
+    \subitem {blob.cpp}, \hyperpage{19}
+    \subitem {blob.h}, \hyperpage{20}
+  \item {compare\_\discretionary {-}{}{}blob\_\discretionary {-}{}{}xpos}
+    \subitem {blob.cpp}, \hyperpage{19}
+    \subitem {blob.h}, \hyperpage{20}
+  \item {compute}
+    \subitem {SkinFinder}, \hyperpage{15}
+  \item {contour}
+    \subitem {Blob}, \hyperpage{6}
+    \subitem {common.h}, \hyperpage{26}
+  \item {contours}
+    \subitem {common.h}, \hyperpage{26}
+    \subitem {SkinFinder}, \hyperpage{15}
+  \item {CV\_\discretionary {-}{}{}NO\_\discretionary {-}{}{}BACKWARD\_\discretionary {-}{}{}COMPATIBILITY}
+    \subitem {common.h}, \hyperpage{26}
+
+  \indexspace
+
+  \item {DEVICE}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {dilate\_\discretionary {-}{}{}contour}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+  \item {draw\_\discretionary {-}{}{}in\_\discretionary {-}{}{}image}
+    \subitem {BodyParts}, \hyperpage{8}
+
+  \indexspace
+
+  \item {EXAMPLES\_\discretionary {-}{}{}PATH}
+    \subitem {settings.h}, \hyperpage{33}
+
+  \indexspace
+
+  \item {face\_\discretionary {-}{}{}center}
+    \subitem {SkinFinder}, \hyperpage{15}
+  \item {FACEHAAR}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {facepixels}
+    \subitem {SkinFinder}, \hyperpage{15}
+  \item {Finder}, \hyperpage{11}
+    \subitem {Finder}, \hyperpage{11}
+    \subitem {run}, \hyperpage{11}
+  \item {finder.cpp}
+    \subitem {main}, \hyperpage{27}
+  \item {frame}
+    \subitem {SkinFinder}, \hyperpage{15}
+
+  \indexspace
+
+  \item {get\_\discretionary {-}{}{}state}
+    \subitem {Stabilizer}, \hyperpage{17}
+  \item {grab}
+    \subitem {Source}, \hyperpage{16}
+
+  \indexspace
+
+  \item {HANDA}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {HANDB}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {HANDC}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {HANDD}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {HEAD}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {head}
+    \subitem {BodyParts}, \hyperpage{8}
+  \item {Histogram}, \hyperpage{12}
+    \subitem {$\sim $Histogram}, \hyperpage{12}
+    \subitem {backproject}, \hyperpage{12}
+    \subitem {Histogram}, \hyperpage{12}
+    \subitem {update}, \hyperpage{12}
+  \item {hog\_\discretionary {-}{}{}features}
+    \subitem {BodyPart}, \hyperpage{7}
+  \item {hog\_\discretionary {-}{}{}image}
+    \subitem {BodyPart}, \hyperpage{7}
+  \item {hsv}
+    \subitem {SkinFinder}, \hyperpage{15}
+
+  \indexspace
+
+  \item {images}
+    \subitem {Combiner}, \hyperpage{10}
+  \item {inflate\_\discretionary {-}{}{}contour}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+  \item {INFLATE\_\discretionary {-}{}{}SIZE}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {is\_\discretionary {-}{}{}active}
+    \subitem {Stabilizer}, \hyperpage{17}
+  \item {is\_\discretionary {-}{}{}number}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+
+  \indexspace
+
+  \item {left\_\discretionary {-}{}{}hand}
+    \subitem {BodyParts}, \hyperpage{8}
+  \item {load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+
+  \indexspace
+
+  \item {main}
+    \subitem {capture.cpp}, \hyperpage{23}
+    \subitem {finder.cpp}, \hyperpage{27}
+    \subitem {test.cpp}, \hyperpage{38}
+  \item {MAKE\_\discretionary {-}{}{}MOVIE}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {mask}
+    \subitem {SkinFinder}, \hyperpage{15}
+  \item {match}
+    \subitem {Matcher}, \hyperpage{13}
+  \item {Matcher}, \hyperpage{13}
+    \subitem {$\sim $Matcher}, \hyperpage{13}
+    \subitem {match}, \hyperpage{13}
+    \subitem {Matcher}, \hyperpage{13}
+  \item {matcher.h}
+    \subitem {STATE\_\discretionary {-}{}{}MAX}, \hyperpage{31}
+    \subitem {STATE\_\discretionary {-}{}{}MIN}, \hyperpage{31}
+    \subitem {STATE\_\discretionary {-}{}{}THRESH}, \hyperpage{31}
+  \item {MIRROR}
+    \subitem {settings.h}, \hyperpage{33}
+
+  \indexspace
+
+  \item {NEWTRAIN\_\discretionary {-}{}{}PATH}
+    \subitem {settings.h}, \hyperpage{33}
+
+  \indexspace
+
+  \item {position}
+    \subitem {Blob}, \hyperpage{6}
+
+  \indexspace
+
+  \item {rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+  \item {render}
+    \subitem {Combiner}, \hyperpage{10}
+  \item {right\_\discretionary {-}{}{}hand}
+    \subitem {BodyParts}, \hyperpage{8}
+  \item {round\_\discretionary {-}{}{}kernel}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+  \item {run}
+    \subitem {Capture}, \hyperpage{9}
+    \subitem {Finder}, \hyperpage{11}
+
+  \indexspace
+
+  \item {scale\_\discretionary {-}{}{}contour}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+  \item {scale\_\discretionary {-}{}{}contours}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+  \item {set\_\discretionary {-}{}{}callback}
+    \subitem {Stabilizer}, \hyperpage{17}
+  \item {settings.h}
+    \subitem {DEVICE}, \hyperpage{33}
+    \subitem {EXAMPLES\_\discretionary {-}{}{}PATH}, \hyperpage{33}
+    \subitem {FACEHAAR}, \hyperpage{33}
+    \subitem {HANDA}, \hyperpage{33}
+    \subitem {HANDB}, \hyperpage{33}
+    \subitem {HANDC}, \hyperpage{33}
+    \subitem {HANDD}, \hyperpage{33}
+    \subitem {HEAD}, \hyperpage{33}
+    \subitem {INFLATE\_\discretionary {-}{}{}SIZE}, \hyperpage{33}
+    \subitem {MAKE\_\discretionary {-}{}{}MOVIE}, \hyperpage{33}
+    \subitem {MIRROR}, \hyperpage{33}
+    \subitem {NEWTRAIN\_\discretionary {-}{}{}PATH}, \hyperpage{33}
+    \subitem {SKIN}, \hyperpage{33}
+    \subitem {THRESHOLD}, \hyperpage{33}
+    \subitem {TRAIN\_\discretionary {-}{}{}PATH}, \hyperpage{33}
+    \subitem {WORKSIZE}, \hyperpage{33}
+    \subitem {XWINDOWS}, \hyperpage{33}
+  \item {show\_\discretionary {-}{}{}mat}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+  \item {size}
+    \subitem {BodyPart}, \hyperpage{7}
+    \subitem {Source}, \hyperpage{16}
+  \item {size\_\discretionary {-}{}{}rounder}
+    \subitem {test.cpp}, \hyperpage{38}
+  \item {SKIN}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {SkinFinder}, \hyperpage{14}
+    \subitem {backproj}, \hyperpage{15}
+    \subitem {blur}, \hyperpage{15}
+    \subitem {bw}, \hyperpage{15}
+    \subitem {compute}, \hyperpage{15}
+    \subitem {contours}, \hyperpage{15}
+    \subitem {face\_\discretionary {-}{}{}center}, \hyperpage{15}
+    \subitem {facepixels}, \hyperpage{15}
+    \subitem {frame}, \hyperpage{15}
+    \subitem {hsv}, \hyperpage{15}
+    \subitem {mask}, \hyperpage{15}
+    \subitem {SkinFinder}, \hyperpage{15}
+    \subitem {thresh}, \hyperpage{15}
+  \item {SOLFEGE\_\discretionary {-}{}{}FILES}
+    \subitem {common.h}, \hyperpage{26}
+  \item {Source}, \hyperpage{16}
+    \subitem {$\sim $Source}, \hyperpage{16}
+    \subitem {grab}, \hyperpage{16}
+    \subitem {size}, \hyperpage{16}
+    \subitem {Source}, \hyperpage{16}
+  \item {src/blob.cpp}, \hyperpage{19}
+  \item {src/blob.h}, \hyperpage{20}
+  \item {src/bodypart.cpp}, \hyperpage{21}
+  \item {src/bodypart.h}, \hyperpage{22}
+  \item {src/capture.cpp}, \hyperpage{23}
+  \item {src/combiner.cpp}, \hyperpage{24}
+  \item {src/combiner.h}, \hyperpage{25}
+  \item {src/common.h}, \hyperpage{26}
+  \item {src/finder.cpp}, \hyperpage{27}
+  \item {src/histogram.cpp}, \hyperpage{28}
+  \item {src/histogram.h}, \hyperpage{29}
+  \item {src/matcher.cpp}, \hyperpage{30}
+  \item {src/matcher.h}, \hyperpage{31}
+  \item {src/settings.h}, \hyperpage{32}
+  \item {src/skinfinder.cpp}, \hyperpage{34}
+  \item {src/skinfinder.h}, \hyperpage{35}
+  \item {src/source.cpp}, \hyperpage{36}
+  \item {src/source.h}, \hyperpage{37}
+  \item {src/test.cpp}, \hyperpage{38}
+  \item {src/tools.cpp}, \hyperpage{39}
+  \item {src/tools.h}, \hyperpage{40}
+  \item {Stabilizer}, \hyperpage{17}
+    \subitem {$\sim $Stabilizer}, \hyperpage{17}
+    \subitem {get\_\discretionary {-}{}{}state}, \hyperpage{17}
+    \subitem {is\_\discretionary {-}{}{}active}, \hyperpage{17}
+    \subitem {set\_\discretionary {-}{}{}callback}, \hyperpage{17}
+    \subitem {Stabilizer}, \hyperpage{17}
+    \subitem {update}, \hyperpage{17}
+  \item {STATE\_\discretionary {-}{}{}MAX}
+    \subitem {matcher.h}, \hyperpage{31}
+  \item {STATE\_\discretionary {-}{}{}MIN}
+    \subitem {matcher.h}, \hyperpage{31}
+  \item {STATE\_\discretionary {-}{}{}THRESH}
+    \subitem {matcher.h}, \hyperpage{31}
+  \item {sub\_\discretionary {-}{}{}region}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+  \item {sum}
+    \subitem {tools.cpp}, \hyperpage{39}
+    \subitem {tools.h}, \hyperpage{40}
+
+  \indexspace
+
+  \item {test.cpp}
+    \subitem {main}, \hyperpage{38}
+    \subitem {size\_\discretionary {-}{}{}rounder}, \hyperpage{38}
+  \item {thresh}
+    \subitem {SkinFinder}, \hyperpage{15}
+  \item {THRESHOLD}
+    \subitem {settings.h}, \hyperpage{33}
+  \item {tools.cpp}
+    \subitem {dilate\_\discretionary {-}{}{}contour}, \hyperpage{39}
+    \subitem {inflate\_\discretionary {-}{}{}contour}, \hyperpage{39}
+    \subitem {is\_\discretionary {-}{}{}number}, \hyperpage{39}
+    \subitem {load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands}, 
+		\hyperpage{39}
+    \subitem {rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat}, 
+		\hyperpage{39}
+    \subitem {round\_\discretionary {-}{}{}kernel}, \hyperpage{39}
+    \subitem {scale\_\discretionary {-}{}{}contour}, \hyperpage{39}
+    \subitem {scale\_\discretionary {-}{}{}contours}, \hyperpage{39}
+    \subitem {show\_\discretionary {-}{}{}mat}, \hyperpage{39}
+    \subitem {sub\_\discretionary {-}{}{}region}, \hyperpage{39}
+    \subitem {sum}, \hyperpage{39}
+  \item {tools.h}
+    \subitem {dilate\_\discretionary {-}{}{}contour}, \hyperpage{40}
+    \subitem {inflate\_\discretionary {-}{}{}contour}, \hyperpage{40}
+    \subitem {is\_\discretionary {-}{}{}number}, \hyperpage{40}
+    \subitem {load\_\discretionary {-}{}{}example\_\discretionary {-}{}{}hands}, 
+		\hyperpage{40}
+    \subitem {rect\_\discretionary {-}{}{}in\_\discretionary {-}{}{}mat}, 
+		\hyperpage{40}
+    \subitem {round\_\discretionary {-}{}{}kernel}, \hyperpage{40}
+    \subitem {scale\_\discretionary {-}{}{}contour}, \hyperpage{40}
+    \subitem {scale\_\discretionary {-}{}{}contours}, \hyperpage{40}
+    \subitem {show\_\discretionary {-}{}{}mat}, \hyperpage{40}
+    \subitem {sub\_\discretionary {-}{}{}region}, \hyperpage{40}
+    \subitem {sum}, \hyperpage{40}
+  \item {TRAIN\_\discretionary {-}{}{}PATH}
+    \subitem {settings.h}, \hyperpage{33}
+
+  \indexspace
+
+  \item {update}
+    \subitem {BodyPart}, \hyperpage{7}
+    \subitem {BodyParts}, \hyperpage{8}
+    \subitem {Histogram}, \hyperpage{12}
+    \subitem {Stabilizer}, \hyperpage{17}
+
+  \indexspace
+
+  \item {WORKSIZE}
+    \subitem {settings.h}, \hyperpage{33}
+
+  \indexspace
+
+  \item {XWINDOWS}
+    \subitem {settings.h}, \hyperpage{33}
+
+\end{theindex}

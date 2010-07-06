@@ -6,11 +6,11 @@
   * Liblo
 
 = Building = 
-  * $ svn checkout https://sonic-gesture.googlecode.com/svn/trunk/ sonic-gesture
+  * $ svn checkout https://sonic-gesture.googlecode.com/svn/trunk/sonic-gesture
   * $ cd sonic-gesture
   * $ mkdir build
   * $ cd build
   * $ cmake ..
-  * $ make
+  * $ make sonicgesture
 
-This will result in 2 binaries, extractor, sonicgesture. You want to run sonicgesture.
+This will result in a binary called sonicgesture, you can run this.

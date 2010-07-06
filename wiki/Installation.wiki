@@ -13,7 +13,7 @@ sudo add-apt-repository ppa:gijzelaar/sonicgesture
 sudo apt-get install sonicgesture
 }}}
 
-To start run: */usr/bin/sonicgesture*.
+To start run: */usr/bin/sonicgesture*. Note that these are just snapshots of the development version which i'll update sometimes. This is not a official release yet.
 
 = Source Installation =
 Follow these instructions if you want to compile the latest development version of Sonic Gesture from source. This is for Linux and/or Mac.

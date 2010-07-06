@@ -14,17 +14,25 @@ Backprojection, morphological transformations
 Heuristics for blob labeling
 
 \section{Blob label stabilisation}
-Kalman filter and template search
+Kalman filter (prediction) and template search
 
 \section{Feature extraction}
 calculate Histogram of Oriented gradients\cite{watanabe2009}
 
-\section{Classifier training}
+\section{Classifier}
 KNN, maybe other classifiers? PCA?
+
+\section{The stabalizer}
+Thresholding histogram based stabalizer, maybe done before (better)?
 
 \section{Training phase}
 recording video, manual labeling, extracting HOG features, trainig classifier
 
-\section{Testing/performance phase}
+\section{Testing/performance/run phase}
+
 
 \section{Output: Open Sound Control}
+Open Sound Control (OSC), protocol for fast sound data transfer
+
+\section{Implementation}
+OpenCV, QT, CMake, Liblo, open source, website, maybe not required/important?

@@ -1,0 +1,19 @@
+Source: sonicgesture
+Section: devel
+Priority: optional
+Maintainer: Gijs Molenaar <gijs@pythonic.nl>
+Build-Depends: cdbs, debhelper (>= 7), cmake, libopencv-dev, libqt4-dev, liblo-dev
+Standards-Version: 3.8.3
+Homepage: http://code.google.com/p/sonic-gesture/
+
+Package: sonicgesture
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Stranslating gestures into sound using computer vision
+ Sonic Gesture is a Computer Vision project where learned hand gestures
+ and/or poses are translated into a corresponding command with the aim of
+ generating sound. In other words this software makes it possible to create
+ and manipulating sound without physical interaction with a computer.
+ .
+ This is the graduation project of Gijs Molenaar for the Master Artificial
+ Intelligence at the University of Amsterdam. 

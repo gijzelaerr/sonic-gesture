@@ -1,0 +1,11 @@
+sonicgesture (0.0.1-2) lucid; urgency=low
+
+  * changed release to lucid
+
+ -- Gijs Molenaar <gijs@pythonic.nl>  Mon, 05 Jul 2010 14:57:30 +0200
+
+sonicgesture (0.0.1-1) karmic; urgency=low
+
+  * First release
+
+ -- Gijs Molenaar <gijs@pythonic.nl>  Wed, 30 Jun 2010 13:32:18 +0200

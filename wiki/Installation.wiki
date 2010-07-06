@@ -22,11 +22,13 @@ Follow these instructions if you want to compile the latest development version 
 
 You should install these packages with a package manager or compile them from source:
 
-  * OpenCV 2.1+
-  * QT 4.6+
-  * cmake 2.0.8+
-  * Subversion
-  * Liblo
+  * [http://www.cmake.org cmake 2.0.8+]
+  * [http://opencv.willowgarage.com OpenCV 2.1+]
+  * [http://qt.nokia.com/downloads Qt 4.6+]
+  * [http://subversion.tigris.org/ Subversion]
+  * [http://liblo.sourceforge.net/ Liblo]
+  * A compiler
+  * Something that can understand OSC (optionally)
 
 == Building ==
 

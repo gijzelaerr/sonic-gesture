@@ -1,20 +1,32 @@
-
 \chapter{Technical Introduction}
 \label{ch:techintro}
 
 \section{Input: The hand poses}
 
-\section{Face detection}
+\section{Color space conversion}
+Hue, Saturation and Intensity. Only hue and Saturation is used to make lightning intensity independent.
+
+\section{Face detection - Haar classifier}
+The hand pose chain stats with detecting a face in the first video frame. This is done using the haar classifier, a  boosted rejection cascade that is trained with Haar-like wavelet features\cite{Lienhart02anextended}.
 Haar wavelets, histogram building.
 
-\section{Hand detection}
-Backprojection, morphological transformations
+\section{Skin color histogram}
+When a face is found a color model for the subjects skin can be created. this is done by constructing a 2 dimensional histogram with the Hue and Saturation values. The optimal number of bins can't be exactly determined, a not to high or not to low value is important. 
+Sonic Gesture used 180 bins for Hue and 256 for Saturation. \marginpar{EXPERIMENT WITH THIS}
+
+\section{Blob detection}
+Back projection, morphological transformations
+
+\section{Pixel grouping, contour extraction}
+join touching pixels
 
 \section{Blob labeling}
 Heuristics for blob labeling
 
-\section{Blob label stabilisation}
+\section{Blob label stabilization}
 Kalman filter (prediction) and template search
+
+\section{Segmentation - removing background}
 
 \section{Feature extraction}
 calculate Histogram of Oriented gradients\cite{watanabe2009}

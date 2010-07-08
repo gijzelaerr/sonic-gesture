@@ -41,4 +41,4 @@ You should install these packages with a package manager or compile them from so
   * $ make sonicgesture
 
 == Running ==
-This will result in a binary called sonicgesture. You can run this.
+This will result in a binary called sonicgesture. You can run this. Start your OSC program, and let it listen to port 6666. Go to finder mode. start doing gestures with your hand. 

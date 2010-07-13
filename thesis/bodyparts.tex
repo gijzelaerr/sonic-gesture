@@ -36,7 +36,16 @@ HSV space separates out hue (color) from saturation (how concentrated the color 
 
 \section{Skin color histogram}
 When a face is found a color model for the subjects skin can be created. this is done by constructing a 2 dimensional histogram with the Hue and Saturation values. The optimal number of bins can't be exactly determined, a not to high or not to low value is important. 
-Sonic Gesture used 180 bins for Hue and 256 for Saturation. \marginpar{EXPERIMENT WITH THIS}
+Sonic Gesture used 30 bins for Hue and 32 for Saturation. \marginpar{EXPERIMENT WITH THIS}
+
+\begin{figure}[htbp]
+	\center
+	\includegraphics[width=0.8\linewidth]{figures/face_hist.png}
+	\caption{Histogram of a face}
+	\label{fig:hsv}
+\end{figure}
+
+
 
 \section{Blob detection}
 Back projection, morphological transformations

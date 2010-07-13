@@ -1,7 +1,5 @@
-\chapter{Technical Introduction}
-\label{ch:techintro}
-
-\section{Input: The hand poses}
+\chapter{Body Part Detection}
+\label{ch:bodyparts}
 
 \section{Color space conversion}
 Hue, Saturation and Intensity. Only hue and Saturation is used to make lightning intensity independent.
@@ -25,26 +23,3 @@ Heuristics for blob labeling
 
 \section{Blob label stabilization}
 Kalman filter (prediction) and template search
-
-\section{Segmentation - removing background}
-
-\section{Feature extraction}
-calculate Histogram of Oriented gradients\cite{watanabe2009}
-
-\section{Classifier}
-KNN, maybe other classifiers? PCA?
-
-\section{The stabalizer}
-Thresholding histogram based stabalizer, maybe done before (better)?
-
-\section{Training phase}
-recording video, manual labeling, extracting HOG features, trainig classifier
-
-\section{Testing/performance/run phase}
-
-
-\section{Output: Open Sound Control}
-Open Sound Control (OSC), protocol for fast sound data transfer
-
-\section{Implementation}
-OpenCV, QT, CMake, Liblo, open source, website, maybe not required/important?

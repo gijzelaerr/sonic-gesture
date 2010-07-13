@@ -1,7 +1,15 @@
+
 \documentclass[a4paper]{report}
 
+% for images
 \usepackage{graphicx}
 \usepackage{subfig}
+
+% for jumping to correct location from editor
+\usepackage{pdfsync}
+
+% for UTF-8 support
+\usepackage[utf8]{inputenc}
 
 
 %% use this to only render some includes
@@ -10,7 +18,7 @@
 \begin{document}
 
 \title{Sonic Gesture}
-\author{G. J. Molenaar}
+\author{G. J. Molenaaar}
 \date{2010}
 
 \maketitle
@@ -21,6 +29,7 @@
 \listoftables
 
 \chapter*{Acknowledgements}
+Figure\ref{fig:hsv} is taken from http://en.wikipedia.org/wiki/HSL\_and\_HSV
 
 \begin{abstract}
 In this thesis a real-time method for extracting pre-trained hand poses from

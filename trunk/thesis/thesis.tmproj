@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>thesis.tex</string>
+	<string>intro.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>thesis.bib</string>
 			<key>lastUsed</key>
-			<date>2010-07-08T11:37:35Z</date>
+			<date>2010-07-08T15:08:48Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -22,13 +22,15 @@
 			<key>filename</key>
 			<string>intro.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-08T11:37:34Z</date>
+			<date>2010-07-09T15:12:58Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>method.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-08T11:37:38Z</date>
+			<date>2010-07-08T15:37:56Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -40,15 +42,13 @@
 			<key>filename</key>
 			<string>techintro.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-08T11:37:42Z</date>
+			<date>2010-07-08T15:37:57Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>thesis.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-08T11:37:42Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-07-08T14:34:05Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -76,7 +76,7 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>8</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -116,9 +116,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>33</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>28</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -130,14 +130,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>64</integer>
+				<integer>22</integer>
 				<key>line</key>
-				<integer>158</integer>
+				<integer>104</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>118</integer>
+			<integer>104</integer>
 		</dict>
 		<key>thesis.tex</key>
 		<dict>
@@ -146,23 +146,23 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>32</integer>
+				<integer>21</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>1</integer>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
+		<string>thesis.tex</string>
 		<string>intro.tex</string>
-		<string>conc.tex</string>
-		<string>thesis.bib</string>
+		<string>techintro.tex</string>
 		<string>method.tex</string>
 		<string>results.tex</string>
-		<string>techintro.tex</string>
-		<string>thesis.tex</string>
+		<string>conc.tex</string>
+		<string>thesis.bib</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

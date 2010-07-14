@@ -1,13 +1,8 @@
-
-
-face_rect = [248, 140, 181, 121];
-
-
-face = imread('face.jpg');
-
-imshow(face);
-rectangle('Position', face_rect);
-
-%[x1,y1] = ginput
-
-
+load('histvals.txt');
+h = bar3(histvals);
+title('Histogram of face colors');
+xlabel('Hue');
+ylabel('Saturation');
+zlabel('Normalized pixel count');
+colormap hsv
+saveas(gcf,'histobar.jpg');

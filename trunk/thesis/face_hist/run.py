@@ -1,8 +1,11 @@
+#!/usr/bin/env python
 '''
 Created on Jul 13, 2010
 
 @author: gijs
 '''
+WORKSIZE = (640, 480)
+MINBLOB = (WORKSIZE[0]/20) * (WORKSIZE[1]/20)
 
 import cv
 import sys
@@ -18,58 +21,164 @@ def sub_region((x, y, w, h)):
     return (int(x2), int(y2), int(w2), int(h2));
 
 
-def main():
-    frame = cv.LoadImage("face.jpg")
-    format = (frame.width,frame.height)
+class Blob:
+    def __init__(self, contour):
+        self.contour = contour
+        self.rect = cv.BoundingRect(contour)
+        self.center = (self.rect[0] + self.rect[2]/2, self.rect[1] + self.rect[3]/2)
+        self.area = self.rect[2] * self.rect[3]
 
-    frameHSV = cv.CreateImage(format, cv.IPL_DEPTH_8U, 3)
-    frameShow = cv.CreateImage(format, cv.IPL_DEPTH_8U, 3)
-    frameH = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
-    frameS = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
-    frameBW = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
-    frameBP = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
-    hist = cv.CreateHist([30, 30], cv.CV_HIST_ARRAY, [[0, 180], [0, 255]], 1)
-    
-    cv.CvtColor(frame, frameHSV, cv.CV_BGR2HSV)
-    cv.Split(frameHSV, frameH, frameS, frameBW, None)
-    cv.Copy(frame, frameShow)
-  
-    hc = cv.Load("/usr/local/share/opencv/haarcascades/haarcascade_frontalface_default.xml")
-    faceRect = cv.HaarDetectObjects(frameBW, hc, cv.CreateMemStorage())[0][0]
+# get frame
+frame = cv.LoadImage("face.jpg")
 
-    faceSubRect = sub_region(faceRect)
+# resize frame
+frameSmall = cv.CreateImage((640, 480), cv.IPL_DEPTH_8U, 3)
+cv.Resize(frame, frameSmall)
+frame = frameSmall
 
-    for (x, y, w, h)  in (faceRect, faceSubRect):
-        cv.Rectangle(frameShow, (x,y), (x+w,y+h), 255)
+# create all other images
+format = (frame.width,frame.height)
+frameHSV = cv.CreateImage(format, cv.IPL_DEPTH_8U, 3)
+frameShow = cv.CreateImage(format, cv.IPL_DEPTH_8U, 3)
+frameCont = cv.CreateImage(format, cv.IPL_DEPTH_8U, 3)
+frameH = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
+frameS = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
+frameBW = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
+frameBP = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
+frameClosed = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
+frameTh = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
+frameBlur = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
+temp = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 
-    cv.SetImageROI(frameH, faceSubRect)
-    cv.SetImageROI(frameS, faceSubRect)
-    cv.CalcArrHist([frameH, frameS], hist, 0)
-    #cv.NormalizeHist(hist, 255)
-    cv.ResetImageROI(frameH)
-    cv.ResetImageROI(frameS)
-    
-    cv.CalcArrBackProject([frameH, frameS], frameBP, hist)
+# create histogram
+hist = cv.CreateHist([30, 30], cv.CV_HIST_ARRAY, [[0, 180], [0, 255]], 1)
 
+# calculate HSV and split
+cv.CvtColor(frame, frameHSV, cv.CV_BGR2HSV)
+cv.Split(frameHSV, frameH, frameS, frameBW, None)
+cv.Copy(frame, frameShow)
 
+# load face finder and find face
+hc = cv.Load("/usr/local/share/opencv/haarcascades/haarcascade_frontalface_default.xml")
+faces = cv.HaarDetectObjects(frameBW, hc, cv.CreateMemStorage())
 
-    histImg = cv.GetMat(hist.bins, True)
-    
-    for x in range(histImg.width):
-        for y in range(histImg.height):
-            value = histImg[y, x] 
-            sys.stdout.write(str(value) + "\t")
-        sys.stdout.write("\n")
-
+if len(faces) == 0:
+    print("can't find face")
+    exit(1)
 
 
-    #cv.ShowImage("face", frame)
-    #cv.ShowImage("detected", frameShow)
-    #cv.ShowImage("backproject", frameBP)
-    #cv.ShowImage("Histogram", histImg)
-    #cv.WaitKey()
-    
-    
-    
-if __name__ == '__main__':
-    main()
+# draw face
+faceRect = faces[0][0]
+face_center = (faceRect[0] + faceRect[2]/2, faceRect[1] + faceRect[3]/2)
+faceSubRect = sub_region(faceRect)
+(x, y, w, h) = faceRect
+cv.Rectangle(frameShow, (x,y), (x+w,y+h), cv.Scalar(0, 0, 255), 3)
+(x, y, w, h) = faceSubRect
+cv.Rectangle(frameShow, (x,y), (x+w,y+h), cv.Scalar(0, 255, 255), 3)
+
+#calculate histogram
+cv.SetImageROI(frameH, faceSubRect)
+cv.SetImageROI(frameS, faceSubRect)
+cv.CalcArrHist([frameH, frameS], hist, 0)
+#cv.NormalizeHist(hist, 255)
+cv.ResetImageROI(frameH)
+cv.ResetImageROI(frameS)
+
+#make backprojection
+cv.CalcArrBackProject([frameH, frameS], frameBP, hist)
+
+#cv.Normalize(frameBP, frameBP, 0, 255)
+cv.Smooth( frameBP, frameBlur, param1=81);
+cv.Threshold(frameBlur, frameTh, 70, 255, cv.CV_THRESH_BINARY);
+#cv.Threshold(frameBP, frameTh, 30, 255, cv.CV_THRESH_BINARY);
+
+# do morhphological close operation
+dia=15
+center=(dia/2)+1
+element = cv.CreateStructuringElementEx(dia, dia, center, center, cv.CV_SHAPE_ELLIPSE)
+cv.MorphologyEx(frameTh, frameClosed, temp, element, cv.CV_MOP_CLOSE)
+
+# find contours
+cv.Copy(frameClosed, temp)
+contours = cv.FindContours(temp, cv.CreateMemStorage(),
+    mode=cv.CV_RETR_EXTERNAL, method=cv.CV_CHAIN_APPROX_SIMPLE, offset=(0, 0))
+
+contour_iter = contours
+
+# label the contours
+head = left = right = None
+blobs = []
+while contour_iter:
+    blob = Blob(contour_iter)
+    if cv.PointPolygonTest(contour_iter, face_center, 0) > 0:
+        if head !=  None:
+            print("ERROR: 2 heads found")
+            exit(1)
+        head = blob
+    else:
+        if blob.area > MINBLOB:
+            blobs.append(blob)
+
+    contour_iter = contour_iter.h_next()
+
+blobs.sort(cmp=lambda x,y: cmp(x.area, y.area))
+blobs = blobs[-2:]
+blobs.sort(cmp=lambda x,y: cmp(x.center[0], y.center[0]))
+
+n = len(blobs)
+if n == 2:
+    left = blobs[0]
+    right = blobs[1]
+elif n == 1:
+    if left.center[0] < face_center[0]:
+        left = blobs[0]
+    else:
+        right = blobs[0]
+else:
+    print("didn't find any limbs")
+
+
+# draw contours and boundbingboxes
+cv.Copy(frame, frameCont)
+cv.ConvertScaleAbs(frameCont, frameCont, 0.2);
+cv.Copy(frame, frameCont, frameClosed)
+cv.DrawContours(img=frameCont, contour=contours,
+    external_color=(50, 200, 50), hole_color=(50, 200, 50), max_level=1,
+    thickness=1, lineType=1, offset=(0, 0))
+
+if left:
+    p1 = (left.rect[0], left.rect[1])
+    p2 = (left.rect[0] + left.rect[2], left.rect[1] + left.rect[3])
+    cv.Rectangle(frameCont, p1, p2, cv.Scalar(0, 255, 255), 3);
+if right:
+    p1 = (right.rect[0], right.rect[1])
+    p2 = (right.rect[0] + right.rect[2], right.rect[1] + right.rect[3])
+    cv.Rectangle(frameCont, p1, p2, cv.Scalar(0, 0, 255), 3);
+if head:
+    #cv.Rectangle(frameCont, head.rect, Scalar(0, 255, 255), 3);
+    cv.Circle(frameCont, face_center, 3, cv.Scalar(255, 255, 255), 3);
+
+
+#convert histogram to image
+histImg = cv.GetMat(hist.bins, True)
+
+f = open('histvals.txt', 'w')
+# print histogram values
+for x in range(histImg.width):
+    for y in range(histImg.height):
+        value = histImg[y, x] 
+        f.write(str(value) + "\t")
+    f.write("\n")
+f.close()
+
+# show images
+cv.SaveImage("detected.jpg", frameShow)
+cv.SaveImage("backproject.jpg", frameBP)
+cv.SaveImage("blurred.jpg", frameBlur)
+cv.SaveImage("Thresholded.jpg", frameTh)
+cv.SaveImage("closed.jpg", frameClosed)
+cv.SaveImage("histogram.jpg", histImg)
+cv.SaveImage("contours.jpg", frameCont)
+
+
+

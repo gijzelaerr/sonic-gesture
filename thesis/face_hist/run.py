@@ -4,11 +4,18 @@ Created on Jul 13, 2010
 
 @author: gijs
 '''
-WORKSIZE = (640, 480)
+#WORKSIZE = (640, 480)
+WORKSIZE = (320, 240)
 MINBLOB = (WORKSIZE[0]/20) * (WORKSIZE[1]/20)
+BINS = 30
 
 import cv
 import sys
+
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = "input.jpg"
 
 def sub_region((x, y, w, h)):
 
@@ -29,7 +36,7 @@ class Blob:
         self.area = self.rect[2] * self.rect[3]
 
 # get frame
-frame = cv.LoadImage("face.jpg")
+frame = cv.LoadImage(filename)
 
 # resize frame
 frameSmall = cv.CreateImage((640, 480), cv.IPL_DEPTH_8U, 3)
@@ -51,7 +58,7 @@ frameBlur = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 temp = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 
 # create histogram
-hist = cv.CreateHist([30, 30], cv.CV_HIST_ARRAY, [[0, 180], [0, 255]], 1)
+hist = cv.CreateHist([BINS, BINS], cv.CV_HIST_ARRAY, [[0, 180], [0, 255]])
 
 # calculate HSV and split
 cv.CvtColor(frame, frameHSV, cv.CV_BGR2HSV)
@@ -80,17 +87,22 @@ cv.Rectangle(frameShow, (x,y), (x+w,y+h), cv.Scalar(0, 255, 255), 3)
 cv.SetImageROI(frameH, faceSubRect)
 cv.SetImageROI(frameS, faceSubRect)
 cv.CalcArrHist([frameH, frameS], hist, 0)
-#cv.NormalizeHist(hist, 255)
+
+# turn this on or off:
+#cv.NormalizeHist(hist, 1)
+
 cv.ResetImageROI(frameH)
 cv.ResetImageROI(frameS)
+
+#convert histogram to image
+histImg = cv.GetMat(hist.bins, True)
 
 #make backprojection
 cv.CalcArrBackProject([frameH, frameS], frameBP, hist)
 
-#cv.Normalize(frameBP, frameBP, 0, 255)
-cv.Smooth( frameBP, frameBlur, param1=81);
-cv.Threshold(frameBlur, frameTh, 70, 255, cv.CV_THRESH_BINARY);
-#cv.Threshold(frameBP, frameTh, 30, 255, cv.CV_THRESH_BINARY);
+cv.Normalize(frameBP, frameBP, 0, 255, 32)
+cv.Smooth( frameBP, frameBlur, param1=31);
+cv.Threshold(frameBlur, frameTh, 30, 255, cv.CV_THRESH_BINARY);
 
 # do morhphological close operation
 dia=15
@@ -130,7 +142,7 @@ if n == 2:
     left = blobs[0]
     right = blobs[1]
 elif n == 1:
-    if left.center[0] < face_center[0]:
+    if blobs[0].center[0] < face_center[0]:
         left = blobs[0]
     else:
         right = blobs[0]
@@ -159,9 +171,6 @@ if head:
     cv.Circle(frameCont, face_center, 3, cv.Scalar(255, 255, 255), 3);
 
 
-#convert histogram to image
-histImg = cv.GetMat(hist.bins, True)
-
 f = open('histvals.txt', 'w')
 # print histogram values
 for x in range(histImg.width):
@@ -179,6 +188,7 @@ cv.SaveImage("Thresholded.jpg", frameTh)
 cv.SaveImage("closed.jpg", frameClosed)
 cv.SaveImage("histogram.jpg", histImg)
 cv.SaveImage("contours.jpg", frameCont)
+cv.SaveImage("histogram.jpg", histImg)
 
 
 

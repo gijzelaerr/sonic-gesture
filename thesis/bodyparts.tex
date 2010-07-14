@@ -1,4 +1,4 @@
-%!TEX root = /Users/gijs/Work/sonic-gesture/thesis/thesis.tex
+%!TEX root = thesis.tex
 \chapter{Body Part Detection}
 \label{ch:bodyparts}
 
@@ -61,3 +61,27 @@ Kalman filter (prediction) and template search
 
 \section{Discussion}
 Ignoring the Value channel in the HSV color space to make the system invariant for lighting intensity changes assumes that the light source is pure white - a saturation of zero. In reality this is never the case, since creating artificial light that is pure white is difficult to accomplish, if not impossible.
+
+
+\begin{figure}[htbp]
+\begin{center}
+\subfloat[input frame]{\label{fig:pipe_input}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/pipeline/input3.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[face detection]{\label{fig:pipe_detected}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/pipeline/detected.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Face color histogram]{\label{fig:pipe_hist}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/pipeline/histobar.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Backprojection]{\label{fig:pipe_bp}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/pipeline/backproject.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Gaussian smooth]{\label{fig:pipe_blur}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/pipeline/blurred.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Thresholded binary image]{\label{fig:pipe_th}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/pipeline/thresholded.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Morpholoical close]{\label{fig:pipe_close}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/pipeline/closed.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Blob labeling]{\label{fig:pipe_cont}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/pipeline/contours.jpg}}
+\end{center}
+\caption{The hand detection pipeline}
+\label{fig:pipeline}
+\end{figure}
+

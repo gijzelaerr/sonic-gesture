@@ -47,6 +47,7 @@ void MainWindow::openVideo() {
             QFileInfo fileInfo(fileName);
             settings->moviePath = fileInfo.absolutePath();
             loadFile(fileName);
+            this->setWindowTitle(QString("Sonic Gesture - %1").arg(fileInfo.fileName()));
         };
 };
 
@@ -70,6 +71,8 @@ void MainWindow::loadFile(const QString &fileName) {
     ui->positionSlider->setEnabled(true);
     ui->recordButton->setEnabled(true);
 
+
+
     videoState = PAUZE;
     stopRecord();
 
@@ -86,6 +89,8 @@ void MainWindow::openDevice() {
         QMessageBox::warning(this, tr("Can't open file"), source.error, QMessageBox::Ok);
         return;
     }
+
+    this->setWindowTitle(QString("Sonic Gesture - device %1").arg(settings->deviceId));
 
     finder.init(source.size);
     capture.init(source.size);

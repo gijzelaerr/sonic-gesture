@@ -46,7 +46,7 @@
 			<key>filename</key>
 			<string>bodyparts.tex</string>
 			<key>lastUsed</key>
-			<date>2010-07-13T13:56:38Z</date>
+			<date>2010-07-15T09:45:17Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -198,7 +198,6 @@
 		<string>thesis.tex</string>
 		<string>gestures.tex</string>
 		<string>bodyparts.tex</string>
-		<string>method.tex</string>
 		<string>experiments.tex</string>
 		<string>thesis.bib</string>
 	</array>

@@ -5,6 +5,10 @@
 #include <QtCore/QDir>
 #include <QtDebug>
 
+//#define USE_SVM
+#define USE_PCA
+
+
 Matcher::Matcher() {
 }
 
@@ -74,30 +78,59 @@ Matcher::Matcher(bool mirror, vector<int> labels) {
 
             // initialize the matrix with info from first hand
             if(first) {
-                train = Mat(descriptors.size(), trainSets.size() * labels.size(), CV_32FC1);
+                train_mat = Mat(descriptors.size(), trainSets.size() * labels.size(), CV_32FC1);
                 first = false;
             }
 
             Mat descr(descriptors);
-            Mat t = train.col(imgnum);
+            Mat t = train_mat.col(imgnum);
             descr.copyTo(t);
         }
     }
-    train = train.t();
+    train_mat = train_mat.t();
     labels_mat = Mat(this->labels);
+
+    //qDebug() << "traing matcher with " << train.rows << " examples with " <<
+    //        train.cols << " features...";
+    train(train_mat, labels_mat);
+
+}
+
+
+void Matcher::train(Mat train_mat, Mat labels_mat) {
+#ifdef USE_PCA
+    int maxComponents = 10;
+    PCA pca(train_mat, Mat(), CV_PCA_DATA_AS_ROW, maxComponents);
+    train_mat = pca.project(train_mat);
+#endif
+
+#ifdef USE_SVM
+    svm_matcher = CvSVM();
+    svm_matcher.train(train_mat, labels_mat);
+#else
     knn_matcher = KNearest();
-    qDebug() << "traing matcher with " << train.rows << " examples with " <<
-            train.cols << " features...";
-    knn_matcher.train(train, labels_mat);
+    knn_matcher.train(train_mat, labels_mat);
+#endif
 }
 
 int Matcher::match(const vector<float>& other_descriptors) {
-    CvMat img_cvmat = (Mat)Mat(other_descriptors).t();
-    int response = int(knn_matcher.find_nearest(&img_cvmat, settings->kNeirNeigh, 0, 0, 0, 0));
+    Mat sample = Mat(other_descriptors).t();
+    int response;
+
+#ifdef USE_PCA
+    sample = pca.project(sample);
+#endif
+
+#ifdef USE_SVM
+    response = int(svm_matcher.predict(sample, false));
+#else
+    CvMat img_cvmat = sample;
+    response = int(knn_matcher.find_nearest(&img_cvmat, settings->kNeirNeigh, 0, 0, 0, 0));
+#endif
+
     return this->stabilizer.update(response);
     //return response;
 }
-
 
 Stabilizer::Stabilizer(int state_num) {
     for (int i = 0; i < state_num; i++) {

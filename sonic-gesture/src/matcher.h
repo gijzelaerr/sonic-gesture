@@ -35,21 +35,23 @@ public:
     ~Matcher();
     Matcher(bool mirror, vector<int> labels);
     int match(const vector<float>& descriptors);
+    void train(Mat train_mat, Mat labels_mat);
 
 private:
     KNearest knn_matcher;
+    CvSVM svm_matcher;
+    PCA pca;
     Size winStride, padding;
     HOGDescriptor hog;
     vector<Point> locations;
     vector<float> descriptors;
     vector<float> labels;
     Mat handimg;
-    Mat train;
+    Mat train_mat;
     Mat labels_mat;
     Stabilizer stabilizer;
     Settings* settings;
 };
-
 
 
 

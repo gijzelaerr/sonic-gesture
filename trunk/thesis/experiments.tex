@@ -3,8 +3,40 @@
 
 
 \section{The dataset}
-The dataset consists of manually labeled recorded movies of 20 different people
-performing the complete sequence of hand poses.
+A dataset was created to perform the experiments. In total there are 74 movies containing 20 different test subjects performing the complete sequence of 28 hand symbols. The movies where recorded with Sonic Gesture, with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in figure\ref{fig:hands_mirrored}, \ref{fig:hands_normal} and \ref{fig:hands_extra}.
+
+\begin{table}
+\begin{tabular}{llll}
+	Test Subject & Movies & Background & Notes \\
+	\hline
+	Anne     & 5 & Simple & None \\
+	Arjan    & 5 & Simple & None \\
+	Gijs     & 5 & Simple & None \\
+	Ivo      & 5 & Simple & None \\
+	Jasper 1 & 5 & Simple & None \\
+	Peter    & 5 & Simple & None \\
+	Hanne    & 5 & Simple & None \\
+
+	Jasper 2 & 3 & Simple & None \\
+	Ork      & 3 & Simple & None \\
+	Roberto  & 3 & Simple & None \\
+	Xiaong   & 3 & Simple & None \\
+			
+	Gosia    & 3 & Complex & None \\
+	Hamdi    & 3 & Complex & None \\
+	Michael  & 3 & Complex & None \\
+	
+	Bas      & 3 & Complex + skin-like colors & None \\
+	Koen     & 3 & Complex + skin-like colors & None \\
+	Sil      & 3 & Complex + skin-like colors & None \\
+	Victoria & 3 & Complex + skin-like colors & None \\
+	Chu      & 3 & Complex + skin-like colors & Quite yellow skin color, similar to brick wall \\
+	Stratos  & 3 & Complex + skin-like colors & Quite pale skin color, similar to white wall \\
+\end{tabular}
+\caption{Dataset details}
+\end{table}
+
+The dataset is manually labeled. For every sequence of frames where a hand pose is performed a frame number is labeled where the pose resembles the example the most. Figure\ref{fig:gijs5} is an example of the labeled frames.
 
 Usually the 12 Curwen solfege hand symbols are performed in front of the torso
 as shown in Figure~\ref{fig:hands_normal}. To increase the number of hand poses

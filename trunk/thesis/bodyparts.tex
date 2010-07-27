@@ -22,10 +22,10 @@ Usually pixel values of a image are stored in the Red, Green Blue (RGB) format. 
 
 
 
-HSV space separates out hue (color) from saturation (how concentrated the color is) and from brightness. We create our color models by taking 1D histograms from the H (hue) channel in HSV space.
+HSV space separates out hue (color) from saturation (how concentrated the color is) and from brightness. The color models are created by taking 1D histograms from the H (hue) channel in HSV space.
 
 
- The RGB color space is transformed into the HSI color space using the following equations:
+The RGB color space is transformed into the HSI color space using the following equations:
 
 \begin{eqnarray*}
 	V&\leftarrow \max(R,G,B) \label{first} \\
@@ -35,20 +35,25 @@ HSV space separates out hue (color) from saturation (how concentrated the color 
 
 
 \section{Skin color histogram}
-When a face is found a color model for the subjects skin can be created. this is done by constructing a 2 dimensional histogram with the Hue and Saturation values. The optimal number of bins can't be exactly determined, a not to high or not to low value is important. 
+When a face is found a color model for the subjects skin is created. this is done by constructing a 2 dimensional histogram with the Hue and Saturation values. The optimal number of bins can't be exactly determined, a not to high or not to low value is important. 
 Sonic Gesture used 30 bins for Hue and 32 for Saturation. \marginpar{EXPERIMENT WITH THIS}
 
 \begin{figure}[htbp]
 	\center
 	\includegraphics[width=0.8\linewidth]{figures/face_hist.png}
 	\caption{Histogram of a face}
-	\label{fig:hsv}
+	\label{fig:face_hsv}
 \end{figure}
 
+\section{Back projection}
+A back projection is the combination of a image a histogram. The result is a new single channel image. All pixels in the input image are iterated and the corresponding bins are looked up in the histogram. The pixel in the same position in the new image is replaced with the value from the histogram. If the histogram is a skin color histogram, the resulting image will have high values for pixels that are skin-like pixels, and low values for other pixels. These values can be seen as skin probability.
+
+\section{Thresholding}
 
 
-\section{Blob detection}
-Back projection, morphological transformations
+\section{Morphological transformations}
+Images are always subject to noise. 	Pixels on the border of a skin-like object are affected b
+
 
 \section{Pixel grouping, contour extraction}
 join touching pixels
@@ -62,6 +67,9 @@ Kalman filter (prediction) and template search
 \section{Discussion}
 Ignoring the Value channel in the HSV color space to make the system invariant for lighting intensity changes assumes that the light source is pure white - a saturation of zero. In reality this is never the case, since creating artificial light that is pure white is difficult to accomplish, if not impossible.
 
+The face detection is one of the most expensive operations in the processing chain. Since in a single shot movie usually a face doesn't move fast, a number of frames can be skipped which will free more computational time for other operations.
+
+Adaptive thresholding - 
 
 \begin{figure}[htbp]
 \begin{center}

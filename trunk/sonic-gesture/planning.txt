@@ -1,0 +1,18 @@
+xiaong -> xirong
+stratos -> stratis
+
+
+1e test
+n-fold simple (KNN, KNN PCA, SVM PCA)
+train simple, test rest (realistisch)
+alles n-fold
+alles per symbool grouperen in confusion matrix
+
+2e test
+* sequence test van goede sequence filmpjes, getraind met alleen simpel, 1 filmpje simpel, 1 fimpje complex
+haming distance
+
+
+star trek symbol herkennen
+
+

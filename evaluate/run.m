@@ -12,18 +12,29 @@ labels = load('labels.txt');
 %% load set labels
 sets = importdata('sets.txt');
 
+%% import all video groups
+tests
+
+%% if we want to use n-fold on simple
+for s = simple
+    runset = find(ismember(sets, s)==1)';
+end
+
+%% if we want to run tests on all data
+%runset = 1:size(sets,1);
+
 %% iterate
 knnConfusion = zeros(SYMBOLS, SYMBOLS);
 knnConfusion30 = zeros(SYMBOLS, SYMBOLS);
 knnConfusion100 = zeros(SYMBOLS, SYMBOLS);
 svmConfusion = zeros(SYMBOLS, SYMBOLS);
 
-for setNum = 1:size(sets,1)
+for setNum = runset
 %for setNum = 1:1
     setName = sets(setNum);
     
     % where are we now
-    fprintf('%s %d/%d\n', setName{1}, setNum, size(sets,1));
+    fprintf('%s %d/%d\n', setName{1}, setNum, size(runset,2));
 
     % construct test features
     testStart = (setNum-1)*SYMBOLS+1;
@@ -35,11 +46,15 @@ for setNum = 1:size(sets,1)
     testPost = features(testEnd+1:end, :);
     trainFeatures = [testPre; testPost];
 
-    %% do PCA
-    eigenhands = pca(trainFeatures, 0.95);
-    trainFeaturesEigen = trainFeatures*eigenhands;
-    testFeaturesEigen = testFeatures*eigenhands;
+    % construct labels
+    testLabels = (1:SYMBOLS)';
+    trainLabels = repmat((1:SYMBOLS)', size(sets,1)-1, 1);
     
+%     % do PCA
+     eigenhands = pca(trainFeatures, 0.95);
+     trainFeaturesEigen = trainFeatures*eigenhands;
+     testFeaturesEigen = testFeatures*eigenhands;
+%     
 %     % construct data for 100 eigenfaces
 %     eigenFaces = eigen(trainFeatures);
 %     eigen100 = eigenFaces(:, 1:100);
@@ -50,16 +65,11 @@ for setNum = 1:size(sets,1)
 %     trainFeatures30 = trainFeatures*eigen30;
 %     testFeatures30 = testFeatures*eigen30;
 %     
-%    
 
-    % construct labels
-    testLabels = (1:SYMBOLS)';
-    trainLabels = repmat((1:SYMBOLS)', size(sets,1)-1, 1);
-    
-%     % do KNN classification
-%     knnPredict = knnclassify(testFeatures, trainFeatures, trainLabels, 3);
-%     C = confusionmat(testLabels, knnPredict);
-%     knnConfusion = knnConfusion + C;
+    % do KNN classification
+    knnPredict = knnclassify(testFeaturesEigen, trainFeaturesEigen, trainLabels, 3);
+    C = confusionmat(testLabels, knnPredict);
+    knnConfusion = knnConfusion + C;
 % 
 %     % do KNN PCA100 classification
 %     knnPredict100 = knnclassify(testFeatures100, trainFeatures100, trainLabels, 3);
@@ -78,7 +88,7 @@ for setNum = 1:size(sets,1)
 %     C = confusionmat(testLabels, svmPredict);
 %     svmConfusion = svmConfusion + C;
 
-    knnPredict = knnclassify(testFeaturesEigen, trainFeaturesEigen, trainLabels, 3);
+    knnPredict = knnclassify(testFeatures, trainFeatures, trainLabels, 3);
     C = confusionmat(testLabels, knnPredict);
     knnConfusion = knnConfusion + C;
 end
@@ -88,5 +98,13 @@ knnConfusion
 good = sum(sum(eye(SYMBOLS).*knnConfusion));
 bad = sum(sum((ones(SYMBOLS)-eye(SYMBOLS)) .* knnConfusion));
 total = sum(sum(knnConfusion));
+accuracy = 100/total * good;
+fprintf('accuracy %.2f%%\n', accuracy');
+
+major = major(knnConfusion);
+
+good = sum(sum(eye(14).*major));
+bad = sum(sum((ones(14)-eye(14)) .* major));
+total = sum(sum(major));
 accuracy = 100/total * good;
 fprintf('accuracy %.2f%%\n', accuracy');

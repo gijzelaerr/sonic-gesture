@@ -1,6 +1,6 @@
 %% group all video files
 
-simple = {
+simple_set = {
 'anne1',
 'anne2',
 'anne3',
@@ -48,9 +48,9 @@ simple = {
 'xiaong1',
 'xiaong2',
 'xiaong3',
-}
+};
 
-complex = {
+complex_set = {
 'gosia1',
 'gosia2',
 'gosia3',
@@ -60,9 +60,9 @@ complex = {
 'michael1',
 'michael2',
 'michael3',
-}
+};
 
-complex_poster = {
+complex_poster_set = {
 'bas1',
 'bas2',
 'bas3',
@@ -75,18 +75,16 @@ complex_poster = {
 'victoria1',
 'victoria2',
 'victoria3',
-}
+};
 
-impossible = {
+impossible_set = {
 'chu1',
 'chu2',
 'chu3',
 'stratos1',
 'stratos2',
 'stratos3',
-}
+};
 
-%%
-for s = simple
-    find(ismember(sets, s)==1)
-end
+full_set = [ simple_set; complex_set; complex_poster_set; impossible_set];
+

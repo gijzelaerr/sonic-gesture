@@ -1,8 +1,6 @@
-function [ accuracy ] = accuracy( confu )
-    s = size(confu, 1);
-    good = sum(sum(eye(s).*confu));
-    bad = sum(sum((ones(s)-eye(s)) .* confu));
-    total = sum(sum(confu));
-    accuracy = 100/total * good;
-end
+function [ accuracy ] = accuracy( confusion )
 
+s = size(confusion,1);
+good = sum(sum(eye(s).*confusion));
+total = sum(sum(confusion));
+accuracy = 100/total * good;

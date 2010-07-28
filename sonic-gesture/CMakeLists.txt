@@ -96,6 +96,24 @@ target_link_libraries (performance
     ${QT_LIBRARIES}
 )
 
+###
+### BUILD DUMPER
+###
+add_executable (dumper
+    src/dumpFeatures.cpp
+    src/settings.cpp
+    src/tools.cpp
+    src/loader.cpp
+    ${SONICGESTURE_RES}
+)
+
+target_link_libraries (dumper
+    ${OpenCV_LIBS}
+    ${QT_LIBRARIES}
+)
+
+
+
 
 ###
 ### INSTALLATION STUFF

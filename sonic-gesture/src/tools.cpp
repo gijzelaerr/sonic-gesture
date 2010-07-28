@@ -33,7 +33,7 @@ void show_mat(Mat M) {
     for (int y=0; y < M.rows; y++) {
         for (int x=0; x < M.cols; x++) {
             float val = M.at<float>(y, x);
-            cout << val << " ";
+            cout << val << "\t";
         }
         cout << endl;
     }

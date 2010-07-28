@@ -64,18 +64,18 @@ for setNum = 1:size(runset,2)
     trainSet = [testPre; testPost];
 
     % do normal KNN
-    predicted = knnclassify(testSet, trainSet, trainLabels, 3);
+    predicted = knnclassify(testSet, trainSet, trainLabels, 2);
     C = confusionmat(testLabels, predicted);
     confusion = confusion + C;
     
 %     % construct PCA
-%     eigenhands = pca(trainFeatures, 0.95);
-%     trainFeaturesEigen = trainFeatures*eigenhands;
-%     testFeaturesEigen = testFeatures*eigenhands;
-% 
+%     eigenhands = pca(trainSet, 0.95);
+%     trainSetEigen = trainSet*eigenhands;
+%     testSetEigen = testSet*eigenhands;
+
 %     % do KNN PCA classification
-%     knnPredict = knnclassify(testFeaturesEigen, trainFeaturesEigen, trainLabels, 3);
-%     C = confusionmat(testLabels, knnPredict);
+%     predicted = knnclassify(testSetEigen.data, trainSetEigen.data, trainLabels, 3);
+%     C = confusionmat(testLabels, predicted);
 %     confusion = confusion + C; 
     
 %     % construct data for 100 eigenfaces
@@ -88,12 +88,11 @@ for setNum = 1:size(runset,2)
 %     C = confusionmat(testLabels, knnPredict100);
 %     knnConfusion100 = knnConfusion100 + C;
  
-  
 %     % DO SVM classification
-%     model = svmtrain(trainLabels, trainFeatures);
-%     [svmPredict, accuracy, decision_values] = svmpredict(rand(SYMBOLS, 1), testFeatures, model);
+%     model = svmtrain(trainLabels, trainSetEigen.data);
+%     [svmPredict, accuracy, decision_values] = svmpredict(rand(SYMBOLS, 1), testSetEigen.data, model);
 %     C = confusionmat(testLabels, svmPredict);
-%     svmConfusion = svmConfusion + C;
+%     confusion = confusion + C;
 end
 
 

@@ -307,6 +307,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event) {
         // if we are in a movie
         if (source.sourceMode == MOVIE) {
             // add label, check if it is okay
+            // TODO: don't add label during messagebox
             if (!labeler.add(source.getAbsolutePos())) {
                QMessageBox::warning(this, tr("Can't write label"), labeler.error, QMessageBox::Ok);
                return;

@@ -23,8 +23,13 @@ groups
 group = simple_set; % full_set
 
 % find positions of sets in full_dataset
-for s = group
-    runset = find(ismember(full_sets, s)==1)';
+runset = find(ismember(full_sets, group)==1)';
+
+
+%% find users
+nameset = zeros(size(full_sets));
+for name = names'
+    nameset = nameset | ~cellfun('isempty', strfind(full_sets, name{1}));
 end
 
 %% construct dataset we want

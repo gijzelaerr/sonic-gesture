@@ -6,7 +6,7 @@
 #include <QtDebug>
 
 //#define USE_SVM
-#define USE_PCA
+//#define USE_PCA
 
 
 Matcher::Matcher() {

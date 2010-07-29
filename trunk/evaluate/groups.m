@@ -88,3 +88,28 @@ impossible_set = {
 
 full_set = [ simple_set; complex_set; complex_poster_set; impossible_set];
 
+
+
+names = {
+    'anne'
+    'arjan'
+    'gijs'
+    'ivo'
+    'jaspera'
+    'peter'
+    'hanne'
+    'jasperb'
+    'ork'
+    'roberto'
+    'xiaong'
+    'gosia'
+    'hamdi'
+    'michael'
+    'bas'
+    'koen'
+    'sil'
+    'victoria1'
+    'chu'
+    'stratos'
+ };
+

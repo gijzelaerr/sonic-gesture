@@ -21,11 +21,11 @@ simple_set = {
 'ivo3',
 'ivo4',
 'ivo5',
-'jaspera1',
-'jaspera2',
-'jaspera3',
-'jaspera4',
-'jaspera5',
+'jasper1',
+'jasper2',
+'jasper3',
+'jasper4',
+'jasper5',
 'peter1',
 'peter2',
 'peter3',
@@ -60,56 +60,61 @@ complex_set = {
 'michael1',
 'michael2',
 'michael3',
+'sil1',
+'sil2',
+'sil3',
+'chu1',
+'chu2',
+'chu3',
 };
 
-complex_poster_set = {
+impossible_set = {
+'victoria1',
+'victoria2',
+'victoria3',
+'stratos1',
+'stratos2',
+'stratos3',
 'bas1',
 'bas2',
 'bas3',
 'koen1',
 'koen2',
 'koen3',
-'sil1',
-'sil2',
-'sil3',
-'victoria1',
-'victoria2',
-'victoria3',
 };
 
-impossible_set = {
-'chu1',
-'chu2',
-'chu3',
-'stratos1',
-'stratos2',
-'stratos3',
-};
-
-full_set = [ simple_set; complex_set; complex_poster_set; impossible_set];
+full_set = [ simple_set; complex_set; impossible_set];
 
 
 
-names = {
+simple_names = {
     'anne'
     'arjan'
     'gijs'
     'ivo'
-    'jaspera'
+    'jasper'
     'peter'
     'hanne'
     'jasperb'
     'ork'
     'roberto'
     'xiaong'
+};
+
+complex_names = {
     'gosia'
     'hamdi'
     'michael'
+    'sil'
+    'chu'
+};
+
+impossible_names = {
+    'victoria'
     'bas'
     'koen'
-    'sil'
-    'victoria1'
-    'chu'
     'stratos'
  };
+
+full_names = [ simple_names; complex_names; impossible_names ];
 

@@ -33,6 +33,8 @@ int main(int argc, char *argv[]) {
     if (!source.open(movieFile.filePath()))
         std::cout << source.error.toStdString() << std::endl;
 
+    source.setLoop(false);
+
     // initalize other stuff
     SkinFinder skinFinder;
     skinFinder.init();

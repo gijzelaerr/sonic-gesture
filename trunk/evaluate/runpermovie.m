@@ -20,16 +20,17 @@ full_sets = importdata('sets.txt');
 groups
 
 %% which group do we want to use
-group = simple_set; % full_set
+group = full_set;
 
 % find positions of sets in full_dataset
 runset = find(ismember(full_sets, group)==1)';
 
 
 %% find users
-nameset = zeros(size(full_sets));
+nameset = zeros(size(group));
 for name = names'
-    nameset = nameset | ~cellfun('isempty', strfind(full_sets, name{1}));
+    %nameset = nameset | ~cellfun('isempty', strfind(full_sets, name{1}));
+    nameset =  nameset | ~cellfun('isempty', cellfun(@(foenk) foenk(foenk==1), strfind(group, name{1}), 'UniformOutput',false));
 end
 
 %% construct dataset we want

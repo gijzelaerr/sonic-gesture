@@ -24,6 +24,7 @@ public:
     double getAbsolutePos();
     void close();
     void startScreen();
+    void setLoop(bool loop);
 
     cv::Size size;
     cv::Mat frame;
@@ -41,6 +42,7 @@ private:
     void setError(QString error);
 
 
+    bool loop;
     cv::VideoCapture cap;
     QImage qimage_storage;
 

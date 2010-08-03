@@ -9,6 +9,7 @@
 
 Source::Source() {
     qimage_storage = QImage(":images/startscreen");
+    loop = true;
 }
 
 Source::~Source() {
@@ -136,11 +137,17 @@ bool Source::init() {
     return true;
 };
 
+void Source::setLoop(bool loop) {
+    this->loop = loop;
+};
+
 bool Source::grab() {
     if (sourceMode != IMAGE) {
         // loop video
-        if (cap.get(CV_CAP_PROP_POS_FRAMES) == (cap.get(CV_CAP_PROP_FRAME_COUNT)-2))
-            setPos(0);
+        if (this->loop) {
+            if (cap.get(CV_CAP_PROP_POS_FRAMES) == (cap.get(CV_CAP_PROP_FRAME_COUNT)-2))
+                setPos(0);
+        };
 
         try {
             cap >> frame;

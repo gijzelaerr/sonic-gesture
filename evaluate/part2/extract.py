@@ -48,5 +48,7 @@ for line in fh.readlines():
 
 
 groundtruth = [str(x) for x in range(0, 28)]
-print distance(classified, groundtruth)
+
+name =  labelfile.split('.')[0].split('/')[1]
+print name, distance(classified, groundtruth)
 

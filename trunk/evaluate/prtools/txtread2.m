@@ -17,7 +17,7 @@
 % Faculty EWI, Delft University of Technology
 % P.O. Box 5031, 2600 GA Delft, The Netherlands
 
-function a = txtread(file,n,nstart)
+function a = txtread2(file,n,nstart)
 
 	if nargin < 3, nstart = 1; end
 	if nargin < 2 | isempty(n), n = inf; end

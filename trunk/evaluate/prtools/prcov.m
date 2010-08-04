@@ -9,9 +9,9 @@ function B = prcov(varargin)
 
 [m,n] = size(varargin{1});
 if m*n*n > 1e9
-	prwaitbaronce('covariance of %i x %i matrix ...',[m,n]);
+	%prwaitbaronce('covariance of %i x %i matrix ...',[m,n]);
 	B = cov(varargin{:});
-	prwaitbar(0);
+	%prwaitbar(0);
 else
 	B = cov(varargin{:});
 end

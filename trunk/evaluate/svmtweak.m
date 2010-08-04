@@ -1,4 +1,8 @@
 
+%% init cluster
+%matlabpool;
+
+
 %% cleanup
 clear;
 close all;
@@ -14,72 +18,79 @@ full_dataset = load('features.txt');
 full_labels = load('labels.txt');
 
 %% load set labels
+profile on;
 full_sets = importdata('sets.txt');
+profile viewer;
 
 %% import all video groups
 groups
 
 %% which group do we want to use
-group = simple_set;
-
-% find positions of sets in full_dataset
-runset = find(ismember(full_sets, group)==1)';
-
-%% construct dataset we want
-dataset = zeros(size(runset,1)*SYMBOLS, size(full_dataset,2));
-for i = 1:size(runset,2)
-    set = runset(i);
-    start = (set-1)*SYMBOLS+1;
-    finish = start+SYMBOLS-1;
-    range = full_dataset(start:finish, :);
-    
-    target_start = (i-1)*SYMBOLS+1;
-    target_finish = target_start+SYMBOLS-1;
-    dataset(target_start:target_finish, :) = range;
-end
-
-%% construct labels
-testLabels = (1:SYMBOLS)';
-trainLabels = repmat((1:SYMBOLS)', size(runset,2)-1, 1);
-
+nameset = simple_names;
 
 %% do it
-for c= 2.^(-3:2:15)
+for c= 2.^(1:2:15)
     for g = 2.^(-15:2:3)
         % iterate
         confusion = zeros(SYMBOLS, SYMBOLS);
 
-        for setNum = 1:size(runset,2)
-            setName = group(setNum);
+        % find users
+        for name = nameset'
+            indx =  ~cellfun('isempty', cellfun(@(foenk) foenk(foenk==1), strfind(full_set, name{1}), 'UniformOutput',false));
+            if sum(indx) == 0
+                fprintf('skipping %s\n', name{1});
+                continue;
+            end;
+            fprintf('.');
+            trainnames = full_set(~indx);
+            testnames = full_set(indx);
 
-            % construct test features
-            testStart = (setNum-1)*SYMBOLS+1;
-            testEnd = testStart+SYMBOLS-1;
-            testSet = dataset(testStart:testEnd, :);
+            trainindexes = find(ismember(full_sets, trainnames)==1)';
+            trainSet = zeros(size(trainindexes,2)*SYMBOLS, size(full_dataset,2));
 
-            % construct train features
-            testPre = dataset(1:testStart-1, :);
-            testPost = dataset(testEnd+1:end, :);
-            trainSet = [testPre; testPost];
+            for i = 1:size(trainindexes,2)
+                set = trainindexes(i);
+                start = (set-1)*SYMBOLS+1;
+                finish = start+SYMBOLS-1;
+                range = full_dataset(start:finish, :);
+
+                target_start = (i-1)*SYMBOLS+1;
+                target_finish = target_start+SYMBOLS-1;
+                trainSet(target_start:target_finish, :) = range;
+            end
+
+            testindexes = find(ismember(full_sets, testnames)==1)';
+            testSet = zeros(size(testindexes,1)*SYMBOLS, size(full_dataset,2));
+
+
+            for i = 1:size(testindexes,2)
+                set = testindexes(i);
+                start = (set-1)*SYMBOLS+1;
+                finish = start+SYMBOLS-1;
+                range = full_dataset(start:finish, :);
+
+                target_start = (i-1)*SYMBOLS+1;
+                target_finish = target_start+SYMBOLS-1;
+                testSet(target_start:target_finish, :) = range;
+            end
+
+            % construct labels
+            testLabels = repmat((1:SYMBOLS)', size(testindexes,2), 1);
+            trainLabels = repmat((1:SYMBOLS)', size(trainindexes,2), 1);
 
             % construct PCA
             eigenhands = pca(trainSet, 0.95);
             trainSetEigen = trainSet*eigenhands;
             testSetEigen = testSet*eigenhands;
-            
-            % normalize data
-            low = max(max([trainSetEigen.data; testSetEigen.data]));
-            high = min(min([trainSetEigen.data; testSetEigen.data]));
-            scale = max(abs(low), abs(high));
-            trainNormalized = trainSetEigen.data / scale;
-            testNormalized = testSetEigen.data / scale;
-            
-            model = svmtrain(trainLabels, trainNormalized, ['-c ' num2str(c) ' -g ' num2str(g)]);
-            [svmPredict, accuracy, decision_values] = svmpredict(rand(size(testNormalized, 1), 1), testNormalized, model);
-            conf1 = confusionmat(testLabels, svmPredict);
-            confusion = confusion +1;
+
+
+            % DO SVM classification
+            model = svmtrain(trainLabels, trainSetEigen.data);
+            [svmPredict, accuracy, decision_values] = svmpredict(rand(size(testSetEigen, 1), 1), testSetEigen.data, model);
+            C = confusionmat(testLabels, svmPredict);
+            confusion = confusion + C;
         end
         a = accur(confusion);
-        fprintf('c: %f, g: %f, accuracy: %.2f%%\n', c, g, a);
+        fprintf('\nc: %f, g: %f, accuracy: %.2f%%\n', c, g, a);
     end
 end

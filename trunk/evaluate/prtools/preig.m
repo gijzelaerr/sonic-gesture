@@ -9,13 +9,13 @@ function [E,D] = preig(A)
 
 [m,n] = size(A);
 if min([m,n]) > 500
-	prwaitbaronce('Computing %i x %i eigenvectors ...',[m,n]);
+	%prwaitbaronce('Computing %i x %i eigenvectors ...',[m,n]);
 	if nargout == 1
 		E = eig(A);
 	else
 		[E,D] = eig(A);
 	end
-	prwaitbar(0);
+	%prwaitbar(0);
 else
 	if nargout == 1
 		E = eig(A);

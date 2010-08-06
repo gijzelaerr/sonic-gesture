@@ -3,37 +3,22 @@
 clear;
 close all;
 
+%% load data
+full_dataset = load('features.txt');
+full_labels = load('labels.txt');
+full_sets = importdata('sets.txt');
+groups
+
 %% settings
 %number of symbols in each set
 SYMBOLS=28;
-
-%% load features
-full_dataset = load('features.txt');
-
-%% load labels
-full_labels = load('labels.txt');
-
-%% load set labels
-full_sets = importdata('sets.txt');
-
-%% import all video groups
-groups
-
-%% which group do we want to use
-group = full_set;
-
-% find positions of sets in full_dataset
-runset = find(ismember(full_sets, group)==1)';
+% which group do we want to use
+group = simple_set;
 
 
-%% find users
-nameset = zeros(size(group));
-for name = names'
-    %nameset = nameset | ~cellfun('isempty', strfind(full_sets, name{1}));
-    nameset =  nameset | ~cellfun('isempty', cellfun(@(foenk) foenk(foenk==1), strfind(group, name{1}), 'UniformOutput',false));
-end
 
 %% construct dataset we want
+runset = find(ismember(full_sets, group)==1)';
 dataset = zeros(size(runset,1)*SYMBOLS, size(full_dataset,2));
 for i = 1:size(runset,2)
     set = runset(i);
@@ -53,7 +38,7 @@ trainLabels = repmat((1:SYMBOLS)', size(runset,2)-1, 1);
 %% iterate
 confusion = zeros(SYMBOLS, SYMBOLS);
 
-for setNum = 1:size(runset,2)
+parfor setNum = 1:size(runset,2)
     setName = group(setNum);
     
     % where are we now
@@ -69,10 +54,10 @@ for setNum = 1:size(runset,2)
     testPost = dataset(testEnd+1:end, :);
     trainSet = [testPre; testPost];
 
-    % do normal KNN
-    predicted = knnclassify(testSet, trainSet, trainLabels, 2);
-    C = confusionmat(testLabels, predicted);
-    confusion = confusion + C;
+%     % do normal KNN
+%     predicted = knnclassify(testSet, trainSet, trainLabels, 2);
+%     C = confusionmat(testLabels, predicted);
+%     confusion = confusion + C;
     
 %     % construct PCA
 %     eigenhands = pca(trainSet, 0.95);
@@ -94,15 +79,20 @@ for setNum = 1:size(runset,2)
 %     C = confusionmat(testLabels, knnPredict100);
 %     knnConfusion100 = knnConfusion100 + C;
  
-%     % DO SVM classification
-%     model = svmtrain(trainLabels, trainSetEigen.data);
+%     % DO SVM + PCA classification
+%     model = svmtrain(trainLabels, trainSetEigen.data, '-c 8192, -g 0.031250');
 %     [svmPredict, accuracy, decision_values] = svmpredict(rand(SYMBOLS, 1), testSetEigen.data, model);
 %     C = confusionmat(testLabels, svmPredict);
 %     confusion = confusion + C;
+
+    % DO SVM + classification
+    model = svmtrain(trainLabels, trainSet, '-c 8192, -g 0.031250');
+    [svmPredict, accuracy, decision_values] = svmpredict(rand(SYMBOLS, 1), testSet, model);
+    C = confusionmat(testLabels, svmPredict);
+    confusion = confusion + C;
 end
 
-
-fprintf('accuracy %.2f%%\n', accuracy(confusion));
-
+%%
+fprintf('accuracy %.2f%%\n', accur(confusion));
 m = major(confusion);
-fprintf('accuracy %.2f%%\n', accuracy(m));
+fprintf('accuracy %.2f%%\n', accur(m));

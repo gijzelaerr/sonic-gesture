@@ -18,9 +18,7 @@ full_dataset = load('features.txt');
 full_labels = load('labels.txt');
 
 %% load set labels
-profile on;
 full_sets = importdata('sets.txt');
-profile viewer;
 
 %% import all video groups
 groups
@@ -29,19 +27,21 @@ groups
 nameset = simple_names;
 
 %% do it
-for c= 2.^(1:2:15)
+%for c = 1
+%    for g = 1
+for c= 2.^(-3:2:15)
     for g = 2.^(-15:2:3)
-        % iterate
+        tic;
         confusion = zeros(SYMBOLS, SYMBOLS);
 
-        % find users
-        for name = nameset'
+        parfor index = 1:size(nameset, 1)
+            name = nameset(index);
             indx =  ~cellfun('isempty', cellfun(@(foenk) foenk(foenk==1), strfind(full_set, name{1}), 'UniformOutput',false));
             if sum(indx) == 0
                 fprintf('skipping %s\n', name{1});
                 continue;
             end;
-            fprintf('.');
+            %fprintf('.');
             trainnames = full_set(~indx);
             testnames = full_set(indx);
 
@@ -85,11 +85,12 @@ for c= 2.^(1:2:15)
 
 
             % DO SVM classification
-            model = svmtrain(trainLabels, trainSetEigen.data);
+            model = svmtrain(trainLabels, trainSetEigen.data, [ '-c ' num2str(c) ' -g ' num2str(g) ]);
             [svmPredict, accuracy, decision_values] = svmpredict(rand(size(testSetEigen, 1), 1), testSetEigen.data, model);
             C = confusionmat(testLabels, svmPredict);
             confusion = confusion + C;
         end
+        toc;
         a = accur(confusion);
         fprintf('\nc: %f, g: %f, accuracy: %.2f%%\n', c, g, a);
     end

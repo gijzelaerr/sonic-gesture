@@ -77,25 +77,14 @@ testSetEigen = testSet*eigenhands;
 
 
 % DO SVM classification
-low = max(max([trainSetEigen.data; testSetEigen.data]));
-high = min(min([trainSetEigen.data; testSetEigen.data]));
-scale = max(abs(low), abs(high));
-trainNormalized = trainSetEigen.data / scale;
-testNormalized = testSetEigen.data / scale;
-%%
-for c= 2.^(-3:2:15)
-    for g = 2.^(-15:2:3)
-        model = svmtrain(trainLabels, trainNormalized, ['-c ' num2str(c) ' -g ' num2str(g)]);
-        [svmPredict, accuracy, decision_values] = svmpredict(rand(size(testNormalized, 1), 1), testNormalized, model);
-        confusion = confusionmat(testLabels, svmPredict);
-        a = accur(confusion);
-        fprintf('c: %f, g: %f, accuracy: %.2f%%\n', c, g, a);
-    end
-end
+model = svmtrain(trainLabels, trainSetEigen.data, '-c 8192, -g 0.031250');
+[svmPredict, accuracy, decision_values] = svmpredict(rand(size(testSetEigen.data, 1), 1), testSetEigen.data, model);
+confusion = confusionmat(testLabels, svmPredict);
+a = accur(confusion);
+fprintf('c: %f, g: %f, accuracy: %.2f%%\n', c, g, a);
 
-%%
-confusion
-knn
+
+%
 fprintf('full scale accuracy %.2f%%\n', accur(confusion));
 m = major(confusion);
 fprintf('major scale accuracy %.2f%%\n', accur(m));

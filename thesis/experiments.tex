@@ -8,7 +8,6 @@ A dataset was created to perform the experiments. In total there are 74 movies c
 \begin{table}
 \begin{tabular}{llll}
 	Test Subject & Movies & Background & Notes \\
-	\hline
 	Anne     & 5 & Simple & None \\
 	Arjan    & 5 & Simple & None \\
 	Gijs     & 5 & Simple & None \\
@@ -16,21 +15,20 @@ A dataset was created to perform the experiments. In total there are 74 movies c
 	Jasper 1 & 5 & Simple & None \\
 	Peter    & 5 & Simple & None \\
 	Hanne    & 5 & Simple & None \\
-
 	Jasper 2 & 3 & Simple & None \\
 	Ork      & 3 & Simple & None \\
 	Roberto  & 3 & Simple & None \\
 	Xiaong   & 3 & Simple & None \\
-			
+	\hline			
 	Gosia    & 3 & Complex & None \\
 	Hamdi    & 3 & Complex & None \\
 	Michael  & 3 & Complex & None \\
-	
-	Bas      & 3 & Complex + skin-like colors & None \\
-	Koen     & 3 & Complex + skin-like colors & None \\
 	Sil      & 3 & Complex + skin-like colors & None \\
 	Victoria & 3 & Complex + skin-like colors & None \\
 	Chu      & 3 & Complex + skin-like colors & Quite yellow skin color, similar to brick wall \\
+	\hline	
+	Bas      & 3 & Complex + skin-like colors & None \\
+	Koen     & 3 & Complex + skin-like colors & None \\
 	Stratos  & 3 & Complex + skin-like colors & Quite pale skin color, similar to white wall \\
 \end{tabular}
 \caption{Dataset details}
@@ -48,20 +46,43 @@ OpenCV, QT, CMake, Liblo, open source, website
 
 \section{Results}
 
+\subsection{part I}
+For the number of neighbours for KNN a small number of tests where run, and a choice was made for a value of 3. higher values untill around 10 yield similar performance, depending on the test. Lower than 3 or higher than 10 will decrease performance.
+
+When PCA was used the smallest eigenvectors where removed so 95\% of the original variance was kept.
+
+For SVM the radial basis function (RBF) kernel is used, since the libsvm documentation states that is a good kernel to use that usually gives good performance. The $c$ and $\gamma$ values for SVM where found by an extensive grid search on the 'per person' tests with only the simple movies performed on a small cluster in the ranges 2.^(-3:2:15) for $c$ and 2.^(-15:2:3) for $\gamma$. The most optimal values are $\gamma$ = 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 8129 was choosen.
+
+Doing PCA and removing eigenvectors untill 0.95 variance on the simple data set will reduce to  594 dimensions (from 3780);
+complex + simple: 688
+complex:  283
+full: 749
+
+
   per film (dus 1 film er uit, trainen met rest, test met 1):
 
-simple set, KNN3: full scale 84.27%, major scale 90.21%
-simple set, KNN3 + PCA: full scale 83.67%, major scale 89.70%
-simple set, SVM + PCA: full scale 76.78%, major scale 84.38%
-
+simple set, KNN3: full scale 84.27\%, major scale 90.21\%
+simple set, KNN3 + PCA: full scale 83.67\%, major scale 89.70\%
+simple set, SVM + PCA: full scale 76.78\%, major scale 84.38\% (untweaked)
+simple set, SVM: full scale: 86.02\% major scale 90.88\% (tweaked)
+simple set, SVM + PCA: full scale: 86.85\% major scale 91.85\% (tweaked)
 
   per persoon (persoon er uit, trainen op rest, test op persoon):
 
-simple set, KNN3: full scale 72.93%, major scale 82.63%
-full set, KNN5: full scale 66.98%, major scale 76.32%
-full set, KNN5 + PCA: full scale 65.31%, major scale 76.00%
-full set, SVM + PCA: full scale 64.05%, major scale 74.42%
+simple set, KNN3: full scale 72.93\%, major scale 82.63\%
+simple set, SVM + PCA: 79.71\%, major scale 86.70\% (tweaked)
 
+full set, KNN3: full scale 66.98\%, major scale 76.32\%
+full set, KNN3 + PCA: full scale 65.31\%, major scale 76.00\%
+full set, SVM + PCA: full scale 64.05\%, major scale 74.42\% (untweaked)
+full set, SVM + PCA: full scale 73.38\%, major scale 81.44\% (tweaked)
+
+  per group (train on simple, test on complex)
+
+knn3 full scale 58.57\% major scale 72.78\%
+knn3 + PCA full scale 57.62\% major scale 72.17\%
+SVM + PCA full scale 55.48\% major scale accuracy 68.25\% (untweaked)
+SVM + PCA full scale 62.14\% major scale accuracy 73.39\% (tweaked)
 
 
 confusion matrix fro simple set, KNN3, per film:
@@ -94,6 +115,14 @@ confusion matrix fro simple set, KNN3, per film:
      0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    41     0     1
      0     0     0     0     0     0     0     0     0     0     0     0     0     0     1     0     0     0     0     0     0     0     0     0     0     0    41     0
      1     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     1     1     1     0     0     0     0     0     0     0     0    38
+
+\subsection{Part II}
+
+For this set of experiments the Damerau–Levenshtein distance of a sequence of generated labels to the ground truth is calculated.
+
+
+\section{Discussion}
+As you can see there is a big difference in performance 
 
 
 

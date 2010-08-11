@@ -1,0 +1,137 @@
+function [errors,numDims,histDims]=xvalPMscaled(a,pm,minmax,clfs,ranges,sfolds,sreps,xfolds,xreps,fname)
+
+if nargin<10
+    fname=[];
+end
+
+maxDimsStr=20;
+
+errors=[];
+numDims=[];
+repsDone=0;
+
+if ~isempty(fname)
+    if exist(fname)
+        load(fname,'e','p');
+        if exist('e','var')&exist('p','var')
+            repsDone=floor(size(e,1)/xfolds);
+            errors=[e;zeros((xreps-repsDone)*xfolds,length(clfs))];
+            numDims=[p;zeros((xreps-repsDone)*xfolds,length(clfs))];
+            fprintf(1, 'Continue after %d cross-validation repeats\n\n',repsDone);
+
+            for m=1:length(clfs)
+                fprintf('    %-20s: AVG #dims=%.2f error=%.4f \n',clfs{m},mean(p(:,m)),mean(e(:,m)));
+            end
+            fprintf('\n');
+        end
+    end
+end
+
+if isempty(errors)
+    errors=cell(1,length(pm));
+    for i=1:length(pm)
+        errors{i}=zeros(xfolds*xreps,length(clfs));
+    end
+end
+if isempty(numDims)
+    numDims=zeros(xfolds*xreps,length(clfs));
+end
+
+    histDims=zeros(1,size(a,2));
+    
+    sign=1;
+    if xfolds<0
+        sign=-1;
+    end
+
+    xfolds=abs(xfolds);
+
+    if repsDone==0
+        fprintf(1,'Starting with cross-validation tests\n');
+    end
+
+    for i=(repsDone+1):xreps
+        sets = nfoldsubsets(size(a,1),get(a,'nlab'),xfolds);
+        for j=1:xfolds
+            [trainSet, testSet] = nfoldselect(sets, sign*j);
+
+            if ~isempty(sfolds)&~isempty(sreps)
+                p=xselPMscaled(a(trainSet,:),pm{1},minmax,clfs,ranges,sfolds,sreps);
+            else
+                p=cell(1,length(clfs));
+                for k=1:length(clfs)
+                    if isempty(ranges{k})
+                        p{k}=NaN;
+                    else
+                        p{k}=ranges{k}(1);
+                    end
+                end
+            end
+
+            fprintf('%s [%d]\n',datestr(clock),(i-1)*xfolds+j);
+
+            %%%%%%%
+            scaleW=scalem(a(trainSet,:),'variance');
+            %%%%%%%
+            
+            for m=1:length(clfs)
+                if isnan(p{m})
+                    w=feval(clfs{m},a(trainSet,:)*scaleW);
+                else
+                    w=feval(clfs{m},a(trainSet,:)*scaleW,p{m});
+                end
+
+                v=+w;
+                if isfield(v,'nr')
+                    numDims((i-1)*xfolds+j,m)=v.nr;
+                else
+                    numDims((i-1)*xfolds+j,m)=size(a,2);
+                end
+
+                if nargout>2&isfield(v,'beta')
+                    histDims=histDims+((abs(v.beta)>1e-8)/xreps/xfolds)';
+                    figure(2);
+                    bar(histDims*(xreps*xfolds)/((i-1)*xfolds+j));
+                    axis([1 size(a,2) 0 1]);
+                    figure(1);
+                end
+
+                for k=1:length(pm)
+                    errors{k}((i-1)*xfolds+j,m)=feval(pm{k},(a(testSet,:)*scaleW)*w);
+                end
+
+                fprintf('    %-20s: #dims=%.0f [%s] error=%.4f +-+-+ AVG #dims=%.2f error=%.4f \n',...
+                        clfs{m},numDims((i-1)*xfolds+j,m),dimsStr(w,maxDimsStr),errors{1}((i-1)*xfolds+j,m),...
+                                mean(numDims(1:(i-1)*xfolds+j,m)),mean(errors{1}(1:(i-1)*xfolds+j,m)));
+            end
+            fprintf('\n');
+        end
+        
+        if ~isempty(fname)
+            e=errors(1:i*xfolds,:);
+            p=numDims(1:i*xfolds,:);
+            save(fname,'e','p')
+        end
+    end
+
+return
+
+function s=dimsStr(w,maxlen)
+
+    v=+w;
+    
+    if isfield(v,'beta')
+        i=find(abs(v.beta)>1e-8);
+
+        s=num2str(i','%.0f ');
+    
+        if length(s)-1>maxlen
+            s=[s(1:maxlen-2) '..'];
+        elseif length(s)>0 & s(end)==' ' 
+            s=s(1:end-1);
+        end
+    else
+        s='';
+    end
+
+return

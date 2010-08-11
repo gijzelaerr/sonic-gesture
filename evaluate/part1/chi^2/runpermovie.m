@@ -1,0 +1,84 @@
+
+%% cleanup
+clear;
+close all;
+
+%%
+fprintf('load data\n');
+full_dataset = load('../features.txt');
+full_labels = load('../labels.txt');
+full_sets = importdata('../sets.txt');
+groups
+
+%% settings
+%number of symbols in each set
+SYMBOLS=28;
+% which group do we want to use
+group = simple_set;
+cRange = 2.^(-4:1:4);
+nReps = 1;
+nFolds = 3;
+
+
+
+%% construct dataset we want
+runset = find(ismember(full_sets, group)==1)';
+dataset = zeros(size(runset,1)*SYMBOLS, size(full_dataset,2));
+for i = 1:size(runset,2)
+    set = runset(i);
+    start = (set-1)*SYMBOLS+1;
+    finish = start+SYMBOLS-1;
+    range = full_dataset(start:finish, :);
+    
+    target_start = (i-1)*SYMBOLS+1;
+    target_finish = target_start+SYMBOLS-1;
+    dataset(target_start:target_finish, :) = range;
+end
+
+%% construct labels
+trainLabels = repmat(eye(28,28),(size(runset,2)-1),1);
+testLabels = eye(28,28);
+
+%% iterate
+confusion = zeros(SYMBOLS, SYMBOLS);
+
+for setNum = 1:size(runset,2)
+    setName = group(setNum);
+    
+    % where are we now
+    fprintf('%s %d/%d\n', setName{1}, setNum, size(runset,2));
+
+    % construct test features
+    testStart = (setNum-1)*SYMBOLS+1;
+    testEnd = testStart+SYMBOLS-1;
+    testSet = dataset(testStart:testEnd, :);
+   
+    % construct train features
+    testPre = dataset(1:testStart-1, :);
+    testPost = dataset(testEnd+1:end, :);
+    trainSet = [testPre; testPost];
+
+
+    % construct PCA
+    eigenhands = pca(trainSet, 0.95);
+    trainSetEigen = trainSet*eigenhands;
+    testSetEigen = testSet*eigenhands;
+
+
+    %% 
+    fprintf('constructing kernel\n');
+    trainDist = ChiSquareDistance(trainSet);
+    testDist = ChiSquareDistance(testSet, trainSet);
+
+
+    %% 
+    fprintf('doing classification\n');
+    [avgPrec clfsOutput] = SvmPKExpOpt(trainDist, testDist, trainLabels, testLabels, cRange, nReps, nFolds, 0);
+    [c,acc]= svmOutput2Confmat(clfsOutput, testLabels);
+    confusion = confusion + c;
+end
+
+%%
+fprintf('accuracy %.2f%%\n', accur(confusion));
+m = major(confusion);
+fprintf('accuracy %.2f%%\n', accur(m));

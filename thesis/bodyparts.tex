@@ -3,15 +3,18 @@
 \label{ch:bodyparts}
 
 
-\section{Face detection - Haar classifier}
-Finding faces in a image is a rather well solved problem. Faces are easy to detect, first of all because people don't tilt their head often, or not more than a couple degrees. This results in that in most movies and pictures the head of a subject is up right. Also a face has easy to detect features like eyes, eyebrows, a mouth and nose. When comparing different faces, these features are - with a small variation - on the same distance and orientation.
+\section{Finding hands}
+To do hand pose estimation of a person in a image his or her hands need to be localized in the image first. Since hands can have different shapes, different orientations, specific color profiles and shapes per person this is a very difficult task. One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin model has been build for this purpose\cite{Jones99statisticalcolor}, but using these values for searching in a image is quite sencetive for error. Skin color can vary dramatically because of lightning conditions but also the cameras properties can color a image. It would be much better to have a way where the skin color the hands could be extracted from the target image itself. This can be done by detecting the subjects face in an image.
 
-Detecting faces is done using the haar classifier, a  boosted rejection cascade that is trained with Haar-like wavelet features\cite{Lienhart02anextended}.
-Haar wavelets, histogram building.
+\section{Face detection - Haar classifier}
+Finding faces in a image is a rather well solved problem. Faces are easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and nose. When comparing different faces, these features are - with a small variation - on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees.
+
+Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar-like wavelet.
+ features\cite{Lienhart02anextended}. Haar wavelets, histogram building.
 
 
 \section{Color space conversion}
-Usually pixel values of a image are stored in the Red, Green Blue (RGB) format. Advantages can be gained by converting this color space into an other, for example Hue, Saturation, Value (HSV). The HSV space splits out hue (color) from saturation (how .. is) and brightness (how .. is).
+Usually pixel values of a image are stored in the Red, Green Blue (RGB) format. Advantages can be gained by converting this color space into an other so, for example thresholding on one channel or even leaving on channel out gets a different meaning. One particular color space that is interesting for this application is the Hue Saturation Value (HSV) color space. HSV space separates out Hue (color) from Saturation (how concentrated the color is) and from Value (brightness). 
 
 \begin{figure}[htbp]
 	\center
@@ -20,17 +23,30 @@ Usually pixel values of a image are stored in the Red, Green Blue (RGB) format. 
 	\label{fig:hsv}
 \end{figure}
 
+The color models are created by taking 2D histograms from the H (hue) channel in HSV space.
 
 
-HSV space separates out hue (color) from saturation (how concentrated the color is) and from brightness. The color models are created by taking 1D histograms from the H (hue) channel in HSV space.
+
 
 
 The RGB color space is transformed into the HSI color space using the following equations:
 
+
 \begin{eqnarray*}
-	V&\leftarrow \max(R,G,B) \label{first} \\
-	S&\leftarrow \{
+  V & \leftarrow & \max(R,G,B) \\
+  S & \leftarrow & \left\{
+  \begin{array}{l l}
+    \frac{V-\min(R, G, B)}{V} & \quad \text{if $V \neq 0$} \\
+    0 						  & \quad \text{otherwise} \\
+  \end{array} \right.\\
+  H & \leftarrow & \left\{
+  \begin{array}{l l}
+    60(G - B)/S     & \quad \text{if $V \eq R$} \\
+    120 + 60(B-R)/S & \quad \text{if $V \eq G$} \\
+    240 + 60(R-G)/S & \quad \text{if V \eq B} \\
+  \end{array} \right.\\
 \end{eqnarray*}
+  
 
 
 

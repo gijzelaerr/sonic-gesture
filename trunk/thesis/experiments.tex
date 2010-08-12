@@ -6,8 +6,11 @@
 A dataset was created to perform the experiments. In total there are 74 movies containing 20 different test subjects performing the complete sequence of 28 hand symbols. The movies where recorded with Sonic Gesture, with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in figure\ref{fig:hands_mirrored}, \ref{fig:hands_normal} and \ref{fig:hands_extra}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background, 3 where recorded with a complex background and 6 where recorded with the same complex background but also with a poster with skinlike colors.
 
 \begin{table}
+\centering
 \begin{tabular}{llll}
+\hline\hline
 	Test Subject & Movies & Background & Notes \\
+\hline
 	Anne     & 5 & Simple & None \\
 	Arjan    & 5 & Simple & None \\
 	Gijs     & 5 & Simple & None \\
@@ -25,11 +28,12 @@ A dataset was created to perform the experiments. In total there are 74 movies c
 	Michael  & 3 & Complex & None \\
 	Sil      & 3 & Complex + skin-like colors & None \\
 	Victoria & 3 & Complex + skin-like colors & None \\
-	Chu      & 3 & Complex + skin-like colors & Quite yellow skin color, similar to brick wall \\
+	Chu      & 3 & Complex + skin-like colors & problem with brick wall \\
 	\hline	
 	Bas      & 3 & Complex + skin-like colors & None \\
 	Koen     & 3 & Complex + skin-like colors & None \\
-	Stratos  & 3 & Complex + skin-like colors & Quite pale skin color, similar to white wall \\
+	Stratos  & 3 & Complex + skin-like colors & problems with white wall \\
+\hline
 \end{tabular}
 \caption{Dataset details}
 \end{table}
@@ -51,70 +55,136 @@ For the number of neighbours for KNN a small number of tests where run, and a ch
 
 When PCA was used the smallest eigenvectors where removed so 95\% of the original variance was kept.
 
-For SVM the radial basis function (RBF) kernel is used, since the libsvm documentation states that is a good kernel to use that usually gives good performance. The $c$ and $\gamma$ values for SVM where found by an extensive grid search on the 'per person' tests with only the simple movies performed on a small cluster in the ranges 2.^(-3:2:15) for $c$ and 2.^(-15:2:3) for $\gamma$. The most optimal values are $\gamma$ = 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 8129 was choosen.
+For SVM the radial basis function (RBF) kernel is used, since the libsvm documentation states that is a good kernel to use that usually gives good performance. The $c$ and $\gamma$ values for SVM where found by an extensive grid search on the 'per person' tests with only the simple movies performed on a small cluster in the ranges $2.^(-3:2:15)$ for $c$ and $2.^(-15:2:3)$ for $\gamma$. The most optimal values are $\gamma$ = 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was choosen.
 
 Doing PCA and removing eigenvectors untill 0.95 variance on the simple data set will reduce to  594 dimensions (from 3780);
 complex + simple: 688
 complex:  283
 full: 749
 
-
-  per film (dus 1 film er uit, trainen met rest, test met 1):
-
-simple set, KNN3: full scale 84.27\%, major scale 90.21\%
-simple set, KNN3 + PCA: full scale 83.67\%, major scale 89.70\%
-simple set, SVM + PCA: full scale 76.78\%, major scale 84.38\% (untweaked)
-simple set, SVM: full scale: 86.02\% major scale 90.88\% (tweaked)
-simple set, SVM + PCA: full scale: 86.85\% major scale 91.85\% (tweaked)
-
-  per persoon (persoon er uit, trainen op rest, test op persoon):
-
-simple set, KNN3: full scale 72.93\%, major scale 82.63\%
-simple set, SVM + PCA: 79.71\%, major scale 86.70\% (tweaked)
-
-full set, KNN3: full scale 66.98\%, major scale 76.32\%
-full set, KNN3 + PCA: full scale 65.31\%, major scale 76.00\%
-full set, SVM + PCA: full scale 64.05\%, major scale 74.42\% (untweaked)
-full set, SVM + PCA: full scale 73.38\%, major scale 81.44\% (tweaked)
-
-  per group (train on simple, test on complex)
-
-knn3 full scale 58.57\% major scale 72.78\%
-knn3 + PCA full scale 57.62\% major scale 72.17\%
-SVM + PCA full scale 55.48\% major scale accuracy 68.25\% (untweaked)
-SVM + PCA full scale 62.14\% major scale accuracy 73.39\% (tweaked)
+  
+\begin{table}
+\centering
+\begin{tabular}{lrr}
+\hline\hline
+Classifier 				&  	Full scale	& Major scale	\\ 
+\hline
+KNN3 		&  	84.27\%		& 90.21\%		\\ 
+PCA, KNN3 	& 	83.67\%		& 89.70\%		\\ 
+PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$)	& 	76.78\%		& 84.38\%		\\ 
+SVM RBF ($c=2^6$ $\gamma=2^{-5}$) & 86.02\% & 90.88\% \\
+PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$) &  86.85\% & 91.85\% \\
+SVM $\chi^2$ & 87.92\% 		& 91.58\% \\
+\hline 
+\end{tabular} 
+\caption{k-fold per film using simple dataset only}
+\end{table}
 
 
-confusion matrix fro simple set, KNN3, per film:
+\begin{table}
+\centering
+\begin{tabular}{llrr}
+\hline\hline
+Dataset & Classifier 				&  	Full scale	& Major scale	\\ 
+\hline
+simple set	& KNN3	& 72.93\%, & 82.63\%	\\ 
+simple set	& PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$) & 79.71\%, & 86.70\%	\\ 
+full set	& KNN3 & 66.98\%, & 76.32\%	\\ 
+full set	& PCA, KNN3 & 65.31\%, & 76.00\%	\\ 
+full set	& PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$) & 64.05\%, & 74.42\%	\\ 
+full set	& PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)& 73.38\%, & 81.44\%	\\ 
+full set    & SVM $\chi^2$ &  71.83\% &80.07\% \\
+\hline 
+\end{tabular} 
+\caption{k-fold per person}
+\end{table}
 
-    31     5     1     0     0     0     0     1     0     0     0     0     0     0     0     0     0     0     1     0     0     0     0     0     0     0     0     3
-     6    35     0     0     0     0     0     1     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0
-     0     0    33     3     1     0     1     0     0     1     0     1     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     2
-     0     0     5    31     3     0     0     0     0     0     0     1     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     2
-     0     0     1     1    27     0     6     0     1     0     0     1     0     0     0     0     1     0     1     0     0     0     0     0     0     0     0     3
-     0     0     0     0     0    37     0     0     0     0     0     0     0     0     1     1     0     0     0     1     0     0     0     0     0     2     0     0
-     0     0     0     1     2     0    30     2     0     1     0     0     0     0     0     1     0     1     0     1     0     1     0     0     0     0     0     2
-     0     0     0     0     0     0     0    40     1     0     0     0     0     0     0     0     1     0     0     0     0     0     0     0     0     0     0     0
-     0     0     0     0     0     0     0     6    36     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0
-     0     0     3     0     0     0     0     0     0    31     1     6     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     1
-     0     0     0     1     0     0     0     0     0     4    34     0     0     0     0     0     0     1     1     0     0     0     0     0     0     0     0     1
-     0     0     0     1     1     0     0     0     0     1     0    38     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     1
-     0     0     0     0     0     0     0     0     0     0     0     0    41     0     0     0     0     0     0     1     0     0     0     0     0     0     0     0
-     0     0     0     0     0     0     0     0     0     0     0     0     3    38     0     0     0     0     0     0     1     0     0     0     0     0     0     0
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0    36     4     1     0     0     0     0     0     0     0     0     0     0     1
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0     4    34     1     0     0     0     0     0     3     0     0     0     0     0
-     0     0     0     0     3     0     0     0     0     0     0     1     0     0     3     0    29     1     1     1     0     1     0     0     0     0     0     2
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    40     0     0     0     1     0     0     0     0     0     1
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    37     0     1     0     0     2     0     0     0     2
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    41     1     0     0     0     0     0     0     0
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     6    36     0     0     0     0     0     0     0
-     0     0     0     0     1     0     1     0     0     0     0     0     0     0     2     3     1     1     0     0     0    28     4     0     0     0     0     1
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0     1     5     0     0     0     0     0     2    33     0     0     0     0     1
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0     2     1     0     0     1     0     0     2     0    34     0     0     1     1
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    41     0     1     0
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    41     0     1
-     0     0     0     0     0     0     0     0     0     0     0     0     0     0     1     0     0     0     0     0     0     0     0     0     0     0    41     0
-     1     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     1     1     1     0     0     0     0     0     0     0     0    38
+
+\begin{table}
+\centering
+\begin{tabular}{lcc}
+\hline\hline
+Classifier 				&  	Full scale	&	Major scale	\\
+\hline
+KNN3					&	58.57\% 	&	72.78\%	\\
+PCA, KNN3 				&	57.62\% 	&	72.17\%	\\
+PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$)	& 55.48\%	&	68.25\%	\\
+PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)				& 62.14\%	&	73.39\%	\\
+SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
+\hline 
+\end{tabular} 
+\caption{simple as trainset, complex as test}
+\end{table}
+
+
+
+\begin{table}
+\centering
+\begin{tabular}{
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}@{\hspace{0.4ex}}r@{\hspace{0.4ex}}
+|}
+
+\hline
+31 & 5 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 3 \\
+6 & 35 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+0 & 0 & 33 & 3 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 2 \\
+0 & 0 & 5 & 31 & 3 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 2 \\
+\hline
+0 & 0 & 1 & 1 & 27 & 0 & 6 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 3 \\
+\hline
+0 & 0 & 0 & 0 & 0 & 37 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 2 & 0 & 0 \\
+0 & 0 & 0 & 1 & 2 & 0 & 30 & 2 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 2 \\
+\hline
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 40 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 6 & 36 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+0 & 0 & 3 & 0 & 0 & 0 & 0 & 0 & 0 & 31 & 1 & 6 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 4 & 34 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+\hline
+0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 38 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+\hline
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 41 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 3 & 38 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 36 & 4 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 4 & 34 & 1 & 0 & 0 & 0 & 0 & 0 & 3 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+0 & 0 & 0 & 0 & 3 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 3 & 0 & 29 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 2 \\
+\hline
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 40 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 37 & 0 & 1 & 0 & 0 & 2 & 0 & 0 & 0 & 2 \\
+\hline
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 41 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 6 & 36 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+0 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 2 & 3 & 1 & 1 & 0 & 0 & 0 & 28 & 4 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 5 & 0 & 0 & 0 & 0 & 0 & 2 & 33 & 0 & 0 & 0 & 0 & 1 \\
+\hline
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 2 & 1 & 0 & 0 & 1 & 0 & 0 & 2 & 0 & 34 & 0 & 0 & 1 & 1 \\
+\hline
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 41 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 41 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 41 & 0 \\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 38 \\
+\hline
+\end{tabular} 
+\caption{confusion matrix fro simple set, KNN3, per film}
+\end{table}
 
 \subsection{Part II}
 

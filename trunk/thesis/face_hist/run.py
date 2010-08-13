@@ -66,7 +66,7 @@ cv.Split(frameHSV, frameH, frameS, frameBW, None)
 cv.Copy(frame, frameShow)
 
 # load face finder and find face
-hc = cv.Load("/usr/local/share/opencv/haarcascades/haarcascade_frontalface_default.xml")
+hc = cv.Load("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml")
 faces = cv.HaarDetectObjects(frameBW, hc, cv.CreateMemStorage())
 
 if len(faces) == 0:
@@ -189,6 +189,9 @@ cv.SaveImage("closed.jpg", frameClosed)
 cv.SaveImage("histogram.jpg", histImg)
 cv.SaveImage("contours.jpg", frameCont)
 cv.SaveImage("histogram.jpg", histImg)
+cv.SaveImage("hue.jpg", frameH)
+cv.SaveImage("saturation.jpg", frameS)
+cv.SaveImage("value.jpg", frameBW)
 
 
 

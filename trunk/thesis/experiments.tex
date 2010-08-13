@@ -62,21 +62,21 @@ complex + simple: 688
 complex:  283
 full: 749
 
-  
+
 \begin{table}
 \centering
 \begin{tabular}{lrr}
 \hline\hline
-Classifier 				&  	Full scale	& Major scale	\\ 
+Classifier 				&  	Full scale	& Major scale	\\
 \hline
-KNN3 		&  	84.27\%		& 90.21\%		\\ 
-PCA, KNN3 	& 	83.67\%		& 89.70\%		\\ 
-PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$)	& 	76.78\%		& 84.38\%		\\ 
+KNN3 		&  	84.27\%		& 90.21\%		\\
+PCA, KNN3 	& 	83.67\%		& 89.70\%		\\
+PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$)	& 	76.78\%		& 84.38\%		\\
 SVM RBF ($c=2^6$ $\gamma=2^{-5}$) & 86.02\% & 90.88\% \\
 PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$) &  86.85\% & 91.85\% \\
 SVM $\chi^2$ & 87.92\% 		& 91.58\% \\
-\hline 
-\end{tabular} 
+\hline
+\end{tabular}
 \caption{k-fold per film using simple dataset only}
 \end{table}
 
@@ -85,17 +85,17 @@ SVM $\chi^2$ & 87.92\% 		& 91.58\% \\
 \centering
 \begin{tabular}{llrr}
 \hline\hline
-Dataset & Classifier 				&  	Full scale	& Major scale	\\ 
+Dataset & Classifier 				&  	Full scale	& Major scale	\\
 \hline
-simple set	& KNN3	& 72.93\%, & 82.63\%	\\ 
-simple set	& PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$) & 79.71\%, & 86.70\%	\\ 
-full set	& KNN3 & 66.98\%, & 76.32\%	\\ 
-full set	& PCA, KNN3 & 65.31\%, & 76.00\%	\\ 
-full set	& PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$) & 64.05\%, & 74.42\%	\\ 
-full set	& PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)& 73.38\%, & 81.44\%	\\ 
+simple set	& KNN3	& 72.93\%, & 82.63\%	\\
+simple set	& PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$) & 79.71\%, & 86.70\%	\\
+full set	& KNN3 & 66.98\%, & 76.32\%	\\
+full set	& PCA, KNN3 & 65.31\%, & 76.00\%	\\
+full set	& PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$) & 64.05\%, & 74.42\%	\\
+full set	& PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)& 73.38\%, & 81.44\%	\\
 full set    & SVM $\chi^2$ &  71.83\% &80.07\% \\
-\hline 
-\end{tabular} 
+\hline
+\end{tabular}
 \caption{k-fold per person}
 \end{table}
 
@@ -111,8 +111,8 @@ PCA, KNN3 				&	57.62\% 	&	72.17\%	\\
 PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$)	& 55.48\%	&	68.25\%	\\
 PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)				& 62.14\%	&	73.39\%	\\
 SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
-\hline 
-\end{tabular} 
+\hline
+\end{tabular}
 \caption{simple as trainset, complex as test}
 \end{table}
 
@@ -182,7 +182,7 @@ SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 41 & 0 \\
 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 38 \\
 \hline
-\end{tabular} 
+\end{tabular}
 \caption{confusion matrix fro simple set, KNN3, per film}
 \end{table}
 
@@ -192,13 +192,13 @@ For this set of experiments the Damerau–Levenshtein distance of a sequence of 
 
 
 \section{Discussion}
-As you can see there is a big difference in performance 
+As you can see there is a big difference in performance
 
 
 
 \section{Images}
 
-\renewcommand{\thesubfigure}{\thefigure.\roman{subfigure}} 
+\renewcommand{\thesubfigure}{\thefigure.\roman{subfigure}}
 \begin{figure}[htbp]
 \begin{center}
 \subfloat[Do]{\label{fig:hand_0}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/0.jpg}}
@@ -336,5 +336,70 @@ As you can see there is a big difference in performance
 \caption{Stills from recording number 5, test subject 'gijs'}
 \label{fig:gijs5}
 \end{figure}
+
+
+
+\begin{figure}[htbp]
+\begin{center}
+\subfloat[Do]{\label{fig:gijs5_cutout_0}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/0.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Di]{\label{fig:gijs5_cutout_1}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/1.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Re]{\label{fig:gijs5_cutout_2}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/2.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Ri]{\label{fig:gijs5_cutout_3}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/3.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Mi]{\label{fig:gijs5_cutout_4}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/4.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Fa]{\label{fig:gijs5_cutout_5}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/5.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Fi]{\label{fig:gijs5_cutout_6}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/6.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Sol]{\label{fig:gijs5_cutout_7}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/7.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Si]{\label{fig:gijs5_cutout_8}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/8.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[La]{\label{fig:gijs5_cutout_9}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/9.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Li]{\label{fig:gijs5_cutout_10}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/10.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Ti]{\label{fig:gijs5_cutout_11}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/11.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Do]{\label{fig:gijs5_cutout_12}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/12.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Di]{\label{fig:gijs5_cutout_13}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/13.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Re]{\label{fig:gijs5_cutout_14}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/14.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Ri]{\label{fig:gijs5_cutout_15}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/15.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Mi]{\label{fig:gijs5_cutout_16}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/16.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Fa]{\label{fig:gijs5_cutout_17}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/17.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Fi]{\label{fig:gijs5_cutout_18}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/18.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Sol]{\label{fig:gijs5_cutout_19}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/19.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Si]{\label{fig:gijs5_cutout_20}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/20.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[La]{\label{fig:gijs5_cutout_21}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/21.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Li]{\label{fig:gijs5_cutout_22}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/22.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Ti]{\label{fig:gijs5_cutout_23}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/23.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Extra1]{\label{fig:gijs5_cutout_24}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/24.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Extra2]{\label{fig:gijs5_cutout_25}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/25.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Extra3]{\label{fig:gijs5_cutout_26}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/26.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Extra4]{\label{fig:gijs5_cutout_27}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/gijs5_cutout/27.jpg}}
+\end{center}
+\caption{Cutout hands, test subject 'gijs' recording number 5}
+\label{fig:gijs5_cutout}
+\end{figure}
+
 
 

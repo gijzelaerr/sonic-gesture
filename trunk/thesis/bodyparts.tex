@@ -1,3 +1,5 @@
+%!TEX root = thesis.tex
+
 \chapter{Body Part Detection}
 \label{ch:bodyparts}
 
@@ -43,6 +45,10 @@ The RGB color space is transformed into the HSV color space using the following 
 So first the input 3 channel RGB image is transformed into a 3 channel HSV image, where the brightness channel is discarded. From the hue and saturation channel together with the face region we can build a histogram which will represent a statistical skin model.
 
 
+VERTEL WAT MEER MEER OVER DEZE PAPERS:
+\cite{Stenger06template-basedhand}, \cite{Bradski98computervision}, \cite{Cooper07largelexicon},
+
+
 \section{Skin color histogram}
 A histogram is a n-dimensional matrix, where every dimension is divided into bins. In our case there are 2 dimensions, one for hue and one for saturation. A bin corresponds to a range of values for every pixel in the source image. A histogram is constructed by creating an empty matrix. For every pixel in the image the corresponding bin is determined, and the value of the bin is increased by one. The result is a matrix with the count of all the hue and suturation combinations in the source image. There are not really optimal values for the number of bins, around 30 for each is good.\marginpar{WHY}
 
@@ -83,9 +89,39 @@ Assuming the hands or the second biggest skin like objects in the image, the 2 o
 
 
 \section{Blob label stabilization}
-A hand doesn't move very fast in an image - it will not move from the left side to the right side in one frame. If this is detected this is probably a measurement error caused by noise or pour labeling. In this case the history of previous positions of a blob can be incorporated. This can be done with a Kalman Filter. A Kalman Filter is a easy and fast way of smoothing out the current position with the previous positions. The result will be a more stable estimation of the hand position. A second advantage of the Kalman Filter is the ability to actually predict the position of the hand in the next frame. This can become useful when there is no new hand detected. 
+A hand doesn't move very fast in an image - it will not move from the left side to the right side in one frame. If this is detected this is probably a measurement error caused by noise or pour labeling. In this case the history of previous positions of a blob can be incorporated. This can be done with a Kalman Filter. A Kalman Filter is a easy and fast way of smoothing out the current position with the previous positions. The result will be a more stable estimation of the hand position. A second advantage of the Kalman Filter is the ability to actually predict the position of the hand in the next frame. This can become useful when there is no new hand detected. The hand position can then be estimated with a different method.
 
-WHAT IS A KALMAN FILTER.
+To stabilize a hand position the transition matrix is used:
+
+\[ A = \left(
+\begin{array}{cccccc}
+	1 & 0 & 0 & 0 & 0.5 & 0 \\
+	0 & 1 & 0 & 0 & 0 & 0.5 \\
+	0 & 0 & 1 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 1 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 1 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 1 \\
+\end{array} \right)\] 
+
+Where the $x$ position, $y$ position, width $w$ and height $h$ are represented.  But also the speed in both dimensions.
+
+measurement vector \[ m_k = \left(
+\begin{array}{c}
+	x_k \\ %measurement.x
+	y_k \\ %measurement.y,
+	w_k \\ %measurement.width
+	h_k \\ %measurement.height
+\end{array} \right)\]
+
+
+% setIdentity(kalman.measurementMatrix, Scalar(1));
+% setIdentity(kalman.processNoiseCov, Scalar(1));
+% setIdentity(kalman.measurementNoiseCov, Scalar(5));
+% setIdentity(kalman.errorCovPost, Scalar(3));
+% setIdentity(kalman.gain, Scalar(0e-15));
+% randu(kalman.statePost, Scalar(1), Scalar(100));
+
+
 
 \section{template search}
 When in a previous frame a hand was detected but in the current frame not any more there is the problem of (self) occlusion. In this case template search is used to track the hand. A cut out image of the hand in the previous frame is used for this template search. Template search is a very simple and quite fast method, as long as the search area is small. A sliding window  with the same size as the cutout image is sliding over a small surrounding area of the location predicted by the kalman filter. The window with the lowest squared sum difference to the previous cutout image is set as the new location. If the original cutout is touching the border of the image or the squared sum difference is to high it is assumed the hand has left the image, and is labeled accordingly. This method works if the shape and size of the hand doesn't change too much.
@@ -99,7 +135,7 @@ The face detection is one of the most expensive operations in the processing cha
 
 \begin{figure}[htbp]
 \begin{center}
-\subfloat[input frame]{\label{fig:pipe_input}\includegraphics[width=0.3\linewidth]{figures/pipeline/input3.jpg}}
+\subfloat[input frame]{\label{fig:pipe_input}\includegraphics[width=0.3\linewidth]{figures/pipeline/input.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[hue channel]{\label{fig:hue}\includegraphics[width=0.3\linewidth]{figures/pipeline/hue.jpg}}
 \hspace{0.03\linewidth}

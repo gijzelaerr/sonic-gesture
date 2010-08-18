@@ -46,7 +46,7 @@
 			<key>filename</key>
 			<string>bodyparts.tex</string>
 			<key>lastUsed</key>
-			<date>2010-08-16T13:31:18Z</date>
+			<date>2010-08-18T08:47:37Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -64,14 +64,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>22</integer>
 				<key>line</key>
-				<integer>94</integer>
+				<integer>108</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>405</integer>
 			<key>firstVisibleLine</key>
-			<integer>87</integer>
+			<integer>91</integer>
 		</dict>
 		<key>conc.tex</key>
 		<dict>
@@ -217,6 +217,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{210, 0}, {1028, 778}}</string>
+	<string>{{460, 54}, {1028, 778}}</string>
 </dict>
 </plist>

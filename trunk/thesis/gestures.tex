@@ -4,19 +4,25 @@
 \label{ch:gestures}
 
 \section{Feature extraction}
-\subsection*{Segmentation - removing background}
 
-\subsection*{Feature extraction}
-calculate Histogram of Oriented gradients\cite{watanabe2009}
-PCA
+\subsection*{Segmentation - removing background}
+In the previous chapter is described how to find the person's hand locations in a image. This will result in a set of coordinates and size per hand. Using these values a cutout image can be made from the original frame. A problem here is that the hand won't fill the complete window, and it will contain background pixels. These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In section \ref{sec:skinmodel} a binary mask for skin pixels is constructed. The binary inversion of this mask can be used again to remove the background. The result of this procedure can be seen in figure \ref{fig:gijs5_cutout}. To decrease the possibility that mislabeled skin pixels are removed by this mask, a small morphological dilate operation will increase the size of the hand cutout, but this will also introduce more noisy (background) pixels. 
+
+
+\subsection*{Histogram of Oriented Gradients}
+WIKIPEDIA:
+Histogram of oriented gradient (HOG) descriptors are feature descriptors used in computer vision and image processing for the purpose of object detection. The technique counts occurrences of gradient orientation in localized portions of an image. This method is similar to that of edge orientation histograms, scale-invariant feature transform descriptors, and shape contexts, but differs in that it on a dense grid of uniformly spaced cells and uses overlapping local contrast normalization for improved accuracy. \cite{watanabe2009}
+
+hand detection with SIFT\cite{Wang_handposture}
+
 
 \subsection*{Classifier}
 KNN,  SVM
 
-\subsection*{The stabalizer}
-Thresholding histogram based stabalizer, maybe done before (better)?
+\subsection*{The stabilizer}
+Thresholding histogram based stabilizer, maybe done before (better)?
 
 \subsection*{Training phase}
-recording video, manual labeling, extracting HOG features, trainig classifier
+recording video, manual labeling, extracting HOG features, training classifier
 
 \section{Discussion}

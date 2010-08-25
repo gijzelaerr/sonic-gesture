@@ -6,6 +6,7 @@
 To perform hand pose estimation of a person in a image his or her hands need to be localized in the image first. Since hands can have different shapes, different orientations, specific color profiles and shapes per person this is a very difficult task. One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin model has been build for this purpose\cite{Jones99statisticalcolor}, but using these values for searching in a image is quite sensitive for error. Skin color can vary dramatically because of lightning conditions but also the cameras properties can color a image. It would be much better to have a way where the skin color the hands could be extracted from the target image itself. This can be done by detecting the subjects face in an image.
 
 \section{Building a skin model}
+\label{sec:skinmodel}
 
 \subsection*{Face detection - Haar classifier}
 Finding faces in a image is a rather well solved problem. Faces are easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and nose. When comparing different faces, these features are - with a small variation - on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar-like wavelet\cite{Lienhart02anextended}. This is a method for detecting faces that doesn't rely on color information. This method is the same as described here\cite{Stenger06template-basedhand}, but in this case the HSV color space is used.
@@ -56,6 +57,7 @@ A back projection is the combination of an image and a histogram. The result is 
 
 \subsection*{Threshold}
 To binary label every pixel to be skin color or not, we need to define a way of doing this automatically. The easiest way to accomplish this is by defining a threshold. All pixel values below a certain threshold are replaced with false or 0, all above this threshold will be replaced with true or 1. This results in a binary image with labels for (non) skin pixels. This method introduces one parameter - the threshold for going from the probabilistic domain to the binary domain.
+
 
 \subsection*{morphological operations}
 until now each pixel has been processed independently, and the information in surrounding pixels is ignored. In natural images, very strong gradients (changes from one pixel to the other) are rare. Pixel values close to each other in the image are usually also close to each other in the HSV domain. This is also true for skin like pixels and non skin like pixels. In other words said; if a pixel is for example a skin pixel, then the neighbors are probably also skin pixels and the opposite. To incorporate this implicit information the morphological operations can be used. Also pixels can be noisy, caused by the camera or environment. The pixel value combined (smoothed) with the pixels surrounding the pixel can reduce the influence of this noise. 

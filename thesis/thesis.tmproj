@@ -3,58 +3,52 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>bodyparts.tex</string>
+	<string>gestures.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>thesis.bib</string>
 			<key>lastUsed</key>
-			<date>2010-08-18T12:25:35Z</date>
+			<date>2010-08-25T10:29:30Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>conc.tex</string>
 			<key>lastUsed</key>
-			<date>2010-08-16T13:08:30Z</date>
+			<date>2010-08-25T10:29:40Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>intro.tex</string>
 			<key>lastUsed</key>
-			<date>2010-08-16T13:06:24Z</date>
-		</dict>
-		<dict>
-			<key>filename</key>
-			<string>method.tex</string>
-			<key>lastUsed</key>
-			<date>2010-07-13T13:56:38Z</date>
+			<date>2010-08-25T11:32:54Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>gestures.tex</string>
 			<key>lastUsed</key>
-			<date>2010-08-18T11:34:04Z</date>
-		</dict>
-		<dict>
-			<key>filename</key>
-			<string>thesis.tex</string>
-			<key>lastUsed</key>
-			<date>2010-08-16T13:06:25Z</date>
-		</dict>
-		<dict>
-			<key>filename</key>
-			<string>bodyparts.tex</string>
-			<key>lastUsed</key>
-			<date>2010-08-18T12:25:35Z</date>
+			<date>2010-08-25T11:34:27Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
+			<string>thesis.tex</string>
+			<key>lastUsed</key>
+			<date>2010-08-25T10:34:20Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>bodyparts.tex</string>
+			<key>lastUsed</key>
+			<date>2010-08-25T11:34:25Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-08-16T13:31:18Z</date>
+			<date>2010-08-25T11:34:27Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -66,29 +60,29 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>243</integer>
+				<integer>6</integer>
 				<key>line</key>
-				<integer>44</integer>
+				<integer>8</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
-			<integer>133</integer>
+			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>84</integer>
+			<integer>2</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>236</integer>
+				<integer>21</integer>
 				<key>line</key>
-				<integer>44</integer>
+				<integer>8</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>243</integer>
+				<integer>6</integer>
 				<key>line</key>
-				<integer>44</integer>
+				<integer>8</integer>
 			</dict>
 		</dict>
 		<key>conc.tex</key>
@@ -126,23 +120,39 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>57</integer>
+				<integer>7</integer>
 				<key>line</key>
-				<integer>125</integer>
+				<integer>350</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>110</integer>
+			<integer>314</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>23</integer>
+				<key>line</key>
+				<integer>350</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>7</integer>
+				<key>line</key>
+				<integer>350</integer>
+			</dict>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>4</integer>
+				<integer>435</integer>
 				<key>line</key>
-				<integer>18</integer>
+				<integer>13</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -179,48 +189,34 @@
 				<integer>0</integer>
 			</dict>
 		</dict>
-		<key>method.tex</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>thesis.bib</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>23</integer>
+				<integer>22</integer>
 				<key>line</key>
-				<integer>161</integer>
+				<integer>208</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>141</integer>
+			<integer>188</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>15</integer>
+				<integer>6</integer>
 				<key>line</key>
-				<integer>161</integer>
+				<integer>208</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>38</integer>
+				<integer>22</integer>
 				<key>line</key>
-				<integer>161</integer>
+				<integer>208</integer>
 			</dict>
 		</dict>
 		<key>thesis.tex</key>
@@ -230,7 +226,7 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>60</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -240,17 +236,17 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>intro.tex</string>
 		<string>thesis.tex</string>
-		<string>conc.tex</string>
+		<string>intro.tex</string>
+		<string>bodyparts.tex</string>
 		<string>gestures.tex</string>
 		<string>experiments.tex</string>
-		<string>bodyparts.tex</string>
+		<string>conc.tex</string>
 		<string>thesis.bib</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{401, 56}, {1028, 778}}</string>
+	<string>{{210, 0}, {1028, 778}}</string>
 </dict>
 </plist>

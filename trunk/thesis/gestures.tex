@@ -10,7 +10,26 @@
 
 
 \subsection*{Segmentation - removing background}
-In the previous chapter is described how to find the person's hand locations in a image. This will result in a set of coordinates and size per hand. Using these values a cutout image can be made from the original frame. A problem here is that the hand won't fill the complete window, and it will contain background pixels. These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In section \ref{sec:skinmodel} a binary mask for skin pixels is constructed. The binary inversion of this mask can be used again to remove the background. The result of this procedure can be seen in figure \ref{fig:gijs5_cutout}. To decrease the possibility that mislabeled skin pixels are removed by this mask, a small morphological dilate operation will increase the size of the hand cutout, but this will also introduce more noisy (background) pixels. 
+\begin{figure}
+        \center
+        \includegraphics[width=0.4\linewidth]{figures/pipeline/lefthand.jpg}
+        \caption{Hand window }
+        \label{fig:lefthandwindow}
+\end{figure}
+\begin{figure}
+        \center
+        \includegraphics[width=0.4\linewidth]{figures/pipeline/lefthandcutout.jpg}
+        \caption{Hand cutout }
+        \label{fig:lefthandcutout}
+\end{figure}
+\begin{figure}
+        \center
+        \includegraphics[width=0.4\linewidth]{figures/pipeline/lefthandhog.jpg}
+        \caption{Hand features}
+        \label{fig:lefthandfeatures}
+\end{figure}
+
+A cutout of a hand from a image still contains some background pixels, because a hand will never fill a perfect square. These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In section \ref{sec:skinmodel} a binary mask for skin pixels is constructed. The binary inversion of this mask can be used again to remove the background. The result of this procedure can be seen in figure \ref{fig:gijs5_cutout}. To decrease the possibility that mislabeled skin pixels are removed by this mask, a small morphological dilate operation will increase the size of the hand cutout, but this will also introduce more noisy (background) pixels. 
 
 
 \subsection*{Histogram of Oriented Gradients}

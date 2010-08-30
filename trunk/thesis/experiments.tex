@@ -5,7 +5,9 @@
 
 
 \section{The dataset}
-A dataset was created to perform the experiments. In total there are 74 movies containing 20 different test subjects performing the complete sequence of 28 hand symbols. The movies where recorded with Sonic Gesture, with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in figure\ref{fig:hands_mirrored}, \ref{fig:hands_normal} and \ref{fig:hands_extra}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background, 3 where recorded with a complex background and 6 where recorded with the same complex background but also with a poster with skinlike colors.
+A dataset was constructed to perform the experiments. The dataset consists of movies with people performing all 28 hand poses. Per movie 28 frames where manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. In the beginning people where recorded performing the complete sequence 5 times, but this was taking too much time. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture, with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in figure\ref{fig:hands_mirrored}, \ref{fig:hands_normal} and \ref{fig:hands_extra}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background, 3 where recorded with a complex background and 6 where recorded with the same complex background but also with a poster with skinlike colors.
+
+
 
 \begin{table}
 \centering
@@ -40,9 +42,9 @@ A dataset was created to perform the experiments. In total there are 74 movies c
 \caption{Dataset details}
 \end{table}
 
-The dataset is manually labeled. For every sequence of frames where a hand pose is performed a frame number is labeled where the pose resembles the example the most. Figure\ref{fig:gijs5} is an example of the labeled frames.
+The dataset is manually labeled. For every sequence of frames where a hand pose is performed a frame number is labeled where the pose resembles the example the most. Figure\ref{fig:gijs5} is an example of the labeled frames. The train images used to train the classifier where extracted with Sonic Gesture
 
-Usually the 12 Curwen solfege hand symbols are performed in front of the torso as shown in Figure~\ref{fig:hands_normal}. To increase the number of hand poses to be recogniced, all 12 Curwen are also performed mirrored next to the body of the recorded subject, see Figure~\ref{fig:hands_mirrored}. Additionally four extra hand symbols have been added that are not part of the Curwen sequence, see Figure~\ref{fig:hands_extra}. These last four symbols are performed next to the head.
+Usually the 12 Curwen solfege hand symbols are performed in front of the torso as shown in Figure~\ref{fig:hands_normal}. To increase the number of hand poses to be recognized, all 12 Curwen are also performed mirrored next to the body of the recorded subject, see Figure~\ref{fig:hands_mirrored}. Additionally four extra hand symbols have been added that are not part of the Curwen sequence, see Figure~\ref{fig:hands_extra}. These last four symbols are performed next to the head.
 
 \section{Evaluation}
 
@@ -132,14 +134,132 @@ SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
 
 \subsection{Part II}
 
-For this set of experiments the Damerau–Levenshtein distance of a sequence of generated labels to the ground truth is calculated.
+For this set of experiments the Damerau-Levenshtein distance of a sequence of generated labels to the ground truth is calculated. This value is then divided by the number of labels, 28. A low value is equal to good performance, a high value to bad. The ground truth is a list of incremented integers from 1 to 28. Since some movies are 'polluted' with incorrect hand poses and other people walking through the screen this ground truth isn't really correct. But it is very difficult to impossible to construct a good ground truth in this case, and given the fact that the goal of the recorded movies was to have people perform the 28 hand poses sequentially this is a good alternative.
+
+simple: 0.27 average
+complex: 0.35 average
+
+ivo 0.08
+hanne 0.14
+gijs 0.18
+ork 0.18
+chu 0.19
+jasberb 0.23
+stratos 0.24
+victoria 0.24
+arjan 0.26
+peter 0.26
+anne 0.28
+michael 0.32
+gosia 0.37
+koen 0.38
+jasper  0.4
+bas 0.44
+roberto 0.47
+xiaong 0.49
+hamdi 0.49
+sil 0.52
+
+
+hanne1 9.0
+hanne2 0.0
+hanne3 1.0
+hanne4 7.0
+hanne5 2.0
+ivo1 2.0
+ivo2 3.0
+ivo3 2.0
+ivo4 3.0
+ivo5 1.0
+anne1 12.0
+anne2 9.0
+anne3 7.0
+anne4 8.0
+anne5 4.0
+arjan1 13.0
+arjan2 7.0
+arjan3 7.0
+arjan4 2.0
+arjan5 8.0
+gijs1 4.0
+gijs2 5.0
+gijs3 6.0
+gijs4 6.0
+gijs5 4.0
+ork1 6.0
+ork2 5.0
+ork3 4.0
+peter1 7.0
+peter2 8.0
+peter3 7.0
+peter4 9.0
+peter5 5.0
+
+roberto1 19.0
+roberto2 8.0
+roberto3 13.0
+xiaong1 17.0
+xiaong2 14.0
+xiaong3 10.0
+jasper1 19.0
+jasper2 13.0
+jasper3 6.0
+jasper4 6.0
+jasper5 12.0
+jasperb1 9.0
+jasperb2 5.0
+jasperb3 5.0
+
+gosia1 16.0
+gosia2 9.0
+gosia3 6.0
+hamdi1 14.0
+hamdi2 12.0
+hamdi3 15.0
+michael1 6.0
+michael2 8.0
+michael3 13.0
+
+sil1 14.0
+sil2 17.0
+sil3 13.0
+koen1 11.0
+koen2 9.0
+koen3 11.0
+bas1 15.0
+bas2 12.0
+bas3 9.0
+chu1 8.0
+chu2 6.0
+chu3 2.0
+stratos1 12.0
+stratos2 3.0
+stratos3 5.0
+victoria1 9.0
+victoria2 6.0
+victoria3 5.0
+
+
+
+
 
 
 \section{Implementation}
-OpenCV, QT, CMake, Liblo, open source, website
+Sonic Gesture has been implemented in C++. Almost all computer vision algorithms used in Sonic Gesture are part of OpenCV, an open source library made for this kind of software. For the graphical interface QT is used. Sonic Gesture has been release as Open Source software and is released under the Apache license. The software can be downloaded, modified and distributed freely from:
+
+http://code.google.com/p/sonic-gesture/
+
+The program can capture directly from a webcam or it can read movies with recorded material. It has 2 modes, one 'finder' mode where hand poses in the video stream are detected. The second mode is the 'capture' mode, which is used to label movies. When labeling a movie in this mode a text file is created with frame positions of the labels. This can later be used to extract the correct frame and extract training data for the classifier. This mode has been used a lot during the gathering of the dataset.
 
 \section{Time performance}
+A lot of effort has been put into getting Sonic Gesture as fast as possible. Initially Sonic Gesture was written in Python and used the Python API of OpenCV. Soon it became clear that Python was to limited to do high performance graphic processing so a switch to C++ was made. 
 
+The performance of Sonic Gesture depends on how fast the testing systems CPU power is, if the OpenCV IPP extention is used but also how fast the camera can capture frames. On a Macbook Pro, 2.4 GHz intel core 2 duo with 4 GB of memory using the build-in iSight as camera, processing one frame takes 65 ms on average. This is with the full dataset of 2072 datapoints with 3780 dimensions using the KNN classifier. KNN works fine with low numbers of datapoint, but with high numbers it starts to slow down. Still it is quite fast; around 25 ms on average. SVM will probably perform much faster with a high number of datapoints but we couldn't get the SVM implementation of OpenCV to work. An other expensive operation is the face detection algoritm, when tweaked it takes around 13 ms to locale a face in a image. Since a face position isn't required constantly this is done only every 10th frame, so valuable computation time is saved. An other surprisingly expensive operation is the resizing of a image. Resizing an image to a small size is a crucial part of the pipe line, because some operations on a big image will take too much time. But resizing a image using interpolation is a expensive operation. Where interpolation is not required, for example for rendering on the screen, it is disabled saving more computing time. 
+
+37.9\% KNN
+8.4\% color space convertion
+7.6\% image resizing
+2.3\% haar classifier (19% if not every 10th frame).
 
 \section{Discussion}
 As you can see there is a big difference in performance

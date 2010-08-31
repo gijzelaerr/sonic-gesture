@@ -136,108 +136,60 @@ SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
 
 For this set of experiments the Damerau-Levenshtein distance of a sequence of generated labels to the ground truth is calculated. This value is then divided by the number of labels, 28. A low value is equal to good performance, a high value to bad. The ground truth is a list of incremented integers from 1 to 28. Since some movies are 'polluted' with incorrect hand poses and other people walking through the screen this ground truth isn't really correct. But it is very difficult to impossible to construct a good ground truth in this case, and given the fact that the goal of the recorded movies was to have people perform the 28 hand poses sequentially this is a good alternative.
 
-simple: 0.27 average
-complex: 0.35 average
+simple: 0.27 average\\
+complex: 0.35 average\\
 
-ivo 0.08
-hanne 0.14
-gijs 0.18
-ork 0.18
-chu 0.19
-jasberb 0.23
-stratos 0.24
-victoria 0.24
-arjan 0.26
-peter 0.26
-anne 0.28
-michael 0.32
-gosia 0.37
-koen 0.38
-jasper  0.4
-bas 0.44
-roberto 0.47
-xiaong 0.49
-hamdi 0.49
-sil 0.52
+ivo 0.08\\
+hanne 0.14\\
+gijs 0.18\\
+ork 0.18\\
+chu 0.19\\
+jasberb 0.23\\
+stratos 0.24\\
+victoria 0.24\\
+arjan 0.26\\
+peter 0.26\\
+anne 0.28\\
+michael 0.32\\
+gosia 0.37\\
+koen 0.38\\
+jasper  0.4\\
+bas 0.44\\
+roberto 0.47\\
+xiaong 0.49\\
+hamdi 0.49\\
+sil 0.52\\
 
 
-hanne1 9.0
-hanne2 0.0
-hanne3 1.0
-hanne4 7.0
-hanne5 2.0
-ivo1 2.0
-ivo2 3.0
-ivo3 2.0
-ivo4 3.0
-ivo5 1.0
-anne1 12.0
-anne2 9.0
-anne3 7.0
-anne4 8.0
-anne5 4.0
-arjan1 13.0
-arjan2 7.0
-arjan3 7.0
-arjan4 2.0
-arjan5 8.0
-gijs1 4.0
-gijs2 5.0
-gijs3 6.0
-gijs4 6.0
-gijs5 4.0
-ork1 6.0
-ork2 5.0
-ork3 4.0
-peter1 7.0
-peter2 8.0
-peter3 7.0
-peter4 9.0
-peter5 5.0
+\begin{tabular}{rrrrrrr}
+\hline
+name	& 1 & 2 & 3 & 4 & 5 & normalized average \\
+\hline
+Anne	&	12.0	&	9.0		&	7.0	&	8.0	&	4.0	&	0.28\\
+Arjan	&	13.0	&	7.0		&	7.0	&	2.0	&	8.0	&	0.26\\
+Gijs	&	4.0		&	5.0		&	6.0	&	6.0	&	4.0	&	0.18\\
+Ivo		&	2.0		&	3.0		&	2.0	&	3.0	&	1.0	&	0.08\\
+Jasper 1	&	19.0	&	13.0	&	6.0	&	6.0	&	12.0 &	0.4\\
+Peter	&	7.0		&	8.0		&	7.0	&	9.0	&	5.0	&	0.26\\
+Hanne	&	9.0		&	0.0		&	1.0	&	7.0	&	2.0	&	0.14\\
+Jasper 2	&	9.0		&	5.0		&	5.0 & & & 0.23\\
+Ork		&	6.0		&	5.0		&	4.0	& & & 0.18\\
+Roberto	&	19.0	&	8.0		&	13.0 & & & 0.47\\
+Xiaong	&	17.0	&	14.0	&	10.0 & & & 0.49\\
+\hline
+Gosia	&	16.0	&	9.0		&	6.0 & & & 0.37\\
+Hamdi	&	14.0	&	12.0	&	15.0 & & & 0.49\\
+Michael	&	6.0		&	8.0		&	13.0 & & & 0.32\\
+Sil		&	14.0	&	17.0	&	13.0 & & & 0.52\\
+Victoria	&	9.0	&	6.0		&	5.0 & & & 0.24\\
+Chu		&	8.0		&	6.0		&	2.0 & & & 0.19\\
+\hline
+Koen	&	11.0	&	9.0		&	11.0 & & & 0.38\\
+Bas		&	15.0	&	12.0	&	9.0 & & & 0.44\\
+Stratos	&	12.0	&	3.0		&	5.0 & & & 0.24\\
 
-roberto1 19.0
-roberto2 8.0
-roberto3 13.0
-xiaong1 17.0
-xiaong2 14.0
-xiaong3 10.0
-jasper1 19.0
-jasper2 13.0
-jasper3 6.0
-jasper4 6.0
-jasper5 12.0
-jasperb1 9.0
-jasperb2 5.0
-jasperb3 5.0
-
-gosia1 16.0
-gosia2 9.0
-gosia3 6.0
-hamdi1 14.0
-hamdi2 12.0
-hamdi3 15.0
-michael1 6.0
-michael2 8.0
-michael3 13.0
-
-sil1 14.0
-sil2 17.0
-sil3 13.0
-koen1 11.0
-koen2 9.0
-koen3 11.0
-bas1 15.0
-bas2 12.0
-bas3 9.0
-chu1 8.0
-chu2 6.0
-chu3 2.0
-stratos1 12.0
-stratos2 3.0
-stratos3 5.0
-victoria1 9.0
-victoria2 6.0
-victoria3 5.0
+\hline
+\end{tabular}
 
 
 

@@ -3,13 +3,13 @@
 \chapter{Body Part Detection}
 \label{ch:bodyparts}
 
-To perform hand pose estimation of a person in a image his or her hands need to be localized in the image first. Since hands can have different shapes, different orientations, specific color profiles and shapes per person this is a very difficult task. One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin model has been build for this purpose\cite{Jones99statisticalcolor}, but using these values for searching in a image is quite sensitive for error. Skin color can vary dramatically because of lightning conditions but also the cameras properties can color a image. It would be much better to have a way where the skin color the hands could be extracted from the target image itself. This can be done by detecting the subjects face in an image.
+To perform hand pose estimation of a person in a image his or her hands need to be localized in the image first. Since hands can have different shapes, different orientations, specific color profiles and shapes per person this is a very difficult task. One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin model has been build for this purpose\cite{Jones1999}, but using these values for searching in a image is quite sensitive for error. Skin color can vary dramatically because of lightning conditions but also the cameras properties can color a image. It would be much better to have a method for obtaining the skin color of the hands from a image itself. This can be done by detecting the subjects face in an image.
 
 \section{Building a skin model}
 \label{sec:skinmodel}
 
-\subsection*{Face detection - Haar classifier}
-Finding faces in a image is a rather well solved problem. Faces are easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and nose. When comparing different faces, these features are - with a small variation - on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar-like wavelet\cite{Lienhart02anextended}. This is a method for detecting faces that doesn't rely on color information. This method is the same as described here\cite{Stenger06template-basedhand}, but in this case the HSV color space is used.
+\subsection*{Face detection \- Haar classifier}
+Finding faces in a image is a rather well solved problem. Faces are easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and a nose. When comparing different faces, these features are \- with a small variation \- on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. Using a haar classifier to search for a face and obtain a skin color profile has been done before with the yab color space \cite{Stenger2006}, but in this case the HSV color space is used.
 
 
 \subsection*{Color space conversion}
@@ -43,7 +43,7 @@ The RGB color space is transformed into the HSV color space using the following 
 So first the input 3 channel RGB image is transformed into a 3 channel HSV image, where the brightness channel is discarded. From the hue and saturation channel together with the face region we can build a histogram which will represent a statistical skin model.
 
 
-MISSCHIEN WAT MEER OVER DEZE PAPERS:\cite{Bradski98computervision}, \cite{Cooper07largelexicon}. MAAR IK KAN NIET ECHT IETS VINDEN OVER DAT HUE SAT ECHT ZOVEEL BETER IS DAN ANDERE METHODES. In \cite{Stenger06template-basedhand} DOEN ZE PRECIES HET ZELFDE MAAR DAN MET YUV.
+MISSCHIEN WAT MEER OVER DEZE PAPERS:\cite{Bradski1998}, \cite{Cooper2007}. MAAR IK KAN NIET ECHT IETS VINDEN OVER DAT HUE SAT ECHT ZOVEEL BETER IS DAN ANDERE METHODES. In \cite{Stenger2006} DOEN ZE PRECIES HET ZELFDE MAAR DAN MET YUV.
 
 
 \subsection*{Skin color histogram}
@@ -69,7 +69,7 @@ A morphologic closing operation of A by B is obtained by the dilation of A by B,
 \section{Object localization}
 
 \subsection*{Pixel grouping, contour extraction}
-To be able to say something useful about groups of pixels, one need to know which pixels belong together. This can be done by clustering. In this case clustering is performed by grouping pixels together to touch horizontally and vertically. This is done with the algorithm described in \cite{Suzuki85}. This algorithm also constructs a list of pixels that form the border of a group. This list of pixels can be used for many interesting things, like finding the top position of the group in a fast way, or to find out if a unidentified pixel is inside the group. Clustering contour extraction\cite{Suzuki85}.
+To be able to say something useful about groups of pixels, one need to know which pixels belong together. This can be done by clustering. In this case clustering is performed by grouping pixels together to touch horizontally and vertically. This is done with the algorithm described in \cite{Suzuki1985}. This algorithm also constructs a list of pixels that form the border of a group. This list of pixels can be used for many interesting things, like finding the top position of the group in a fast way, or to find out if a unidentified pixel is inside the group. Clustering contour extraction\cite{Suzuki1985}.
 
 From the contours of the group a square region of interest can be defined by calculating the outer borders of the group. This window will be called the hand window.
 

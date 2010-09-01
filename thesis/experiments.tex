@@ -52,11 +52,25 @@ Usually the 12 Curwen solfege hand symbols are performed in front of the torso a
 \section{Results}
 
 \subsection{part I}
-For the number of neighbours for KNN a small number of tests where run, and a choice was made for a value of 3. higher values untill around 10 yield similar performance, depending on the test. Lower than 3 or higher than 10 will decrease performance.
+For the number of neighbors for K-NN a small number of tests where run, and a value between 3 and 10 for N yielded similar performance. Since a lower number of $k$ can give better performance $k=3$ was used for all experiments.
 
-When PCA was used the smallest eigenvectors where removed so 95\% of the original variance was kept.
+When PCA was performed on the dataset the smallest eigenvectors where removed so 95\% of the original variance was kept.
 
-For SVM the radial basis function (RBF) kernel is used, since the libsvm documentation states that is a good kernel to use that usually gives good performance. The $c$ and $\gamma$ values for SVM where found by an extensive grid search on the 'per person' tests with only the simple movies performed on a small cluster in the ranges $2.^(-3:2:15)$ for $c$ and $2.^(-15:2:3)$ for $\gamma$. The most optimal values are $\gamma$ = 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was choosen.
+For SVM the radial basis function (RBF) kernel is used, since the libsvm documentation states that is a good kernel to use that usually gives good performance. The $c$ and $\gamma$ values for SVM where found by an extensive grid search on the 'per person' tests with only the simple movies performed on a small cluster in the ranges $2.^(-3:2:15)$ for $c$ and $2.^(-15:2:3)$ for $\gamma$. The most optimal values are $\gamma$ = 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
+
+The Curwen hand symbols that are closely related in a musical scale way are quite similar, for example 'Re' and 'Ri' (figure\ref{fig:reri}). It is expected that a lot of misclassifications will be caused by this similarity. To investigate the impact of this issue, 2 different scores are calculated, one for the major scale and one for the full scale. The full scale threats every class as a single class, for the major scale the notes in the major scale and their corresponding similar notes are joined into one class. For example Do an
+
+\begin{figure}[h]
+  \centering
+\subfloat[Re]{\label{fig:hand_2}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/2.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Ri]{\label{fig:hand_3}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/3.jpg}}
+  \caption{The hand symbols for Re and Ri}
+  \label{fig:reri}
+\end{figure}
+
+
+
 
 Doing PCA and removing eigenvectors untill 0.95 variance on the simple data set will reduce to  594 dimensions (from 3780);
 complex + simple: 688
@@ -124,11 +138,11 @@ SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
 \label{fig:confusion}
 \includegraphics[width=\linewidth]{confmat/confusion.jpg}
 \end{center}
-\caption{confusion matrix for simple set, KNN3, per film}
+\caption{confusion matrix, SVM $\chi^2$, n-fold, per film simple set}
 \end{figure}
 
-
-
+%>> sum((ones(28,28)-eye(28)).* C)
+%6     6     7     6    17     5    14     1     0     3     5     3     3     %1     6    13    10     5     6     5     2     8    10     4     0     0     %1    12
 
 
 
@@ -246,13 +260,6 @@ As you can see there is a big difference in performance
 \subfloat[Li]{\label{fig:hand_10}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/10.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[Ti]{\label{fig:hand_11}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/11.jpg}}
-\end{center}
-\caption{All mirrored Curwen hand poses}
-\label{fig:hands_mirrored}
-\end{figure}
-
-\begin{figure}[htbp]
-\begin{center}
 \subfloat[Do]{\label{fig:hand_12}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/12.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[Di]{\label{fig:hand_13}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/13.jpg}}
@@ -276,14 +283,6 @@ As you can see there is a big difference in performance
 \subfloat[Li]{\label{fig:hand_22}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/22.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[Ti]{\label{fig:hand_23}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/23.jpg}}
-\end{center}
-\caption{All Curwen hand poses}
-\label{fig:hands_normal}
-\end{figure}
-
-
-\begin{figure}[htbp]
-\begin{center}
 \subfloat[Extra1]{\label{fig:hand_24}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/24.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[Extra2]{\label{fig:hand_25}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/25.jpg}}

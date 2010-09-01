@@ -247,7 +247,7 @@ void MainWindow::heartBeat() {
     int MINWAIT = 4;
     int wait = (1000/settings->FPS) - elapsed;
     wait = MAX(wait, MINWAIT);
-        //qDebug() << elapsed << "\t" << wait;
+    qDebug() << elapsed << "\t" << wait;
     QTimer::singleShot(wait, this, SLOT(heartBeat()));
 };
 

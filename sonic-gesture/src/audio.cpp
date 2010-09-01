@@ -7,12 +7,15 @@ Audio::Audio() {
     triggerRight = false;
 }
 
-bool Audio::send(int left, int right, float leftPos, float rightPos) {
+bool Audio::send(int left, int right, float leftPos, float rightPos, float leftSize, float rightSize) {
     float scaledLeft = float(left+1)/28;
     float scaledRight = float(right+1)/28;
 
     lo_send(connection, "/sonicgesture/leftPos", "f", leftPos);
     lo_send(connection, "/sonicgesture/rightPos", "f", rightPos);
+
+    lo_send(connection, "/sonicgesture/leftSize", "f", leftSize);
+    lo_send(connection, "/sonicgesture/rightSize", "f", rightSize);
 
     if (left > -1) {
         if (!triggerLeft) {

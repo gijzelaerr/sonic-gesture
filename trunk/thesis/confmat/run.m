@@ -21,7 +21,7 @@ set(gca,'YTick',1:28);
 set(gca, 'XTickLabel',{'do1','di1','re1','ri1','mi1','fa1','fi1','sol1','si1','la1','li1','ti1','do2','di2','re2','ri2','mi2','fa2','fi2','sol2','si2','la2','li2','ti2','I','II','III','IV'});
 set(gca, 'YTickLabel',{'do1','di1','re1','ri1','mi1','fa1','fi1','sol1','si1','la1','li1','ti1','do2','di2','re2','ri2','mi2','fa2','fi2','sol2','si2','la2','li2','ti2','I','II','III','IV'});
 set(gcf,'Resize', 'off');
-%set(gcf, 'Position', [1 1 2000 600]);
+set(gcf, 'Position', [1 1 1000 600]);
 set(gca, 'FontSize', 7);
 
 

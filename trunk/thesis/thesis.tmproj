@@ -22,7 +22,7 @@
 			<key>filename</key>
 			<string>intro.tex</string>
 			<key>lastUsed</key>
-			<date>2010-08-31T13:56:04Z</date>
+			<date>2010-09-01T15:07:52Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -34,13 +34,13 @@
 			<key>filename</key>
 			<string>thesis.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-01T13:16:33Z</date>
+			<date>2010-09-01T15:10:47Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>bodyparts.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-01T13:16:40Z</date>
+			<date>2010-09-01T15:10:47Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -48,7 +48,7 @@
 			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-01T12:00:20Z</date>
+			<date>2010-09-01T14:46:30Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -60,14 +60,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>28</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>121</integer>
+				<integer>215</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>76</integer>
+			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>94</integer>
+			<integer>182</integer>
 		</dict>
 		<key>conc.tex</key>
 		<dict>
@@ -104,14 +104,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>384</integer>
+				<integer>34</integer>
 				<key>line</key>
-				<integer>199</integer>
+				<integer>143</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>93</integer>
+			<integer>91</integer>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>
@@ -148,14 +148,30 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>15</integer>
+				<integer>16</integer>
 				<key>line</key>
-				<integer>20</integer>
+				<integer>17</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>13</integer>
+				<key>line</key>
+				<integer>17</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>19</integer>
+				<key>line</key>
+				<integer>17</integer>
+			</dict>
 		</dict>
 		<key>thesis.bib</key>
 		<dict>
@@ -194,12 +210,12 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>22</integer>
+				<integer>76</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>7</integer>
+			<integer>22</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -215,6 +231,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{38, 7}, {817, 1020}}</string>
+	<string>{{702, 8}, {817, 1020}}</string>
 </dict>
 </plist>

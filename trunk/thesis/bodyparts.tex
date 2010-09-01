@@ -152,7 +152,21 @@ To be able to say something useful about groups of pixels, one need to know whic
 From the contours of the group a square region of interest can be defined by calculating the outer borders of the group. This window will be called the hand window.
 
 \subsection*{Blob labeling}
-Now we have grouped skin pixels (blobs) we need to know what group of skin pixels is what body part. It is assumed that there is only one person in the image and that the body is covert with clothing except for the head an hands. In a optimal situation this would result in 3 blobs, 2 for the hands and one for the head. For one blob it is already known what body part it is - the face. In the face detection phase we found a face in the image, so the blob containing the center point of the detected phase is the face blob. Usually the left hand is on the left of the head and the right hand on the right side. If there are 3 blobs, and the face is the middle blob, we labeling is done. But unfortunately in practice this isn't always the case. Often there are more or less blobs, because for example an object in the background has skin-like colors or one hand is difficult to detect. Also the order of hands and head can change, a left hand doesn't necessarily need to appear on the left side of a head. In this case some more intelligent decision process. 
+
+\subsection*{morphological operations}
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{figures/pipeline/contours.jpg}
+ \end{center}
+  \vspace{-20pt}
+	\caption{Labeled blobs}
+	\label{fig:contours}
+  \vspace{-10pt}
+\end{wrapfigure}
+
+
+Now we have grouped skin pixels (blobs) we need to know what group of skin pixels is what body part. It is assumed that there is only one person in the image and that the body is covert with clothing except for the head an hands. In a optimal situation this would result in 3 blobs, 2 for the hands and one for the head. For one blob it is already known what body part it is - the face. In the face detection phase we found a face in the image, so the blob containing the center point of the detected phase is the face blob. Usually the left hand is on the left of the head and the right hand on the right side. If there are 3 blobs, and the face is the middle blob, we labeling is done. But unfortunately in practice this isn't always the case. Often there are more or less blobs, because the background has skin-like color, a hand is difficult to detect or is occluded. Also the order of hands and head can change, a left hand doesn't necessarily need to appear on the left side of a head. In this case some more intelligent decision process. 
 
 First the surface of each blob is calculated and then the blobs are sorted by size. The blob containing the head is removed from the list, since we already know this label. Also very small blobs are removed, because these are probably noise. The removal threshold surface is set to:
 
@@ -163,6 +177,46 @@ T = (\frac{h}{20})^2
 All blobs smaller than this value are discarded. 
 
 Assuming the hands or the second biggest skin like objects in the image, the 2 or less biggest blobs are taken from the list and the rest is also discarded. If there is no biggest blob, the labeling is finished - there is only a head in the image. If there is one blob left, the left or right position relative to the head is the hand label. If there are 2 hands, there are 3 possible situations, 1 where the head is in the middle which is already described. If both hands are on the left of the head, the most outer left blob is labeled as left and the other as right. This is visa versa for right.
+
+\begin{algorithm}
+\caption{Blob labeling heuristics}
+\label{blobheuristics}
+\begin{algorithmic}
+	\STATE head $=$ left $=$ right $=$ None
+	\STATE faceCenter $=$ getFaceCenter()
+	\STATE blobs $=$ getContours()
+	\STATE limbs $=$ []
+	
+	\FOR{blob in blobs}
+		\IF{blob.contains(faceCenter)}
+			\STATE head $=$ blob
+		\ELSE
+			\STATE blobs.append(blob)
+		\ENDIF
+	\ENDFOR
+
+	\STATE blobs $=$ sortBySize(blobs)
+	\STATE blobs $=$ blobs[-2:]
+	\STATE blobs $=$ sortByXPosition(blobs)
+
+	\STATE $n = $ len(blobs)
+	\IF{$n == 2$}
+	    \STATE left $=$ blobs[0]
+	    \STATE right $=$ blobs[1]
+	\ELSE
+		\IF{$n == 1$}
+		    \IF{blobs\[0\].center\[0\] $<$ face\_center\[0\]}
+		        \STATE left $=$ blobs[0]
+		    \ELSE
+		        \STATE right $=$ blobs[0]
+			\ENDIF
+		\ENDIF
+	\ELSE
+	    \STATE print("didn't find any limbs")
+	\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
 
 
 \subsection*{Blob label stabilization}

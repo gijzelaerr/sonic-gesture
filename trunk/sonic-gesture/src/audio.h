@@ -6,7 +6,7 @@
 class Audio {
 public:
     Audio();
-    bool send(int left, int right, float leftPos, float rightPos);
+    bool send(int left, int right, float leftPos, float rightPos, float leftSize, float rightSize);
 
     float leftState;
     float rightState;

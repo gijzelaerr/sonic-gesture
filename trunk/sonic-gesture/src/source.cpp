@@ -24,6 +24,10 @@ bool Source::open(int device) {
     cap = cv::VideoCapture(device);
     sourceMode = DEVICE;
     movieLocation = QFileInfo();
+	
+
+    cap.set(CV_CAP_PROP_FRAME_WIDTH, 320);
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT, 280);
     return init();
 
 }

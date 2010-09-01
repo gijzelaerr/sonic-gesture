@@ -37,7 +37,7 @@ private:
 
     void draw_fps(int fps);
     void setError(QString);
-    void audioOut(int left, int right, float leftPos, float rightPos);
+    void audioOut(int left, int right, float leftPos, float rightPos, float leftSize, float rightSize);
 };
 
 

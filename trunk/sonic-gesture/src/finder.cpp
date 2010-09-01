@@ -111,9 +111,8 @@ bool Finder::step(Mat& big) {
 
     float lefty = float(bodyparts.left_hand.position.y-(bodyparts.left_hand.position.height/2))/big_size.height;
     float righty = float(bodyparts.right_hand.position.y-(bodyparts.right_hand.position.height/2))/big_size.height;
-    //float leftsize = (bodyparts.left_hand.blob.area - settings->cvWorkWinHight * 450) / 1000 * settings->cvWorkWinHight;
-    float leftsize = (bodyparts.left_hand.blob.area - 250.0 * settings->cvWorkWinHight) / (250.0 * settings->cvWorkWinHight);
-    float rightsize = (bodyparts.left_hand.blob.area - settings->cvWorkWinHight * 450) / 1000 * settings->cvWorkWinHight;
+    float leftsize = (bodyparts.left_hand.blob.area - 20.0 * settings->cvWorkWinHight) / (15.0 * settings->cvWorkWinHight);
+    float rightsize = (bodyparts.left_hand.blob.area - 20.0 * settings->cvWorkWinHight) / (15.0 * settings->cvWorkWinHight);
     audioOut(left_index, right_index, lefty, righty, leftsize, rightsize);
 
 

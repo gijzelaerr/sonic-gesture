@@ -3,17 +3,42 @@
 \chapter{Body Part Detection}
 \label{ch:bodyparts}
 
-To perform hand pose estimation of a person in a image his or her hands need to be localized in the image first. Since hands can have different shapes, different orientations, specific color profiles and shapes per person this is a very difficult task. One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin model has been build for this purpose\cite{Jones1999}, but using these values for searching in a image is quite sensitive for error. Skin color can vary dramatically because of lightning conditions but also the cameras properties can color a image. It would be much better to have a method for obtaining the skin color of the hands from a image itself. This can be done by detecting the subjects face in an image.
+To perform hand pose estimation of a person in a image, hands need to be localized in the image first. Hands are very can have different appearances and different orientations this is a very difficult task. Also hand size and shape but also skin color are different per person. One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin color model based on average skin color has been constructed for this purpose\cite{Jones1999}, but this method is sensitive for error when the skin is colored by a light source. It would be much better to have a method for obtaining the skin color of the hands from a image itself. This can be done by extracting the a skin model from a face, which is much easier to detect.
 
 \section{Building a skin model}
 \label{sec:skinmodel}
 
 \subsection*{Face detection \- Haar classifier}
-Finding faces in a image is a rather well solved problem. Faces are easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and a nose. When comparing different faces, these features are \- with a small variation \- on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. Using a haar classifier to search for a face and obtain a skin color profile has been done before with the yab color space \cite{Stenger2006}, but in this case the HSV color space is used.
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{figures/pipeline/detected.jpg}
+ \end{center}
+  \vspace{-20pt}
+  \caption{Face detection}
+  \label{fig:face_detection}
+  \vspace{-10pt}
+\end{wrapfigure}
+
+
+Finding faces in a image is a rather well solved problem. Faces are easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and a nose. When comparing different faces, these features are \- with a small variation \- on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position.  Using a haar classifier to search for a face and obtain a skin color profile has been done before with the lab color space \cite{Stenger2006}, but in this case the HSV color space is used.
 
 
 \subsection*{Color space conversion}
-Usually pixel values of a image are stored in the Red, Green Blue (RGB) format. Advantages can be gained by converting this color space into an other so, for example thresholding on one or more channels or even leaving one channel out gets a different meaning. One particular color space that is interesting for this application is the Hue Saturation Value (HSV) color space. HSV space separates out Hue (color) from Saturation (how concentrated the color is) and from Value (brightness). When a subject is lighted by a light source with uniform hue distribution, the light doesn't change the hue or saturation of the subject. The only thing that will change is the intensity, which is changing because of the light source's intensity, distance or (self casted) shadow. Since we want to extract hand pixels independent of the lightening intensity, we can ignore this channel and only use the hue and saturation.
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{figures/hsv.png}
+ \end{center}
+  \vspace{-20pt}
+	\caption{The Hue, Saturation, Value color space}
+	\label{fig:hsv}
+  \vspace{-10pt}
+\end{wrapfigure}
+
+Usually, pixel values of a image are stored in the Red, Green Blue (RGB) color space where specific colors can be represented with combinations of these primary colors. A more intuitive color space is Hue Saturation Value (HSV), which comes closes to how humans perceive color. The hue (color) from Saturation (how concentrated the color is) and from Value (brightness) HSV When a subject is lighted by a light source with uniform hue distribution, the light doesn't change the hue or saturation of the subject. The only thing that will change is the intensity, which is changing because of the light source's intensity, distance or (self casted) shadow. Since we want to extract hand pixels independent of the illumination intensity, we can ignore this channel and only use the hue and saturation.
 
 As many things in computer vision in theory this should work, but in practice it doesn't or not perfect. A light source never has a uniform distribution and \emph{will} color the subject. But in our case that doesn't matter, since all skin pixels in the image will have the same shift in the hue spectrum.
 
@@ -33,36 +58,89 @@ The RGB color space is transformed into the HSV color space using the following 
   \end{array} \right.\\
 \end{eqnarray*}
 
-\begin{figure}[htbp]
-	\center
-	\includegraphics[width=0.4\linewidth]{figures/hsv.png}
-	\caption{The Hue, Saturation, Value color space}
-	\label{fig:hsv}
+
+The input 3 channel RGB image is transformed into a 3 channel HSV image, after which the brightness channel is discarded. From the hue and saturation channel together with the face region we can build a histogram which will represent a statistical skin model.
+
+\begin{figure}[h]
+  \centering
+\subfloat[hue channel]{\label{fig:hue}\includegraphics[width=0.3\linewidth]{figures/pipeline/hue.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[saturation channel]{\label{fig:saturation}\includegraphics[width=0.3\linewidth]{figures/pipeline/saturation.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[value channel]{\label{fig:value}\includegraphics[width=0.3\linewidth]{figures/pipeline/value.jpg}}
+  \caption{The HSV channels}
+  \label{fig:hsvchannels}
 \end{figure}
 
-So first the input 3 channel RGB image is transformed into a 3 channel HSV image, where the brightness channel is discarded. From the hue and saturation channel together with the face region we can build a histogram which will represent a statistical skin model.
 
 
-MISSCHIEN WAT MEER OVER DEZE PAPERS:\cite{Bradski1998}, \cite{Cooper2007}. MAAR IK KAN NIET ECHT IETS VINDEN OVER DAT HUE SAT ECHT ZOVEEL BETER IS DAN ANDERE METHODES. In \cite{Stenger2006} DOEN ZE PRECIES HET ZELFDE MAAR DAN MET YUV.
 
 
 \subsection*{Skin color histogram}
-A histogram is a n-dimensional matrix, where every dimension is divided into bins. In our case there are 2 dimensions, one for hue and one for saturation. A bin corresponds to a range of values for every pixel in the source image. A histogram is constructed by creating an empty matrix. For every pixel in the image the corresponding bin is determined, and the value of the bin is increased by one. The result is a matrix with the count of all the hue and saturation combinations in the source image. There are not really optimal values for the number of bins, around 30 for each is good.\marginpar{WHY}
 
-When all pixels are evaluated, the histogram is normalized - all values are divided by the sum of all bins. This way when all values are added together, the sum will be equal to 1. This makes the histogram independent of the image size, and each value represents a 'skin probability'. Figure\ref{fig:pipe_hist} is a histogram of face pixels.
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{figures/pipeline/histogram.png}
+ \end{center}
+  \vspace{-20pt}
+	\caption{A histogram of face pixels}
+	\label{fig:histogram}
+  \vspace{-10pt}
+\end{wrapfigure}
+
+
+The skin color model is represented in a 2 dimensional histogram, where the first dimension is Hue and the second is Saturation. The histogram is filled with the values from the detected face region. After, the histogram is normalized - all values are divided by the sum of all bins. This makes the histogram independent of the original image size, and each histogram bin value represents a 'skin probablility'.
+
+When all pixels are evaluated, the histogram is normalized - all values are divided by the sum of all bins. This way when all values are added together, the sum will be equal to 1. This makes the histogram independent of the image size, and each value represents a 'skin probability'. Figure\ref{fig:histogram} is a histogram of face pixels.
 
 \subsection*{Back projection}
-A back projection is the combination of an image and a histogram. The result is a new single channel image. All pixels in the input image are iterated and the corresponding bins are looked up in the histogram. The pixel in the same position in the new image is replaced with the value from the histogram. If the histogram is a skin color histogram, the resulting image will have high values for pixels that are skin-like pixels, and low values for other pixels. The result of the process can be seen in Figure\ref{fig:pipe_bp}.
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{figures/pipeline/backproject.jpg}
+ \end{center}
+  \vspace{-20pt}
+	\caption{Backprojection}
+	\label{fig:backproject}
+  \vspace{-10pt}
+\end{wrapfigure}
+
+
+A back projection is the combination of an image and a histogram. The result is a new single channel image. All pixels in the input image are iterated and the corresponding bins are looked up in the histogram. The pixel in the same position in the new image is replaced with the value from the histogram. If the histogram is a skin color histogram, the resulting image will have high values for pixels that are skin-like pixels, and low values for other pixels. The result of the process can be seen in Figure\ref{fig:backproject}.
 
 
 \subsection*{Threshold}
-To binary label every pixel to be skin color or not, we need to define a way of doing this automatically. The easiest way to accomplish this is by defining a threshold. All pixel values below a certain threshold are replaced with false or 0, all above this threshold will be replaced with true or 1. This results in a binary image with labels for (non) skin pixels. This method introduces one parameter - the threshold for going from the probabilistic domain to the binary domain.
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{figures/pipeline/thresholded.jpg}
+ \end{center}
+  \vspace{-20pt}
+	\caption{Thresholded image}
+	\label{fig:threshold}
+  \vspace{-10pt}
+\end{wrapfigure}
+
+
+To label pixel to be skin color or not, we need to define a way of doing this automatically. The easiest way to accomplish this is by defining a threshold. All pixel values below a certain threshold are replaced with false or 0, all above this threshold will be replaced with true or 1. This results in a binary image with labels for (non) skin pixels. This introduces one parameter - the threshold for going from the probabilistic domain to the binary domain.
+
+\subsection*{smoothing}
 
 
 \subsection*{morphological operations}
-until now each pixel has been processed independently, and the information in surrounding pixels is ignored. In natural images, very strong gradients (changes from one pixel to the other) are rare. Pixel values close to each other in the image are usually also close to each other in the HSV domain. This is also true for skin like pixels and non skin like pixels. In other words said; if a pixel is for example a skin pixel, then the neighbors are probably also skin pixels and the opposite. To incorporate this implicit information the morphological operations can be used. Also pixels can be noisy, caused by the camera or environment. The pixel value combined (smoothed) with the pixels surrounding the pixel can reduce the influence of this noise. 
-
-There are 2 basic morphological operations which can be used separately or in sequence - the erode operation and the dilate operation which are strongly related. The input for the operations is a binary image and a kernel. A kernel can be any 2D binary matrix, but usually an elliptic shape is used. When performing the erode operation on a input image $A$ with kernel $K$, all false pixels in $A$ are iterated. In every iteration the surrounding pixels of the current iterated pixel are replaced with the false values in $K$, with the center of $K$ as relative point of the current iteration point. The result is that the binary true shapes in $A$ are 'eroded'. This is the same for dilation, but the opposite way. One could also say that in the case of dilation the background, or false pixels are 'eroded'.
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{figures/pipeline/closed.jpg}
+ \end{center}
+  \vspace{-20pt}
+	\caption{Morphologically closed}
+	\label{fig:closed}
+  \vspace{-10pt}
+\end{wrapfigure}
 
 A morphologic closing operation of A by B is obtained by the dilation of A by B, followed by erosion of the resulting structure by B. The result of performing this operation is that small holes in the binary image are removed, and edges are smoothed.
 
@@ -185,7 +263,7 @@ The face detection is one of the most expensive operations in the processing cha
 \hspace{0.03\linewidth}
 \subfloat[value channel]{\label{fig:value}\includegraphics[width=0.3\linewidth]{figures/pipeline/value.jpg}}
 \hspace{0.03\linewidth}
-\subfloat[face detection]{\label{fig:pipe_detected}\includegraphics[width=0.3\linewidth]{figures/pipeline/detected.jpg}}
+\subfloat[face detection]{\includegraphics[width=0.3\linewidth]{figures/pipeline/detected.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[Face color histogram]{\label{fig:pipe_hist}\includegraphics[width=0.3\linewidth]{figures/pipeline/histogram.png}}
 \hspace{0.03\linewidth}

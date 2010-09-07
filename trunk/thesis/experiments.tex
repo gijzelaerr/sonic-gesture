@@ -5,7 +5,7 @@
 
 
 \section{The dataset}
-A dataset was constructed to perform the experiments. The dataset consists of movies with people performing all 28 hand poses. Per movie 28 frames where manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. In the beginning people where recorded performing the complete sequence 5 times, but this was taking too much time. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture, with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in figure\ref{fig:hands_mirrored}, \ref{fig:hands_normal} and \ref{fig:hands_extra}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background, 3 where recorded with a complex background and 6 where recorded with the same complex background but also with a poster with skinlike colors.
+A dataset was constructed to perform the experiments. The dataset consists of movies with people performing all 28 hand poses. Per movie 28 frames where manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. In the beginning people where recorded performing the complete sequence 5 times, but this was taking too much time. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture, with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in figure\ref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background, 3 where recorded with a complex background and 6 where recorded with the same complex background but also with a poster with skinlike colors.
 
 
 
@@ -44,7 +44,7 @@ A dataset was constructed to perform the experiments. The dataset consists of mo
 
 The dataset is manually labeled. For every sequence of frames where a hand pose is performed a frame number is labeled where the pose resembles the example the most. Figure\ref{fig:gijs5} is an example of the labeled frames. The train images used to train the classifier where extracted with Sonic Gesture
 
-Usually the 12 Curwen solfege hand symbols are performed in front of the torso as shown in Figure~\ref{fig:hands_normal}. To increase the number of hand poses to be recognized, all 12 Curwen are also performed mirrored next to the body of the recorded subject, see Figure~\ref{fig:hands_mirrored}. Additionally four extra hand symbols have been added that are not part of the Curwen sequence, see Figure~\ref{fig:hands_extra}. These last four symbols are performed next to the head.
+Usually the 12 Curwen solfege hand symbols are performed in front of the torso as shown in Figure~\ref{fig:hands}. To increase the number of hand poses to be recognized, all 12 Curwen are also performed mirrored next to the body of the recorded subject, see Figure~\ref{fig:hands}. Additionally four extra hand symbols have been added that are not part of the Curwen sequence, see Figure~\ref{fig:hands}. These last four symbols are performed next to the head.
 
 \section{Evaluation}
 
@@ -62,9 +62,9 @@ The Curwen hand symbols that are closely related in a musical scale way are quit
 
 \begin{figure}[h]
   \centering
-\subfloat[Re]{\label{fig:hand_2}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/2.jpg}}
+\subfloat[Re]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/2.jpg}}
 \hspace{0.03\linewidth}
-\subfloat[Ri]{\label{fig:hand_3}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/3.jpg}}
+\subfloat[Ri]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/3.jpg}}
   \caption{The hand symbols for Re and Ri}
   \label{fig:reri}
 \end{figure}
@@ -260,6 +260,7 @@ As you can see there is a big difference in performance
 \subfloat[Li]{\label{fig:hand_10}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/10.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[Ti]{\label{fig:hand_11}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/11.jpg}}
+\hspace{0.03\linewidth}
 \subfloat[Do]{\label{fig:hand_12}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/12.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[Di]{\label{fig:hand_13}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/13.jpg}}
@@ -283,6 +284,7 @@ As you can see there is a big difference in performance
 \subfloat[Li]{\label{fig:hand_22}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/22.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[Ti]{\label{fig:hand_23}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/23.jpg}}
+\hspace{0.03\linewidth}
 \subfloat[Extra1]{\label{fig:hand_24}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/24.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[Extra2]{\label{fig:hand_25}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/25.jpg}}
@@ -291,8 +293,8 @@ As you can see there is a big difference in performance
 \hspace{0.03\linewidth}
 \subfloat[Extra4]{\label{fig:hand_27}\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/27.jpg}}
 \end{center}
-\caption{The extra hand poses}
-\label{fig:hands_extra}
+\caption{The hand poses}
+\label{fig:hands}
 \end{figure}
 
 

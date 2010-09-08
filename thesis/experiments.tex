@@ -148,6 +148,21 @@ SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
 
 \subsection{Part II}
 
+\begin{figure}[h]
+\begin{center}
+\subfloat[Without stabilizer]{
+	\includegraphics[width=0.3\linewidth]{figures/performance/anne1_unstable.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[With stabilizer]{
+	\includegraphics[width=0.3\linewidth]{figures/performance/anne1_stable.jpg}}
+	\hspace{0.03\linewidth}
+	\subfloat[Arbitrary movie with stabilizer]{
+		\includegraphics[width=0.3\linewidth]{figures/performance/heilige.jpg}}
+\end{center}
+\caption{Plots of labels per frame}
+\label{fig:performances}
+\end{figure}
+
 For this set of experiments the Damerau-Levenshtein distance of a sequence of generated labels to the ground truth is calculated. This value is then divided by the number of labels, 28. A low value is equal to good performance, a high value to bad. The ground truth is a list of incremented integers from 1 to 28. Since some movies are 'polluted' with incorrect hand poses and other people walking through the screen this ground truth isn't really correct. But it is very difficult to impossible to construct a good ground truth in this case, and given the fact that the goal of the recorded movies was to have people perform the 28 hand poses sequentially this is a good alternative.
 
 simple: 0.27 average\\

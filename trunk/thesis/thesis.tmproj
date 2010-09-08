@@ -34,9 +34,7 @@
 			<key>filename</key>
 			<string>thesis.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-07T13:06:17Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-09-08T10:43:11Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -48,7 +46,7 @@
 			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-07T13:06:16Z</date>
+			<date>2010-09-08T10:43:11Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -111,7 +109,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>248</integer>
+			<integer>0</integer>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>
@@ -156,20 +154,6 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>20</integer>
-		</dict>
-		<key>notes.tex</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>54</integer>
-				<key>line</key>
-				<integer>6</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
 		</dict>
 		<key>thesis.bib</key>
 		<dict>
@@ -219,7 +203,6 @@
 	<key>openDocuments</key>
 	<array>
 		<string>thesis.tex</string>
-		<string>notes.tex</string>
 		<string>intro.tex</string>
 		<string>bodyparts.tex</string>
 		<string>gestures.tex</string>
@@ -230,6 +213,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{460, 28}, {1221, 1000}}</string>
+	<string>{{285, 27}, {1221, 1000}}</string>
 </dict>
 </plist>

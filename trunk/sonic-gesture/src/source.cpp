@@ -163,8 +163,6 @@ bool Source::grab() {
         };
     };
 
-    cout << cap.get(CV_CAP_PROP_POS_FRAMES) << endl;
-
     if (!frame.data) {
         setError("can't grab frame");
         return false;

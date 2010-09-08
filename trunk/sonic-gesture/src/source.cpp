@@ -148,9 +148,11 @@ void Source::setLoop(bool loop) {
 bool Source::grab() {
     if (sourceMode != IMAGE) {
         // loop video
-        if (this->loop) {
-            if (cap.get(CV_CAP_PROP_POS_FRAMES) == (cap.get(CV_CAP_PROP_FRAME_COUNT)-2))
+        if (cap.get(CV_CAP_PROP_POS_FRAMES) == (cap.get(CV_CAP_PROP_FRAME_COUNT)-1)) {
+            if (this->loop)
                 setPos(0);
+            else
+                return false;
         };
 
         try {
@@ -160,6 +162,8 @@ bool Source::grab() {
             return false;
         };
     };
+
+    cout << cap.get(CV_CAP_PROP_POS_FRAMES) << endl;
 
     if (!frame.data) {
         setError("can't grab frame");

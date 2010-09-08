@@ -157,6 +157,20 @@
 			<key>firstVisibleLine</key>
 			<integer>20</integer>
 		</dict>
+		<key>notes.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>54</integer>
+				<key>line</key>
+				<integer>6</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>thesis.bib</key>
 		<dict>
 			<key>caret</key>
@@ -205,6 +219,7 @@
 	<key>openDocuments</key>
 	<array>
 		<string>thesis.tex</string>
+		<string>notes.tex</string>
 		<string>intro.tex</string>
 		<string>bodyparts.tex</string>
 		<string>gestures.tex</string>
@@ -213,7 +228,7 @@
 		<string>conc.tex</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
-	<false/>
+	<true/>
 	<key>windowFrame</key>
 	<string>{{460, 28}, {1221, 1000}}</string>
 </dict>

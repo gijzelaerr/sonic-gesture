@@ -3,7 +3,7 @@
 \chapter{Gesture recognition}
 \label{ch:gestures}
 
-
+Knowing the location the hands in a image doesn't tell much about the hand poses. A method needs to be constructed to extract features from the hand window that help to discriminate the different hand poses. These features can then be used to compare to features extracted from labeled hand windows.
 
 \section{Feature extraction}
 
@@ -28,13 +28,13 @@
 \end{center}
 \end{figure}
 
-A cutout of a hand from a image still contains some background pixels, because a hand will never fill a perfect square. These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In section \ref{sec:skinmodel} a binary mask for skin pixels is constructed. The binary inversion of this mask can be used again to remove the background. The result of this procedure can be seen in figure \ref{fig:gijs5_cutout}. To decrease the possibility that mislabeled skin pixels are removed by this mask, a small morphological dilate operation will increase the size of the hand cutout, but this will also introduce more noisy (background) pixels.
+The hand window contains some background pixels, because a hand will never fill a perfect square. These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In \autoref{sec:skinmodel} a binary mask for skin pixels is constructed. The binary inversion of this mask can be used again to remove the background. The result of this procedure can be seen in \autoref{fig:gijs5_cutout}. To decrease the possibility that mislabeled skin pixels are removed by this mask, a small morphological dilate operation will increase the size of the hand cutout, but this will also introduce more noisy (background) pixels.
 
 
 \subsection*{Histogram of Oriented Gradients}
 Histogram of oriented gradient (HOG) descriptors are feature descriptors used for object detection. It has been successfully applied and studied in human detection \cite{NavneetDalal2006}.  The HOG descriptors method is similar to that of edge orientation histograms, scale-invariant feature transform descriptors, and shape contexts, but differs in that it uses a dense grid of uniformly spaced cells and uses overlapping local contrast normalization for improved accuracy.
 
-For the experiments described in chapter \ref{ch:experiments} the same parameters as in the \cite{watanabe2009} paper are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
+For the experiments described in \autoref{ch:experiments} the same parameters as in the \cite{watanabe2009} paper are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
 
 hand detection with SIFT\cite{Wang2007}
 
@@ -43,7 +43,7 @@ hand detection with SIFT\cite{Wang2007}
 \subsection*{Classifier}
 Two classifiers where evaluation during the experiments, K-Nearest Neighbors (KNN) and Support Vector Machines (SVM). For the experiments with KNN different values for $k$ where evaluated. The experiments with SVM where more profound, different kernels and parameters where evaluated. The evaluated kernels are the Radial Basis Function (RBF) and a precomputed kernel using the $\chi^2$ method on the train set. For the RBF kernel 2 parameters are important, the cost $c$ and $\gamma$. The optimal values of these variables for these experiments where found with a brute force grid search on a small cluster.
 
-Also Principal Component Analysis (PCA) was performed on the dataset to reduce the dimensionality. The impact on the classifiers has been measured and is presented together with all other experiments in chapter \ref{ch:experiments}.
+Also Principal Component Analysis (PCA) was performed on the dataset to reduce the dimensionality. The impact on the classifiers has been measured and is presented together with all other experiments in \autoref{ch:experiments}.
 
 \subsection*{The stabilizer}
 Since the frames following each other have a spatio-temporal relationship there is a relationship between the labels given by the classifier. Because of noise, misclassification can happen. These false matches can be filtered out by smoothing the labels on a time scale.

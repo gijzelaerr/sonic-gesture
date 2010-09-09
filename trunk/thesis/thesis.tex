@@ -7,7 +7,7 @@
 \usepackage{subfig}
 
 % for jumping to correct location from editor
-\usepackage{pdfsync}
+%\usepackage{pdfsync}
 
 % for UTF-8 support
 \usepackage[utf8]{inputenc}
@@ -22,7 +22,7 @@
 \usepackage{wrapfig}
 
 % for internal references
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 
 % for algorithms
 \usepackage{algorithm}
@@ -40,9 +40,14 @@
 \maketitle{}
 
 \newpage{}
+
+\begin{abstract}
+A real\-time method for detecting pre\-trained hand poses from
+video using a normal RGB camera is discussed and evaluated. The method uses a probabilistic skin color histogram model for pixel based limb detection and Histogram of Oriented Gradients as features for classification. SVM an KNN classification performance is evaluated with a dataset consisting 72 recordings of 20 people performing 28 hand symbols based upon the Curwen method. 
+\end{abstract}
 \newpage{}
 
-\pagenumbering{roman}
+%\pagenumbering{roman}
 \tableofcontents{}
 \listoffigures{}
 \listoftables{}
@@ -50,13 +55,7 @@
 \chapter*{Acknowledgements}
 I LOVE YOU MOM AND DAD
 
-\begin{abstract}
-A real\-time method for detecting pre\-trained hand poses from
-video using a normal RGB camera is discussed and evaluated. The method uses a probabilistic skin color histogram model for pixel based limb detection and Histogram of Oriented Gradients as features for classification. SVM an KNN classification performance is evaluated with a dataset consisting 72 recordings of 20 people performing 28 hand symbols based upon the Curwen method. 
-
-\end{abstract}
-
-\pagenumbering{arabic}
+%\pagenumbering{arabic}
 
 \include{intro}
 

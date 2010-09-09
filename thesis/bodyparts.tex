@@ -8,18 +8,14 @@ To perform hand pose estimation of a person in a image, hands need to be localiz
 \section{Building a skin model}
 \label{sec:skinmodel}
 
-\subsection*{Face detection \- Haar classifier}
+\subsection*{Face localization}
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \vspace{-20pt}
-  \begin{center}
-    \includegraphics[width=0.48\textwidth]{figures/pipeline/detected.jpg}
- \end{center}
-  \vspace{-20pt}
+\begin{figure}
+  \center{}
+    \includegraphics[width=0.3\textwidth]{figures/pipeline/detected.jpg}
   \caption{Face detection}
   \label{fig:face_detection}
-  \vspace{-10pt}
-\end{wrapfigure}
+\end{figure}
 
 
 Finding faces in a image is a rather well solved problem. Faces are easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and a nose. When comparing different faces, these features are \- with a small variation \- on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position.  Using a haar classifier to search for a face and obtain a skin color profile has been done before with the lab color space \cite{Stenger2006}, but in this case the HSV color space is used.
@@ -27,16 +23,12 @@ Finding faces in a image is a rather well solved problem. Faces are easy to dete
 
 \subsection*{Color space conversion}
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \vspace{-20pt}
-  \begin{center}
-    \includegraphics[width=0.48\textwidth]{figures/hsv.png}
- \end{center}
-  \vspace{-20pt}
+\begin{figure}
+  \center{}
+    \includegraphics[width=0.3\textwidth]{figures/hsv.png}
 	\caption{The Hue, Saturation, Value color space}
 	\label{fig:hsv}
-  \vspace{-10pt}
-\end{wrapfigure}
+\end{figure}
 
 Usually, pixel values of a image are stored in the Red, Green Blue (RGB) color space where specific colors can be represented with combinations of these primary colors. A more intuitive color space is Hue Saturation Value (HSV), which comes closes to how humans perceive color. The hue (color) from Saturation (how concentrated the color is) and from Value (brightness) HSV When a subject is lighted by a light source with uniform hue distribution, the light doesn't change the hue or saturation of the subject. The only thing that will change is the intensity, which is changing because of the light source's intensity, distance or (self casted) shadow. Since we want to extract hand pixels independent of the illumination intensity, we can ignore this channel and only use the hue and saturation.
 
@@ -61,7 +53,7 @@ The RGB color space is transformed into the HSV color space using the following 
 
 The input 3 channel RGB image is transformed into a 3 channel HSV image, after which the brightness channel is discarded. From the hue and saturation channel together with the face region we can build a histogram which will represent a statistical skin model.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering
 \subfloat[hue channel]{\label{fig:hue}\includegraphics[width=0.3\linewidth]{figures/pipeline/hue.jpg}}
 \hspace{0.03\linewidth}
@@ -78,51 +70,39 @@ The input 3 channel RGB image is transformed into a 3 channel HSV image, after w
 
 \subsection*{Skin color histogram}
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \vspace{-20pt}
-  \begin{center}
-    \includegraphics[width=0.48\textwidth]{figures/pipeline/histogram.png}
- \end{center}
-  \vspace{-20pt}
+\begin{figure}
+    \center{}
+    \includegraphics[width=0.5\textwidth]{figures/pipeline/histogram.png}
 	\caption{A histogram of face pixels}
 	\label{fig:histogram}
-  \vspace{-10pt}
-\end{wrapfigure}
+\end{figure}
 
 
 The skin color model is represented in a 2 dimensional histogram, where the first dimension is Hue and the second is Saturation. The histogram is filled with the values from the detected face region. After, the histogram is normalized - all values are divided by the sum of all bins. This makes the histogram independent of the original image size, and each histogram bin value represents a 'skin probablility'.
 
-When all pixels are evaluated, the histogram is normalized - all values are divided by the sum of all bins. This way when all values are added together, the sum will be equal to 1. This makes the histogram independent of the image size, and each value represents a 'skin probability'. Figure\ref{fig:histogram} is a histogram of face pixels.
+When all pixels are evaluated, the histogram is normalized - all values are divided by the sum of all bins. This way when all values are added together, the sum will be equal to 1. This makes the histogram independent of the image size, and each value represents a 'skin probability'. \autoref{fig:histogram} is a histogram of face pixels.
 
 \subsection*{Back projection}
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \vspace{-20pt}
-  \begin{center}
-    \includegraphics[width=0.48\textwidth]{figures/pipeline/backproject.jpg}
- \end{center}
-  \vspace{-20pt}
-	\caption{Backprojection}
+\begin{figure}
+    \center{}
+    \includegraphics[width=0.4\textwidth]{figures/pipeline/backproject.jpg}
+ 	\caption{Backprojection}
 	\label{fig:backproject}
-  \vspace{-10pt}
-\end{wrapfigure}
+\end{figure}
 
 
-A back projection is the combination of an image and a histogram. The result is a new single channel image. All pixels in the input image are iterated and the corresponding bins are looked up in the histogram. The pixel in the same position in the new image is replaced with the value from the histogram. If the histogram is a skin color histogram, the resulting image will have high values for pixels that are skin-like pixels, and low values for other pixels. The result of the process can be seen in Figure\ref{fig:backproject}.
+A back projection is the combination of an image and a histogram. The result is a new single channel image. All pixels in the input image are iterated and the corresponding bins are looked up in the histogram. The pixel in the same position in the new image is replaced with the value from the histogram. If the histogram is a skin color histogram, the resulting image will have high values for pixels that are skin-like pixels, and low values for other pixels. The result of the process can be seen in \autoref{fig:backproject}.
 
 
 \subsection*{Threshold}
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \vspace{-20pt}
-  \begin{center}
-    \includegraphics[width=0.48\textwidth]{figures/pipeline/thresholded.jpg}
- \end{center}
-  \vspace{-20pt}
+\begin{figure}
+    \center{}
+    \includegraphics[width=0.4\textwidth]{figures/pipeline/thresholded.jpg}
 	\caption{Thresholded image}
 	\label{fig:threshold}
-  \vspace{-10pt}
-\end{wrapfigure}
+\end{figure}
 
 
 To label pixel to be skin color or not, we need to define a way of doing this automatically. The easiest way to accomplish this is by defining a threshold. All pixel values below a certain threshold are replaced with false or 0, all above this threshold will be replaced with true or 1. This results in a binary image with labels for (non) skin pixels. This introduces one parameter - the threshold for going from the probabilistic domain to the binary domain.
@@ -131,16 +111,13 @@ To label pixel to be skin color or not, we need to define a way of doing this au
 
 
 \subsection*{morphological operations}
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \vspace{-20pt}
-  \begin{center}
-    \includegraphics[width=0.48\textwidth]{figures/pipeline/closed.jpg}
- \end{center}
-  \vspace{-20pt}
+
+\begin{figure}
+    \center{}
+    \includegraphics[width=0.4\textwidth]{figures/pipeline/closed.jpg}
 	\caption{Morphologically closed}
 	\label{fig:closed}
-  \vspace{-10pt}
-\end{wrapfigure}
+\end{figure}
 
 A morphologic closing operation of A by B is obtained by the dilation of A by B, followed by erosion of the resulting structure by B. The result of performing this operation is that small holes in the binary image are removed, and edges are smoothed.
 
@@ -153,20 +130,15 @@ From the contours of the group a square region of interest can be defined by cal
 
 \subsection*{Blob labeling}
 
-\subsection*{morphological operations}
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \vspace{-20pt}
-  \begin{center}
-    \includegraphics[width=0.48\textwidth]{figures/pipeline/contours.jpg}
- \end{center}
-  \vspace{-20pt}
+\begin{figure}
+    \center{}
+    \includegraphics[width=0.4\textwidth]{figures/pipeline/contours.jpg}
 	\caption{Labeled blobs}
 	\label{fig:contours}
-  \vspace{-10pt}
-\end{wrapfigure}
+\end{figure}
 
 
-Now we have grouped skin pixels (blobs) we need to know what group of skin pixels is what body part. It is assumed that there is only one person in the image and that the body is covert with clothing except for the head an hands. In a optimal situation this would result in 3 blobs, 2 for the hands and one for the head. For one blob it is already known what body part it is - the face. In the face detection phase we found a face in the image, so the blob containing the center point of the detected phase is the face blob. Usually the left hand is on the left of the head and the right hand on the right side. If there are 3 blobs, and the face is the middle blob, we labeling is done. But unfortunately in practice this isn't always the case. Often there are more or less blobs, because the background has skin-like color, a hand is difficult to detect or is occluded. Also the order of hands and head can change, a left hand doesn't necessarily need to appear on the left side of a head. In this case some more intelligent decision process. 
+Now we have grouped skin pixels (blobs) we need to know blob is what body part. It is assumed that there is only one person in the image and that the body is covert with clothing except for the head an hands. In a optimal situation this would result in 3 blobs, 2 for the hands and one for the head. For one blob it is already known what body part it is - the face. In the face detection phase we found a face in the image, so the blob containing the center point of the detected phase is the face blob. Usually the left hand is on the left of the head and the right hand on the right side. If there are 3 blobs, and the face is the middle blob, we labeling is done. But unfortunately in practice this isn't always the case. Often there are more or less blobs, because the background has skin-like color, a hand is difficult to detect or is occluded. Also the order of hands and head can change, a left hand doesn't necessarily need to appear on the left side of a head. In this case some more intelligent decision process. 
 
 First the surface of each blob is calculated and then the blobs are sorted by size. The blob containing the head is removed from the list, since we already know this label. Also very small blobs are removed, because these are probably noise. The removal threshold surface is set to:
 
@@ -205,7 +177,7 @@ Assuming the hands or the second biggest skin like objects in the image, the 2 o
 	    \STATE right $=$ blobs[1]
 	\ELSE
 		\IF{$n == 1$}
-		    \IF{blobs\[0\].center\[0\] $<$ face\_center\[0\]}
+		    \IF{blobs[0].center[0] $<$ face\_center[0]}
 		        \STATE left $=$ blobs[0]
 		    \ELSE
 		        \STATE right $=$ blobs[0]
@@ -245,7 +217,7 @@ The Transition matrix:
 	0 & 0 & 0 & 0 & 0 & 1 \\
 \end{array} \right)\] 
 
-In this matrix  the upleft 2 values represent the combination between the position and the speed.
+In this matrix  the up left 2 values represent the combination between the position and the speed.
 
 % setIdentity(kalman.measurementMatrix, Scalar(1));
 % setIdentity(kalman.processNoiseCov, Scalar(1));
@@ -298,7 +270,7 @@ When in a previous frame a hand was detected but in the current frame not any mo
 \label{fig:templatesearch}
 \end{figure}
 
-Figure \ref{fig:templatesearch} shows a test setting of a template search. In the left image The left hand was found using the skin model. In the second frame the hand cannot be found, because it is occluding the face and using the skin model approach the hand will be labeled as face. Using a template search the hand can still be tracked.
+\autoref{fig:templatesearch} shows a test setting of a template search. In the left image The left hand was found using the skin model. In the second frame the hand cannot be found, because it is occluding the face and using the skin model approach the hand will be labeled as face. Using a template search the hand can still be tracked.
 
 
 \section{Discussion}
@@ -307,31 +279,4 @@ A parameterless method of going from the probabilistic domain to the binary doma
 
 The face detection is one of the most expensive operations in the processing chain. Since in a single shot movie usually a face doesn't move fast, a number of frames can be skipped which will free more computational time for other operations.
 
-\begin{figure}[htbp]
-\begin{center}
-\subfloat[input frame]{\label{fig:pipe_input}\includegraphics[width=0.3\linewidth]{figures/pipeline/input.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[hue channel]{\label{fig:hue2}\includegraphics[width=0.3\linewidth]{figures/pipeline/hue.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[saturation channel]{\label{fig:saturation2}\includegraphics[width=0.3\linewidth]{figures/pipeline/saturation.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[value channel]{\label{fig:value2}\includegraphics[width=0.3\linewidth]{figures/pipeline/value.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[face detection]{\includegraphics[width=0.3\linewidth]{figures/pipeline/detected.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Face color histogram]{\label{fig:pipe_hist}\includegraphics[width=0.3\linewidth]{figures/pipeline/histogram.png}}
-\hspace{0.03\linewidth}
-\subfloat[Backprojection]{\label{fig:pipe_bp}\includegraphics[width=0.3\linewidth]{figures/pipeline/backproject.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Gaussian smooth]{\label{fig:pipe_blur}\includegraphics[width=0.3\linewidth]{figures/pipeline/blurred.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Thresholded binary image]{\label{fig:pipe_th}\includegraphics[width=0.3\linewidth]{figures/pipeline/thresholded.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Morpholoical close]{\label{fig:pipe_close}\includegraphics[width=0.3\linewidth]{figures/pipeline/closed.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Blob labeling]{\label{fig:pipe_cont}\includegraphics[width=0.3\linewidth]{figures/pipeline/contours.jpg}}
-\end{center}
-\caption{The hand detection pipeline}
-\label{fig:pipeline}
-\end{figure}
 

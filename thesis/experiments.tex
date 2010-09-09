@@ -5,7 +5,7 @@
 
 
 \section{The dataset}
-A dataset was constructed to perform the experiments. The dataset consists of movies with people performing all 28 hand poses. Per movie 28 frames where manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. In the beginning people where recorded performing the complete sequence 5 times, but this was taking too much time. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture, with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in figure\ref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background, 3 where recorded with a complex background and 6 where recorded with the same complex background but also with a poster with skinlike colors.
+A dataset was constructed to perform the experiments. The dataset consists of movies with people performing all 28 hand poses. Per movie 28 frames where manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. In the beginning people where recorded performing the complete sequence 5 times, but this was taking too much time. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture, with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background, 3 where recorded with a complex background and 6 where recorded with the same complex background but also with a poster with skinlike colors.
 
 
 
@@ -42,9 +42,9 @@ A dataset was constructed to perform the experiments. The dataset consists of mo
 \caption{Dataset details}
 \end{table}
 
-The dataset is manually labeled. For every sequence of frames where a hand pose is performed a frame number is labeled where the pose resembles the example the most. Figure\ref{fig:gijs5} is an example of the labeled frames. The train images used to train the classifier where extracted with Sonic Gesture
+The dataset is manually labeled. For every sequence of frames where a hand pose is performed a frame number is labeled where the pose resembles the example the most. \autoref{fig:gijs5} is an example of the labeled frames. The train images used to train the classifier where extracted with Sonic Gesture
 
-Usually the 12 Curwen solfege hand symbols are performed in front of the torso as shown in Figure~\ref{fig:hands}. To increase the number of hand poses to be recognized, all 12 Curwen are also performed mirrored next to the body of the recorded subject, see Figure~\ref{fig:hands}. Additionally four extra hand symbols have been added that are not part of the Curwen sequence, see Figure~\ref{fig:hands}. These last four symbols are performed next to the head.
+Usually the 12 Curwen solfege hand symbols are performed in front of the torso as shown in \autoref{fig:hands}. To increase the number of hand poses to be recognized, all 12 Curwen are also performed mirrored next to the body of the recorded subject, see \autoref{fig:hands}. Additionally four extra hand symbols have been added that are not part of the Curwen sequence, see \autoref{fig:hands}. These last four symbols are performed next to the head.
 
 \section{Evaluation}
 
@@ -58,9 +58,9 @@ When PCA was performed on the dataset the smallest eigenvectors where removed so
 
 For SVM the radial basis function (RBF) kernel is used, since the libsvm documentation states that is a good kernel to use that usually gives good performance. The $c$ and $\gamma$ values for SVM where found by an extensive grid search on the 'per person' tests with only the simple movies performed on a small cluster in the ranges $2.^(-3:2:15)$ for $c$ and $2.^(-15:2:3)$ for $\gamma$. The most optimal values are $\gamma$ = 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
 
-The Curwen hand symbols that are closely related in a musical scale way are quite similar, for example 'Re' and 'Ri' (figure\ref{fig:reri}). It is expected that a lot of misclassifications will be caused by this similarity. To investigate the impact of this issue, 2 different scores are calculated, one for the major scale and one for the full scale. The full scale threats every class as a single class, for the major scale the notes in the major scale and their corresponding similar notes are joined into one class. For example Do an
+The Curwen hand symbols that are closely related in a musical scale way are quite similar, for example 'Re' and 'Ri' (\autoref{fig:reri}). It is expected that a lot of misclassifications will be caused by this similarity. To investigate the impact of this issue, 2 different scores are calculated, one for the major scale and one for the full scale. The full scale threats every class as a single class, for the major scale the notes in the major scale and their corresponding similar notes are joined into one class. For example Do an
 
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering
 \subfloat[Re]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/2.jpg}}
 \hspace{0.03\linewidth}
@@ -148,17 +148,16 @@ SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
 
 \subsection{Part II}
 
-\begin{figure}[h]
-\begin{center}
+\begin{figure}[htbp]
+\center{}
 \subfloat[Without stabilizer]{
 	\includegraphics[width=0.3\linewidth]{figures/performance/anne1_unstable.jpg}}
-\hspace{0.03\linewidth}
+\hspace{0.02\linewidth}
 \subfloat[With stabilizer]{
 	\includegraphics[width=0.3\linewidth]{figures/performance/anne1_stable.jpg}}
-	\hspace{0.03\linewidth}
-	\subfloat[Arbitrary movie with stabilizer]{
-		\includegraphics[width=0.3\linewidth]{figures/performance/heilige.jpg}}
-\end{center}
+\hspace{0.02\linewidth}
+\subfloat[Arbitrary movie with stabilizer]{
+	\includegraphics[width=0.3\linewidth]{figures/performance/heilige.jpg}}
 \caption{Plots of labels per frame}
 \label{fig:performances}
 \end{figure}
@@ -188,6 +187,84 @@ roberto 0.47\\
 xiaong 0.49\\
 hamdi 0.49\\
 sil 0.52\\
+
+
+
+
+anne1 25.0
+anne2 24.0
+anne3 25.0
+anne4 25.0
+anne5 24.0
+arjan1 24.0
+arjan2 22.0
+arjan3 25.0
+arjan4 23.0
+arjan5 22.0
+bas1 25.0
+bas2 26.0
+bas3 25.0
+chu1 26.0
+chu2 25.0
+chu3 24.0
+gijs1 25.0
+gijs2 23.0
+gijs3 23.0
+gijs4 27.0
+gijs5 24.0
+gosia1 24.0
+gosia2 25.0
+gosia3 25.0
+hamdi1 24.0
+hamdy2 25.0
+hamdy3 24.0
+hanne1 26.0
+hanne2 25.0
+hanne3 25.0
+hanne4 25.0
+hanne5 26.0
+ivo1 26.0
+ivo2 24.0
+ivo3 24.0
+ivo4 24.0
+ivo5 23.0
+jasper1 25.0
+jasper2 23.0
+jasper3 24.0
+jasper4 23.0
+jasper5 25.0
+jasperb1 24.0
+jasperb2 26.0
+jasperb3 26.0
+koen1 24.0
+koen2 25.0
+koen3 25.0
+michael1 26.0
+michael2 26.0
+michael3 24.0
+ork1 23.0
+ork2 24.0
+ork3 25.0
+peter1 25.0
+peter2 24.0
+peter3 24.0
+peter4 26.0
+peter5 25.0
+roberto1 23.0
+roberto2 24.0
+roberto3 23.0
+sil1 23.0
+sil2 24.0
+sil3 23.0
+stratos1 23.0
+stratos2 25.0
+stratos3 24.0
+victoria1 25.0
+victoria2 25.0
+victoria3 24.0
+xiaong1 24.0
+xiaong2 26.0
+xiaong3 24.0
 
 
 \begin{tabular}{rrrrrrr}
@@ -230,7 +307,7 @@ Stratos	&	12.0	&	3.0		&	5.0 & & & 0.24\\
 \begin{figure}[ht]
 \begin{center}
 \label{fig:sonicgesture}
-\includegraphics[width=\linewidth]{figures/sonicgesture.jpg}
+\includegraphics[width=0.6\linewidth]{figures/sonicgesture.jpg}
 \end{center}
 \caption{screenshot of Sonic Gesture}
 \end{figure}

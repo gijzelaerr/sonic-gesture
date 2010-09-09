@@ -4,6 +4,35 @@
 
 \chapter{Images}
 
+\begin{figure}[htbp]
+\begin{center}
+\subfloat[input frame]{\label{fig:pipe_input}\includegraphics[width=0.3\linewidth]{figures/pipeline/input.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[hue channel]{\label{fig:hue2}\includegraphics[width=0.3\linewidth]{figures/pipeline/hue.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[saturation channel]{\label{fig:saturation2}\includegraphics[width=0.3\linewidth]{figures/pipeline/saturation.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[value channel]{\label{fig:value2}\includegraphics[width=0.3\linewidth]{figures/pipeline/value.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[face detection]{\includegraphics[width=0.3\linewidth]{figures/pipeline/detected.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Face color histogram]{\label{fig:pipe_hist}\includegraphics[width=0.3\linewidth]{figures/pipeline/histogram.png}}
+\hspace{0.03\linewidth}
+\subfloat[Backprojection]{\label{fig:pipe_bp}\includegraphics[width=0.3\linewidth]{figures/pipeline/backproject.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Gaussian smooth]{\label{fig:pipe_blur}\includegraphics[width=0.3\linewidth]{figures/pipeline/blurred.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Thresholded binary image]{\label{fig:pipe_th}\includegraphics[width=0.3\linewidth]{figures/pipeline/thresholded.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Morpholoical close]{\label{fig:pipe_close}\includegraphics[width=0.3\linewidth]{figures/pipeline/closed.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Blob labeling]{\label{fig:pipe_cont}\includegraphics[width=0.3\linewidth]{figures/pipeline/contours.jpg}}
+\end{center}
+\caption{The complete hand pose detection pipeline}
+\label{fig:pipeline}
+\end{figure}
+
+
 \renewcommand{\thesubfigure}{\thefigure.\roman{subfigure}}
 \begin{figure}[htbp]
 \begin{center}

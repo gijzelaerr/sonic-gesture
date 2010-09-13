@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>gestures.tex</string>
+	<string>experiments.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -28,9 +28,7 @@
 			<key>filename</key>
 			<string>gestures.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-09T14:12:44Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-09-13T18:15:43Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -42,7 +40,7 @@
 			<key>filename</key>
 			<string>bodyparts.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-09T13:12:22Z</date>
+			<date>2010-09-13T18:17:53Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -60,7 +58,9 @@
 			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-09T13:09:47Z</date>
+			<date>2010-09-13T18:17:53Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -102,14 +102,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>47</integer>
+				<integer>26</integer>
 				<key>line</key>
-				<integer>179</integer>
+				<integer>278</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>152</integer>
+			<integer>206</integer>
 		</dict>
 		<key>conc.tex</key>
 		<dict>
@@ -146,14 +146,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>26</integer>
 				<key>line</key>
-				<integer>192</integer>
+				<integer>54</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>172</integer>
+			<integer>8</integer>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>
@@ -257,6 +257,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{1005, 5}, {779, 1026}}</string>
+	<string>{{384, 2}, {779, 1026}}</string>
 </dict>
 </plist>

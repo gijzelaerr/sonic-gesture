@@ -42,6 +42,22 @@ A dataset was constructed to perform the experiments. The dataset consists of mo
 \caption{Dataset details}
 \end{table}
 
+
+\begin{figure}[htbp]
+\center{}
+\includegraphics[width=0.8\linewidth]{figures/simple.png}
+\caption{Still of movie ivo5 with simple background}
+\label{fig:simplebackground}
+\end{figure}
+
+\begin{figure}[htbp]
+\center{}
+\includegraphics[width=0.8\linewidth]{figures/complex.png}
+\caption{Still of movie sil1 with simple background}
+\label{fig:complexbackground}
+\end{figure}
+
+
 The dataset is manually labeled. For every sequence of frames where a hand pose is performed a frame number is labeled where the pose resembles the example the most. \autoref{fig:gijs5} is an example of the labeled frames. The train images used to train the classifier where extracted with Sonic Gesture
 
 Usually the 12 Curwen solfege hand symbols are performed in front of the torso as shown in \autoref{fig:hands}. To increase the number of hand poses to be recognized, all 12 Curwen are also performed mirrored next to the body of the recorded subject, see \autoref{fig:hands}. Additionally four extra hand symbols have been added that are not part of the Curwen sequence, see \autoref{fig:hands}. These last four symbols are performed next to the head.

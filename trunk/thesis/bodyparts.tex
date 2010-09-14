@@ -3,7 +3,13 @@
 \chapter{Body Part Detection}
 \label{ch:bodyparts}
 
-To perform hand pose estimation of a person in a image, hands need to be localized in the image first. Hands are very can have different appearances and different orientations this is a very difficult task. Also hand size and shape but also skin color are different per person. One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin color model based on average skin color has been constructed for this purpose\cite{Jones1999}, but this method is sensitive for error when the skin is colored by a light source. It would be much better to have a method for obtaining the skin color of the hands from a image itself. This can be done by extracting the a skin model from a face, which is much easier to detect.
+To perform hand pose estimation of a person in a image, hands need to be localized in the image first. Hands are very changeable - they can have very different appearances and different orientations. Also hand size and shape but also skin color can be very different per person. This makes the localization a very difficult task. 
+
+One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin color model based on average skin color has been constructed for this purpose\cite{Jones1999}. The problem with this method is that it fails when the skin color isn't 'pure', for example when it is colored by a light source. but this method is sensitive for error when the image is colored by a light source. Also, since the profile is very generic, it contains colors for many different skin colors. This introduces more false positives.
+
+It would be much better to have a method for obtaining the skin color of a person in a image from that image itself. This can be done by extracting the skin model from the face, which is much easier to detect.
+
+This chapter will first describe how this skin model is created, followed by how this skin model is used to find the skin pixels in the image. These found skin pixels are clustered and labeled as left hand, right hand and head. How the positions of these labeled body parts are stabilized is also explained and is followed by how self occlusion can be handled.
 
 \section{Building a skin model}
 \label{sec:skinmodel}
@@ -12,27 +18,42 @@ To perform hand pose estimation of a person in a image, hands need to be localiz
 
 \begin{figure}
   \center{}
-    \includegraphics[width=0.3\textwidth]{figures/pipeline/detected.jpg}
+    \includegraphics[width=0.6\textwidth]{figures/pipeline/detected.jpg}
   \caption{Face detection}
   \label{fig:face_detection}
 \end{figure}
 
 
-Finding faces in a image is a rather well solved problem. Faces are easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and a nose. When comparing different faces, these features are \- with a small variation \- on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position.  Using a haar classifier to search for a face and obtain a skin color profile has been done before with the lab color space \cite{Stenger2006}, but in this case the HSV color space is used.
+Finding faces in a image is a rather well solved problem. Faces are easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and a nose. When comparing different faces, these features are - with a small variation - on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position.
 
+The face detection is one of the most expensive operations used in this thesis. Since usually a face doesn't move fast in a vide stream, a number of frames can be skipped which will free more computational time for other operations.
+
+Using a haar classifier to search for a face and obtain a skin color profile has been done before with the lab color space \cite{Stenger2006}, but in this case the HSV color space is used.
 
 \subsection*{Color space conversion}
+Usually, pixel values of a image are stored in the Red, Green Blue (RGB) color space where colors are represented with combinations of these primary colors. The RGB representation of colors is not suitable for modeling skin color. The RGB color space represents not only color, but also luminance which is not a reliable measure for segmenting skin pixels\cite{Cai1999}.
 
-\begin{figure}
-  \center{}
-    \includegraphics[width=0.3\textwidth]{figures/hsv.png}
-	\caption{The Hue, Saturation, Value color space}
-	\label{fig:hsv}
+When a subject is lighted by a light source with uniform hue distribution, the light doesn't change the hue or saturation of the subject. The only thing that will change is the luminance, which is changing because of the light source's intensity, distance or (self casted) shadow. Since we want to extract hand pixels independent of the illumination intensity, we can ignore this channel and only use the hue and saturation.
+
+The luminance can be removed from the color space by transforming the color model to a chromatic color space. There are multiple chromatic color spaces, for example LAB, HSV and normalized. A small experiment with these color spaces have shown that no significant improvements can be gained with a specific color space, so the HSV color space is used in the rest of this paper.
+
+
+\begin{figure}[htbp]
+  \centering
+\subfloat[HSV channel]{
+	\label{fig:hsv}\includegraphics[width=0.45\linewidth]{figures/hsv2.png}
+}
+\hspace{0.01\linewidth}
+\subfloat[RGB channel]{
+	\label{fig:rgb}\includegraphics[width=0.45\linewidth]{figures/rgb.png}
+}
+  \caption{The RGB and HSV color space}
+  \label{fig:hsvchannels}
 \end{figure}
 
-Usually, pixel values of a image are stored in the Red, Green Blue (RGB) color space where specific colors can be represented with combinations of these primary colors. A more intuitive color space is Hue Saturation Value (HSV), which comes closes to how humans perceive color. The hue (color) from Saturation (how concentrated the color is) and from Value (brightness) HSV When a subject is lighted by a light source with uniform hue distribution, the light doesn't change the hue or saturation of the subject. The only thing that will change is the intensity, which is changing because of the light source's intensity, distance or (self casted) shadow. Since we want to extract hand pixels independent of the illumination intensity, we can ignore this channel and only use the hue and saturation.
+HSV stands for hue (color), saturation (how concentrated the color is) and value (brightness). The brightness is changed by the illumination, so we will discard this channel
 
-As many things in computer vision in theory this should work, but in practice it doesn't or not perfect. A light source never has a uniform distribution and \emph{will} color the subject. But in our case that doesn't matter, since all skin pixels in the image will have the same shift in the hue spectrum.
+In practice a light source never has a uniform distribution and \emph{will} change the color of the subject. Since we build a color model from the image itself, all skin pixels will change in the same way. 
 
 The RGB color space is transformed into the HSV color space using the following equations:
 \begin{eqnarray*}
@@ -50,8 +71,7 @@ The RGB color space is transformed into the HSV color space using the following 
   \end{array} \right.\\
 \end{eqnarray*}
 
-
-The input 3 channel RGB image is transformed into a 3 channel HSV image, after which the brightness channel is discarded. From the hue and saturation channel together with the face region we can build a histogram which will represent a statistical skin model.
+The input 3 channel RGB image is transformed into a 3 channel HSV image, after which the value channel is discarded. Using the detected face region of the hue and saturation channel a histogram can be constructed which will represent a statistical skin model.
 
 \begin{figure}[htbp]
   \centering
@@ -68,85 +88,110 @@ The input 3 channel RGB image is transformed into a 3 channel HSV image, after w
 
 
 
-\subsection*{Skin color histogram}
+\subsection*{Statistical skin color model}
 
-\begin{figure}
+\begin{figure}[htbp]
     \center{}
-    \includegraphics[width=0.5\textwidth]{figures/pipeline/histogram.png}
+    \includegraphics[width=1\textwidth]{figures/pipeline/histogram.png}
 	\caption{A histogram of face pixels}
 	\label{fig:histogram}
 \end{figure}
 
+There are multiple ways of constructing a statistical skin color model. The most conventional ways are a (mixture of) gausian(s) or a histogram. 
 
-The skin color model is represented in a 2 dimensional histogram, where the first dimension is Hue and the second is Saturation. The histogram is filled with the values from the detected face region. After, the histogram is normalized - all values are divided by the sum of all bins. This makes the histogram independent of the original image size, and each histogram bin value represents a 'skin probablility'.
+The skin color model is represented in a 2 dimensional histogram, where the first dimension is Hue and the second is Saturation. The histogram is filled with the values from the detected face region. After, the histogram is normalized - all values are divided by the sum of all bins. This makes the histogram independent of the original image size, and each histogram bin value represents a 'skin probablility'. \autoref{fig:histogram} is a histogram of colors of a caucasian.
 
-When all pixels are evaluated, the histogram is normalized - all values are divided by the sum of all bins. This way when all values are added together, the sum will be equal to 1. This makes the histogram independent of the image size, and each value represents a 'skin probability'. \autoref{fig:histogram} is a histogram of face pixels.
+Manual experiments show that tweaking the number of bins doesn't have much effect, as long as the number of bins is not too high or not to low. Since for the storage of the values a 8 bit integer is used, a number of bins higher than 256 doesn't make sense. In all experiments mentioned in this paper a number of bins of 30 is used for both the hue and saturation.
 
 \subsection*{Back projection}
 
-\begin{figure}
+\begin{figure}[htbp]
     \center{}
-    \includegraphics[width=0.4\textwidth]{figures/pipeline/backproject.jpg}
+    \includegraphics[width=0.5\textwidth]{figures/pipeline/backproject.jpg}
  	\caption{Backprojection}
 	\label{fig:backproject}
 \end{figure}
 
 
-A back projection is the combination of an image and a histogram. The result is a new single channel image. All pixels in the input image are iterated and the corresponding bins are looked up in the histogram. The pixel in the same position in the new image is replaced with the value from the histogram. If the histogram is a skin color histogram, the resulting image will have high values for pixels that are skin-like pixels, and low values for other pixels. The result of the process can be seen in \autoref{fig:backproject}.
+A back projection is the combination of an image and a histogram. The result is a new single channel image. All pixels in the input image are iterated and the corresponding bins are looked up in the histogram. The pixel in the same position in the new image is replaced with the value from the histogram. If the histogram is a skin color histogram, the resulting image will have high values for pixels that are skin-like pixels, and low values for other pixels. The result of the process can be seen in \autoref{fig:backproject}. Since the probabilities are very low the contrast of this image is enhanced so the maximum pixel value becomes pure white.
+
+
+\subsection*{smoothing}
+The back projection can be quite noisy, this is caused by the rounding in the in the histogram, but also by noise introduced by the camera. Thresholding this image will result in skin pixel groups with rough edges and a lot of holes, see \autoref{fig:threshold_noblur}. The noise can be reduced by smoothing the image. This way, the pixel value is replaced by the old value weighted with the surrounding pixel values. Using a gaussian kernel with a large size gives a good result, see \autoref{fig:blurred}.
+
+\begin{figure}[htbp]
+    \center{}
+    \includegraphics[width=0.5\textwidth]{figures/pipeline/blurred.jpg}
+	\caption{Blurred image}
+	\label{fig:blurred}
+\end{figure}
 
 
 \subsection*{Threshold}
 
-\begin{figure}
+\begin{figure}[htbp]
     \center{}
-    \includegraphics[width=0.4\textwidth]{figures/pipeline/thresholded.jpg}
+ \includegraphics[width=0.5\textwidth]{figures/pipeline/thresholded_noblur.jpg}
+	\caption{Thresholded image without blur preprocessing}
+	\label{fig:threshold_noblur}
+\end{figure}
+
+\begin{figure}[htbp]
+    \center{}
+    \includegraphics[width=0.5\textwidth]{figures/pipeline/thresholded.jpg}
 	\caption{Thresholded image}
 	\label{fig:threshold}
 \end{figure}
 
 
-To label pixel to be skin color or not, we need to define a way of doing this automatically. The easiest way to accomplish this is by defining a threshold. All pixel values below a certain threshold are replaced with false or 0, all above this threshold will be replaced with true or 1. This results in a binary image with labels for (non) skin pixels. This introduces one parameter - the threshold for going from the probabilistic domain to the binary domain.
+To segments pixels from non-skin pixels we need to define a way of doing this automatically. The easiest way to accomplish this is by defining a threshold. All pixel values below a certain threshold are replaced with false or 0, all above this threshold will be replaced with true or 1. This results in a binary image with labels for (non) skin pixels. This introduces one parameter - the 
+threshold for going from the probabilistic domain to the binary domain.
 
-\subsection*{smoothing}
+A alternative method of going from the probabilistic domain to the binary domain is adaptive thresholding. here the threshold is determined per pixel by the values of surrounding pixels. This method has one parameter; the neighborhood blocksize used to determine the threshold.
 
 
 \subsection*{morphological operations}
 
-\begin{figure}
+\begin{figure}[htbp]
     \center{}
-    \includegraphics[width=0.4\textwidth]{figures/pipeline/closed.jpg}
+    \includegraphics[width=0.5\textwidth]{figures/pipeline/closed.jpg}
 	\caption{Morphologically closed}
 	\label{fig:closed}
 \end{figure}
 
-A morphologic closing operation of A by B is obtained by the dilation of A by B, followed by erosion of the resulting structure by B. The result of performing this operation is that small holes in the binary image are removed, and edges are smoothed.
+An alternative to smoothing out rough edges and holes are (combinations of )morphological operations.  A morphologic closing operation of A by B is obtained by the dilation of A by B, followed by erosion of the resulting structure by B. The result of performing this operation is that small holes in the binary image are removed, and edges are smoothed as seen in \autoref{fig:closed}. The effect isn't really significant, since the gaussian smoothing already removes a lot of noise. 
+
 
 \section{Object localization}
 
 \subsection*{Pixel grouping, contour extraction}
-To be able to say something useful about groups of pixels, one need to know which pixels belong together. This can be done by clustering. In this case clustering is performed by grouping pixels together to touch horizontally and vertically. This is done with the algorithm described in \cite{Suzuki1985}. This algorithm also constructs a list of pixels that form the border of a group. This list of pixels can be used for many interesting things, like finding the top position of the group in a fast way, or to find out if a unidentified pixel is inside the group. Clustering contour extraction\cite{Suzuki1985}.
+To be able to say something useful about groups of pixels, one need to know which pixels belong together. This is done by clustering. In this case clustering is performed by grouping pixels together to touch horizontally and vertically. Each cluster of pixels is called a blob.
 
-From the contours of the group a square region of interest can be defined by calculating the outer borders of the group. This window will be called the hand window.
+To handle the blobs in a time efficient way, it is good idea to extract the contours. This way interesting problems can be solved like if a certain pixel coordinate is inside a certain blob, the maximum or minimal horizontal or vertical position and hole removal.
+
+Since it unusual to have holes in blobs that represent skin regions, these can be removed. This is done with the algorithm described in \cite{Suzuki1985}, where the contours of the blobs are extracted and all contours except the outer most contour are removed. This removes holes and islands in holes.
+
+From the contours of the group a square region of interest is defined by calculating the outer borders of the group. This window is called the hand window from now on.
 
 \subsection*{Blob labeling}
 
-\begin{figure}
+\begin{figure}[htbp]
     \center{}
-    \includegraphics[width=0.4\textwidth]{figures/pipeline/contours.jpg}
+    \includegraphics[width=0.5\textwidth]{figures/pipeline/contours.jpg}
 	\caption{Labeled blobs}
 	\label{fig:contours}
 \end{figure}
 
 
-Now we have grouped skin pixels (blobs) we need to know blob is what body part. It is assumed that there is only one person in the image and that the body is covert with clothing except for the head an hands. In a optimal situation this would result in 3 blobs, 2 for the hands and one for the head. For one blob it is already known what body part it is - the face. In the face detection phase we found a face in the image, so the blob containing the center point of the detected phase is the face blob. Usually the left hand is on the left of the head and the right hand on the right side. If there are 3 blobs, and the face is the middle blob, we labeling is done. But unfortunately in practice this isn't always the case. Often there are more or less blobs, because the background has skin-like color, a hand is difficult to detect or is occluded. Also the order of hands and head can change, a left hand doesn't necessarily need to appear on the left side of a head. In this case some more intelligent decision process. 
+Now we have blobs we need to know blob is what body part. In a optimal situation there are three blobs, two for the hands and one for the head. For one blob it is already known what body part it is - the face. In the face detection phase we found a face in the image, so the blob containing the center point of the detected phase is the face blob. Usually the left hand is on the left of the head and the right hand on the right side. If there are three blobs, and the face is the middle blob, we labeling is done. If not an other decision needs to be made. Often there are more or less blobs, because the background has skin-like color, a hand is difficult to detect or is occluded. Also the order of hands and head can change, a left hand doesn't necessarily need to appear on the left side of a head.
 
 First the surface of each blob is calculated and then the blobs are sorted by size. The blob containing the head is removed from the list, since we already know this label. Also very small blobs are removed, because these are probably noise. The removal threshold surface is set to:
 
 \begin{equation}
-T = (\frac{h}{20})^2
+T = (\frac{h}{c})^2
 \end{equation}
 
-All blobs smaller than this value are discarded. 
+Where $h$ is the height of the movie frame and $c$ is a control constant. The equation can be interpreted as a filter for the minimal size in square pixels, relative to the hight of the movie frame. A value of $20$ for $c$ removes a lot of noise blobs, but still is small enough to leave most hand blobs intact.
 
 Assuming the hands or the second biggest skin like objects in the image, the 2 or less biggest blobs are taken from the list and the rest is also discarded. If there is no biggest blob, the labeling is finished - there is only a head in the image. If there is one blob left, the left or right position relative to the head is the hand label. If there are 2 hands, there are 3 possible situations, 1 where the head is in the middle which is already described. If both hands are on the left of the head, the most outer left blob is labeled as left and the other as right. This is visa versa for right.
 
@@ -196,7 +241,9 @@ A hand doesn't move very fast in an image - usually it will not move from the le
 
 For every hand a Kalman filter is initialized. The measurement that need to be smoothed is the hand window. The hand window has a x and y position and a width and hight. Each hand also has a speed in the x and y direction but we don't measure that - we let the kalman filter represent, calculate and use that internally. 
 
-The measurement vector \[ m_k = \left(
+A hand window represented in a measurement vector as:
+
+\[ m_k = \left(
 \begin{array}{c}
 	x_k \\ %measurement.x
 	y_k \\ %measurement.y,
@@ -204,8 +251,9 @@ The measurement vector \[ m_k = \left(
 	h_k \\ %measurement.height
 \end{array} \right)\]
 
+Where $x_k$ is the horizontal position, $y_k$ is the vertical position, $w_k$ is the width and $h_k$ is the height of the hand window.
 
-The Transition matrix:
+The Transition matrix is defined as follows:
 
 \[ A = \left(
 \begin{array}{cccccc}
@@ -217,7 +265,9 @@ The Transition matrix:
 	0 & 0 & 0 & 0 & 0 & 1 \\
 \end{array} \right)\] 
 
-In this matrix  the up left 2 values represent the combination between the position and the speed.
+This is just an identity matrix, except for the left ones on the right top in the matrix. These represent the combination of the current position and the internal state of the speed.
+
+With these matrixes and a standard kalman filter the position and size of the hands can be predicted. The predicted values are used for an other hand localization method in case no hand is found en the next frame.
 
 % setIdentity(kalman.measurementMatrix, Scalar(1));
 % setIdentity(kalman.processNoiseCov, Scalar(1));
@@ -228,36 +278,37 @@ In this matrix  the up left 2 values represent the combination between the posit
 
 
 
-\paragraph{Update}
-The kalman filter is then updated:
+% \paragraph{Update}
+% The kalman filter is then updated:
+% 
+% Innovation or measurement residual 	
+% $\tilde{\textbf{y}}_k = \textbf{z}_k - \textbf{H}_k\hat{\textbf{x}}_{k|k-1}$
 
-Innovation or measurement residual 	
-$\tilde{\textbf{y}}_k = \textbf{z}_k - \textbf{H}_k\hat{\textbf{x}}_{k|k-1}$
+% Innovation (or residual) covariance
+% $\textbf{S}_k = \textbf{H}_k \textbf{P}_{k|k-1} \textbf{H}_k^\text{T} + % \textbf{R}_k$
 
-Innovation (or residual) covariance
-$\textbf{S}_k = \textbf{H}_k \textbf{P}_{k|k-1} \textbf{H}_k^\text{T} + \textbf{R}_k$
+% Optimal Kalman gain
+% $\textbf{K}_k = \textbf{P}_{k|k-1}\textbf{H}_k^\text{T}\textbf{S}_k^{-1}$
 
-Optimal Kalman gain
-$\textbf{K}_k = \textbf{P}_{k|k-1}\textbf{H}_k^\text{T}\textbf{S}_k^{-1}$
+% Updated (a posteriori) state estimate
+% $\hat{\textbf{x}}_{k|k} = \hat{\textbf{x}}_{k|k-1} + % \textbf{K}_k\tilde{\textbf{y}}_k$
 
-Updated (a posteriori) state estimate
-$\hat{\textbf{x}}_{k|k} = \hat{\textbf{x}}_{k|k-1} + \textbf{K}_k\tilde{\textbf{y}}_k$
+% Updated (a posteriori) estimate covariance
+% $\textbf{P}_{k|k} = (I - \textbf{K}_k \textbf{H}_k) \textbf{P}_{k|k-1}$
 
-Updated (a posteriori) estimate covariance
-$\textbf{P}_{k|k} = (I - \textbf{K}_k \textbf{H}_k) \textbf{P}_{k|k-1}$
+% \paragraph{Prediction}
+% And the values are predicted with:
 
-\paragraph{Prediction}
-And the values are predicted with:
+% Predicted (a priori) state estimate 	
+% $\hat{\textbf{x}}_{k|k-1} = \textbf{F}_{k}\hat{\textbf{x}}_{k-1|k-1} + % \textbf{B}_{k} \textbf{u}_{k}$
 
-Predicted (a priori) state estimate 	
-$\hat{\textbf{x}}_{k|k-1} = \textbf{F}_{k}\hat{\textbf{x}}_{k-1|k-1} + \textbf{B}_{k} \textbf{u}_{k}$
-
-Predicted (a priori) estimate covariance
-$\textbf{P}_{k|k-1} = \textbf{F}_{k} \textbf{P}_{k-1|k-1} \textbf{F}_{k}^{\text{T}} + \textbf{Q}_{k}$
+% Predicted (a priori) estimate covariance
+% $\textbf{P}_{k|k-1} = \textbf{F}_{k} \textbf{P}_{k-1|k-1}
+% \textbf{F}_{k}^{\text{T}} + \textbf{Q}_{k}$
 
 
-\subsection*{template search}
-When in a previous frame a hand was detected but in the current frame not any more there is the problem of (self) occlusion. In this case template search is used to track the hand. A cut out image of the hand in the previous frame is used for this template search. Template search is a very simple and quite fast method, as long as the search area is small. A sliding window  with the same size as the cutout image is sliding over a small surrounding area of the location predicted by the kalman filter. The window with the lowest squared sum difference to the previous cutout image is set as the new location. If the original cutout is touching the border of the image or the squared sum difference is to high it is assumed the hand has left the image, and is flagged accordingly. This method works if the shape and size of the hand don't change too much.
+\subsection*{Self occlusion by body parts}
+When in a previous frame a hand was detected but in the current frame not any more three things can be the source. First of all the hand can be out of the image, or occluded by an obstacle. The second case is that the hand detection phase just fails and couldn't localize the body part. The third case is self occlusion, where the hand is very close or occluding the hand and the skin segmentation segements these two bodyparts as one. In this case template search is used to track the specific hand. A cut out image of the hand in the previous frame is used for this template search. Template search is a very simple and fast method, as long as the search area is small. A sliding window  with the same size as the cutout image is sliding over a small surrounding area of the location predicted by the kalman filter. The window with the lowest squared sum difference to the previous cutout image is set as the new location. If the original cutout is touching the border of the image or the squared sum difference is to high it is assumed the hand has left the image, and is flagged accordingly. This method works if the shape and size of the hand don't change too much.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -273,6 +324,7 @@ When in a previous frame a hand was detected but in the current frame not any mo
 
 
 \section{Discussion}
+This method is quite robust, but can fail if the conditions listed in \autoref{sec:goal} are not met. See \autoref{fig:fail} for an example of failed segmentation. This figure is a still from one of the movies in the dataset used in the experiments. The test subject has a skin color profile that is similar to parts of the background. Not much can be done to solve this problem, except the threshold can be manually adjusted. Still, this will introduce more false negatives and the segmentation will still be poor.
 
 \begin{figure}[htbp]
 \center{}
@@ -282,8 +334,7 @@ When in a previous frame a hand was detected but in the current frame not any mo
 \end{figure}
 
 
-A parameterless method of going from the probabilistic domain to the binary domain is adaptive thresholding.
 
-The face detection is one of the most expensive operations in the processing chain. Since in a single shot movie usually a face doesn't move fast, a number of frames can be skipped which will free more computational time for other operations.
+
 
 

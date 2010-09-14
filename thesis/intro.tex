@@ -20,9 +20,20 @@ A deaf person can't interpret spoken words, at least not by listening. He or she
 Speech generation, speech recognition, facial expression recognition and sign language interpretation have all been studied before. Research has been done in automated sign language interpretation using computer vision\cite{Buehler2009}\cite{RichardBowden2004}. The problem with interpreting sign language is a very large vocabulary, segmentation of the different gestures and representing the gestures in a robust way.
 
 \section{Goal and motivation}
-The goal of this thesis is to describe the design, build and evaluation process of a system for hand pose recognition.
+\label{sec:goal}
+The goal of this thesis is to describe the design, build and evaluation process of a system for hand pose recognition. The system needs to be fast and user friendly. 
 
-To realize this some criteria on the system's settings are required:
+\begin{itemize}
+	\item Real time performance (between 10 and 50 fps)
+	\item Normal consumer processing power
+	\item Normal RGB camera (webcam)
+	\item No gloves or skin mounted electromechanical sensors
+	\item No calibration or initialization
+	\item Minimal configuration/parameters
+\end{itemize}
+	
+
+To realize these requirements some restrictions on the system's setting are required:
 \begin{itemize}
 	\item One person in the image
 	\item Person is wearing clothing with long sleeves

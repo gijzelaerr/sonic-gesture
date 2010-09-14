@@ -52,8 +52,9 @@ frameH = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameS = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameBW = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameBP = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
-frameClosed = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameTh = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
+frameThNoBlur = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
+frameClosed = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameBlur = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameSkinCut = cv.CreateImage(format, cv.IPL_DEPTH_8U, 3)
 temp = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
@@ -105,13 +106,14 @@ cv.CalcArrBackProject([frameH, frameS], frameBP, hist)
 cv.Normalize(frameBP, frameBP, 0, 255, 32)
 cv.Smooth( frameBP, frameBlur, param1=31);
 cv.Threshold(frameBlur, frameTh, 30, 255, cv.CV_THRESH_BINARY);
+cv.Threshold(frameBP, frameThNoBlur, 30, 255, cv.CV_THRESH_BINARY);
 
 # do morhphological close operation
 dia=15
 center=(dia/2)+1
 element = cv.CreateStructuringElementEx(dia, dia, center, center, cv.CV_SHAPE_ELLIPSE)
-#cv.MorphologyEx(frameTh, frameClosed, temp, element, cv.CV_MOP_CLOSE)
-cv.Dilate(frameTh, frameClosed, element, 1)
+cv.MorphologyEx(frameTh, frameClosed, temp, element, cv.CV_MOP_CLOSE)
+#cv.Dilate(frameTh, frameClosed, element, 1)
 
 # find contours
 cv.Copy(frameClosed, temp)
@@ -193,7 +195,7 @@ cv.Copy(frameSkinCut, leftHandImgCut)
 cv.ResetImageROI(frameSkinCut)
 
 
-cv.CvtColor(leftHandImg ,leftHandImgBw, cv.CV_RGB2GRAY)
+cv.CvtColor(leftHandImgCut, leftHandImgBw, cv.CV_RGB2GRAY)
 
 maxVal = cv.MinMaxLoc(leftHandImgBw)[1]
 cv.ConvertScale(leftHandImgBw, leftHandImgBw, scale=255/maxVal)
@@ -215,6 +217,7 @@ cv.SaveImage("detected.jpg", frameShow)
 cv.SaveImage("backproject.jpg", frameBP)
 cv.SaveImage("blurred.jpg", frameBlur)
 cv.SaveImage("thresholded.jpg", frameTh)
+cv.SaveImage("thresholded_noblur.jpg", frameThNoBlur)
 cv.SaveImage("closed.jpg", frameClosed)
 cv.SaveImage("histogram.jpg", histImg)
 cv.SaveImage("contours.jpg", frameCont)

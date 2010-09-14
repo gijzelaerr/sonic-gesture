@@ -5,6 +5,7 @@
 
 Knowing the location the hands in a image doesn't tell much about the hand poses. A method needs to be constructed to extract features from the hand window that help to discriminate the different hand poses. These features can then be used to compare to features extracted from labeled hand windows.
 
+This chapter describes how the hand poses are extracted from the hand windows. First features of the hand window are extracted that represent the current hand pose. Then these features are compared by a classifier with previously extracted features of hand poses for which the poses where already known. The classifier will determine which known hand pose(s) resembles the extracted  
 \section{Feature extraction}
 
 \subsection*{Segmentation - removing background}
@@ -28,7 +29,7 @@ Knowing the location the hands in a image doesn't tell much about the hand poses
 \end{center}
 \end{figure}
 
-The hand window contains some background pixels, because a hand will never fill a perfect square. These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In \autoref{sec:skinmodel} a binary mask for skin pixels is constructed. The binary inversion of this mask can be used again to remove the background. The result of this procedure can be seen in \autoref{fig:gijs5_cutout}. To decrease the possibility that mislabeled skin pixels are removed by this mask, a small morphological dilate operation will increase the size of the hand cutout, but this will also introduce more noisy (background) pixels.
+The hand window contains some background pixels, because a hand will never fill a perfect square. These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In \autoref{sec:skinmodel} a binary mask for skin pixels is constructed. The binary inversion of this mask can be used again to remove the background. The result of this procedure can be seen in \autoref{fig:gijs5_cutout}. To decrease the possibility that false negative skin pixels are removed by this mask, a small morphological dilate operation will increase the size of the hand cutout, but this will also introduce more noisy (non-skin) pixels.
 
 
 \subsection*{Histogram of Oriented Gradients}

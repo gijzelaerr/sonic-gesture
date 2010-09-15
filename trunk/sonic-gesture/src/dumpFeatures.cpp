@@ -22,10 +22,26 @@ int main(int argc, char *argv[]) {
     HOGDescriptor hog;
     vector<Point> locations;
     vector<float> descriptors;
+    vector<KeyPoint> keypoints;
+    SURF surf;
 
     Mat handimg;
     Mat train_mat;
     Mat labels_mat;
+
+    int xsize = 64;
+    int ysize = 128;
+    int winsize = 16;
+
+    int xpt, ypt;
+    for (int x = 0; x < (xsize/winsize)*2-1; x++ ) {
+        for (int y = 0; y < (ysize/winsize)*2-1; y++ ) {
+            xpt = (x+1)*(winsize/2);
+            ypt = (y+1)*(winsize/2);
+            keypoints.push_back(KeyPoint(Point(xpt, ypt), winsize));
+        }
+    };
+
 
     QFileInfo labelsPath(settings->dataSet.absolutePath() + "/labels.txt");
     if (!labelsPath.isReadable()) {
@@ -50,6 +66,8 @@ int main(int argc, char *argv[]) {
 
     // initialize the HOG parameters
     hog = HOGDescriptor();
+    surf = SURF();
+
 
     // we keep track of which is the first, so we can extract size info from image
     bool first = true;
@@ -94,7 +112,11 @@ int main(int argc, char *argv[]) {
                 exit(EXIT_FAILURE);
             };
 
-            hog.compute(handimg, descriptors, winStride, padding, locations);
+            // UNCOMMENT THIS TO USE HOG
+            //hog.compute(handimg, descriptors, winStride, padding, locations);
+
+            // UNCOMMENT THIS TO USE SURF
+            surf(handimg, Mat(), keypoints, descriptors, true);
 
             // initialize the matrix with info from first hand
             if(first) {
@@ -109,7 +131,6 @@ int main(int argc, char *argv[]) {
     }
     train_mat = train_mat.t();
     labels_mat = Mat(labels_vector);
-
 
 
 

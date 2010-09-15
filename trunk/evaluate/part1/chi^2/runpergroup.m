@@ -3,14 +3,14 @@
 clear;
 close all;
 
-%%
+%
 fprintf('load data\n');
 full_dataset = load('../features.txt');
 full_labels = load('../labels.txt');
 full_sets = importdata('../sets.txt');
 groups
 
-%% SETTINGS
+% SETTINGS
 %number of symbols in each set
 SYMBOLS=28;
 % which nameset we want to use
@@ -22,11 +22,10 @@ nReps = 1;
 nFolds = 3;
 
 
-%%
+%
 fprintf('constructing train and test set\n');
 trainIndexes = find(ismember(full_sets, trainVideos)==1)';
 trainSet = zeros(size(trainIndexes,2)*SYMBOLS, size(full_dataset,2));
-
 for i = 1:size(trainIndexes,2)
     set = trainIndexes(i);
     start = (set-1)*SYMBOLS+1;
@@ -38,10 +37,14 @@ for i = 1:size(trainIndexes,2)
     trainSet(target_start:target_finish, :) = range;
 end
 
+% calculate shift
+trainMin = min(trainSet);
+shift = trainMin .* ((trainMin < 0)*-1);
+trainShift = repmat(shift, size(trainSet, 1), 1);
+trainSet = trainSet + trainShift;
+
 testIndexes = find(ismember(full_sets, testVideos)==1)';
 testSet = zeros(size(testIndexes,1)*SYMBOLS, size(full_dataset,2));
-
-
 for i = 1:size(testIndexes,2)
     set = testIndexes(i);
     start = (set-1)*SYMBOLS+1;
@@ -53,32 +56,41 @@ for i = 1:size(testIndexes,2)
     testSet(target_start:target_finish, :) = range;
 end
 
-%% construct labels
+
+testShift = repmat(shift, size(testSet, 1), 1);
+testSet = testSet + testShift;
+
+
+% construct labels
 trainLabels = repmat(eye(28,28),size(trainIndexes,2),1);
 testLabels = repmat(eye(28,28),size(testIndexes,2),1);
 
 
 
 %%
-fprintf('doing PCA\n');
-eigenhands = pca(trainSet, 0.95);
-fprintf('dimensions after PCA: %d\n', size(eigenhands, 2));
-trainSetEigen = trainSet*eigenhands;
-testSetEigen = testSet*eigenhands;
+% fprintf('doing PCA\n');
+% eigenhands = pca(trainSet, 0.95);
+% fprintf('dimensions after PCA: %d\n', size(eigenhands, 2));
+% trainSetEigen = trainSet*eigenhands;
+% testSetEigen = testSet*eigenhands;
 
 
-%% 
+%%
+% fprintf('constructing kernel\n');
+% trainDist = ChiSquareDistance(trainSetEigen.data);
+% testDist = ChiSquareDistance(testSetEigen.data, trainSetEigen.data);
+
 fprintf('constructing kernel\n');
 trainDist = ChiSquareDistance(trainSet);
 testDist = ChiSquareDistance(testSet, trainSet);
 
 
-%% 
+% 
 fprintf('doing classification\n');
 [avgPrec clfsOutput] = SvmPKExpOpt(trainDist, testDist, trainLabels, testLabels, cRange, nReps, nFolds, 0);
 [c,acc]= svmOutput2Confmat(clfsOutput, testLabels);
 
-%% output
+% output
 fprintf('full scale accuracy %.2f%%\n', accur(c));
 m = major(c);
 fprintf('major scale accuracy %.2f%%\n', accur(m));

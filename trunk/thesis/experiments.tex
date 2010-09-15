@@ -135,18 +135,27 @@ full set    & SVM $\chi^2$ &  71.83\% &80.07\% \\
 \centering
 \begin{tabular}{lcc}
 \hline\hline
-Classifier 				&  	Full scale	&	Major scale	\\
+Descriptors & Classifier 				&  	Full scale	&	Major scale	\\
 \hline
-KNN3					&	58.57\% 	&	72.78\%	\\
-PCA, KNN3 				&	57.62\% 	&	72.17\%	\\
-PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$)	& 55.48\%	&	68.25\%	\\
-PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)				& 62.14\%	&	73.39\%	\\
-SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
+Hog & KNN3					&	58.57\% 	&	72.78\%	\\
+SURF & KNN3					&	46.19\% 	&	60.17\%	\\
+Hog & PCA, KNN3 			&	57.62\% 	&	72.17\%	\\
+SURF & PCA, KNN3			& 44.05\%		& 56.65\% \\
+Hog & PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$)	& 55.48\%	&	Hog & 68.25\%	\\
+Hog & PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)				& 62.14\%	&	73.39\%	\\
+SURF & PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)				& 44.29\%	& 	57.18\%	\\
+Hog & SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
+Hog & PCA, SVM $\chi^2$ 			&	crash due to negative values		&	crash due to negative values	\\
+SURF & SVM $\chi^2$ 			&	37.93\%		&	47.91\%	\\
+SURF & PCA, SVM $\chi^2$ 			&	crash due to negative values		&	crash due to negative values	\\
 \hline
 \end{tabular}
 \caption{simple as trainset, complex as test}
 \end{table}
 
+
+full scale accuracy 46.19%
+major scale accuracy 60.17%
 
 
 \begin{figure}[htbp]
@@ -347,13 +356,16 @@ The performance of Sonic Gesture depends on how fast the testing systems CPU pow
 \begin{tabular}{cccc}
 What & relative time & absolute time & comment \\
 \hline
-kNN & 37\% & ... & 3780 features, 2016 dimensions \\
+kNN & 37\% & ... & 3780 features, 2016 samples \\
 Color space convertion & 8.4\% & ... & \\
 Image resizing & 7.6\% & ... & \\
 Face detection & 2.3\% & ... &  19\% if every frame \\
 \end{tabular}
 \caption{Performance timing of Sonic Gesture}
 \end{table}
+
+calculating SURF features of a hand train image takes 4ms and results in 11 features on average.
+
 
 
 37.9\% KNN

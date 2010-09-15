@@ -25,9 +25,9 @@ trainVideos = simple_set;
 testVideos =  complex_set;
 knn = 5;
 
+%make trainset
 trainIndexes = find(ismember(full_sets, trainVideos)==1)';
 trainSet = zeros(size(trainIndexes,2)*SYMBOLS, size(full_dataset,2));
-
 for i = 1:size(trainIndexes,2)
     set = trainIndexes(i);
     start = (set-1)*SYMBOLS+1;
@@ -39,10 +39,16 @@ for i = 1:size(trainIndexes,2)
     trainSet(target_start:target_finish, :) = range;
 end
 
+% calculate shift
+trainMin = min(trainSet);
+shift = trainMin .* ((trainMin < 0)*-1);
+trainShift = repmat(shift, size(trainSet, 1), 1);
+trainSet = trainSet + trainShift;
+
+
+% make testset
 testIndexes = find(ismember(full_sets, testVideos)==1)';
 testSet = zeros(size(testIndexes,1)*SYMBOLS, size(full_dataset,2));
-
-
 for i = 1:size(testIndexes,2)
     set = testIndexes(i);
     start = (set-1)*SYMBOLS+1;
@@ -53,6 +59,10 @@ for i = 1:size(testIndexes,2)
     target_finish = target_start+SYMBOLS-1;
     testSet(target_start:target_finish, :) = range;
 end
+
+testShift = repmat(shift, size(testSet, 1), 1);
+testSet = testSet + testShift;
+
 
 % construct labels
 testLabels = repmat((1:SYMBOLS)', size(testIndexes,2), 1);
@@ -65,7 +75,7 @@ trainLabels = repmat((1:SYMBOLS)', size(trainIndexes,2), 1);
 
 
 
-% construct PCA
+%% construct PCA
 eigenhands = pca(trainSet, 0.95);
 fprintf('dimensions after PCA: %d\n', size(eigenhands, 2));
 trainSetEigen = trainSet*eigenhands;
@@ -76,12 +86,13 @@ testSetEigen = testSet*eigenhands;
 % confusion = confusionmat(testLabels, predicted);
 
 
-% DO SVM classification
+%% DO SVM classification
 model = svmtrain(trainLabels, trainSetEigen.data, '-c 8192, -g 0.031250');
 [svmPredict, accuracy, decision_values] = svmpredict(rand(size(testSetEigen.data, 1), 1), testSetEigen.data, model);
 confusion = confusionmat(testLabels, svmPredict);
 a = accur(confusion);
-fprintf('c: %f, g: %f, accuracy: %.2f%%\n', c, g, a);
+%%
+fprintf('accuracy: %.2f%%\n', a);
 
 
 %

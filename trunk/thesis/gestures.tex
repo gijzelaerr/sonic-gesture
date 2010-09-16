@@ -58,13 +58,29 @@ Two classifiers where evaluation during the experiments, K-Nearest Neighbors (KN
 Also Principal Component Analysis (PCA) was performed on the dataset to reduce the dimensionality. The impact on the classifiers has been measured and is presented together with all other experiments in \autoref{ch:experiments}.
 
 \subsection*{The stabilizer}
-Since the frames following each other have a spatio-temporal relationship there is a relationship between the labels given by the classifier. Because of noise, misclassification can happen. These false matches can be filtered out by smoothing the labels on a time scale.
+Since the frames following each other have a spatial-temporal relationship there is a relationship between the labels given by the classifier. Because of noise, misclassification can happen. These false matches can be filtered out by smoothing the labels on a time scale.
 
 This smoothing is done with a simple self invented method called 'the stabilizer'. 
 
-The stabilizer is initialized with $n$ numbers of bins which is equal to the number of labels. There are 2 parameters, $n_{max}$ and $n_{threshold}$.
+A visual representation is given in \autoref{fig:stabilizer}. The stabilizer is initialized with $n$ numbers of bins which is equal to the number of labels. There are 2 parameters, $V_{max}$ which controls the maximum and $V_{th}$ which controls the threshold.
 
-For every new label that is given by the classifier all bins are decremented with 1, except for the bin with the currently classified label which is incremented. A bin is incremented until it reaches it maximum value. When at any moment one of the bins value rises above the threshold, the stabilizer will output the label of that bin, as if it was the classifier itself. The result is a more stable and smoothed stream of labels, where single noisy labels are filtered out. For a sequence of frames with a correctly detected pose there is a delay between the first frame and the stabilizer will output the correct label, this delay is controlled by $n_{threshold}$ which is measured in frame count. A higher value will reduce more noise, but will give a bigger delay. There is also a delay after a sequence which is controlled by $n_{max}$. With a framerate of $25$ frames a second, $n_{max} = 15$ and $n_{threshold} = 10$ give good results reducing noise and still being very responsive. 
+For every new label that is given by the classifier all bins are decremented with 1, except for the bin with the currently classified label which is incremented. A bin is incremented until it reaches $V_{max}$. When at any moment one of the bins value rises above $V_{th}$, the stabilizer will output the label of that bin. The result is a more stable and smoothed stream of labels, where single noisy labels are filtered out. For a sequence of frames with a correctly detected pose there is a delay between the first frame and the stabilizer will output the correct label, this delay is controlled by $V_{th}$ which is measured in frame count. A higher value will reduce more noise, but will give a bigger delay. There is also a delay after a sequence which is controlled by $n_{max}$. With a framerate between $10$ and $25$ frames a second, $V_{max} = 15$ and $V_{th} = 10$ give good results reducing noise and still being very responsive. 
+
+\begin{figure}[htbp]
+  \centering
+\subfloat[A]{
+    \includegraphics[width=0.45\textwidth]{figures/stabilizer/b.png}
+}
+\hspace{0.03\linewidth}
+\subfloat[B]{
+    \includegraphics[width=0.45\textwidth]{figures/stabilizer/a.png}
+}
+  \caption{Two examples of a stabilizer in action}
+  \label{fig:stabilizer}
+\end{figure}
+
+
+
 
 \subsection*{Training phase}
 recording video, manual labeling, extracting HOG features, training classifier

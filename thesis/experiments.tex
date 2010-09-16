@@ -5,8 +5,28 @@
 
 
 \section{The dataset}
-A dataset was constructed to perform the experiments. The dataset consists of movies with people performing all 28 hand poses. Per movie 28 frames where manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. In the beginning people where recorded performing the complete sequence 5 times, but this was taking too much time. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture, with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background, 3 where recorded with a complex background and 6 where recorded with the same complex background but also with a poster with skinlike colors.
+A dataset was constructed to perform the experiments. The dataset consists of movies with people performing all 28 hand poses. Per movie 28 frames where manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first people where recorded performing the complete sequence 5 times, but this was taking too much time, and people became impatient. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture (see \autoref{sec:implementation}), with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 where recorded with a complex background (\autoref{fig:complexbackground}) and 6 where recorded with the same complex background but also with a poster with skinlike colors.
 
+\begin{figure}[htbp]
+\center{}
+\includegraphics[width=0.8\linewidth]{figures/simple.png}
+\caption{Still of movie ivo5 with simple background}
+\label{fig:simplebackground}
+\end{figure}
+
+\begin{figure}[htbp]
+\center{}
+\includegraphics[width=0.8\linewidth]{figures/complex.png}
+\caption{Still of movie gosia3 with complex background}
+\label{fig:complexbackground}
+\end{figure}
+
+\begin{figure}[htbp]
+\center{}
+\includegraphics[width=0.8\linewidth]{figures/complexposter.png}
+\caption{Still of movie sil1 with complex background with skin like poster}
+\label{fig:complexposterbackground}
+\end{figure}
 
 
 \begin{table}
@@ -26,16 +46,14 @@ A dataset was constructed to perform the experiments. The dataset consists of mo
 	Ork      & 3 & Simple & None \\
 	Roberto  & 3 & Simple & None \\
 	Xiaong   & 3 & Simple & None \\
-	\hline			
 	Gosia    & 3 & Complex & None \\
 	Hamdi    & 3 & Complex & None \\
 	Michael  & 3 & Complex & None \\
-	Sil      & 3 & Complex + skin-like colors & None \\
-	Victoria & 3 & Complex + skin-like colors & None \\
-	Chu      & 3 & Complex + skin-like colors & problem with brick wall \\
-	\hline	
-	Bas      & 3 & Complex + skin-like colors & None \\
-	Koen     & 3 & Complex + skin-like colors & None \\
+	Sil      & 3 & Complex + poster & None \\
+	Victoria & 3 & Complex + poster & None \\
+	Bas      & 3 & Complex + poster & None \\
+	Koen     & 3 & Complex + poster & None \\
+	Chu      & 3 & Complex + poster & problem with brick wall \\
 	Stratos  & 3 & Complex + skin-like colors & problems with white wall \\
 \hline
 \end{tabular}
@@ -43,19 +61,7 @@ A dataset was constructed to perform the experiments. The dataset consists of mo
 \end{table}
 
 
-\begin{figure}[htbp]
-\center{}
-\includegraphics[width=0.8\linewidth]{figures/simple.png}
-\caption{Still of movie ivo5 with simple background}
-\label{fig:simplebackground}
-\end{figure}
 
-\begin{figure}[htbp]
-\center{}
-\includegraphics[width=0.8\linewidth]{figures/complex.png}
-\caption{Still of movie sil1 with simple background}
-\label{fig:complexbackground}
-\end{figure}
 
 
 The dataset is manually labeled. For every sequence of frames where a hand pose is performed a frame number is labeled where the pose resembles the example the most. \autoref{fig:gijs5} is an example of the labeled frames. The train images used to train the classifier where extracted with Sonic Gesture
@@ -64,15 +70,29 @@ Usually the 12 Curwen solfege hand symbols are performed in front of the torso a
 
 \section{Evaluation}
 
-
-\section{Results}
-
 \subsection{part I - evaluating classifiers}
+In this section different evaluators with different parameters are evaluated with changing subsets of the dataset.
+
+\subsubsection{Method}
+All hand windows for each symbol in each movie are extracted and the features are extracted and stored. This data in then imported in Matlab, where the experiments are performed. For the SVM classifier the libsvm\footnote{http://www.csie.ntu.edu.tw/~cjlin/libsvm/} package is used. To perform PCA the prtools\footnote{http://www.prtools.org/} package is used. For nearest neighbors the KNN implementation in the biolearning package of matlab itself is used. The evaluation of the classifiers is split out in three runs per classifier:
+
+\paragraph{K-fold per movie using simple dataset only}
+here only the movies with a simple background are used. For each run one movie is used for testing and all other movies are used for training. This means for each recorded person currently tested there is also 2 or 4 recordings of him used in the train set. This setting mimics the real life situation where the system is pre-trained with other people than the user but also trained by the user himself, with a simple background.
+
+\paragraph{K-fold per person}
+For this evaluation run all movies or used, but per person the movies are used for testing and all other movies for training. Both complex and simple backgrounds are used. This setting mimics the real life situation where the system is pre-trained with only other people than the user of the system, and the background isn't necessarily simple. 
+
+\paragraph{Simple as train set, complex as test set}
+As the last evaluation the classifier is trained with all movies with the simple background, and as a test set the movies with the complex background are used. This mimics the real life situation where the training is with recordings in optimal conditions, but the system is used in a complex environment like a living room. Also the system is not trained by the user.
+
+\paragraph{}
 For the number of neighbors for K-NN a small number of tests where run, and a value between 3 and 10 for N yielded similar performance. Since a lower number of $k$ can give better performance $k=3$ was used for all experiments.
 
-When PCA was performed on the dataset the smallest eigenvectors where removed so 95\% of the original variance was kept.
+When PCA was performed on the dataset the smallest eigenvectors where removed so 95\% of the original variance was remaining. On the simple dataset reduce the dimensions from 3780 to 594 dimensions. For the complex set combined with the simple set the dimensionality is reduced to 688 dimensions, for complex only 283 and for the complete dataset 749.
 
-For SVM the radial basis function (RBF) kernel is used, since the libsvm documentation states that is a good kernel to use that usually gives good performance. The $c$ and $\gamma$ values for SVM where found by an extensive grid search on the 'per person' tests with only the simple movies performed on a small cluster in the ranges $2.^(-3:2:15)$ for $c$ and $2.^(-15:2:3)$ for $\gamma$. The most optimal values are $\gamma$ = 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
+For SVM two kernels are evaluated. The first is the radial basis function (RBF) kernel, since the libsvm documentation states that is a good kernel to use that usually gives good performance. The $c$ and $\gamma$ values for SVM where found by an extensive grid search on the 'per person' tests with only the simple movies performed on a small cluster in the ranges $2.^(-3:2:15)$ for $c$ and $2.^(-15:2:3)$ for $\gamma$. The most optimal values are $\gamma$ = 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
+
+The second kernel used is a precomputed kernel using $\chi^2$.
 
 The Curwen hand symbols that are closely related in a musical scale way are quite similar, for example 'Re' and 'Ri' (\autoref{fig:reri}). It is expected that a lot of misclassifications will be caused by this similarity. To investigate the impact of this issue, 2 different scores are calculated, one for the major scale and one for the full scale. The full scale threats every class as a single class, for the major scale the notes in the major scale and their corresponding similar notes are joined into one class. For example Do an
 
@@ -88,11 +108,7 @@ The Curwen hand symbols that are closely related in a musical scale way are quit
 
 
 
-Doing PCA and removing eigenvectors untill 0.95 variance on the simple data set will reduce to  594 dimensions (from 3780);
-complex + simple: 688
-complex:  283
-full: 749
-
+\subsubsection{Results}
 
 \begin{table}
 \centering
@@ -133,24 +149,26 @@ full set    & SVM $\chi^2$ &  71.83\% &80.07\% \\
 
 \begin{table}
 \centering
-\begin{tabular}{lcc}
+\begin{tabular}{lllcc}
 \hline\hline
-Descriptors & Classifier 				&  	Full scale	&	Major scale	\\
+Descriptors & Classifier 		& pca		&  	Full scale	&	Major scale	\\
 \hline
-Hog & KNN3					&	58.57\% 	&	72.78\%	\\
-SURF & KNN3					&	46.19\% 	&	60.17\%	\\
-Hog & PCA, KNN3 			&	57.62\% 	&	72.17\%	\\
-SURF & PCA, KNN3			& 44.05\%		& 56.65\% \\
-Hog & PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$)	& 55.48\%	&	Hog & 68.25\%	\\
-Hog & PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)				& 62.14\%	&	73.39\%	\\
-SURF & PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)				& 44.29\%	& 	57.18\%	\\
-Hog & SVM $\chi^2$ 			&	63.81\%		&	74.71\%	\\
-Hog & PCA, SVM $\chi^2$ 			&	crash due to negative values		&	crash due to negative values	\\
-SURF & SVM $\chi^2$ 			&	37.93\%		&	47.91\%	\\
-SURF & PCA, SVM $\chi^2$ 			&	crash due to negative values		&	crash due to negative values	\\
+Hog & KNN3				& no	&	58.57\% 	&	72.78\%	\\
+Hog & KNN3 				& yes	&	57.62\% 	&	72.17\%	\\
+Hog & SVM RBF ($c=2^6$ $\gamma=2^{-5}$)			& yes & 62.14\%	&	73.39\%	\\
+Hog & SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	& yes & 55.48\%	&	68.25\%	\\
+Hog & SVM $\chi^2$ 		&	yes	&	63.81\%	&	74.71\%	\\
+Hog & SVM $\chi^2$		&	yes &	crash 	&	crash \\
+\hline
+SURF & KNN3				&	no	&	46.19\% 	&	60.17\%	\\
+SURF & KNN3										& yes &	44.05\% & 56.65\% \\
+SURF & SVM RBF ($c=2^6$ $\gamma=2^{-5}$)		& yes &	44.29\%	&	57.18\%	\\
+SURF & SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	& yes &	40.00\%	&	53.28\%	\\
+SURF & SVM $\chi^2$								& no  &	37.93\%		&	47.91\%	\\
+SURF & SVM $\chi^2$		&	yes	&	crash 	&	crash \\
 \hline
 \end{tabular}
-\caption{simple as trainset, complex as test}
+\caption{simple as trainset, complex as testset. $f$ is the number of features}
 \end{table}
 
 
@@ -173,164 +191,111 @@ major scale accuracy 60.17%
 
 \subsection{Part II - evaluating Sonic Gesture}
 
+\subsubsection{Method}
+
 \begin{figure}[htbp]
 \center{}
 \subfloat[Without stabilizer]{
-	\includegraphics[width=0.7\linewidth]{figures/performance/anne1_unstable.jpg}}
+	\includegraphics[width=0.3\linewidth]{figures/performance/anne1_unstable.jpg}}
 \hspace{0.02\linewidth}
 \subfloat[With stabilizer]{
-	\includegraphics[width=0.7\linewidth]{figures/performance/anne1_stable.jpg}}
+	\includegraphics[width=0.3\linewidth]{figures/performance/anne1_stable.jpg}}
 \hspace{0.02\linewidth}
 \subfloat[Arbitrary movie with stabilizer]{
-	\includegraphics[width=0.7\linewidth]{figures/performance/heilige.jpg}}
+	\includegraphics[width=0.3\linewidth]{figures/performance/heilige.jpg}}
 \caption{Plots of labels per frame}
 \label{fig:performances}
 \end{figure}
 
-For this set of experiments the Damerau-Levenshtein distance of a sequence of generated labels to the ground truth is calculated. This value is then divided by the number of labels, 28. A low value is equal to good performance, a high value to bad. The ground truth is a list of incremented integers from 1 to 28. Since some movies are 'polluted' with incorrect hand poses and other people walking through the screen this ground truth isn't really correct. But it is very difficult to impossible to construct a good ground truth in this case, and given the fact that the goal of the recorded movies was to have people perform the 28 hand poses sequentially this is a good alternative.
+For this set of experiments the Damerau-Levenshtein distance of a sequence of generated labels to the ground truth is calculated. This value is then divided by the number of labels, 28. A low value is equal to good performance, a high value to bad. The ground truth is a list of incremented integers from 1 to 28. Since some movies are 'poluted' with incorrect hand poses and other people walking through the screen this ground truth isn't really correct. But it is very difficult to impossible to construct a good ground truth in this case, and given the fact that the goal of the recorded movies was to have people perform the 28 hand poses sequentially this is a good alternative. 
+
+\begin{algorithm}
+\caption{DamerauLevenshteinDistance(str1, str2)}
+\label{dameraulevenshtein}
+\begin{algorithmic}
+   \REQUIRE a string str1
+   \REQUIRE a string str2
+   \ENSURE The distance between str1 and str2
+
+   \medskip
+
+   \FOR{$i = 1$ to lenStr1}
+       \STATE $\mathbf{D}[i, 0] \Leftarrow i$
+   \ENDFOR
+   \FOR{$j = 1$ to lenStr2}
+       \STATE $\mathbf{D}[0, j] \Leftarrow j$
+   \ENDFOR
+   \FOR{$i = 1$ to lenStr1}
+       \FOR{$j = 1$ to lenStr2}
+       		\IF{str1[$i$] $=$ str2[$j$]}
+				\STATE cost $\Leftarrow 0$
+            \ELSE
+				\STATE cost $\Leftarrow 1$
+			\ENDIF
+			\STATE $x \leftarrow D[i-1, j  ] + 1$ % deletion
+			\STATE $y \leftarrow D[i  , j-1] + 1$ % insertion
+            \STATE $z \leftarrow D[i-1, j-1] + $ cost % substitution
+            \STATE $\mathbf{D}[i, j] \Leftarrow \min(x, y, z)$
+            \IF {(str1[$i$] $=$ str2[$j-1$]) $\wedge$ (str1[$i-1$] $=$ str2[$j$])}
+				\STATE $\mathbf{D}[i, j] \Leftarrow \min(
+                	\mathbf{D}[i, j],
+                    \mathbf{D}[i-2, j-2] + $ cost  % transposition
+                )
+			\ENDIF
+		\ENDFOR
+	\ENDFOR
+   \RETURN d[lenStr1, lenStr2]
+
+\end{algorithmic}
+\end{algorithm}
+	
+\subsubsection{Results}
 
 simple: 0.27 average\\
 complex: 0.35 average\\
 
-ivo 0.08\\
-hanne 0.14\\
-gijs 0.18\\
-ork 0.18\\
-chu 0.19\\
-jasberb 0.23\\
-stratos 0.24\\
-victoria 0.24\\
-arjan 0.26\\
-peter 0.26\\
-anne 0.28\\
-michael 0.32\\
-gosia 0.37\\
-koen 0.38\\
-jasper  0.4\\
-bas 0.44\\
-roberto 0.47\\
-xiaong 0.49\\
-hamdi 0.49\\
-sil 0.52\\
-
-
-
-
-anne1 25.0
-anne2 24.0
-anne3 25.0
-anne4 25.0
-anne5 24.0
-arjan1 24.0
-arjan2 22.0
-arjan3 25.0
-arjan4 23.0
-arjan5 22.0
-bas1 25.0
-bas2 26.0
-bas3 25.0
-chu1 26.0
-chu2 25.0
-chu3 24.0
-gijs1 25.0
-gijs2 23.0
-gijs3 23.0
-gijs4 27.0
-gijs5 24.0
-gosia1 24.0
-gosia2 25.0
-gosia3 25.0
-hamdi1 24.0
-hamdy2 25.0
-hamdy3 24.0
-hanne1 26.0
-hanne2 25.0
-hanne3 25.0
-hanne4 25.0
-hanne5 26.0
-ivo1 26.0
-ivo2 24.0
-ivo3 24.0
-ivo4 24.0
-ivo5 23.0
-jasper1 25.0
-jasper2 23.0
-jasper3 24.0
-jasper4 23.0
-jasper5 25.0
-jasperb1 24.0
-jasperb2 26.0
-jasperb3 26.0
-koen1 24.0
-koen2 25.0
-koen3 25.0
-michael1 26.0
-michael2 26.0
-michael3 24.0
-ork1 23.0
-ork2 24.0
-ork3 25.0
-peter1 25.0
-peter2 24.0
-peter3 24.0
-peter4 26.0
-peter5 25.0
-roberto1 23.0
-roberto2 24.0
-roberto3 23.0
-sil1 23.0
-sil2 24.0
-sil3 23.0
-stratos1 23.0
-stratos2 25.0
-stratos3 24.0
-victoria1 25.0
-victoria2 25.0
-victoria3 24.0
-xiaong1 24.0
-xiaong2 26.0
-xiaong3 24.0
-
 \begin{table}
 \centering
-\begin{tabular}{rrrrrrr}
+\begin{tabular}{rrrrrrrr}
 \hline
-name	& 1 & 2 & 3 & 4 & 5 & normalized average \\
+name	& 1 & 2 & 3 & 4 & 5 & normalized average & without stabilizer\\
 \hline
-Anne	&	12.0	&	9.0		&	7.0	&	8.0	&	4.0	&	0.28\\
-Arjan	&	13.0	&	7.0		&	7.0	&	2.0	&	8.0	&	0.26\\
-Gijs	&	4.0		&	5.0		&	6.0	&	6.0	&	4.0	&	0.18\\
-Ivo		&	2.0		&	3.0		&	2.0	&	3.0	&	1.0	&	0.08\\
-Jasper 1	&	19.0	&	13.0	&	6.0	&	6.0	&	12.0 &	0.4\\
-Peter	&	7.0		&	8.0		&	7.0	&	9.0	&	5.0	&	0.26\\
-Hanne	&	9.0		&	0.0		&	1.0	&	7.0	&	2.0	&	0.14\\
-Jasper 2	&	9.0		&	5.0		&	5.0 & & & 0.23\\
-Ork		&	6.0		&	5.0		&	4.0	& & & 0.18\\
-Roberto	&	19.0	&	8.0		&	13.0 & & & 0.47\\
-Xiaong	&	17.0	&	14.0	&	10.0 & & & 0.49\\
+Anne		&	12.0	&	9.0		&	7.0		&	8.0	&	4.0	&	0.28 & 0.88 \\
+Arjan		&	13.0	&	7.0		&	7.0		&	2.0	&	8.0	&	0.26 & 0.83 \\
+Gijs		&	4.0		&	5.0		&	6.0		&	6.0	&	4.0	&	0.18 & 0.87 \\
+Ivo			&	2.0		&	3.0		&	2.0		&	3.0	&	1.0	&	0.08 & 0.86 \\
+Jasper 1	&	19.0	&	13.0	&	6.0		&	6.0	&	12.0 &	0.40 & 0.85 \\
+Peter		&	7.0		&	8.0		&	7.0		&	9.0	&	5.0	&	0.26 & 0.86 \\
+Hanne		&	9.0		&	0.0		&	1.0		&	7.0	&	2.0	&	0.14 & 0.91 \\
+Jasper 2	&	9.0		&	5.0		&	5.0 	& & & 0.23 & 0.90 \\
+Ork			&	6.0		&	5.0		&	4.0		& & & 0.18 & 0.86 \\
+Roberto		&	19.0	&	8.0		&	13.0	& & & 0.47 & 0.83 \\
+Xiaong		&	17.0	&	14.0	&	10.0	& & & 0.49 & 0.88 \\
 \hline
-Gosia	&	16.0	&	9.0		&	6.0 & & & 0.37\\
-Hamdi	&	14.0	&	12.0	&	15.0 & & & 0.49\\
-Michael	&	6.0		&	8.0		&	13.0 & & & 0.32\\
-Sil		&	14.0	&	17.0	&	13.0 & & & 0.52\\
-Victoria	&	9.0	&	6.0		&	5.0 & & & 0.24\\
-Chu		&	8.0		&	6.0		&	2.0 & & & 0.19\\
+Gosia		&	16.0	&	9.0		&	6.0		& & & 0.37 & 0.88 \\
+Hamdi		&	14.0	&	12.0	&	15.0	& & & 0.49 & 0.87 \\
+Michael		&	6.0		&	8.0		&	13.0	& & & 0.32 & 0.90 \\
+Sil			&	14.0	&	17.0	&	13.0	& & & 0.52 & 0.83 \\
+Victoria	&	9.0		&	6.0		&	5.0		& & & 0.24 & 0.88 \\
+Chu			&	8.0		&	6.0		&	2.0 	& & & 0.19 & 0.89 \\
 \hline
-Koen	&	11.0	&	9.0		&	11.0 & & & 0.38\\
-Bas		&	15.0	&	12.0	&	9.0 & & & 0.44\\
-Stratos	&	12.0	&	3.0		&	5.0 & & & 0.24\\
+Koen		&	11.0	&	9.0		&	11.0 	& & & 0.38 & 0.88\\
+Bas			&	15.0	&	12.0	&	9.0		& & & 0.44 & 0.90 \\
+Stratos		&	12.0	&	3.0		&	5.0		& & & 0.24 & 0.86 \\
 
 \hline
 \end{tabular}
-\caption{Damerau-Levenshtein of all movies}
+\caption{Damerau-Levenshtein distance of all movies}
 \end{table}
 
 \subsection{Part III - Finding Spock}
 
-
+\subsubsection{Method}
+\subsubsection{Results}
 
 
 \section{Implementation}
+\label{sec:implementation}
 
 \begin{figure}[ht]
 \begin{center}

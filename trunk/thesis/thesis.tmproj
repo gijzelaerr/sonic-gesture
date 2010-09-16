@@ -28,7 +28,7 @@
 			<key>filename</key>
 			<string>gestures.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-14T14:13:02Z</date>
+			<date>2010-09-15T14:02:24Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -58,7 +58,7 @@
 			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-15T08:48:31Z</date>
+			<date>2010-09-15T14:02:24Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -146,14 +146,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>1180</integer>
+				<integer>19</integer>
 				<key>line</key>
-				<integer>340</integer>
+				<integer>144</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>298</integer>
+			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>335</integer>
+			<integer>103</integer>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>
@@ -167,7 +167,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>24</integer>
 		</dict>
 		<key>intro.tex</key>
 		<dict>
@@ -242,6 +242,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{849, 2}, {779, 1026}}</string>
+	<string>{{826, 1}, {774, 1026}}</string>
 </dict>
 </plist>

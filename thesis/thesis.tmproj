@@ -28,7 +28,7 @@
 			<key>filename</key>
 			<string>gestures.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-16T14:50:33Z</date>
+			<date>2010-09-16T15:07:54Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -176,9 +176,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>468</integer>
+				<integer>13</integer>
 				<key>line</key>
-				<integer>66</integer>
+				<integer>70</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>

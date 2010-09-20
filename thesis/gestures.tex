@@ -5,14 +5,14 @@
 
 Knowing the location the hands in a image doesn't tell much about the hand poses. A method needs to be constructed to discriminate the different hand poses. 
 
-This chapter describes how the hand poses are extracted from the hand windows. First features of the hand window are extracted that represent the current hand pose. Then these features are compared by a classifier with previously extracted features of hand poses for which the poses where already known. The classifier will determine which known hand pose(s) resembles the at that moment classified hand.
+This chapter describes how the hand poses are extracted from the hand windows. First features of the hand window are extracted that represent the current hand pose. These features are compared by a classifier with previously extracted features of hand poses for which the poses where already known. The classifier will determine which known hand pose(s) resembles the at that moment classified hand.
 
 
 \section{Feature extraction}
-To compare two or more hands with each other a method is required to calculate the similarity. A very simple method is to compare each pixel location with each other and sum all the differences. But there are some problems with this method. First of all, it is not going to work on images that are not the same size or orientation. Also it is computationally expensive for larger images, for an image of 100 by 100 pixels there are already 10.000 dimensions. And a other important thing, this method is not very forgiving for small variations like scaling and rotation.
+To compare two or more hands with each other a method is required to calculate the similarity. A very simple method is to compare each pixel location with each other and sum all the differences. But this method isn't feasible. First of all, it is not going to work on images that are not the same size or orientation. Also it is computationally expensive for larger images - for an image of 100 by 100 pixels there are already 10.000 dimensions. And a other important thing, this method is not very forgiving for small variations like scaling and rotation.
+
 
 \subsection*{Segmentation - removing background}
-
 
 \begin{figure}[htbp]
 \begin{center}

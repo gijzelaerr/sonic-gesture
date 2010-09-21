@@ -23,36 +23,12 @@ When two people are in a room and don't have a audio or visual limitation, they 
 
 A deaf person can't interpret spoken words, at least not by listening. He or she is highly depended on visual information. Sign languages have been created or invented to aid this visual communication. In these languages two elements have an important role, the face and the hands. These body parts give the most expressive power. The face because it is very good for expressing feelings and emotions, and the hands because they are very flexible and morphable. The hands are especially interesting because there are countless combinations of finger poses and orientations. 
 
-Speech generation, speech recognition, facial expression recognition and sign language interpretation are all subject of extensive research at the moment.
+Speech generation, speech recognition, facial expression recognition and sign language interpretation are all subject of extensive research at the moment. (WHY IS THIS IMPORTANT)
 
 Research has been done in automated sign language interpretation using computer vision\cite{Buehler2009}\cite{RichardBowden2004}. The problem with interpreting sign language is a very large vocabulary, segmentation of the different gestures and representing the gestures in a robust way.
 
-\section{Goal and motivation}
-\label{sec:goal}
-The goal of this thesis is to describe the design, build and evaluation process of a system for hand pose recognition. The system needs to be fast and user friendly. Also the system should be able to run on current consumer hardware.
 
-\begin{itemize}
-	\item Real time performance (10+ fps)
-	\item Normal consumer processing power
-	\item Normal RGB camera (webcam)
-	\item No gloves or skin mounted electromechanical sensors
-	\item No calibration or initialization
-	\item Minimal configuration/parameters
-\end{itemize}
-	
-
-To realize these requirements some restrictions on the system's setting are required:
-\begin{itemize}
-	\item One person in the image
-	\item Person is wearing clothing with long sleeves
-	\item Good enough lightning conditions
-	\item No skin like colors in the image.
-\end{itemize}
-
-The system can be used to aid HCI, but als add more feeling and detail, especially for real time interaction. Using hand poses for Computer aided music composing is interesting but challenging, since the realtime element plays an important role. Also, in a live performance setting, it is much more interesting to look at somebody using his body to interact with a machine than only click of a mouse.
-
-
-\section{Solfege, The Curwen Hand symbols}
+\section{Hand Poses}
 
 Any set of hand poses would do for this system, as long as the individual poses don't look to similar. But since the idea is to translate the interpreted hand poses into sound, it would be interesting to use a set of poses that has a already existing relationship to sound.
 
@@ -92,6 +68,30 @@ A more recent method using hand poses in relation to music are the Curwen solfeg
 \end{figure}
 
 
+\section{Goal and Motivation}
+\label{sec:goal}
+The goal of this thesis is to describe the design, build and evaluation process of a system for hand pose recognition. The system needs to be fast and user friendly. Also the system should be able to run on current consumer hardware.
+
+\begin{itemize}
+	\item Real time performance (10+ fps)
+	\item Normal consumer processing power
+	\item Normal RGB camera (webcam)
+	\item No gloves or skin mounted electromechanical sensors
+	\item No calibration or initialization
+	\item Minimal configuration/parameters
+\end{itemize}
+	
+
+To realize these requirements some restrictions on the system's setting are required:
+\begin{itemize}
+	\item One person in the image
+	\item Person is wearing clothing with long sleeves
+	\item Good enough lightning conditions
+	\item No skin like colors in the image.
+\end{itemize}
+
+The system can be used to aid HCI, but als add more feeling and detail, especially for real time interaction. Using hand poses for Computer aided music composing is interesting but challenging, since the realtime element plays an important role. Also, in a live performance setting, it is much more interesting to look at somebody using his body to interact with a machine than only click of a mouse.
+
 
 
 \section{Related Work}
@@ -121,6 +121,8 @@ An interesting overview paper is \cite{Erol2007}, which reviews the current stat
 
 Similar research has been done \cite{Wang2007}. Here SIFT features are used to discriminate 3 different hand symbols. A performance of 95.6\% is claimed using a the 'sharing feature concept'.
 
+
+MEER MEER MEER
 
 
 

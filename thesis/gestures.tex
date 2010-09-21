@@ -33,6 +33,8 @@ To compare two or more hands with each other a method is required to calculate t
 \end{center}
 \end{figure}
 
+INVERSE SKIN MASK
+
 The hand window contains some background pixels, because a hand will never fill a perfect square. These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In \autoref{sec:skinmodel} a binary mask for skin pixels is constructed. The binary inversion of this mask can be used again to remove the background.
 
 Sometimes the blob is too small to say something useful about the hand pose. One way to artificially increase the blob size is to do a morphological dilate operation on the blob. This will increase the size of the hand cutout and probably add skin pixels, but this will also introduce more noisy (non-skin) pixels.
@@ -44,11 +46,11 @@ The HOG descriptor has been successfully applied and studied in human detection 
 
 The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF is approximates the speed of SIFT and sometimes is even faster\cite{Murillo2007, Valgren2010}. Also it is claimed to be more robust against several image transformations.
 
-To be able to compare the two descriptors better, the SURF descriptor is configured to work with a fixed set of interest points - the same set used for HOG. Also using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms.
+To be able to compare the two descriptors better, the SURF descriptor is configured to work with a fixed set of interest points set up as a dense grid - the same set used for HOG. Also using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms.
 
 For the experiments described in \autoref{ch:experiments} the same parameters as in the \cite{watanabe2009} paper are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
 
-hand detection with SIFT\cite{Wang2007}
+
 
 \section{Classification}
 
@@ -56,6 +58,9 @@ hand detection with SIFT\cite{Wang2007}
 Two classifiers where evaluation during the experiments, K-Nearest Neighbors (KNN) and Support Vector Machines (SVM). For the experiments with KNN different values for $k$ where evaluated. The experiments with SVM where more profound, different kernels and parameters where evaluated. The evaluated kernels are the Radial Basis Function (RBF) and a precomputed kernel using the $\chi^2$ method on the train set. For the RBF kernel 2 parameters are important, the cost $c$ and $\gamma$. The optimal values of these variables for these experiments where found with a brute force grid search on a small cluster.
 
 Also Principal Component Analysis (PCA) was performed on the dataset to reduce the dimensionality. The impact on the classifiers has been measured and is presented together with all other experiments in \autoref{ch:experiments}.
+
+MEER UITLEGGEN WAT CLASSIFIER IS, SVM KNN ENZO
+
 
 \subsection*{The stabilizer}
 Since the frames following each other have a spatial-temporal relationship there is a relationship between the labels given by the classifier. Because of noise, misclassification can happen. These false matches can be filtered out by smoothing the labels on a time scale.

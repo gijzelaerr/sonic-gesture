@@ -3,7 +3,7 @@
 \chapter{Gesture recognition}
 \label{ch:gestures}
 
-Knowing the location of the hands in a image doesn't tell much about the hand poses. A method needs to be constructed to discriminate the different hand poses. 
+Knowing the location of the hands in a image doesn't tell much about the hand poses. A method needs to be constructed to discriminate the different hand poses.
 
 This chapter describes how the hand poses are extracted from the hand windows. First features of the hand window are extracted that represent the current hand pose. These features are compared by a classifier with previously extracted features of hand poses for which the poses where already known. The classifier will determine which known hand pose(s) resembles the at that moment classified hand.
 
@@ -61,15 +61,29 @@ Also Principal Component Analysis (PCA) was performed on the dataset to reduce t
 
 MEER UITLEGGEN WAT CLASSIFIER IS, SVM KNN ENZO
 
+\begin{figure}[htbp]
+\center{}
+\includegraphics[width=0.3\linewidth]{figures/svm.png}
+\caption{Classification using Support Vector machines}
+\label{fig:svm}
+\end{figure}
+
+\begin{figure}[htbp]
+\center{}
+\includegraphics[width=0.3\linewidth]{figures/knn.png}
+\caption{Classification using K Nearest Neighbors}
+\label{fig:fail}
+\end{figure}
+
 
 \subsection*{The stabilizer}
 Since the frames following each other have a spatial-temporal relationship there is a relationship between the labels given by the classifier. Because of noise, misclassification can happen. These false matches can be filtered out by smoothing the labels on a time scale.
 
-This smoothing is done with a simple self invented method called 'the stabilizer'. 
+This smoothing is done with a simple self invented method called 'the stabilizer'.
 
 A visual representation is given in \autoref{fig:stabilizer}. The stabilizer is initialized with $n$ numbers of bins which is equal to the number of labels. There are 2 parameters, $V_{max}$ which controls the maximum and $V_{th}$ which controls the threshold.
 
-For every new label that is given by the classifier all bins are decremented with 1, except for the bin with the currently classified label which is incremented. A bin is incremented until it reaches $V_{max}$. When at any moment one of the bins value rises above $V_{th}$, the stabilizer will output the label of that bin. The result is a more stable and smoothed stream of labels, where single noisy labels are filtered out. For a sequence of frames with a correctly detected pose there is a delay between the first frame and the stabilizer will output the correct label, this delay is controlled by $V_{th}$ which is measured in frame count. A higher value will reduce more noise, but will give a bigger delay. There is also a delay after a sequence which is controlled by $n_{max}$. With a framerate between $10$ and $25$ frames a second, $V_{max} = 15$ and $V_{th} = 10$ give good results reducing noise and still being very responsive. 
+For every new label that is given by the classifier all bins are decremented with 1, except for the bin with the currently classified label which is incremented. A bin is incremented until it reaches $V_{max}$. When at any moment one of the bins value rises above $V_{th}$, the stabilizer will output the label of that bin. The result is a more stable and smoothed stream of labels, where single noisy labels are filtered out. For a sequence of frames with a correctly detected pose there is a delay between the first frame and the stabilizer will output the correct label, this delay is controlled by $V_{th}$ which is measured in frame count. A higher value will reduce more noise, but will give a bigger delay. There is also a delay after a sequence which is controlled by $n_{max}$. With a framerate between $10$ and $25$ frames a second, $V_{max} = 15$ and $V_{th} = 10$ give good results reducing noise and still being very responsive.
 
 \begin{figure}[htbp]
   \centering

@@ -3,9 +3,9 @@
 \chapter{Body Part Detection}
 \label{ch:bodyparts}
 
-To perform hand pose estimation of a person in a image, hands need to be localized in the image first. Hands are very changeable - they can have very different appearances and different orientations. Also hand size and shape but also skin color can be very different per person. This makes the localization a very difficult task. 
+To perform hand pose estimation of a person in a image, hands need to be localized in the image first. Hands are very changeable - they can have very different appearances and different orientations. Also hand size, hand shape and skin color can be very different per person. This makes the localization a  difficult task. 
 
-One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin color model based on average skin color has been constructed for this purpose\cite{Jones1999}. The problem with this method is that it fails when the skin color isn't 'pure', for example when it is colored by a light source. but this method is sensitive for error when the image is colored by a light source. Also, since the profile is very generic, it contains colors for many different skin colors. This introduces more false positives.
+One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin color model based on average skin color has been constructed for this purpose\cite{Jones1999}. The problem with this method is that it fails when the skin color isn't 'pure', for example when it is colored by a light source. Also, since the profile is very generic, it contains colors for many different skin colors. This introduces more false positives.
 
 It would be much better to have a method for obtaining the skin color of a person in a image from that image itself. This can be done by extracting the skin model from the face, which is much easier to detect.
 
@@ -24,9 +24,9 @@ This chapter will first describe how this skin model is created, followed by how
 \end{figure}
 
 
-Finding faces in a image is a rather well solved problem. Faces are easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and a nose. When comparing different faces, these features are - with a small variation - on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position.
+Finding faces in a image is a rather well solved problem. A face is easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and a nose. When comparing different faces, these features are - with a small variation - on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position.
 
-The face detection is one of the most expensive operations used in this thesis. Since usually a face doesn't move fast in a vide stream, a number of frames can be skipped which will free more computational time for other operations.
+Still, the face detection is a expensive operation. Since usually a face doesn't move fast in a vide stream, a number of frames can be skipped which will free more computational time for other operations.
 
 Using a haar classifier to search for a face and obtain a skin color profile has been done before with the lab color space \cite{Stenger2006}, but in this case the HSV color space is used.
 
@@ -36,7 +36,6 @@ Usually, pixel values of a image are stored in the Red, Green Blue (RGB) color s
 When a subject is lighted by a light source with uniform hue distribution, the light doesn't change the hue or saturation of the subject. The only thing that will change is the luminance, which is changing because of the light source's intensity, distance or (self casted) shadow. Since we want to extract hand pixels independent of the illumination intensity, we can ignore this channel and only use the hue and saturation.
 
 The luminance can be removed from the color space by transforming the color model to a chromatic color space. There are multiple chromatic color spaces, for example LAB, HSV and normalized. A small experiment with these color spaces have shown that no significant improvements can be gained with a specific color space, so the HSV color space is used in the rest of this paper.
-
 
 \begin{figure}[htbp]
   \centering
@@ -331,6 +330,16 @@ This method is quite robust, but can fail if the conditions listed in \autoref{s
 \includegraphics[width=0.8\linewidth]{figures/fail.png}
 \caption{Example of failed segmentation}
 \label{fig:fail}
+\end{figure}
+
+Also, it requires manual tweaking of one parameter - the threshold for going from the probabilistic domain to the binary domain. The adaptive threshold could be used to remove the need for this parameter, but becomes very slow with a high neighborhood value. A high neighborhood value is required, since a low value doesn't perform very well. Also the background is clustered as a big blob, which requires an extra removal step later on. \autoref{fig:thresholdedAdap} shows the example output of a adaptive threshold with a neighborhood of 51.
+
+
+\begin{figure}[htbp]
+\center{}
+\includegraphics[width=0.3\linewidth]{figures/pipeline/thresholdedAdap.jpg}
+\caption{Adaptive threshold with pixel neighborhood of 51}
+\label{fig:thresholdedAdap}
 \end{figure}
 
 

@@ -53,6 +53,7 @@ frameS = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameBW = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameBP = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameTh = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
+frameAdapTh = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameThNoBlur = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameClosed = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
 frameBlur = cv.CreateImage(format, cv.IPL_DEPTH_8U, 1)
@@ -107,6 +108,8 @@ cv.Normalize(frameBP, frameBP, 0, 255, 32)
 cv.Smooth( frameBP, frameBlur, param1=31);
 cv.Threshold(frameBlur, frameTh, 30, 255, cv.CV_THRESH_BINARY);
 cv.Threshold(frameBP, frameThNoBlur, 30, 255, cv.CV_THRESH_BINARY);
+
+cv.AdaptiveThreshold(frameBlur, frameAdapTh, 255, blockSize=101, adaptive_method=cv.CV_ADAPTIVE_THRESH_GAUSSIAN_C)
 
 # do morhphological close operation
 dia=15
@@ -217,6 +220,7 @@ cv.SaveImage("detected.jpg", frameShow)
 cv.SaveImage("backproject.jpg", frameBP)
 cv.SaveImage("blurred.jpg", frameBlur)
 cv.SaveImage("thresholded.jpg", frameTh)
+cv.SaveImage("thresholdedAdap.jpg", frameAdapTh)
 cv.SaveImage("thresholded_noblur.jpg", frameThNoBlur)
 cv.SaveImage("closed.jpg", frameClosed)
 cv.SaveImage("histogram.jpg", histImg)

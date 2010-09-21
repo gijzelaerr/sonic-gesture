@@ -3,7 +3,7 @@
 \chapter{Gesture recognition}
 \label{ch:gestures}
 
-Knowing the location the hands in a image doesn't tell much about the hand poses. A method needs to be constructed to discriminate the different hand poses. 
+Knowing the location of the hands in a image doesn't tell much about the hand poses. A method needs to be constructed to discriminate the different hand poses. 
 
 This chapter describes how the hand poses are extracted from the hand windows. First features of the hand window are extracted that represent the current hand pose. These features are compared by a classifier with previously extracted features of hand poses for which the poses where already known. The classifier will determine which known hand pose(s) resembles the at that moment classified hand.
 
@@ -38,7 +38,7 @@ The hand window contains some background pixels, because a hand will never fill 
 Sometimes the blob is too small to say something useful about the hand pose. One way to artificially increase the blob size is to do a morphological dilate operation on the blob. This will increase the size of the hand cutout and probably add skin pixels, but this will also introduce more noisy (non-skin) pixels.
 
 \subsection*{Descriptors}
-To reduce the number of dimensions of an image a descriptor can be used. A descriptor describes an image in, if properly used, less dimensions than the image itself. Also it can introduce some useful properties like scale an rotation invariance. In this paper only 2 descriptors are discussed, Histogram of oriented gradient\cite{NavneetDalal2006} (HOG) and Speeded Up Robust Features\cite{Bay2006} (SURF).
+To reduce the number of dimensions of an image a descriptor can be used. A descriptor describes an image in, if properly used, less dimensions than the image itself. Also it can introduce some useful properties like scale and rotation invariance. In this paper 2 descriptors are discussed and compared, Histogram of oriented gradient\cite{NavneetDalal2006} (HOG) and Speeded Up Robust Features\cite{Bay2006} (SURF).
 
 The HOG descriptor has been successfully applied and studied in human detection \cite{NavneetDalal2006, watanabe2009}. The HOG descriptors method uses a dense grid of uniformly spaced cells, where for each cell the gradients are calculated in 9 orientations. The values for each orientation for each cell are stored in a histogram that represent the image. Also contrast normalization is applied for improved accuracy.
 

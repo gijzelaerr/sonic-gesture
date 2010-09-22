@@ -12,6 +12,8 @@ This chapter describes how the hand poses are extracted from the hand windows. F
 To compare two or more hands with each other a method is required to calculate the similarity. A very simple method is to compare each pixel location with each other and sum all the differences. But this method isn't feasible. First of all, it is not going to work on images that are not the same size or orientation. Also it is computationally expensive for larger images - for an image of 100 by 100 pixels there are already 10.000 dimensions. And a other important thing, this method is not very forgiving for small variations like scaling and rotation.
 
 
+BRIDGE
+
 \subsection*{Segmentation - removing background}
 
 \begin{figure}[htbp]
@@ -46,20 +48,48 @@ The HOG descriptor has been successfully applied and studied in human detection 
 
 The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF is approximates the speed of SIFT and sometimes is even faster\cite{Murillo2007, Valgren2010}. Also it is claimed to be more robust against several image transformations.
 
-To be able to compare the two descriptors better, the SURF descriptor is configured to work with a fixed set of interest points set up as a dense grid - the same set used for HOG. Also using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms.
+To be able to compare the two descriptors better, the SURF descriptor is configured to work with a fixed set of interest points set up as a dense grid - the same set used for HOG. Using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms.
 
 For the experiments described in \autoref{ch:experiments} the same parameters as in the \cite{watanabe2009} paper are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
 
 
 
 \section{Classification}
+Using a set of training examples each marked as belonging to a category, a classifier builds a model that predicts whether a new example falls into one category or the other. 
 
-\subsection*{Classifier}
-Two classifiers where evaluation during the experiments, K-Nearest Neighbors (KNN) and Support Vector Machines (SVM). For the experiments with KNN different values for $k$ where evaluated. The experiments with SVM where more profound, different kernels and parameters where evaluated. The evaluated kernels are the Radial Basis Function (RBF) and a precomputed kernel using the $\chi^2$ method on the train set. For the RBF kernel 2 parameters are important, the cost $c$ and $\gamma$. The optimal values of these variables for these experiments where found with a brute force grid search on a small cluster.
+There are many classifiers which can be used in different ways, for computer vision two of these are interesting because of simplicity or speed - k-NN and SVM.
 
-Also Principal Component Analysis (PCA) was performed on the dataset to reduce the dimensionality. The impact on the classifiers has been measured and is presented together with all other experiments in \autoref{ch:experiments}.
+\subsection*{k Nearest Neighbors}
+The k-nearest neighbours algorithm (k-NN) is a method for classifying objects based on closest training examples in the feature space. The k-nearest neighbor algorithm is one of the the simplest of all machine learning  algorithms. K-NN is a type of 'lazy learning' where all computation is deferred until classification. This results in a fast training phase, but a computationally expensive classification. Also the memory footprint is large since all data points are stored. 
 
-MEER UITLEGGEN WAT CLASSIFIER IS, SVM KNN ENZO
+The training samples are labeled multidimensional vectors. The training phase of the algorithm consists only of storing the vectors and class labels of the training samples.
+
+In the classification phase, $k$ is a user-defined constant, and an unlabeled vector is classified by assigning the label which is most frequent among the k training samples nearest to that query point.
+
+
+
+\autoref{fig:knn} is an example of k-NN classification. The test sample (the circle) should be classified either to the squares class or to the triangles class. If $k = 3$ the circle is classified to the triangles class because there are 2 triangles and 1 square inside the inner circle. If $k = 5$ it is classified to squares class.
+
+\begin{figure}[htbp]
+\center{}
+\includegraphics[width=0.3\linewidth]{figures/knn.png}
+\caption{Classification using K Nearest Neighbors}
+\label{fig:knn}
+\end{figure}
+
+\subsection*{Support Vector Machines}
+
+Support vector machines (SVMs) are a set of related supervised learning methods which analyze data and recognize patterns, used for classification and regression. It is a binary classifier, but can be extended to be a multi class classifier by combining multiple binary classifiers. 
+
+SVM uses a subset of the train data (the support vectors) that lay on the borders of a category cluster to calculate a decision boundary (DB). This DB is constructed by maximizing the distance between the support vectors two classes. The decision boundary, a linear function, is later used to classify new data points.
+
+Often a space with two sets datapoint classes are not linearly separable. For this reason the the original space is mapped to a higher dimensional space making the separation easier. This is done by a kernel.
+
+The training phase consists of computing a kernel to make the space linearly separable. Then a decision boundary is calculated. Training a SVM classifier can be very computationally expensive, but classification is very fast and memory efficient.
+
+The evaluated kernels are the Radial Basis Function (RBF) and a precomputed kernel using the $\chi^2$ method on the train set. For the RBF kernel 2 parameters are important, the cost $c$ and $\gamma$. The optimal values of these variables for these experiments where found with a brute force grid search on a small cluster.
+
+\autoref{fig:svm} is an example of a SVM classification setting. The space is already linearly separable, so no space transformation is required. 
 
 \begin{figure}[htbp]
 \center{}
@@ -68,12 +98,7 @@ MEER UITLEGGEN WAT CLASSIFIER IS, SVM KNN ENZO
 \label{fig:svm}
 \end{figure}
 
-\begin{figure}[htbp]
-\center{}
-\includegraphics[width=0.3\linewidth]{figures/knn.png}
-\caption{Classification using K Nearest Neighbors}
-\label{fig:fail}
-\end{figure}
+
 
 
 \subsection*{The stabilizer}

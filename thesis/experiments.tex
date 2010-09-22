@@ -5,7 +5,23 @@
 
 
 \section{The dataset}
-A dataset was constructed to perform the experiments. The dataset consists of movies with people performing all 28 (DO WE KNOW THAT) hand poses. Per movie 28 frames where manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first people where recorded performing the complete sequence 5 times, but this was taking too much time, and people became impatient. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture (see \autoref{sec:implementation}), with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 where recorded with a complex background (\autoref{fig:complexbackground}) and 6 where recorded with the same complex background but also with a poster with skinlike colors.
+A dataset was constructed to perform the experiments where people perform the Curwen hand poses in different settings. Usually the 12 Curwen solfege hand symbols are performed in front of the torso. To increase the number of hand poses to be recognized and increase the usability, all 12 Curwen are also performed mirrored next to the body of the recorded subject, see \autoref{fig:torso}. Additionally four extra hand symbols have been added that are not part of the Curwen sequence. These last four symbols are performed next to the head. This results in a total of 28 hand poses.
+
+\begin{figure}[htbp]
+  \centering
+	\subfloat[]{
+		\includegraphics[width=0.4\linewidth]{figures/gijs5/13.png}
+	}
+\hspace{0.03\linewidth}
+	\subfloat[]{
+		\includegraphics[width=0.4\linewidth]{figures/gijs5/1.png}
+	}
+  \caption{The Curwen hand poses in front of torso (A) and next of torso (B)}
+  \label{fig:torso}
+\end{figure}
+
+
+The dataset consists of movies with people performing the 28 hand poses. For each pose in each movie a frame was manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first people where recorded performing the complete sequence 5 times, but this was taking too much time, and people became impatient. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture (see \autoref{sec:implementation}), with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 where recorded with a complex background (\autoref{fig:complexbackground}) and 6 where recorded with the same complex background but also with a poster with skinlike colors.
 
 \begin{figure}[htbp]
 \center{}
@@ -60,14 +76,6 @@ A dataset was constructed to perform the experiments. The dataset consists of mo
 \caption{Dataset details}
 \end{table}
 
-
-
-
-
-The dataset is manually labeled. For every sequence of frames where a hand pose is performed a frame number is labeled where the pose resembles the example the most. \autoref{fig:gijs5} is an example of the labeled frames. The train images used to train the classifier where extracted with Sonic Gesture
-
-Usually the 12 Curwen solfege hand symbols are performed in front of the torso as shown in \autoref{fig:hands}. To increase the number of hand poses to be recognized, all 12 Curwen are also performed mirrored next to the body of the recorded subject, see \autoref{fig:hands}. Additionally four extra hand symbols have been added that are not part of the Curwen sequence, see \autoref{fig:hands}. These last four symbols are performed next to the head.
-
 \section{Evaluation}
 
 \subsection{part I - evaluating classifiers}
@@ -106,9 +114,10 @@ The Curwen hand symbols that are closely related in a musical scale way are quit
 \end{figure}
 
 
-
-
 \subsubsection{Results}
+See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for all the results.
+
+\autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm} (SVM with a $\chi^2$ precomputed kernel).
 
 \begin{table}
 \centering
@@ -118,13 +127,14 @@ Classifier 				&  	Full scale	& Major scale	\\
 \hline
 KNN3 		&  	84.27\%		& 90.21\%		\\
 PCA, KNN3 	& 	83.67\%		& 89.70\%		\\
-PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$)	& 	76.78\%		& 84.38\%		\\
+PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	& 	76.78\%		& 84.38\%		\\
 SVM RBF ($c=2^6$ $\gamma=2^{-5}$) & 86.02\% & 90.88\% \\
 PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$) &  86.85\% & 91.85\% \\
 SVM $\chi^2$ & 87.92\% 		& 91.58\% \\
 \hline
 \end{tabular}
-\caption{k-fold per film using simple dataset only}
+\caption{k-fold per film using simple dataset only, $f$ is the number of features}
+\label{tab:perfilm}
 \end{table}
 
 
@@ -144,6 +154,7 @@ full set    & SVM $\chi^2$ &  71.83\% &80.07\% \\
 \hline
 \end{tabular}
 \caption{k-fold per person}
+\label{tab:perperson}
 \end{table}
 
 
@@ -169,23 +180,19 @@ SURF & SVM $\chi^2$		&	yes	&	crash 	&	crash \\
 \hline
 \end{tabular}
 \caption{simple as trainset, complex as testset. $f$ is the number of features}
+\label{tab:perset}
 \end{table}
 
 
-full scale accuracy 46.19%
-major scale accuracy 60.17%
 
 
 \begin{figure}[htbp]
-\begin{center}
-\label{fig:confusion}
-\includegraphics[width=\linewidth]{confmat/confusion.jpg}
-\end{center}
-\caption{confusion matrix, SVM $\chi^2$, n-fold, per film simple set}
+	\centering{}
+	\includegraphics[width=\linewidth]{confmat/confusion.jpg}
+	\caption{confusion matrix, SVM $\chi^2$, n-fold, per film simple set}
+	\label{fig:confusion}
 \end{figure}
 
-%>> sum((ones(28,28)-eye(28)).* C)
-%6     6     7     6    17     5    14     1     0     3     5     3     3     %1     6    13    10     5     6     5     2     8    10     4     0     0     %1    12
 
 
 
@@ -227,32 +234,30 @@ For this set of experiments the Damerau-Levenshtein distance of a sequence of ge
    \ENDFOR
    \FOR{$i = 1$ to lenStr1}
        \FOR{$j = 1$ to lenStr2}
-       		\IF{str1[$i$] $=$ str2[$j$]}
+       		\IF{str1$_{i} =$ str2$_{j}$}
 				\STATE cost $\Leftarrow 0$
             \ELSE
 				\STATE cost $\Leftarrow 1$
 			\ENDIF
-			\STATE $x \leftarrow D[i-1, j  ] + 1$ % deletion
-			\STATE $y \leftarrow D[i  , j-1] + 1$ % insertion
-            \STATE $z \leftarrow D[i-1, j-1] + $ cost % substitution
-            \STATE $\mathbf{D}[i, j] \Leftarrow \min(x, y, z)$
-            \IF {(str1[$i$] $=$ str2[$j-1$]) $\wedge$ (str1[$i-1$] $=$ str2[$j$])}
-				\STATE $\mathbf{D}[i, j] \Leftarrow \min(
-                	\mathbf{D}[i, j],
-                    \mathbf{D}[i-2, j-2] + $ cost  % transposition
+			\STATE $x \leftarrow \mathbf{D}_{i-1, j  } + 1$ % deletion
+			\STATE $y \leftarrow \mathbf{D}_{i  , j-1} + 1$ % insertion
+            \STATE $z \leftarrow \mathbf{D}_{i-1, j-1} + $ cost % substitution
+            \STATE $\mathbf{D}_{i, j} \Leftarrow \min(x, y, z)$
+            \IF {(str1$_{i} =$ str2$_{j-1}$) $\wedge$ (str1$_{i-1} =$ str2$_{j}$)}
+				\STATE $\mathbf{D}_{i, j} \Leftarrow \min(
+                	\mathbf{D}_{i, j},
+                    \mathbf{D}_{i-2, j-2} + $ cost  % transposition
                 )
 			\ENDIF
 		\ENDFOR
 	\ENDFOR
-   \RETURN d[lenStr1, lenStr2]
+   \RETURN $\mathbf{D}_{lenStr1, lenStr2}$
 
 \end{algorithmic}
 \end{algorithm}
 	
 \subsubsection{Results}
-
-simple: 0.27 average\\
-complex: 0.35 average\\
+See \autoref{tab:distance} for all the results. An average performance for only the simple data is 0.27, for the complex only  0.35.
 
 \begin{table}
 \centering
@@ -286,6 +291,7 @@ Stratos		&	12.0	&	3.0		&	5.0		& & & 0.24 & 0.86 \\
 \hline
 \end{tabular}
 \caption{Damerau-Levenshtein distance of all movies}
+\label{tab:distance}
 \end{table}
 
 \subsection{Part III - Finding Spock}
@@ -331,12 +337,6 @@ Face detection & 2.3\% & ... &  19\% if every frame \\
 
 calculating SURF features of a hand train image takes 4ms and results in 11 features on average.
 
-
-
-37.9\% KNN
-8.4\% color space convertion
-7.6\% image resizing
-2.3\% haar classifier (19% if not every 10th frame).
 
 \section{Discussion}
 As you can see there is a big difference in performance

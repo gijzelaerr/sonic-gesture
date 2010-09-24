@@ -23,16 +23,13 @@ This chapter will first describe how this skin model is created, followed by how
   \label{fig:face_detection}
 \end{figure}
 
-
-(NON-DEFORMABLE)
-
-Finding faces in a image is a rather well solved problem. A face is easy to detect, since it has easy to detect features like eyes, eyebrows, a mouth and a nose. When comparing different faces, these features are - with a small variation - on the same distance and orientation. Also people don't tilt their head often, or not more than a couple degrees. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position.
+Finding faces in a image is a rather well solved problem. A face is easy to detect, since it is almost non-deformable. Different faces are very similar in looking at the most prominent properties. People don't tilt their head often or not more than a couple degrees, which makes it even more easier to detect. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position.
 
 Still, the face detection is a expensive operation. Since usually a face doesn't move fast in a vide stream, a number of frames can be skipped which will free more computational time for other operations.
 
-Using a haar classifier to search for a face and obtain a skin color profile has been done before with the lab color space \cite{Stenger2006}, but in this case the HSV color space is used.
+Using a haar classifier to search for a face and obtain a skin color profile has been done before with the lab color space \cite{Stenger2006}, but in this case the HSV color space is used. (MISSCHIEN WEG OF ERGENS ANDERS?)
 
-(WHY, BRIDGE)
+
 
 \subsection*{Color Space Conversion}
 Usually, pixel values of a image are stored in the Red, Green Blue (RGB) color space where colors are represented with combinations of these primary colors. The RGB representation of colors is not suitable for modeling skin color. The RGB color space represents not only color, but also luminance which is not a reliable measure for segmenting skin pixels\cite{Cai1999}.
@@ -54,9 +51,7 @@ The luminance can be removed from the color space by transforming the color mode
   \label{fig:colorspaces}
 \end{figure}
 
-HSV stands for hue (color), saturation (how concentrated the color is) and value (brightness). The brightness is changed by the illumination, so we will discard this channel
-
-In practice a light source never has a uniform distribution and \emph{will} change the color of the subject. Since we build a color model from the image itself, all skin pixels will change in the same way. 
+HSV stands for hue (color), saturation (how concentrated the color is) and value (brightness). In practice a light source never has a uniform distribution and \emph{will} change the color of the subject. Since we build a color model from the image itself, all skin pixels will change in the same way. 
 
 The RGB color space is transformed into the HSV color space using the following equations:
 
@@ -72,9 +67,12 @@ The RGB color space is transformed into the HSV color space using the following 
   \begin{array}{l l}
     \frac{60(G - B)}{S}     & \quad \text{if $V = R$} \\
     \frac{120 + 60(B-R)}{S} & \quad \text{if $V = G$} \\
-    \frac{240 + 60(R-G)}{S} & \quad \text{if V = B} \\
-  \end{array} \right.\\
+    \frac{240 + 60(R-G)}{S} & \quad \text{if $V = B$} \\
+  \end{array} \right.
 \end{eqnarray}
+
+
+
 
 
 The input 3 channel RGB image is transformed into a 3 channel HSV image, after which the value channel is discarded. Using the detected face region of the hue and saturation channel a histogram can be constructed which will represent a statistical skin model.

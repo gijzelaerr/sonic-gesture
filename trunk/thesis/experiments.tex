@@ -23,6 +23,8 @@ A dataset was constructed to perform the experiments where people perform the Cu
 
 The dataset consists of movies with people performing the 28 hand poses. For each pose in each movie a frame was manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first people where recorded performing the complete sequence 5 times, but this was taking too much time, and people became impatient. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture (see \autoref{sec:implementation}), with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 where recorded with a complex background (\autoref{fig:complexbackground}) and 6 where recorded with the same complex background but also with a poster with skinlike colors.
 
+The nationality of the test subjects is diverse. Half of the set is Dutch and two are from South-East Asia. The rest is from eastern and southern Europe. (KLOPT DIT?)
+
 \begin{figure}[htbp]
 \center{}
 \includegraphics[width=0.8\linewidth]{figures/simple.png}
@@ -214,11 +216,16 @@ SURF & SVM $\chi^2$		&	yes	&	crash 	&	crash \\
 \label{fig:performances}
 \end{figure}
 
-For this set of experiments the Damerau-Levenshtein distance of a sequence of generated labels to the ground truth is calculated. This value is then divided by the number of labels, 28. A low value is equal to good performance, a high value to bad. The ground truth is a list of incremented integers from 1 to 28. Since some movies are 'poluted' with incorrect hand poses and other people walking through the screen this ground truth isn't really correct. But it is very difficult to impossible to construct a good ground truth in this case, and given the fact that the goal of the recorded movies was to have people perform the 28 hand poses sequentially this is a good alternative. 
+To evaluate Sonic Gesture in the time domain, the sequential output must be evaluated. Sonic gesture outputs for every frame the estimated label for each hand. Constructing a ground truth for each frame is a difficult, time consuming and subjective process. The material is also 'polluted' with wrong hand poses caused by misunderstanding or misinterpretation. In some cases there are also more people in the image than only the test subject. To evade these problems a different evaluation method is used, where the consecutive changes in labels is evaluated. The ground truth in this case is a ordered list of all labels. The goal for each recorded movie in the dataset was to record a person performing the 28 hand poses sequentially.
+
+the output of Sonic Gesture for all movies is stored. This results in a long list of labels - one label for each frame - for each move. In each list all repeating labels are replaced with one instance of that label. This reduces the length of each list significantly. This short list of labels is then compared with the ground truth using the Damerau-Levenshtein distance.
+
+
+The Damerau-Levenshtein Distance algorithm is shown in \autoref{alg:dameraulevenshtein}. The algorithm calculated to number of deletions, insertions, substitutions and transpositions required to transform one string into an other. The maximum number of operations is equal to the length of shortest string. Because of the ground truth's length of 28 the minimum will always be 28 or less. This way the distance can be safely normalized and divided by 28, so all distances can be easily compared.
 
 \begin{algorithm}
 \caption{DamerauLevenshteinDistance(str1, str2)}
-\label{dameraulevenshtein}
+\label{alg:dameraulevenshtein}
 \begin{algorithmic}
    \REQUIRE a string str1
    \REQUIRE a string str2
@@ -257,36 +264,37 @@ For this set of experiments the Damerau-Levenshtein distance of a sequence of ge
 \end{algorithm}
 	
 \subsubsection{Results}
-See \autoref{tab:distance} for all the results. An average performance for only the simple data is 0.27, for the complex only  0.35.
+\autoref{tab:distance} contains all distances, grouped per dataset. The numbers in table heading are the movie number of that column. The average column is the \textit{average} of all movies per person. The average per person column lists the same distances, but without using the stabilizer discussed in \autoref{subsec:stabilizer}. As you see this has a dramatic impact on the performance. The average distance for the simple set is 0.27, for the complex set 0.35.
 
 \begin{table}
 \centering
-\begin{tabular}{rrrrrrrr}
+\begin{tabular}{p{0.4in}rrrrrrrp{0.55in}}
 \hline
-name	& 1 & 2 & 3 & 4 & 5 & normalized average & without stabilizer\\
+Dataset & Name	& 1 & 2 & 3 & 4 & 5 & Average & Average without stabilizer\\
 \hline
-Anne		&	12.0	&	9.0		&	7.0		&	8.0	&	4.0	&	0.28 & 0.88 \\
-Arjan		&	13.0	&	7.0		&	7.0		&	2.0	&	8.0	&	0.26 & 0.83 \\
-Gijs		&	4.0		&	5.0		&	6.0		&	6.0	&	4.0	&	0.18 & 0.87 \\
-Ivo			&	2.0		&	3.0		&	2.0		&	3.0	&	1.0	&	0.08 & 0.86 \\
-Jasper 1	&	19.0	&	13.0	&	6.0		&	6.0	&	12.0 &	0.40 & 0.85 \\
-Peter		&	7.0		&	8.0		&	7.0		&	9.0	&	5.0	&	0.26 & 0.86 \\
-Hanne		&	9.0		&	0.0		&	1.0		&	7.0	&	2.0	&	0.14 & 0.91 \\
-Jasper 2	&	9.0		&	5.0		&	5.0 	& & & 0.23 & 0.90 \\
-Ork			&	6.0		&	5.0		&	4.0		& & & 0.18 & 0.86 \\
-Roberto		&	19.0	&	8.0		&	13.0	& & & 0.47 & 0.83 \\
-Xiaong		&	17.0	&	14.0	&	10.0	& & & 0.49 & 0.88 \\
+Simple & Anne	&	0.43	&	0.32	&	0.25	&	0.29	&	0.14	&	0.28	&	0.88 \\
+ & Arjan	&	0.46	&	0.25	&	0.25	&	0.07	&	0.29	&	0.26	&	0.83 \\
+ & Gijs	&	0.14	&	0.18	&	0.21	&	0.21	&	0.14	&	0.18	&	0.87 \\
+ & Ivo	&	0.07	&	0.11	&	0.07	&	0.11	&	0.04	&	0.08	&	0.86 \\
+ & Jasper 1	&	0.68	&	0.46	&	0.21	&	0.21	&	0.43	&	0.40	&	0.85 \\
+ & Peter	&	0.25	&	0.29	&	0.25	&	0.32	&	0.18	&	0.26	&	0.86 \\
+ & Hanne	&	0.32	&	0.00	&	0.04	&	0.25	&	0.07	&	0.14	&	0.91 \\
+ & Jasper 2	&	0.32	&	0.18	&	0.18	&	 	&	 	&	0.23	&	0.90 \\
+ & Ork	&	0.21	&	0.18	&	0.14	&	 	&	 	&	0.18	&	0.86 \\
+ & Roberto	&	0.68	&	0.29	&	0.46	&	 	&	 	&	0.47	&	0.83 \\
+ & Xiaong	&	0.61	&	0.50	&	0.36	&	 	&	 	&	0.49	&	0.88 \\
 \hline
-Gosia		&	16.0	&	9.0		&	6.0		& & & 0.37 & 0.88 \\
-Hamdi		&	14.0	&	12.0	&	15.0	& & & 0.49 & 0.87 \\
-Michael		&	6.0		&	8.0		&	13.0	& & & 0.32 & 0.90 \\
-Sil			&	14.0	&	17.0	&	13.0	& & & 0.52 & 0.83 \\
-Victoria	&	9.0		&	6.0		&	5.0		& & & 0.24 & 0.88 \\
-Chu			&	8.0		&	6.0		&	2.0 	& & & 0.19 & 0.89 \\
+Complex & Gosia	&	0.57	&	0.32	&	0.21	&	 	&	 	&	0.37	&	0.88 \\
+ & Hamdi	&	0.50	&	0.43	&	0.54	&	 	&	 	&	0.49	&	0.87 \\
+ & Michael	&	0.21	&	0.29	&	0.46	&	 	&	 	&	0.32	&	0.90 \\
+ & Sil	&	0.50	&	0.61	&	0.46	&	 	&	 	&	0.52	&	0.83 \\
+ & Victoria	&	0.32	&	0.21	&	0.18	&	 	&	 	&	0.24	&	0.88 \\
+ & Chu	&	0.29	&	0.21	&	0.07	&	 	&	 	&	0.19	&	0.89 \\
 \hline
-Koen		&	11.0	&	9.0		&	11.0 	& & & 0.38 & 0.88\\
-Bas			&	15.0	&	12.0	&	9.0		& & & 0.44 & 0.90 \\
-Stratos		&	12.0	&	3.0		&	5.0		& & & 0.24 & 0.86 \\
+Complex & Koen	&	0.39	&	0.32	&	0.39	&	 	&	 	&	0.38	&	0.88\\
+with & Bas	&	0.54	&	0.43	&	0.32	&	 	&	 	&	0.44	&	0.90 \\
+poster & Stratos	&	0.43	&	0.11	&	0.18	&	 	&	 	&	0.24	&	0.86 \\
+
 
 \hline
 \end{tabular}
@@ -294,69 +302,57 @@ Stratos		&	12.0	&	3.0		&	5.0		& & & 0.24 & 0.86 \\
 \label{tab:distance}
 \end{table}
 
-\begin{figure}[htbp]
-	\center{}
-	\includegraphics[width=0.3\linewidth]{figures/spock1.png}
-	\caption{Spock1}
-	\label{fig:spock1}
-\end{figure}
-
-\begin{figure}[htbp]
-	\center{}
-	\includegraphics[width=0.3\linewidth]{figures/spock2.png}
-	\caption{Spock2}
-	\label{fig:spock2}
-\end{figure}
-
-\begin{figure}[htbp]
-	\center{}
-	\includegraphics[width=0.3\linewidth]{figures/spock3.png}
-	\caption{Spock3}
-	\label{fig:spock3}
-\end{figure}
-
-\begin{figure}[htbp]
-	\center{}
-	\includegraphics[width=0.3\linewidth]{figures/spock4.png}
-	\caption{Spock4}
-	\label{fig:spock4}
-\end{figure}
-
-\begin{figure}[htbp]
-	\center{}
-	\includegraphics[width=0.3\linewidth]{figures/spock5.png}
-	\caption{Spock5}
-	\label{fig:spock5}
-\end{figure}
-
-\begin{figure}[htbp]
-	\center{}
-	\includegraphics[width=0.3\linewidth]{figures/spock6.png}
-	\caption{Spock6}
-	\label{fig:spock6}
-\end{figure}
 
 
-\begin{figure}[htbp]
-	\center{}
-	\includegraphics[width=0.3\linewidth]{figures/spock7.png}
-	\caption{Spock7}
-	\label{fig:spock7}
-\end{figure}
-
-
-\begin{figure}[htbp]
-	\center{}
-	\includegraphics[width=0.3\linewidth]{figures/spock8.png}
-	\caption{Spock8}
-	\label{fig:spock8}
-\end{figure}
-
-
-\subsection{Part III - Finding Spock}
+\subsection{Part III - The Search for Spock}
 
 \subsubsection{Method}
+To show that Sonic Gesture can also work with non artificial video material a third experiment was constructed. For this experiment a collection of real fragments of movies and pictures of people performing the 'Vulcan Salute' was gathered. The Vulcan Salute is greeting hand gesture and was popularised by the half-Vulcan character Mr. Spock on the Star Trek television series in end of the 1960s. \autoref{fig:spock} is a movie fragment of Mr. Spock giving the hand salute. The original dataset used for the previous experiments was extended with a 29th hand pose, the vulcan salute. 
+
+\begin{figure}[htbp]
+\centering{}
+\includegraphics[width=0.6\linewidth]{figures/spock/salute.png}
+\caption{Mr. Spock giving the Vulcan Salute}
+\label{fig:spock}
+\end{figure}
+
+
 \subsubsection{Results}
+\autoref{fig:vulcangood} shows eight examples of successful classification of the vulcan salute. The images are cutout screenshots of the implementation of Sonic Gesture. The upper left window is the input, the upper right window is the segmented and labeled visualisation. A green square indicates a right hand and yellow left. The bottom squares show the estimated hand poses, the left square for the left hand and the right square for the right hand. For the visualisation of the detected Vulcan Salute the picture of Mr. Spock is used.
+
+\autoref{fig:vulcanfail} shows two screenshots of failed segmentation. Sonic Gesture fails on the first salute - performed Condolisa Rise - because the skin segmentation fails. The skin colour of her face has more in common with the wall than with her hand. The second failure case is performed by Simon Pegg, here the segmentation is correct, but classification is just wrong. More training data could fix this problem.
+
+\begin{figure}[htbp]
+\centering
+\subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/good1.png}}
+\hspace{0.09\linewidth}
+\subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/good2.png}}
+\hspace{0.09\linewidth}
+\subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/good3.png}}
+\hspace{0.09\linewidth}
+\subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/good4.png}}
+\hspace{0.09\linewidth}
+\subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/good5.png}}
+\hspace{0.09\linewidth}
+\subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/good6.png}}
+\hspace{0.09\linewidth}
+\subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/good7.png}}
+\hspace{0.09\linewidth}
+\subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/good8.png}}
+\hspace{0.09\linewidth}
+\caption{Successful detection of Vulcan salute}
+\label{fig:vulcangood}
+\end{figure}
+
+
+\begin{figure}[htbp]
+\centering
+\subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/fail1.png}}
+\hspace{0.09\linewidth}
+\subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/fail2.png}}
+\caption{Failed detection of Vulcan salute}
+\label{fig:vulcanfail}
+\end{figure}
 
 
 

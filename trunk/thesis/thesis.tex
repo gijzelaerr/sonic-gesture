@@ -1,6 +1,8 @@
 
 
-\documentclass[a4paper]{report}
+%\documentclass[a4paper,twoside]{report}
+\documentclass[a4paper]{book}
+
 
 % for images
 \usepackage{graphicx}
@@ -16,13 +18,13 @@
 \usepackage[utf8]{inputenc}
 
 % for sideway tables
-\usepackage{rotating}
+%\usepackage{rotating}
 
 % for math
 \usepackage{amsmath}
 
 % for image wrapping
-\usepackage{wrapfig}
+%\usepackage{wrapfig}
 
 % for internal references
 \usepackage[colorlinks]{hyperref}
@@ -31,8 +33,10 @@
 \usepackage{algorithm}
 \usepackage{algorithmic}
 
-%% use this to only render some includes
-%\includeonly{method,results}
+% for fancy headers
+%\usepackage{fancyhdr}
+%\setlength{\headheight}{15.2pt}
+%\pagestyle{fancy}
 
 % Different font in captions
 \newcommand{\captionfonts}{\small}
@@ -66,11 +70,12 @@
 
 \newpage{}
 
-\begin{abstract}
+%\begin{abstract}
+\chapter*{Abstract}
 A real\-time method for detecting pre\-trained hand poses from
 video using a normal RGB. The method uses a probabilistic skin color histogram model for pixel based limb localisation and Histogram of Oriented Gradients as features for classification and is compared to SURF performance. SVM an KNN classification performance is evaluated with a dataset consisting 72 recordings of 20 people performing 28 hand symbols based upon the Curwen Solfege method. 
-\end{abstract}
-\newpage{}
+%\end{abstract}
+%\newpage{}
 
 %\pagenumbering{roman}
 \tableofcontents{}

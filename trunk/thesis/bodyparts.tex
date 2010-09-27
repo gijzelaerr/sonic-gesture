@@ -47,7 +47,7 @@ The luminance can be removed from the color space by transforming the color mode
 \subfloat[RGB color space]{
 	\label{fig:rgb}\includegraphics[width=0.45\linewidth]{figures/rgb.png}
 }
-  \caption{The RGB and HSV color space (ADD NOTE ABOUT CIRCULAR COLOR SPACE)}
+  \caption{The RGB and HSV color space}
   \label{fig:colorspaces}
 \end{figure}
 
@@ -71,9 +71,7 @@ The RGB color space is transformed into the HSV color space using the following 
   \end{array} \right.
 \end{eqnarray}
 
-
-
-
+Note that for computation simplicity this a simplification of the real HSV color space. The real HSV colorspace is circular in the Hue dimension.
 
 The input 3 channel RGB image is transformed into a 3 channel HSV image, after which the value channel is discarded. Using the detected face region of the hue and saturation channel a histogram can be constructed which will represent a statistical skin model.
 
@@ -188,7 +186,7 @@ From the contours of the group a square region of interest is defined by calcula
 
 (NEEDS REWRITE)
 
-Now we have blobs we need to know blob is what body part. In a optimal situation there are three blobs, two for the hands and one for the head. For one blob it is already known what body part it is - the face. In the face detection phase we found a face in the image, so the blob containing the center point of the detected phase is the face blob. Usually the left hand is on the left of the head and the right hand on the right side. If there are three blobs, and the face is the middle blob, we labeling is done. If not an other decision needs to be made. Often there are more or less blobs, because the background has skin-like color, a hand is difficult to detect or is occluded. Also the order of hands and head can change, a left hand doesn't necessarily need to appear on the left side of a head.
+Now we have blobs we need to know blob is what body part. In a optimal situation there are three blobs, two for the hands and one for the head. For one blob it is already known what body part it is - the face. In the face detection phase we found a face in the image, so the blob containing the center point of the detected phase is the face blob. Usually the left hand is on the left of the head and the right hand on the right side. If there are three blobs, and the face is the middle blob, the labeling is finished. If not an other decision needs to be made. Often there are more or less blobs, because the background has skin-like color, a hand is difficult to detect or is occluded. Also the order of hands and head can change, a left hand doesn't necessarily need to appear on the left side of a head.
 
 First the surface of each blob is calculated and then the blobs are sorted by size. The blob containing the head is removed from the list, since we already know this label. Also very small blobs are removed, because these are probably noise. The removal threshold surface is set to:
 
@@ -198,43 +196,40 @@ T = (\frac{h}{c})^2
 
 Where $h$ is the height of the movie frame and $c$ is a control constant. The equation can be interpreted as a filter for the minimal size in square pixels, relative to the hight of the movie frame. A value of $20$ for $c$ removes a lot of noise blobs, but still is small enough to leave most hand blobs intact.
 
-Assuming the hands or the second biggest skin like objects in the image, the 2 or less biggest blobs are taken from the list and the rest is also discarded. If there is no biggest blob, the labeling is finished - there is only a head in the image. If there is one blob left, the left or right position relative to the head is the hand label. If there are 2 hands, there are 3 possible situations, 1 where the head is in the middle which is already described. If both hands are on the left of the head, the most outer left blob is labeled as left and the other as right. This is visa versa for right.
+Assuming the hands or the second biggest skin like objects in the image, the 2 or less biggest blobs are taken from the list and the rest is also discarded. If there is no biggest blob, the labeling is finished - there is only a head in the image. If there is one blob left, the left or right position relative to the head is the hand label. If there are 2 hands, there are 3 possible situations, 1 where the head is in the middle which is already described. If both hands are on the left of the head, the most outer left blob is labeled as left and the other as right. This is visa versa for right. This whole process is listed in \autoref{alg:blobheuristics}.
 
 \begin{algorithm}
 \caption{Blob labeling heuristics}
-\label{blobheuristics}
+\label{alg:blobheuristics}
 \begin{algorithmic}
-	\STATE head $=$ left $=$ right $=$ None
-	\STATE faceCenter $=$ getFaceCenter()
-	\STATE blobs $=$ getContours()
-	\STATE limbs $=$ []
-	
+   \REQUIRE A list of blobs 'blobs'
+   \REQUIRE Coordinates of a face 'faceCenter'
+   \ENSURE 3 or less blobs labeled head, left or right
+
 	\FOR{blob in blobs}
-		\IF{blob.contains(faceCenter)}
-			\STATE head $=$ blob
-		\ELSE
-			\STATE blobs.append(blob)
+		\IF{blob contains faceCenter}
+			\STATE head $\leftarrow$ blob
+			\STATE remove blob from blobs
 		\ENDIF
 	\ENDFOR
 
-	\STATE blobs $=$ sortBySize(blobs)
-	\STATE blobs $=$ blobs[-2:]
-	\STATE blobs $=$ sortByXPosition(blobs)
+	\STATE keep only 2 biggest blobs
+	\STATE sort blobs by $x$ position
 
-	\STATE $n = $ len(blobs)
-	\IF{$n == 2$}
-	    \STATE left $=$ blobs[0]
-	    \STATE right $=$ blobs[1]
+	\STATE $n \leftarrow $ $|$blobs$|$
+	\IF{$n = 2$}
+	    \STATE left $\leftarrow$ blobs$_0$
+	    \STATE right $\leftarrow$ blobs$_1$
 	\ELSE
-		\IF{$n == 1$}
-		    \IF{blobs[0].center[0] $<$ face\_center[0]}
-		        \STATE left $=$ blobs[0]
+		\IF{$n = 1$}
+		    \IF{center of blobs$_0$ $<$ center of face}
+		        \STATE left $\leftarrow$ blobs$_0$
 		    \ELSE
-		        \STATE right $=$ blobs[0]
+		        \STATE right $\leftarrow$ blobs$_0$
 			\ENDIF
 		\ENDIF
 	\ELSE
-	    \STATE print("didn't find any limbs")
+	    \STATE no limbs found
 	\ENDIF
 \end{algorithmic}
 \end{algorithm}

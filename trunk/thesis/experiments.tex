@@ -9,14 +9,14 @@ A dataset was constructed to perform the experiments where people perform the Cu
 
 \begin{figure}[htbp]
   \centering
-	\subfloat[]{
+	\subfloat[in front of torso]{
 		\includegraphics[width=0.4\linewidth]{figures/gijs5/13.png}
 	}
 \hspace{0.03\linewidth}
-	\subfloat[]{
+	\subfloat[next of torso]{
 		\includegraphics[width=0.4\linewidth]{figures/gijs5/1.png}
 	}
-  \caption{The Curwen hand poses in front of torso (A) and next of torso (B)}
+  \caption{The Curwen hand poses}
   \label{fig:torso}
 \end{figure}
 
@@ -117,7 +117,7 @@ The Curwen hand symbols that are closely related in a musical scale way are quit
 
 
 \subsubsection{Results}
-See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for all the results.
+See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for all the results, $f$ is the number of features.
 
 \autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm} (SVM with a $\chi^2$ precomputed kernel).
 
@@ -135,7 +135,7 @@ PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$) &  86.85\% & 91.85\% \\
 SVM $\chi^2$ & 87.92\% 		& 91.58\% \\
 \hline
 \end{tabular}
-\caption{k-fold per film using simple dataset only, $f$ is the number of features}
+\caption{k-fold per film using simple dataset only,}
 \label{tab:perfilm}
 \end{table}
 
@@ -150,7 +150,7 @@ simple set	& KNN3	& 72.93\%, & 82.63\%	\\
 simple set	& PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$) & 79.71\%, & 86.70\%	\\
 full set	& KNN3 & 66.98\%, & 76.32\%	\\
 full set	& PCA, KNN3 & 65.31\%, & 76.00\%	\\
-full set	& PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|features|}$) & 64.05\%, & 74.42\%	\\
+full set	& PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$) & 64.05\%, & 74.42\%	\\
 full set	& PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)& 73.38\%, & 81.44\%	\\
 full set    & SVM $\chi^2$ &  71.83\% &80.07\% \\
 \hline
@@ -181,7 +181,7 @@ SURF & SVM $\chi^2$								& no  &	37.93\%		&	47.91\%	\\
 SURF & SVM $\chi^2$		&	yes	&	crash 	&	crash \\
 \hline
 \end{tabular}
-\caption{simple as trainset, complex as testset. $f$ is the number of features}
+\caption{simple as trainset, complex as testset}
 \label{tab:perset}
 \end{table}
 
@@ -191,7 +191,7 @@ SURF & SVM $\chi^2$		&	yes	&	crash 	&	crash \\
 \begin{figure}[htbp]
 	\centering{}
 	\includegraphics[width=\linewidth]{confmat/confusion.jpg}
-	\caption{confusion matrix, SVM $\chi^2$, n-fold, per film simple set}
+	\caption{Confusion matrix, SVM $\chi^2$, n-fold, per film simple set}
 	\label{fig:confusion}
 \end{figure}
 
@@ -365,7 +365,7 @@ To show that Sonic Gesture can also work with non artificial video material a th
 \label{fig:sonicgesture}
 \includegraphics[width=0.6\linewidth]{figures/sonicgesture.jpg}
 \end{center}
-\caption{screenshot of Sonic Gesture}
+\caption{Screenshot of Sonic Gesture}
 \end{figure}
 
 Sonic Gesture has been implemented in C++. Almost all computer vision algorithms used in Sonic Gesture are part of OpenCV, an open source library made for this kind of software. For the graphical interface QT is used. Sonic Gesture has been release as Open Source software and is released under the Apache license. The software can be downloaded, modified and distributed freely from the website\footnote{http://code.google.com/p/sonic-gesture}.

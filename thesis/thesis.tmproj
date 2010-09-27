@@ -16,7 +16,7 @@
 			<key>filename</key>
 			<string>intro.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-21T15:29:09Z</date>
+			<date>2010-09-22T12:33:53Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -34,7 +34,7 @@
 			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-22T12:26:16Z</date>
+			<date>2010-09-23T08:25:09Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -130,14 +130,30 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>56</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>274</integer>
+				<integer>193</integer>
 			</dict>
+			<key>columnSelection</key>
+			<true/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>255</integer>
+			<integer>158</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>189</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>193</integer>
+			</dict>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>
@@ -158,14 +174,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>177</integer>
+				<integer>19</integer>
 				<key>line</key>
-				<integer>25</integer>
+				<integer>51</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>455</integer>
+			<integer>78</integer>
 			<key>firstVisibleLine</key>
-			<integer>19</integer>
+			<integer>43</integer>
 		</dict>
 		<key>notes.tex</key>
 		<dict>
@@ -202,30 +218,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>14</integer>
+				<integer>1</integer>
 				<key>line</key>
 				<integer>600</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>583</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>9</integer>
-				<key>line</key>
-				<integer>600</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>17</integer>
-				<key>line</key>
-				<integer>600</integer>
-			</dict>
 		</dict>
 		<key>thesis.tex</key>
 		<dict>
@@ -257,6 +257,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{658, 46}, {847, 778}}</string>
+	<string>{{407, 99}, {847, 778}}</string>
 </dict>
 </plist>

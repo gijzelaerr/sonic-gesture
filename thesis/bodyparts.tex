@@ -3,13 +3,13 @@
 \chapter{Body Part Detection}
 \label{ch:bodyparts}
 
-To perform hand pose estimation of a person in a image, hands need to be localized in the image first. Hands are very changeable - they can have very different appearances and different orientations. Also hand size, hand shape and skin color can be very different per person. This makes the localization a  difficult task. 
+To perform hand pose estimation of a person in a image, hands need to be localized in the image first. Hands are very deformable - they can have very different appearances and different orientations. Also hand size, hand shape and skin color can differ tremendously per person. This makes localization a  difficult task. 
 
-One way to localize the hands is by searching for skin like colors in an image given that this color profile is known. A generic skin color model based on average skin color has been constructed for this purpose\cite{Jones1999}. The problem with this method is that it fails when the skin color isn't 'pure', for example when it is colored by a light source. Also, since the profile is very generic, it contains colors for many different skin colors. This introduces more false positives.
+One way to localize the hands is by searching for skin like colors in an image given a pre-calculated color profile. A generic skin color model based on average skin color has been constructed for this purpose\cite{Jones1999}. The problem with this method is that it fails when the skin color isn't 'pure', for example when it is colored by a light source. Also, since the profile is very generic, it contains colors for many different skin colors. This introduces more false positives.
 
 It would be much better to have a method for obtaining the skin color of a person in a image from that image itself. This can be done by extracting the skin model from the face, which is much easier to detect.
 
-This chapter will first describe how this skin model is created, followed by how this skin model is used to find the skin pixels in the image. These found skin pixels are clustered and labeled as left hand, right hand and head. How the positions of these labeled body parts are stabilized is also explained and is followed by how self occlusion can be handled. (REWRITE, HOW HOW HOW HOW)
+This chapter describes how a skin model is created and how this is used to find the skin pixels in the image. These found skin pixels are clustered and labeled as left hand, right hand and head. 
 
 \section{Skin Segmentation}
 \label{sec:skinmodel}
@@ -23,11 +23,11 @@ This chapter will first describe how this skin model is created, followed by how
   \label{fig:face_detection}
 \end{figure}
 
-Finding faces in a image is a rather well solved problem. A face is easy to detect, since it is almost non-deformable. Different faces are very similar in looking at the most prominent properties. People don't tilt their head often or not more than a couple degrees, which makes it even more easier to detect. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position.
+Finding faces in a image is a rather well solved problem. A face is easy to detect, since it is almost non-deformable. Different faces are quite similar looking at the most prominent properties. People don't tilt their head often or not more than a couple degrees, which makes it even more easier to detect. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position, see \autoref{fig:face_detection} for an example. In the figure you can see the complete head and surrounding (yellow rectangle) is returned by the search algorithm. Since we are only interested in the skin pixels a smaller sub-region is used for further processing.
 
-Still, the face detection is a expensive operation. Since usually a face doesn't move fast in a vide stream, a number of frames can be skipped which will free more computational time for other operations.
+Still, the face detection is a expensive operation. Fortunately a face doesn't move fast in a vide stream, a number of frames can be skipped which will free more computational time for other operations.
 
-Using a haar classifier to search for a face and obtain a skin color profile has been done before with the lab color space \cite{Stenger2006}, but in this case the HSV color space is used. (MISSCHIEN WEG OF ERGENS ANDERS?)
+Using a classifier to search for a face and obtain a skin color profile from it has been done before with the lab color space \cite{Stenger2006}, but in this case the HSV color space is used.
 
 
 
@@ -36,7 +36,7 @@ Usually, pixel values of a image are stored in the Red, Green Blue (RGB) color s
 
 When a subject is lighted by a light source with uniform hue distribution, the light doesn't change the hue or saturation of the subject. The only thing that will change is the luminance, which is changing because of the light source's intensity, distance or (self casted) shadow. Since we want to extract hand pixels independent of the illumination intensity, we can ignore this channel and only use the hue and saturation.
 
-The luminance can be removed from the color space by transforming the color model to a chromatic color space. There are multiple chromatic color spaces, for example LAB, HSV and normalized. A small experiment with these color spaces have shown that no significant improvements can be gained with a specific color space, so (CITE BRADSKY HERE?) the HSV color space is used in the rest of this paper.
+The luminance can be removed from the color space by transforming the color model to a chromatic color space. There are multiple chromatic color spaces\cite{Bradski1998}, for example LAB, HSV and normalized RGB. A small experiment with these color spaces have shown that no significant improvements can be gained with a specific color space, so the HSV color space is used in the rest of this paper.
 
 \begin{figure}[htbp]
   \centering

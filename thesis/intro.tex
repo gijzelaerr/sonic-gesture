@@ -3,10 +3,9 @@
 \chapter{Introduction}
 \label{ch:intro}
 
-\section{The Human-Computer Interface}
-
-
-Human-Computer Interaction (HCI) is slow. The information per minute rate is still low nowadays, and innovation is progressing slowly. Since the introduction of the mouse in the seventies very few revolutionary new peripherals where introduced that aid the communication with a computer and are still affordable. The most notable innovations in HCI are the Wii, which is mainly used for gaming and (multi) touch screen which are becoming more and more popular for smartphones.
+\section{Background}
+\subsection*{The Human-Computer Interaction}
+Human-Computer Interaction (HCI) is slow. The information per minute rate is still low nowadays, and innovation is progressing slowly. Since the introduction of the mouse in the seventies very few revolutionary new and still affordable peripherals where introduced that aid the communication with a computer. The most notable innovations in HCI are the Wii - which is mainly used for gaming - and (multi) touch screen which is becoming more popular for integration smartphones.
 
 \begin{figure}[htbp]
 	\center{}
@@ -19,15 +18,20 @@ New and revolutionary ideas are required to create new peripherals that improve 
 
 When two people are in a room and don't have a audio or visual limitation, they will probably communicate by speech. But there is much more going on than only producing and interpreting words. The intonation, speed and other small variations in the voice add a lot more information to the words. Also the facial expression and body language give more space for expression. Some people like to 'talk with their hands' while telling a story, something that adds more expression to the transmitted information.
 
-\section{Sign Language}
+\subsection*{Sign Language}
 
-A deaf person can't interpret spoken words, at least not by listening. He or she is highly depended on visual information. Sign languages have been created or invented to aid this visual communication. In these languages two elements have an important role, the face and the hands. These body parts give the most expressive power. The face because it is very good for expressing feelings and emotions, and the hands because they are very deformable. This makes the hands very interesting and usefull, since there are countless combinations of finger poses and orientations. 
+A deaf person can't interpret spoken words, at least not by listening. He or she is highly depended on visual information. Sign languages have been created or invented to aid this visual communication. In these languages two elements have an important role, the face and the hands. These body parts give the most expressive power. The face because it is very good for expressing feelings and emotions, and the hands because they are very deformable. This makes the hands very interesting and useful, since there are countless combinations of finger poses and orientations. 
 
 Speech generation, speech recognition, facial expression recognition and sign language interpretation are all subject of extensive research at the moment. Breakthroughs in these area's are important for revolutionary new interfaces which can tremendously improve the speed of interaction and usability for a user. 
 
-\section{Hand Poses}
+For this graduation thesis I want to look into the details of using computer vision to interpret sign language and especially to use sign language to actually control the computer - to use your hands for interaction without touching the system itself. To show the advantages of having such a system I wanted to find an application for it and demonstrate that this can be actually useful. The application I found was sound generation and manipulation or said differently - make music. 
 
-Any set of hand poses would do for this system, as long as the individual poses don't look to similar. But since the idea is to translate the interpreted hand poses into sound, it would be interesting to use a set of poses that has a already existing relationship to sound.
+Translating sign language into music is a very interesting concept, not only because it sounds poetic but it can really demonstrate the power of such a system. Making life music is a complex process where real-time interaction between a artist and his tools is important. Also, for an audience it is much more compelling to look at a artist who is physically more active than only clicking a mouse.
+
+\subsection*{Hand Poses}
+Studying sign language brought the understanding that there are not really signs for musical concepts. Usually when music is translated into sign language only the vocals are translated. Facial expression and references to emotions are used to indicate the 'mood' of the music and the speed and expressiveness of the gestures indicate the intensity of the music, but these kind of gesture are not really usable for HCI because they are to much subject of interpretation. A more formal and less subjective method is required. Also previous studies have shown that the segmentation of the consecutive gestures is a difficult task\cite{Buehler2009}.
+
+It is more feasible to have a limited set of hand poses that corresponds to a set of commands and parameters.  Any set of hand poses would do for this system, as long as the individual poses don't look to similar.  But since the idea is to translate the interpreted hand poses into sound, it would be interesting to use a set of poses that has a already existing relationship to sound.
 
 In Medieval music, the Guidonian hand was a mnemonic device used to assist singers in learning to sight sing. The idea of the Guidonian hand is that each portion of one hand represents a specific note within the hexachord system, which spans nearly three octaves. The other hand is used to point to the correct hand portion. \autoref{fig:guidonian} shows a hands with the tonal positions.
 
@@ -65,11 +69,13 @@ A more recent method using hand poses in relation to music are the Curwen solfeg
 \end{figure}
 
 
-\section{Goal and Motivation}
+\section{The Goal}
 \label{sec:goal}
-The goal of this thesis is to describe the design, build and evaluation process of a system for hand pose recognition. The system needs to be fast and user friendly. Also the system should be able to run on current consumer hardware.
+The goal of this thesis is to describe the design, build and evaluation process of a system for hand pose recognition. The system needs to be fast and user friendly. Also the system should be able to run on current consumer hardware. Overall the system should satisfy the following requirements:
 
 \begin{itemize}
+	\item Extract a set of hand in video
+	\item Extract position of hands in video
 	\item Real time performance (10+ fps)
 	\item Normal consumer processing power
 	\item Normal RGB camera (webcam)
@@ -78,16 +84,18 @@ The goal of this thesis is to describe the design, build and evaluation process 
 	\item Minimal configuration/parameters
 \end{itemize}
 	
-
 To realize these requirements some restrictions on the system's setting are required:
+
 \begin{itemize}
 	\item One person in the image
 	\item Person is wearing clothing with long sleeves
 	\item Good enough lightning conditions
-	\item No skin like colors in the image.
+	\item No skin like colors in the image
 \end{itemize}
 
-The system can be used to aid HCI, but als add more feeling and detail, especially for real time interaction. Using hand poses for Computer aided music composing is interesting but challenging, since the realtime element plays an important role. Also, in a live performance setting, it is much more interesting to look at somebody using his body to interact with a machine than only click of a mouse.
+The system can be used to aid HCI, but also to add more feeling and detail, especially for real time interaction. The output of the system can be easily configured by a user to map to his or her preferred set commands. For example one hand control the pitch of a sound, while the other controls a accompanying beat while the position of this hand controls a cutoff filter. 
+
+It is important to say that the scope of this thesis is limited to extracting the hand poses from video, and will not cover the study of the mapping of hand poses into sound. 
 
 
 
@@ -104,7 +112,7 @@ non-intrusive
 \end{figure}
 
 
-An other interesting development is \cite{Wang2009} where a colored glove is used to perform full 3d hand pose estimation.
+An other interesting development is \cite{Wang2009} where a colored glove is used to perform full 3d hand pose estimation which seem to yield promising results. The disadvantage of this method is the intrusive requirement of wearing a specific color glove. 
 
 \begin{figure}[htbp]
 	\center{}
@@ -119,22 +127,81 @@ An interesting overview paper is \cite{Erol2007}, which reviews the current stat
 Similar research has been done \cite{Wang2007}. Here SIFT features are used to discriminate 3 different hand symbols. A performance of 95.6\% is claimed using a the 'sharing feature concept'.
 
 
-MEER MEER MEER
-
-
-
-
 Research has been done in automated sign language interpretation using computer vision\cite{Buehler2009}\cite{RichardBowden2004}. The problem with interpreting sign language is a very large vocabulary, segmentation of the different gestures and representing the gestures in a robust way.
 
-others:
+\cite{Yi2009} proposed a method for computer aided 3d architecture design using hand gestures, see \autoref{fig:yi2009} for the a model constructed with this software.
 
-A PhD thesis exploring the hand as a input device: \cite{Sturman1992}
+\begin{figure}[htbp]
+	\center{}
+	\includegraphics[width=0.3\linewidth]{figures/yi2009.png}
+	\caption{3d model of train station made with aid of hand gestures}
+	\label{fig:yi2009}
+\end{figure}
 
-A very old paper using hand motion for segmentation: \cite{Cui1996}
 
+
+
+
+\paragraph{COLOR}
 Color based tracking a face for computer input \cite{Bradski1998}
+Detecting human faces in color images: \cite{Cai1999}
+Adaptive Gaussian Mixture Model for skin color segmentation \cite{Hassanpour2008}
+Statistical color models with applicaiton to skin detection \cite{Jones1999}
+A survey of skin-color modeling and detection methods \cite{Kakumanu2007}
 
+\paragraph{Body Pose}
+2d human pose estimation in tv shows \cite{ferrari2008}
+advances in vision based hum motion capture and analysis (survey) \cite{Moeslund2006}
+
+\paragraph{GESTURES}
+Estimating 3d hand pose from a cluttered image: \cite{Athitsos2003}
+A very old paper using hand motion for segmentation: \cite{Cui1996}
+Vision-based hand pose estimation (Review): \cite{Erol2007}
+A variational approach to monocular hand-pose estimation \cite{laGorce2010}
 Old paper using shadows to estimate 3d hand pose \cite{Segen1999}
+A PhD thesis exploring the hand as a input device: \cite{Sturman1992}
+Gesture recognition (survey) \cite{Mitra2007}
+Real-time hand pose recognition using low-resolution depth images \cite{Mo2006}
+
+\paragraph{SIGN LANGUAGE}
+Learning sign language by watching TV using weakly aligned subtitles \cite{Buehler2009}
+Large lexicon detection of sign language: \cite{Cooper2007}
+
+\paragraph{FEATURES}
+SURF: \cite{Bay2006}
+SURF features for robot localization \cite{Murillo2007}
+An extended set of haar-like features for rapid object detection \cite{Lienhart2002}
+
+\paragraph{Others}
+the kod\'{a}ly method: \cite{choksy1999}
+
+
+
+
+
+\cite{NavneetDalal2006}
+\cite{Nickel2007}
+\cite{Phung2002}
+\cite{Poppe2007}
+\cite{RichardBowden2004}
+
+\cite{Sigal2004}
+\cite{Soriano2000}
+\cite{Stenger2006}
+
+\cite{Stoerring1999}
+\cite{Suzuki1985}
+\cite{watanabe2009}
+\cite{Valgren2010}
+\cite{VanNort2009}
+\cite{VandenBergh2009}
+\cite{vsa03survey}
+\cite{Viola2004}
+\cite{Wang2007}
+\cite{Wang2009}
+\cite{Xiong2006}
+
+
 
 
 

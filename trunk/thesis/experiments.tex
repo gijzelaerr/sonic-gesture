@@ -21,7 +21,7 @@ A dataset was constructed to perform the experiments where people perform the Cu
 \end{figure}
 
 
-The dataset consists of movies with people performing the 28 hand poses. For each pose in each movie a frame was manually picked out and labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first people where recorded performing the complete sequence 5 times, but this was taking too much time, and people became impatient. After we switched to 3 movies per person. The movies where recorded with Sonic Gesture (see \autoref{sec:implementation}), with a resolution of 532x400 and a frame rate of 10. The test subjects where recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 where recorded with a complex background (\autoref{fig:complexbackground}) and 6 where recorded with the same complex background but also with a poster with skinlike colors.
+The dataset consists of movies with people performing the 28 hand poses. For each pose in each movie a frame was manually labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first people were recorded performing the complete sequence 5 times, but this was taking too much time, and people became impatient, after we switched to 3 movies per person. The movies where recorded with Sonic Gesture (see \autoref{sec:implementation}), with a resolution of 532x400 and a frame rate of 10. The test subjects were recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 where recorded with a complex background (\autoref{fig:complexbackground}) and 6 where recorded with the same complex background but also with a poster with skinlike colors.
 
 The nationality of the test subjects is diverse. Half of the set is Dutch and two are from South-East Asia. The rest is from eastern and southern Europe. (KLOPT DIT?)
 
@@ -81,19 +81,19 @@ The nationality of the test subjects is diverse. Half of the set is Dutch and tw
 \section{Evaluation}
 
 \subsection{part I - evaluating classifiers}
-In this section different evaluators with different parameters are evaluated with changing subsets of the dataset.
+In this section different classifier with different parameters are evaluated with subsets of the dataset.
 
 \subsubsection{Method}
-All hand windows for each symbol in each movie are extracted and the features are extracted and stored. This data in then imported in Matlab, where the experiments are performed. For the SVM classifier the libsvm\footnote{http://www.csie.ntu.edu.tw/~cjlin/libsvm/} package is used. To perform PCA the prtools\footnote{http://www.prtools.org/} package is used. For nearest neighbors the KNN implementation in the biolearning package of matlab itself is used. The evaluation of the classifiers is split out in three runs per classifier:
+All hand windows for each symbol in each movie are extracted and the features are extracted and stored. This data in then imported in Matlab, where the experiments are performed. For the SVM classifier the libsvm\footnote{http://www.csie.ntu.edu.tw/~cjlin/libsvm/} package is used. To perform PCA the prtools\footnote{http://www.prtools.org/} package is used. For nearest neighbors the KNN implementation in the biolearning package of matlab itself is used. The evaluation of the classifiers is split in three runs per classifier:
 
 \paragraph{K-fold per movie using simple dataset only}
-here only the movies with a simple background are used. For each run one movie is used for testing and all other movies are used for training. This means for each recorded person currently tested there is also 2 or 4 recordings of him used in the train set. This setting mimics the real life situation where the system is pre-trained with other people than the user but also trained by the user himself, with a simple background.
+Only the movies with a simple background are used. For each run one movie is used for testing and all other movies are used for training. For each recorded person in the test set there are also 2 or 4 recordings of him or her used in the train set. This setting mimics the real life situation where the system is pre-trained with other people \emph{and} the user, with a simple background.
 
 \paragraph{K-fold per person}
-For this evaluation run all movies or used, but per person the movies are used for testing and all other movies for training. Both complex and simple backgrounds are used. This setting mimics the real life situation where the system is pre-trained with only other people than the user of the system, and the background isn't necessarily simple. 
+All movies or used, but per person the movies are used for testing and all other movies for training. Both complex and simple backgrounds are used. This setting mimics the real life situation where the system is pre-trained with only other people than the user of the system, and the background isn't necessarily simple. 
 
 \paragraph{Simple as train set, complex as test set}
-As the last evaluation the classifier is trained with all movies with the simple background, and as a test set the movies with the complex background are used. This mimics the real life situation where the training is with recordings in optimal conditions, but the system is used in a complex environment like a living room. Also the system is not trained by the user.
+The classifier is trained with all movies with the simple background, and as a test set the movies with the complex background are used. This mimics the real life situation where the training is with recordings in optimal conditions, but the system is used in a complex environment like a living room. Also the system is not trained by the user.
 
 \paragraph{}
 For the number of neighbors for K-NN a small number of tests where run, and a value between 3 and 10 for N yielded similar performance. Since a lower number of $k$ can give better performance $k=3$ was used for all experiments.
@@ -120,6 +120,9 @@ The Curwen hand symbols that are closely related in a musical scale way are quit
 See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for all the results, $f$ is the number of features.
 
 \autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm} (SVM with a $\chi^2$ precomputed kernel).
+
+(NEEDS MORE LOVE)
+
 
 \begin{table}
 \centering
@@ -266,6 +269,9 @@ The Damerau-Levenshtein Distance algorithm is shown in \autoref{alg:damerauleven
 \subsubsection{Results}
 \autoref{tab:distance} contains all distances, grouped per dataset. The numbers in table heading are the movie number of that column. The average column is the \textit{average} of all movies per person. The average per person column lists the same distances, but without using the stabilizer discussed in \autoref{subsec:stabilizer}. As you see this has a dramatic impact on the performance. The average distance for the simple set is 0.27, for the complex set 0.35.
 
+(NEEDS MORE LOVE)
+
+
 \begin{table}
 \centering
 \begin{tabular}{p{0.4in}rrrrrrrp{0.55in}}
@@ -320,7 +326,7 @@ To show that Sonic Gesture can also work with non artificial video material a th
 \subsubsection{Results}
 \autoref{fig:vulcangood} shows eight examples of successful classification of the vulcan salute. The images are cutout screenshots of the implementation of Sonic Gesture. The upper left window is the input, the upper right window is the segmented and labeled visualisation. A green square indicates a right hand and yellow left. The bottom squares show the estimated hand poses, the left square for the left hand and the right square for the right hand. For the visualisation of the detected Vulcan Salute the picture of Mr. Spock is used.
 
-\autoref{fig:vulcanfail} shows two screenshots of failed segmentation. Sonic Gesture fails on the first salute - performed Condolisa Rise - because the skin segmentation fails. The skin colour of her face has more in common with the wall than with her hand. The second failure case is performed by Simon Pegg, here the segmentation is correct, but classification is just wrong. More training data could fix this problem.
+\autoref{fig:vulcanfail} shows two screenshots of failed segmentation. Sonic Gesture fails on the first salute - performed by Condolisa Rise - because the skin segmentation fails. The skin colour of her face has more in common with the wall than with her hand. The second failure case is performed by Simon Pegg, here the segmentation is correct, but classification is just wrong. More training data could fix this problem.
 
 \begin{figure}[htbp]
 \centering

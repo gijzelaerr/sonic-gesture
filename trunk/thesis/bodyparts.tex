@@ -23,9 +23,9 @@ This chapter describes how a skin model is created and how this is used to find 
   \label{fig:face_detection}
 \end{figure}
 
-Finding faces in a image is a rather well solved problem. A face is easy to detect, since it is almost non-deformable. Different faces are quite similar looking at the most prominent properties. People don't tilt their head often or not more than a couple degrees, which makes it even more easier to detect. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Lienhart2002}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position, see \autoref{fig:face_detection} for an example. In the figure you can see the complete head and surrounding (yellow rectangle) is returned by the search algorithm. Since we are only interested in the skin pixels a smaller sub-region is used for further processing.
+Finding faces in a image is a rather well solved problem. A face is easy to detect, since it is almost non-deformable. Different faces are quite similar looking at the most prominent properties. People don't tilt their head often or not more than a couple degrees, which makes it even more easier to detect. Face detection can be done in a fast and robust way using a haar classifier, a boosted rejection cascade that is trained with Haar\-like wavelet\cite{Viola2001,Viola2004}. This is a method for detecting faces that doesn't rely on color information. The classifier is run over the image on different scales, and positions with a score above a certain threshold are classified as face position, see \autoref{fig:face_detection} for an example. In the figure you can see the complete head and surrounding (yellow rectangle) is returned by the search algorithm. Since we are only interested in the skin pixels a smaller sub-region is used for further processing.
 
-Still, the face detection is a expensive operation. Fortunately a face doesn't move fast in a vide stream, a number of frames can be skipped which will free more computational time for other operations.
+Still, the face detection is a expensive operation. Fortunately a face doesn't move fast in a video stream, a number of frames can be skipped which will free more computational time for other operations.
 
 Using a classifier to search for a face and obtain a skin color profile from it has been done before with the lab color space \cite{Stenger2006}, but in this case the HSV color space is used.
 
@@ -36,7 +36,7 @@ Usually, pixel values of a image are stored in the Red, Green Blue (RGB) color s
 
 When a subject is lighted by a light source with uniform hue distribution, the light doesn't change the hue or saturation of the subject. The only thing that will change is the luminance, which is changing because of the light source's intensity, distance or (self casted) shadow. Since we want to extract hand pixels independent of the illumination intensity, we can ignore this channel and only use the hue and saturation.
 
-The luminance can be removed from the color space by transforming the color model to a chromatic color space. There are multiple chromatic color spaces\cite{Bradski1998}, for example LAB, HSV and normalized RGB. A small experiment with these color spaces have shown that no significant improvements can be gained with a specific color space, so the HSV color space is used in the rest of this paper.
+The luminance can be removed from the color space by transforming the color model to a chromatic color space. There are multiple chromatic color spaces\cite{Bradski1998}, for example LAB, HSV and normalized RGB. No significant improvements are measured with a these color spaces \cite{vsa03survey}, so the HSV color space is used in the rest of this paper.
 
 \begin{figure}[htbp]
   \centering
@@ -88,6 +88,15 @@ The input 3 channel RGB image is transformed into a 3 channel HSV image, after w
 
 
 
+Color based tracking a face for computer input \cite{Bradski1998}
+Adaptive Gaussian Mixture Model for skin color segmentation \cite{Hassanpour2008}
+A survey of skin-color modeling and detection methods \cite{Kakumanu2007}
+skin model in YCbCr and application to human face detection \cite{Phung2002}
+Skin Color-based video segmentation under time-varying illumination \cite{Sigal2004}
+Skin detection in video under changing illumination conditions \cite{Soriano2000}
+Skin Color detection under changing lightning conditions \cite{Stoerring1999}
+
+
 
 
 \subsection*{Statistical Skin Color Model}
@@ -99,7 +108,7 @@ The input 3 channel RGB image is transformed into a 3 channel HSV image, after w
 	\label{fig:histogram}
 \end{figure}
 
-There are multiple ways of constructing a statistical skin color model. The most conventional ways are a (mixture of) gausian(s) or a histogram. 
+There are multiple ways of constructing a statistical skin color model. The most conventional ways are a (mixture of) gaussian(s) or a histogram. 
 
 The skin color model is represented in a 2 dimensional histogram, where the first dimension is Hue and the second is Saturation. The histogram is filled with the values from the detected face region. After, the histogram is normalized - all values are divided by the sum of all bins. This makes the histogram independent of the original image size, and each histogram bin value represents a 'skin probablility'. \autoref{fig:histogram} is a histogram of colors of a caucasian.
 
@@ -146,11 +155,23 @@ The back projection can be quite noisy, this is caused by the rounding in the in
 \end{figure}
 
 
-To segments pixels from non-skin pixels we need to define a way of doing this automatically. The easiest way to accomplish this is by defining a threshold. All pixel values below a certain threshold are replaced with false or 0, all above this threshold will be replaced with true or 1. This results in a binary image with labels for (non) skin pixels. This introduces one parameter - the 
-threshold for going from the probabilistic domain to the binary domain.
+To segments pixels from non-skin pixels we need to define a way of doing this automatically. The easiest way to accomplish this is by defining a threshold. All pixel values below a certain threshold are replaced with false or 0, all above this threshold will be replaced with true or 1. This results in a binary image with labels for (non) skin pixels. This introduces one parameter - the threshold for going from the probabilistic domain to the binary domain.
 
-A alternative method of going from the probabilistic domain to the binary domain is adaptive thresholding. here the threshold is determined per pixel by the values of surrounding pixels. This method has one parameter; the neighborhood blocksize used to determine the threshold.
+This parameter could be adjusted automatically, by comparing the percentage of skin pixels in the image and comparing this to a believed proper percentage. This percentage should be made dependent on the size of the detected face. If the percentage is too low, then the threshold should be lowered and raised if too high. 
 
+A alternative method of going from the probabilistic domain to the binary domain is adaptive thresholding. Here the threshold is determined per pixel by the values of surrounding pixels. This method has one parameter; the neighborhood blocksize $n$ is used to determine the threshold.
+
+The threshold per pixel is calculated by the equation:
+
+\begin{eqnarray}
+  \text{dst}(x, y) & \leftarrow & \left\{
+  \begin{array}{l l}
+	1 & \text{if src}(x,y) > T(x,y) \\
+	0 & \text{otherwise} \\
+  \end{array} \right.
+\end{eqnarray}
+
+Where $T(x,y)$ is the mean of the $n$ by $n$ pixel neighborhood.
 
 \subsection*{Morphological Operations}
 
@@ -161,7 +182,7 @@ A alternative method of going from the probabilistic domain to the binary domain
 	\label{fig:closed}
 \end{figure}
 
-An alternative to smoothing out rough edges and holes are (combinations of )morphological operations.  A morphologic closing operation of A by B is obtained by the dilation of A by B, followed by erosion of the resulting structure by B. The result of performing this operation is that small holes in the binary image are removed, and edges are smoothed as seen in \autoref{fig:closed}. The effect isn't really significant, since the gaussian smoothing already removes a lot of noise. 
+An alternative to smoothing out rough edges and holes are (combinations of morphological) operations.  A morphologic closing operation of A by B is obtained by the dilation of A by B, followed by erosion of the resulting structure by B. The result of performing this operation is that small holes in the binary image are removed, and edges are smoothed as seen in \autoref{fig:closed}. The effect isn't really significant, since the gaussian smoothing already removes a lot of noise. 
 
 
 \section{Object Localization}

@@ -7,16 +7,26 @@
 \label{sec:implementation}
 
 \begin{figure}[ht]
-\begin{center}
-\label{fig:sonicgesture}
+\centering{}
 \includegraphics[width=0.6\linewidth]{figures/sonicgesture.jpg}
-\end{center}
 \caption{Screenshot of Sonic Gesture}
+\label{fig:sonicgesture}
 \end{figure}
 
-Sonic Gesture has been implemented in C++. Almost all computer vision algorithms used in Sonic Gesture are part of OpenCV, an open source library made for this kind of software. For the graphical interface QT is used. Sonic Gesture has been release as Open Source software and is released under the Apache license. The software can be downloaded, modified and distributed freely from the website\footnote{http://code.google.com/p/sonic-gesture}.
+Sonic Gesture has been implemented in C++. Almost all computer vision algorithms used are part of OpenCV, an open source library made for this kind of software. For the graphical interface QT is used. Sonic Gesture has been release as Open Source software and is released under the Apache license. The software can be downloaded, modified and distributed freely from the website\footnote{http://code.google.com/p/sonic-gesture}.
 
-The program can capture directly from a webcam or it can read movies with recorded material. It has 2 modes, one 'finder' mode where hand poses in the video stream are detected. The second mode is the 'capture' mode, which is used to label movies. When labeling a movie in this mode a text file is created with frame positions of the labels. This can later be used to extract the correct frame and extract training data for the classifier. This mode has been used a lot during the gathering of the dataset.
+\autoref{fig:sonicgesture} is a screenshot of the main screen of sonic gesture. The program can capture directly from a webcam or it can read movies with recorded material. It has 2 modes, the first is the 'finder' mode where hand poses in the video stream are detected and classified. The second mode is the 'capture' mode, which is used to label movies. When labeling a movie in this mode a text file is created with frame positions of the labels. This can later be used to extract the correct frame and extract training data for the classifier. This mode has been used a lot during the gathering of the dataset.
+
+When the finder mode is active, Sonic Gesture will translate the labeled hand poses, the hand positions and the size of the hand into Open Sound Control (OSC). OSC is a protocol which is specially designed for transferring audio information over a network. For those who are familiar with digital music, it is very similar to MIDI. A program that can interpreted OSC can then be configured to listen on a specific port and process these OSC command.
+
+Sonic Gesture will submit
+\begin{itemize}
+	\item For each hand the beginning and the end of detected sequence of hand specific hand pose. This is an integer. This can be used to trigger a action, like playing a specific note.
+	\item The position of each hand in $x$ and $y$ position. This is a float and can be used to manipulate a parameter.
+	\item The size of the hand. This is also a float and can also be used to manipulate a parameter.
+\end{itemize}
+
+As you can see there is no strict defined relationship between a hand pose and a sound or parameter, the user of Sonic Gesture can define his own specific mapping with his or her preferred audio application. 
 
 \section{Time performance}
 A lot of effort has been put into getting Sonic Gesture as fast as possible. Initially Sonic Gesture was written in Python and used the Python API of OpenCV. Soon it became clear that Python was to limited to do high performance graphic processing so a switch to C++ was made. 

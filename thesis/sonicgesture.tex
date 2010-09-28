@@ -1,0 +1,41 @@
+%!TEX root = thesis.tex
+
+\chapter{Sonic Gesture}
+\label{ch:sonicgesture}
+
+\section{Implementation}
+\label{sec:implementation}
+
+\begin{figure}[ht]
+\begin{center}
+\label{fig:sonicgesture}
+\includegraphics[width=0.6\linewidth]{figures/sonicgesture.jpg}
+\end{center}
+\caption{Screenshot of Sonic Gesture}
+\end{figure}
+
+Sonic Gesture has been implemented in C++. Almost all computer vision algorithms used in Sonic Gesture are part of OpenCV, an open source library made for this kind of software. For the graphical interface QT is used. Sonic Gesture has been release as Open Source software and is released under the Apache license. The software can be downloaded, modified and distributed freely from the website\footnote{http://code.google.com/p/sonic-gesture}.
+
+The program can capture directly from a webcam or it can read movies with recorded material. It has 2 modes, one 'finder' mode where hand poses in the video stream are detected. The second mode is the 'capture' mode, which is used to label movies. When labeling a movie in this mode a text file is created with frame positions of the labels. This can later be used to extract the correct frame and extract training data for the classifier. This mode has been used a lot during the gathering of the dataset.
+
+\section{Time performance}
+A lot of effort has been put into getting Sonic Gesture as fast as possible. Initially Sonic Gesture was written in Python and used the Python API of OpenCV. Soon it became clear that Python was to limited to do high performance graphic processing so a switch to C++ was made. 
+
+The performance of Sonic Gesture depends on how fast the testing systems CPU power is, if the OpenCV IPP extention is used but also how fast the camera can capture frames. On a Macbook Pro, 2.4 GHz intel core 2 duo with 4 GB of memory using the build-in iSight as camera, processing one frame takes 65 ms on average. This is with the full dataset of 2072 datapoints with 3780 dimensions using the KNN classifier. KNN works fine with low numbers of datapoint, but with high numbers it starts to slow down. Still it is quite fast; around 25 ms on average. SVM will probably perform much faster with a high number of datapoints but we couldn't get the SVM implementation of OpenCV to work. An other expensive operation is the face detection algoritm, when tweaked it takes around 13 ms to locale a face in a image. Since a face position isn't required constantly this is done only every 10th frame, so valuable computation time is saved. An other surprisingly expensive operation is the resizing of a image. Resizing an image to a small size is a crucial part of the pipe line, because some operations on a big image will take too much time. But resizing a image using interpolation is a expensive operation. Where interpolation is not required, for example for rendering on the screen, it is disabled saving more computing time. 
+
+
+
+\begin{table}
+\centering
+\begin{tabular}{cccc}
+What & relative time & absolute time & comment \\
+\hline
+kNN & 37\% & ... & 3780 features, 2016 samples \\
+Color space convertion & 8.4\% & ... & \\
+Image resizing & 7.6\% & ... & \\
+Face detection & 2.3\% & ... &  19\% if every frame \\
+\end{tabular}
+\caption{Performance timing of Sonic Gesture}
+\end{table}
+
+calculating SURF features of a hand train image takes 4ms and results in 11 features on average.

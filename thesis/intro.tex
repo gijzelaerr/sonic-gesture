@@ -4,8 +4,8 @@
 \label{ch:intro}
 
 \section{Background}
-\subsection*{The Human-Computer Interaction}
-Human-Computer Interaction (HCI) is slow. The information per minute rate is still low nowadays, and innovation is progressing slowly. Since the introduction of the mouse in the seventies very few revolutionary new and still affordable peripherals where introduced that aid the communication with a computer. The most notable innovations in HCI are the Wii - which is mainly used for gaming - and (multi) touch screen which is becoming more popular for integration smartphones.
+\subsection*{Human-Computer Interaction}
+Human-Computer Interaction (HCI) is limited in transmission rate. The information per second rate is still low nowadays, and innovation is progressing slowly. Since the introduction of the mouse in the seventies very few revolutionary new and still affordable peripherals where introduced that aid the communication with a computer. The most notable innovations in HCI are the Wii - which is mainly used for gaming - and (multi) touch screen, which is becoming more popular for integration smartphones.
 
 \begin{figure}[htbp]
 	\center{}
@@ -20,18 +20,18 @@ When two people are in a room and don't have a audio or visual limitation, they 
 
 \subsection*{Sign Language}
 
-A deaf person can't interpret spoken words, at least not by listening. He or she is highly depended on visual information. Sign languages have been created or invented to aid this visual communication. In these languages two elements have an important role, the face and the hands. These body parts give the most expressive power. The face because it is very good for expressing feelings and emotions, and the hands because they are very deformable. This makes the hands very interesting and useful, since there are countless combinations of finger poses and orientations. 
+A deaf person can't interpret spoken words, at least not by listening. He or she is highly depended on visual information. Sign languages have been emerged or invented to aid this visual communication. In these languages two elements have an important role, the face and the hands. These body parts give the most expressive power. The face because it is very good for expressing feelings and emotions, and the hands because they are very deformable. This makes the hands very interesting and useful, since there are countless combinations of finger poses and orientations. 
 
 Speech generation, speech recognition, facial expression recognition and sign language interpretation are all subject of extensive research at the moment. Breakthroughs in these area's are important for revolutionary new interfaces which can tremendously improve the speed of interaction and usability for a user. 
 
-For this graduation thesis I want to look into the details of using computer vision to interpret sign language and especially to use sign language to actually control the computer - to use your hands for interaction without touching the system itself. To show the advantages of having such a system I wanted to find an application for it and demonstrate that this can be actually useful. The application I found was sound generation and manipulation or said differently - make music. 
+In this thesis I want to look into the details of using computer vision to interpret sign language and especially to use sign language to actually control the computer - to use your hands for non-intrusive interaction. To show the advantages of having such a system I wanted to find an application for it and demonstrate that this can be actually useful. The application I found was sound generation and manipulation, or said differently; making music. 
 
 Translating sign language into music is a very interesting concept, not only because it sounds poetic but it can really demonstrate the power of such a system. Making life music is a complex process where real-time interaction between a artist and his tools is important. Also, for an audience it is much more compelling to look at a artist who is physically more active than only clicking a mouse.
 
 \subsection*{Hand Poses}
-Studying sign language brought the understanding that there are not really signs for musical concepts. Usually when music is translated into sign language only the vocals are translated. Facial expression and references to emotions are used to indicate the 'mood' of the music and the speed and expressiveness of the gestures indicate the intensity of the music, but these kind of gesture are not really usable for HCI because they are to much subject of interpretation. A more formal and less subjective method is required. Also previous studies have shown that the segmentation of the consecutive gestures is a difficult task\cite{Buehler2009}.
+Studying sign language brought the understanding that there are not really signs for musical concepts. Usually when music is translated into sign language only the vocals are translated. Facial expression and references to emotions are used to indicate the 'mood' of the music and the speed and expressiveness of the gestures indicate the intensity of the music, but these kind of gesture are not really usable for HCI because they are too subjective. A more formal method is required. Also, previous studies have shown that the segmentation of the consecutive gestures is a difficult task\cite{Buehler2009}.
 
-It is more feasible to have a limited set of hand poses that corresponds to a set of commands and parameters.  Any set of hand poses would do for this system, as long as the individual poses don't look to similar.  But since the idea is to translate the interpreted hand poses into sound, it would be interesting to use a set of poses that has a already existing relationship to sound.
+It is more feasible to have a limited set of hand poses that corresponds to a set of commands and parameters.  Any set of hand poses would do for this system, as long as the individual poses don't look too similar.  But since the idea is to translate the interpreted hand poses into sound, it would be interesting to use a set of poses that has a already existing relationship to sound.
 
 In Medieval music, the Guidonian hand was a mnemonic device used to assist singers in learning to sight sing. The idea of the Guidonian hand is that each portion of one hand represents a specific note within the hexachord system, which spans nearly three octaves. The other hand is used to point to the correct hand portion. \autoref{fig:guidonian} shows a hands with the tonal positions.
 
@@ -42,7 +42,7 @@ In Medieval music, the Guidonian hand was a mnemonic device used to assist singe
 	\label{fig:guidonian}
 \end{figure}
 
-Despite this system has a large set of symbols - 22 to be exact - this system is not usable since the individual poses are very much alike. Discriminating between the different poses will probably be problematic.
+Despite the fact that this system has a large set of symbols - 22 to be exact - this system is not usable since the individual poses are very much alike. Discriminating between the different poses will probably be problematic.
 
 A more recent method using hand poses in relation to music are the Curwen solfege hand signs\cite{choksy1999}. This method was introduced in the 19th century by John Curwen, who also is the founder of the famous tonic sol-fa. The tonic sol-fa is better known as \emph{'do re mi fa sol la ti'}.
 
@@ -71,10 +71,10 @@ A more recent method using hand poses in relation to music are the Curwen solfeg
 
 \section{The Goal}
 \label{sec:goal}
-The goal of this thesis is to describe the design, build and evaluation process of a system for hand pose recognition. The system needs to be fast and user friendly. Also the system should be able to run on current consumer hardware. Overall the system should satisfy the following requirements:
+The goal of this thesis is to describe the design, build and evaluation process of a system for hand pose recognition. The system needs to be fast and user friendly; it should be able to run on current consumer hardware. Overall the system should satisfy the following requirements:
 
 \begin{itemize}
-	\item Extract a set of hand in video
+	\item Extract a set of hands in video
 	\item Extract position of hands in video
 	\item Real time performance (10+ fps)
 	\item Normal consumer processing power
@@ -93,14 +93,14 @@ To realize these requirements some restrictions on the system's setting are requ
 	\item No skin like colors in the image
 \end{itemize}
 
-The system can be used to aid HCI, but also to add more feeling and detail, especially for real time interaction. The output of the system can be easily configured by a user to map to his or her preferred set commands. For example one hand control the pitch of a sound, while the other controls a accompanying beat while the position of this hand controls a cutoff filter. 
+The system can be used as a controller for a computer, with a focus on subtile detail for continuous variables, which give the sence of more direct control - important for real time interaction. Just how a graphical designer prefers a graphics tablet over a mouse for drawing, the design of the system aims to accomplish a similar sensation. The output of the system can be easily configured by a user to map to his or her preferred set commands. For example one hand control the pitch of a sound, while the other controls a accompanying beat while the position of this hand controls a cutoff filter. 
 
-It is important to say that the scope of this thesis is limited to extracting the hand poses from video, and will not cover the study of the mapping of hand poses into sound. 
+It is important to say that the scope of this thesis is limited to extracting the hand poses from video, and will not cover the study of the mapping of hand poses into sound. Although a prototype system is published along this thesis.
 
 
 
 \section{Related Work}
-At the moment of writing this thesis Microsoft is finishing the development of a new commercial product called 'Kinect'. Kinect is claimed to provide full-body 3D motion capture. To accomplish this, Kinect uses a range camera, which interprets 3D scene information from a continuously-projected infrared pattern. For this setting a infrared projector and a range camera is required. It is interesting to see that again - this is also the case for the Wii - a new revolutionary input device is created for a gaming console. 
+At the moment of writing this thesis Microsoft is finishing the development of a new commercial product called 'Kinect'. Kinect is claimed to provide full-body 3D motion capture. To accomplish this, Kinect uses a range camera, which interprets 3D scene information from a continuously-projected infrared pattern. For this setting an infrared projector and a range camera is required. It is interesting to see that again (this is also the case for the Wii) a new revolutionary input device is created for a gaming console. 
 
 \begin{figure}[htbp]
 	\center{}
@@ -119,7 +119,7 @@ An other interesting development is \cite{Wang2009} where a colored glove is use
 	\caption{3D hand pose estimation using a colored glove}
 \end{figure}
 
-An interesting overview paper is \cite{Erol2007}, which reviews the current state, possibilities and limitations of computer vision based hand pose and gesture recognition.
+
 
 
 Similar research has been done \cite{Wang2007}. Here SIFT features are used to discriminate 3 different hand symbols. A performance of 95.6\% is claimed using a the 'sharing feature concept'.
@@ -135,9 +135,6 @@ Research has been done in automated sign language interpretation using computer 
 	\caption{3D model of train station made with aid of hand gestures}
 	\label{fig:yi2009}
 \end{figure}
-
-
-
 
 
 \paragraph{Color}
@@ -181,6 +178,7 @@ A linguistic feature vector for the visual interpretation of sign language \cite
 
 
 
+An interesting overview paper is \cite{Erol2007}, which reviews the current state, possibilities and limitations of computer vision based hand pose and gesture recognition.
 
 
 

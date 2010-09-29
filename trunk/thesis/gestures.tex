@@ -38,7 +38,16 @@ To compare two or more hands with each other a method is required to calculate t
 \subsection*{Descriptors}
 To reduce the number of dimensions of an image a descriptor can be used. A descriptor describes an image in, if properly used, less dimensions than the image itself. Also it can introduce some useful properties like scale and rotation invariance. In this paper 2 descriptors are discussed and compared, Histogram of oriented gradient\cite{NavneetDalal2006} (HOG) and Speeded Up Robust Features\cite{Bay2006} (SURF).
 
-The HOG descriptor has been successfully applied and studied in human detection \cite{NavneetDalal2006, watanabe2009}. The HOG descriptors method uses a dense grid of uniformly spaced cells, where for each cell the gradients are calculated in 9 orientations. The values for each orientation for each cell are stored in a histogram that represent the image. Also contrast normalization is applied for improved accuracy.
+The HOG descriptor has been successfully applied and studied in human detection \cite{NavneetDalal2006, watanabe2009}. The HOG descriptors method uses a dense grid of uniformly spaced cells, where for each cell the gradients are calculated in 9 orientations. The values for each orientation for each cell are stored in a histogram that represent the image. Also contrast normalization is applied for improved accuracy. \autoref{fig:hog} visualizes a simplification of the HOG calculation. 
+
+\begin{figure}[htbp]
+\center{}
+\includegraphics[width=0.6\linewidth]{figures/hog.png}
+\caption{Visual representation of HOG calculation}
+\label{fig:hog}
+\end{figure}
+
+
 
 The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF approximates the speed of Scale-invariant feature transform (SIFT) and is claimed to more robust against several image transformations\cite{Murillo2007, Valgren2010}. SIFT is an other descriptor that is popular and often used.
 
@@ -47,6 +56,7 @@ To be able to compare the two descriptors, the SURF descriptor is configured to 
 For the experiments described in \autoref{ch:experiments} the same parameters as in \cite{watanabe2009} are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels. \autoref{fig:lefthandfeatures} is an example of a image used for calculating HOG features.
 
 
+\subsection{Principal Component Analysis}
 
 \section{Classification}
 Using a set of training examples each marked as belonging to a category, a classifier builds a model that predicts whether a new example falls into one category or the other. 
@@ -81,13 +91,31 @@ Often, a set of data points in a space is not linearly separable. For this reaso
 
 The training phase consists of computing a kernel to make the space linearly separable. Then a decision boundary is calculated. Training a SVM classifier can be very computationally expensive, but classification is very fast and memory efficient. The training phase has one parameter, which is the error cost $c$. $c$ controls the trade off between allowing training errors and forcing rigid margins. This allows some flexibility in separating the categories and prevents over or under fitting.
 
+The function for the DB for a test sample $x$ has the following form:
+
+\begin{equation}
+	g(x) = \sum_i{\alpha_i y_i K(x_i,x) -b},
+\end{equation}
+
+Where $K(x_i,x)$ is a kernel function for the training sample $x_i$ and the test sample $x$ and $y_i$ the class label of $x_i$ with value $+1$ or $-1$. $\alpha_i$ is the weight of the training sample $x_i$ and $b$ is a threshold parameter which both are learned in the training phase.  
+
 There are various kernels, but \cite{Hsu2003} states the Radial Basis Function is a good kernel to start with because it generally gives good results. This kernel is defined by:
 
 \begin{equation}
-	K(x,y) = e^{(-\gamma||x-y||^2)}, \gamma > 0
+	K(S_i,S_i) = e^{(-\gamma||S_i-S-j||^2)}, \gamma > 0,
 \end{equation}
 
-It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the steepness of the kernel. An Other interesting kernel is the $\chi^2$ kernel (BECAUSE?).
+where $S_i$ and $S_j$ are two feature vectors. It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the steepness of the kernel. An other interesting kernel is based upon the $\chi^2$ distance\cite{Zhang2007}. This distance is incorporated into SVM by the usage of Gaussian kernels\cite{Chapelle1999}:
+
+\begin{equation}
+	K(S_i,S_j) = exp(-\frac{1}{A}D(S_i,S_J)),
+\end{equation}
+
+where $D(S_i,S_j)$ is defined as
+
+\begin{equation}
+	D(S_1,S_2) = \frac{1}{2}\sum^{m}_{i=1}\frac{(u_i-w_i)^2}{u_i+w_i}.
+\end{equation}
 
 \autoref{fig:svm} is an example of a SVM classification setting. The space is already linearly separable, so no space transformation is required. 
 

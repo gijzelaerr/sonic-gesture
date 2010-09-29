@@ -68,18 +68,26 @@ testLabels = repmat(eye(28,28),size(testIndexes,2),1);
 
 
 %%
-% fprintf('doing PCA\n');
-% eigenhands = pca(trainSet, 0.95);
-% fprintf('dimensions after PCA: %d\n', size(eigenhands, 2));
-% trainSetEigen = trainSet*eigenhands;
-% testSetEigen = testSet*eigenhands;
+fprintf('doing PCA\n');
+eigenhands = pca(trainSet, 0.95);
+fprintf('dimensions after PCA: %d\n', size(eigenhands, 2));
+trainSetEigen = trainSet*eigenhands;
+testSetEigen = testSet*eigenhands;
 
 
 %%
-% fprintf('constructing kernel\n');
-% trainDist = ChiSquareDistance(trainSetEigen.data);
-% testDist = ChiSquareDistance(testSetEigen.data, trainSetEigen.data);
+trainData = trainSetEigen.data;
+testData = testSetEigen.data;
+trainMin = min(trainData);
+shift = trainMin .* ((trainMin < 0)*-1);
+trainShift = repmat(shift, size(trainData, 1), 1);
+testShift = repmat(shift, size(testSet, 1), 1);
+trainData = trainData + trainShift;
+testData = testData + testShift;
+testData(testData<0) = 0;
 
+
+%%
 fprintf('constructing kernel\n');
 trainDist = ChiSquareDistance(trainSet);
 testDist = ChiSquareDistance(testSet, trainSet);

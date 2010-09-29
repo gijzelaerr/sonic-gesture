@@ -87,7 +87,8 @@ testSetEigen = testSet*eigenhands;
 
 
 %% DO SVM classification
-model = svmtrain(trainLabels, trainSetEigen.data, '-c 8192, -g 0.031250');
+%model = svmtrain(trainLabels, trainSetEigen.data, '-c 8192, -g 0.031250');
+model = svmtrain(trainLabels, trainSetEigen.data);
 [svmPredict, accuracy, decision_values] = svmpredict(rand(size(testSetEigen.data, 1), 1), testSetEigen.data, model);
 confusion = confusionmat(testLabels, svmPredict);
 a = accur(confusion);

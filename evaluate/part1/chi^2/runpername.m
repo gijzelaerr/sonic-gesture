@@ -48,7 +48,7 @@ end;
 confusion = zeros(SYMBOLS, SYMBOLS);
 parfor index = 1:size(rundata,1)
     name = nameset(index);
-    fprintf('running test with: %s\n%s', name{1});
+    fprintf('running test with: %s\n', name{1});
     data = rundata(index, :);
     trainIndexes = data{1};
     testIndexes = data{2};
@@ -81,32 +81,33 @@ parfor index = 1:size(rundata,1)
     % construct labels
     testLabels = repmat((1:SYMBOLS)', size(testIndexes,2), 1);
     trainLabels = repmat((1:SYMBOLS)', size(trainIndexes,2), 1);
-
-%     % do normal KNN
-%     predicted = knnclassify(testSet, trainSet, trainLabels, knn);
-%     C = confusionmat(testLabels, predicted);
-%     confusion = confusion + C;
-     
     
-    % construct PCA
+    fprintf('doing PCA\n');
     eigenhands = pca(trainSet, 0.95);
     trainSetEigen = trainSet*eigenhands;
     testSetEigen = testSet*eigenhands;
 
-%     % do KNN PCA classification
-%     predicted = knnclassify(testSetEigen.data, trainSetEigen.data, trainLabels, 3);
-%     C = confusionmat(testLabels, predicted);
-%     confusion = confusion + C; 
-    
-    % DO SVM classification
-    model = svmtrain(trainLabels, trainSetEigen.data, '-c 8192, -g 0.031250');
-    [svmPredict, accuracy, decision_values] = svmpredict(rand(size(testSetEigen, 1), 1), testSetEigen.data, model);
-    C = confusionmat(testLabels, svmPredict);
-    confusion = confusion + C;
+    trainData = trainSetEigen.data;
+    testData = testSetEigen.data;
+    trainMin = min(trainData);
+    shift = trainMin .* ((trainMin < 0)*-1);
+    trainShift = repmat(shift, size(trainData, 1), 1);
+    testShift = repmat(shift, size(testSet, 1), 1);
+    trainData = trainData + trainShift;
+    testData = testData + testShift;
+    testData(testData<0) = 0;
+
+    fprintf('constructing kernel\n');
+    trainDist = ChiSquareDistance(trainSet);
+    testDist = ChiSquareDistance(testSet, trainSet);
+
+    fprintf('doing classification\n');
+    [avgPrec clfsOutput] = SvmPKExpOpt(trainDist, testDist, trainLabels, testLabels, cRange, nReps, nFolds, 0);
+    [c,acc]= svmOutput2Confmat(clfsOutput, testLabels);
+    confusion = confusion + c;
     
 end;
     
-
 
 %%
 fprintf('full scale accuracy %.2f%%\n', accur(confusion));

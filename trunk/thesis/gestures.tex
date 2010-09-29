@@ -26,11 +26,11 @@ To compare two or more hands with each other a method is required to calculate t
         \label{fig:lefthandcutout}
 }
 \hspace{0.03\linewidth}
-\subfloat[Resized hand]{
+\subfloat[Resized hand, used for feature extraction]{
         \includegraphics[width=0.2\linewidth]{figures/pipeline/lefthandhog.jpg}
         \label{fig:lefthandfeatures}
 }
-\caption{Prparing the hand window for feature extraction}
+\caption{Preparing the hand window for feature extraction}
 \label{fig:featureprep}
 \end{center}
 \end{figure}
@@ -42,21 +42,21 @@ The HOG descriptor has been successfully applied and studied in human detection 
 
 \begin{figure}[htbp]
 \center{}
-\includegraphics[width=0.6\linewidth]{figures/hog.png}
+\includegraphics[width=0.8\linewidth]{figures/hog.png}
 \caption{Visual representation of HOG calculation}
 \label{fig:hog}
 \end{figure}
 
 
-
 The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF approximates the speed of Scale-invariant feature transform (SIFT) and is claimed to more robust against several image transformations\cite{Murillo2007, Valgren2010}. SIFT is an other descriptor that is popular and often used.
 
-To be able to compare the two descriptors, the SURF descriptor is configured to work with a fixed set of interest points set up as a dense grid - the same set used for HOG. Using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms.
-
-For the experiments described in \autoref{ch:experiments} the same parameters as in \cite{watanabe2009} are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels. \autoref{fig:lefthandfeatures} is an example of a image used for calculating HOG features.
+To be able to compare the two descriptors, the SURF descriptor is configured to work with a fixed set of interest points set up as a dense grid - the same set used for HOG. Also Using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms which makes it unusable for real-time operation.
 
 
 \subsection{Principal Component Analysis}
+Principal Component Analysis (PCA) is a method that reduces data dimensionality performing a covariance analysis between vectors. The original space will be mapped into a new space based on the variance in the data. PCA transforms a number of correlated variables into a (possibly smaller) number of uncorrelated variables called principal components. The first principal component vector accounts for as much of the variability in the data as possible, and each consecutive component vector accounts for as much of the remaining variability as possible.
+
+PCA can improve the performance of a classifier both in classification and time.
 
 \section{Classification}
 Using a set of training examples each marked as belonging to a category, a classifier builds a model that predicts whether a new example falls into one category or the other. 

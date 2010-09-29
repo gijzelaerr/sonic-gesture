@@ -95,16 +95,22 @@ All movies or used, but per person the movies are used for testing and all other
 \paragraph{Simple as train set, complex as test set}
 The classifier is trained with all movies with the simple background, and as a test set the movies with the complex background are used. This mimics the real life situation where the training is with recordings in optimal conditions, but the system is used in a complex environment like a living room. Also the system is not trained by the user.
 
-\paragraph{}
+
+\subsubsection{Test setting}
 For the number of neighbors for K-NN a small number of tests where run, and a value between 3 and 10 for N yielded similar performance. Since a lower number of $k$ can give better performance $k=3$ was used for all experiments.
 
 When PCA was performed on the dataset the smallest eigenvectors where removed so 95\% of the original variance was remaining. On the simple dataset reduce the dimensions from 3780 to 594 dimensions. For the complex set combined with the simple set the dimensionality is reduced to 688 dimensions, for complex only 283 and for the complete dataset 749.
 
-For SVM two kernels are evaluated. The first is the radial basis function (RBF) kernel, since the libsvm documentation states that is a good kernel to use that usually gives good performance. The $c$ and $\gamma$ values for SVM where found by an extensive grid search on the 'per person' test set with only the simple movies performed on a small cluster in the ranges $2^{-3}$ to $2^{15}$ for $c$ and $2^{-15}$ and $2^3$ for $\gamma$. The most optimal values are $\gamma$ = 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
+For SVM two kernels are evaluated, RBF and $\chi^2$. The $c$ for both kernels and $\gamma$ for RBF values where found by an extensive grid search on the 'per person' test set with only the simple movies performed on a small cluster in the ranges $2^{-3}$ to $2^{15}$ for $c$ and $2^{-15}$ and $2^3$ for $\gamma$. The most optimal values for $\gamma$ is 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
 
-The second kernel used is a precomputed kernel using $\chi^2$.
+For calculating the HOG features the same parameters as \cite{watanabe2009} are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
+
+\autoref{fig:lefthandfeatures} is an example of a image used for calculating HOG features.
+
 
 The Curwen hand symbols that are closely related in a musical scale way are quite similar, for example 'Re' and 'Ri' (\autoref{fig:reri}). It is expected that a lot of misclassifications will be caused by this similarity. To investigate the impact of this issue, 2 different scores are calculated, one for the major scale and one for the full scale. The full scale threats every class as a single class, for the major scale the notes in the major scale and their corresponding similar notes are joined into one class. For example Do an
+
+
 
 \begin{figure}[htbp]
   \centering

@@ -105,6 +105,8 @@ For SVM two kernels are evaluated, RBF and $\chi^2$. The $c$ for both kernels an
 
 For calculating the HOG features the same parameters as \cite{watanabe2009} are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
 
+To be able to compare the HOG and SURF, the SURF descriptor is configured to work with a fixed set of interest points set up as a dense grid - the same set used for HOG. This results in a 13440 dimensional feature vector. Also Using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms which makes it unusable for real-time operation.
+
 \autoref{fig:lefthandfeatures} is an example of a image used for calculating HOG features.
 
 
@@ -132,16 +134,17 @@ See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for 
 
 \begin{table}
 \centering
-\begin{tabular}{lrr}
+\begin{tabular}{llrr}
 \hline\hline
-Classifier 				&  	Full scale	& Major scale	\\
+Classifier 		& PCA		&  	Full scale	& Major scale	\\
 \hline
-KNN3 		&  	84.27\%		& 90.21\%		\\
-PCA, KNN3 	& 	83.67\%		& 89.70\%		\\
-PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	& 	76.78\%		& 84.38\%		\\
-SVM RBF ($c=2^6$ $\gamma=2^{-5}$) & 86.02\% & 90.88\% \\
-PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$) &  86.85\% & 91.85\% \\
-SVM $\chi^2$ & 87.92\% 		& 91.58\% \\
+KNN3 		&	no	&  	84.27\%		& 90.21\%		\\
+KNN3	 	&	yes	& 	83.67\%		& 89.70\%		\\
+SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	&	yes	& 	76.78\%	& 84.38\%	\\
+SVM RBF ($c=2^6$ $\gamma=2^{-5}$)		&	no	&	86.02\%	& 90.88\% \\
+SVM RBF ($c=2^6$ $\gamma=2^{-5}$)		&	yes	& 	86.85\% & 91.85\% \\
+SVM $\chi^2$ &	no	&	87.92\%		& 91.58\% \\
+SVM $\chi^2$ &	yes	&	TODO		& TODO \\
 \hline
 \end{tabular}
 \caption{k-fold per film using simple dataset only,}
@@ -153,15 +156,16 @@ SVM $\chi^2$ & 87.92\% 		& 91.58\% \\
 \centering
 \begin{tabular}{llrr}
 \hline\hline
-Dataset & Classifier 				&  	Full scale	& Major scale	\\
+Dataset & Classifier & PCA	& Full scale	& Major scale \\
 \hline
-simple set	& KNN3	& 72.93\%, & 82.63\%	\\
-simple set	& PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$) & 79.71\%, & 86.70\%	\\
-full set	& KNN3 & 66.98\%, & 76.32\%	\\
-full set	& PCA, KNN3 & 65.31\%, & 76.00\%	\\
-full set	& PCA, SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$) & 64.05\%, & 74.42\%	\\
-full set	& PCA, SVM RBF ($c=2^6$ $\gamma=2^{-5}$)& 73.38\%, & 81.44\%	\\
-full set    & SVM $\chi^2$ &  71.83\% &80.07\% \\
+simple	& KNN3	&	&	no	& 72.93\%, & 82.63\% \\
+simple	& SVM RBF ($c=2^6$ $\gamma=2^{-5}$) &	yes	& 79.71\% & 86.70\%	\\
+full 	& KNN3 &	no	& 66.98\% & 76.32\%	\\
+full 	& KNN3 &	yes	& 65.31\% & 76.00\%	\\
+full 	& SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$) & yes	& 64.05\% & 74.42\%	\\
+full 	& SVM RBF ($c=2^6$ $\gamma=2^{-5}$)	     & yes	& 73.38\% & 81.44\%	\\
+full 	& SVM $\chi^2$ &	no	&  71.83\% &80.07\% \\
+full 	& SVM $\chi^2$ &	yes	&  TODO & TODO \\
 \hline
 \end{tabular}
 \caption{k-fold per person}
@@ -179,15 +183,15 @@ Hog & KNN3				& no	&	58.57\% 	&	72.78\%	\\
 Hog & KNN3 				& yes	&	57.62\% 	&	72.17\%	\\
 Hog & SVM RBF ($c=2^6$ $\gamma=2^{-5}$)			& yes & 62.14\%	&	73.39\%	\\
 Hog & SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	& yes & 55.48\%	&	68.25\%	\\
-Hog & SVM $\chi^2$ 		&	yes	&	63.81\%	&	74.71\%	\\
-Hog & SVM $\chi^2$		&	yes &	crash 	&	crash \\
+Hog & SVM $\chi^2$ 		&	no	&	63.81\%		&	74.71\%	\\
+Hog & SVM $\chi^2$		&	yes &	58.57\% 	&	71.98\% \\
 \hline
 SURF & KNN3				&	no	&	46.19\% 	&	60.17\%	\\
-SURF & KNN3										& yes &	44.05\% & 56.65\% \\
+SURF & KNN3				&	yes &	44.05\%		& 56.65\% \\
 SURF & SVM RBF ($c=2^6$ $\gamma=2^{-5}$)		& yes &	44.29\%	&	57.18\%	\\
 SURF & SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	& yes &	40.00\%	&	53.28\%	\\
-SURF & SVM $\chi^2$								& no  &	37.93\%		&	47.91\%	\\
-SURF & SVM $\chi^2$		&	yes	&	crash 	&	crash \\
+SURF & SVM $\chi^2$		&	no	&	37.93\%		&	47.91\%	\\
+SURF & SVM $\chi^2$		&	yes	&	53.33\% 	&	65.13 \\
 \hline
 \end{tabular}
 \caption{simple as trainset, complex as testset}
@@ -195,12 +199,10 @@ SURF & SVM $\chi^2$		&	yes	&	crash 	&	crash \\
 \end{table}
 
 
-
-
 \begin{figure}[htbp]
 	\centering{}
 	\includegraphics[width=\linewidth]{confmat/confusion.jpg}
-	\caption{Confusion matrix, SVM $\chi^2$, n-fold, per film simple set}
+	\caption{Confusion matrix using HOG, SVM $\chi^2$, n-fold, per film simple set}
 	\label{fig:confusion}
 \end{figure}
 

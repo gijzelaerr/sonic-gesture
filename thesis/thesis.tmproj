@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>notes.tex</string>
+	<string>experiments.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>thesis.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-28T15:00:53Z</date>
+			<date>2010-09-29T15:56:54Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -22,7 +22,9 @@
 			<key>filename</key>
 			<string>bodyparts.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-29T10:04:39Z</date>
+			<date>2010-09-28T17:31:33Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -34,7 +36,7 @@
 			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-29T11:42:02Z</date>
+			<date>2010-09-29T15:56:54Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -64,7 +66,7 @@
 			<key>filename</key>
 			<string>notes.tex</string>
 			<key>lastUsed</key>
-			<date>2010-09-29T11:58:17Z</date>
+			<date>2010-09-29T15:56:37Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -136,30 +138,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>20</integer>
+				<integer>18</integer>
 				<key>line</key>
-				<integer>107</integer>
+				<integer>156</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>92</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>13</integer>
-				<key>line</key>
-				<integer>107</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>29</integer>
-				<key>line</key>
-				<integer>107</integer>
-			</dict>
+			<integer>140</integer>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>
@@ -294,6 +280,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{802, 26}, {831, 1002}}</string>
+	<string>{{407, 280}, {831, 778}}</string>
 </dict>
 </plist>

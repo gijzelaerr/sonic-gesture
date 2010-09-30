@@ -154,23 +154,21 @@ Back projection can be quite noisy, which is caused by the rounding in the in th
 	\label{fig:threshold}
 \end{figure}
 
-A mechanism is required to label each pixel as skin or non-skin. The easiest way to accomplish this is by defining a threshold. All pixel values below a certain threshold are replaced with false (or 0), all above this threshold will be replaced with true (or 1). This results in a binary image with labels for (non) skin pixels. This introduces one parameter - the threshold for going from the probabilistic domain to the binary domain.
+A mechanism is required to label each pixel as skin or non-skin. The easiest way to accomplish this is by defining a threshold. All pixel values below a certain threshold are replaced with false/non-skin, all above this threshold will be replaced with true/skin. This results in a binary image with labels for (non) skin pixels. This introduces one parameter - the threshold for going from the probabilistic domain to the binary domain.
 
 This parameter could be adjusted automatically, by comparing the percentage of skin pixels in the image and comparing this to a believed proper percentage. This percentage should be made dependent on the size of the detected face. If the percentage is too low, then the threshold should be lowered and raised if too high. 
 
-An alternative method of going from the probabilistic domain to the binary domain is adaptive thresholding. Here the threshold is determined per pixel by the values of surrounding pixels. This method has one parameter; the neighborhood blocksize $n$ is used to determine the threshold.
-
-The threshold per pixel is calculated by the equation:
+An alternative method of going from the probabilistic domain to the binary domain is adaptive thresholding. Here the threshold is determined per pixel by the values of surrounding pixels. This method has one parameter; the neighborhood blocksize $n$ is used to determine the threshold. The threshold per pixel is calculated by the equation
 
 \begin{eqnarray}
   \text{dst}(x, y) & \leftarrow & \left\{
   \begin{array}{l l}
 	1 & \text{if src}(x,y) > T(x,y) \\
 	0 & \text{otherwise} \\
-  \end{array} \right.
+  \end{array} \right.,
 \end{eqnarray}
 
-Where $T(x,y)$ is the mean of the $n$ by $n$ pixel neighborhood.
+where $T(x,y)$ is the mean of the $n$ by $n$ pixel neighborhood.
 
 \subsection*{Morphological Operations}
 
@@ -187,7 +185,7 @@ An alternative to smoothing out rough edges and holes are (combinations of morph
 \section{Object Localization}
 
 \subsection*{Pixel Grouping, Contour Extraction}
-To be able to say something useful about groups of pixels, one needs to know which pixels belong together. This is done by clustering. In this case clustering is performed by grouping pixels together to touch horizontally and vertically. Each cluster of pixels is called a blob.
+To be able to say something useful about groups of pixels, one needs to know which pixels belong together. The human eye perceives neighboring pixels as a whole, but this is less obvious for a computer. Grouping pixels is called clustering. In this case clustering is performed by grouping pixels together to touch horizontally and vertically. Each cluster of pixels is called a blob.
 
 To handle the blobs in a time efficient way, it is a good idea to extract the contours. In this way interesting problems can be solved like determining if a certain pixel coordinate is inside a certain blob, the maximum or minimal horizontal or vertical position and hole removal.
 
@@ -204,19 +202,39 @@ From the contours of the group, a square region of interest is defined by the ou
 	\label{fig:contours}
 \end{figure}
 
-(NEEDS REWRITE)
+To interpret the blob the label a blob is required. A blob can be a hand a head or noise mislabeled as bodypart. This noise can reduced by assuming a body part has a minimal size. If the surface of a blob is smaller than a certain value this blob can be discarded.
 
-Now we have blobs we need to know blob is what body part. In a optimal situation there are three blobs, two for the hands and one for the head. For one blob it is already known what body part it is - the face. In the face detection phase we found a face in the image, so the blob containing the center point of the detected phase is the face blob. Usually the left hand is on the left of the head and the right hand on the right side. If there are three blobs, and the face is the middle blob, the labeling is finished. If not an other decision needs to be made. Often there are more or less blobs, because the background has skin-like color, a hand is difficult to detect or is occluded. Also the order of hands and head can change, a left hand doesn't necessarily need to appear on the left side of a head.
-
-First the surface of each blob is calculated and then the blobs are sorted by size. The blob containing the head is removed from the list, since we already know this label. Also very small blobs are removed, because these are probably noise. The removal threshold surface is set to:
+The threshold for noise is calculated by
 
 \begin{equation}
-T = (\frac{h}{c})^2
+T = (\frac{h}{c})^2,
 \end{equation}
 
-Where $h$ is the height of the movie frame and $c$ is a control constant. The equation can be interpreted as a filter for the minimal size in square pixels, relative to the hight of the movie frame. A value of $20$ for $c$ removes a lot of noise blobs, but still is small enough to leave most hand blobs intact.
+where $h$ is the height of the video in pixels and $c$ is a parameter to control the effect of the threshold. A value of $20$ for $c$ removes a lot of noise blobs, but still is small enough to leave most hand blobs intact.
 
-Assuming the hands or the second biggest skin like objects in the image, the 2 or less biggest blobs are taken from the list and the rest is also discarded. If there is no biggest blob, the labeling is finished - there is only a head in the image. If there is one blob left, the left or right position relative to the head is the hand label. If there are 2 hands, there are 3 possible situations, 1 where the head is in the middle which is already described. If both hands are on the left of the head, the most outer left blob is labeled as left and the other as right. This is visa versa for right. This whole process is listed in \autoref{alg:blobheuristics}.
+Multiple cues can be used to determine which blob is which body part. The most  certain and important one is the face center, which is known as we detected the face. If a blob contains this point, this blob is the face. 
+
+To determine which blob is which hand the relative x position to the head can be used. Algorithm \autoref{alg:blobheuristics} sorts the hands by x position and labels them with heuristics. The result of the heuristics in different scenarios is shown in \autoref{fig:heuristics}. (a) in this figure shows the usual position, where the left hand is on the left of the face and the right hand on the right. The labels are labeled accordingly. In some cases both hands are on one side of the face (b), here the relative position is used to label the hand. This is a robust method, except for the scenario where the hands positions are swapped in the x position. Fortunately this is a very unnatural body pose, so this case is just simply ignored. If such a scenario occurs the labels of the hands are mixed. 
+
+\begin{figure}[htbp]
+\centering
+ \subfloat[]{
+   \includegraphics[width=0.29\linewidth]{figures/heurist/a.png}
+}
+\hspace{0.02\linewidth}
+ \subfloat[]{
+   \includegraphics[width=0.29\linewidth]{figures/heurist/b.png}
+}
+\hspace{0.02\linewidth}
+ \subfloat[]{
+   \includegraphics[width=0.29\linewidth]{figures/heurist/c.png}
+}
+\hspace{0.02\linewidth}
+\caption{Visualisation of heuristics results}
+\label{fig:heuristics}
+\end{figure}
+
+
 
 \begin{algorithm}
 \caption{Blob labeling heuristics}
@@ -261,7 +279,7 @@ A hand doesn't move very fast in an image - usually it will not move from the le
 
 For every hand a Kalman filter is initialized. The measurement that need to be smoothed is the hand window. The hand window has a x and y position and a width and hight. Each hand also has a speed in the x and y direction but we don't measure that - we let the kalman filter represent, calculate and use that internally. 
 
-A hand window represented in a measurement vector as:
+A hand window represented in a measurement vector as
 
 \begin{equation}
  m_k = \left(
@@ -270,12 +288,12 @@ A hand window represented in a measurement vector as:
 	y_k \\ %measurement.y,
 	w_k \\ %measurement.width
 	h_k \\ %measurement.height
-\end{array} \right)
+\end{array} \right),
 \end{equation}
 
-Where $x_k$ is the horizontal position, $y_k$ is the vertical position, $w_k$ is the width and $h_k$ is the height of the hand window.
+where $x_k$ is the horizontal position, $y_k$ is the vertical position, $w_k$ is the width and $h_k$ is the height of the hand window.
 
-The Transition matrix is defined as follows:
+The Transition matrix is defined as follows
 
 \begin{equation}
  A = \left(
@@ -286,7 +304,7 @@ The Transition matrix is defined as follows:
 	0 & 0 & 0 & 1 & 0 & 0 \\
 	0 & 0 & 0 & 0 & 1 & 0 \\
 	0 & 0 & 0 & 0 & 0 & 1 \\
-\end{array} \right)
+\end{array} \right).
 \end{equation}
 	
 This is just an identity matrix, except for the ones on the right top in the matrix. These represent the combination of the current position and the internal state of the speed.
@@ -332,7 +350,7 @@ With these matrices and a standard kalman filter the position and size of the ha
 
 
 \subsection*{Self Occlusion by Body Parts}
-Failing to detect the hand in the current frame is caused by one of three disturbances. First of all the hand can be out of the image, or occluded by an obstacle. The second case is that the hand detection phase just fails and couldn't localize the body part. The third case is self occlusion, where the hand is very close or occluding the face or other hand and the skin segmentation segments this as one big blob. In this case template search is used to track the specific hand. A cut out image of the hand in the previous frame is used for this template search. Template search is a very simple and fast method, as long as the search area is small. A sliding window  with the same size as the cutout image is sliding over a small surrounding area of the location predicted by the kalman filter. The window with the lowest squared sum difference to the previous cutout image is set as the new location. If the original cutout is touching the border of the image or the squared sum difference is too high it is assumed the hand is not visible anymore, and is flagged accordingly. This method works if the shape and size of the hand don't change too much.
+Failing to detect the hand in the current frame is caused by one of three disturbances. First of all the hand can be out of the image, or occluded by an obstacle. The second case is that the hand detection phase just fails and couldn't localize the body part. The third case is self occlusion, where the hand is very close or occluding the face or the other hand. The skin segmentation will segment this as one big blob. In this case template search is used to track the specific hand. A cut out image of the hand from the previous frame is used for this template search. Template search is a very simple and fast method, as long as the search area is small. A sliding window  with the same size as the cutout image is sliding over a small surrounding area of the location predicted by the Kalman filter. The window with the lowest squared sum difference to the previous cutout image is set as the new location. If the original cutout is touching the border of the image or the squared sum difference is too high it is assumed the hand is not visible anymore, and is flagged accordingly. This method works if the shape and size of the hand don't change too much from the last.
 
 \begin{figure}[htbp]
 \begin{center}

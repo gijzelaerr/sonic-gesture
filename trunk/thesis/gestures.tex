@@ -5,13 +5,13 @@
 
 Knowing the location of the hands in a image doesn't tell much about the hand poses. A method needs to be constructed to discriminate the different hand poses.
 
-This chapter describes how the hand poses are extracted from the hand windows. First features of the hand window are extracted that represent the current hand pose. These features are compared by a classifier with previously extracted features of hand poses for which the poses where already known. The classifier will determine which known hand pose(s) resembles the at that moment examined hand.
+This chapter describes how the hand poses are detected in the hand windows. Features are extracted from the hand window and represent the hand pose in a more compact way. These features are compared by a classifier with previously extracted features of hand poses for which the poses where already known. The classifier will determine which known hand pose(s) resembles the at that moment examined hand.
 
 
 \section{Feature extraction}
 The hand window contains some background pixels, because a hand will never fill a perfect square (Figure \autoref{fig:lefthandwindow}). These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In \autoref{sec:skinmodel} a binary mask for skin pixels is constructed. The inverse skin mask can be used  to remove the background (Figure \autoref{fig:lefthandcutout}). Sometimes the blob is too small to say something useful about the hand pose. One way to artificially increase the blob size is to do a morphological dilate operation on the blob. This will increase the size of the hand cutout and probably add skin pixels, but this will also introduce more noisy (non-skin) pixels.
 
-To compare two or more hands with each other a method is required to calculate the similarity. A very simple method is to compare each pixel location with each other and sum all the differences. But this method isn't feasible. First of all, it is not going to work on images that are not the same size or orientation. Also it is computationally expensive for larger images - for an image of 100 by 100 pixels there are already 10.000 dimensions. And a other important thing, this method is not very forgiving for small variations like scaling and rotation.
+To compare two or more hands with each other a method is required to calculate the similarity. A very simple method is to compare each pixel location with each other and sum all the differences. But this method isn't feasible. It is not going to work on images that are not the same size or orientation. Also it is computationally expensive for larger images - for an image of 100 by 100 pixels there are already 10.000 dimensions. Also important is that this method is not very forgiving for small variations like scaling and rotation.
 
 
 \begin{figure}[htbp]
@@ -38,7 +38,7 @@ To compare two or more hands with each other a method is required to calculate t
 \subsection*{Descriptors}
 To reduce the number of dimensions of an image a descriptor can be used. A descriptor describes an image in, if properly used, less dimensions than the image itself. Also it can introduce some useful properties like scale and rotation invariance. In this paper 2 descriptors are discussed and compared, Histogram of oriented gradient\cite{NavneetDalal2006} (HOG) and Speeded Up Robust Features\cite{Bay2006} (SURF).
 
-The HOG descriptor has been successfully applied and studied in human detection \cite{NavneetDalal2006, watanabe2009}. The HOG descriptors method uses a dense grid of uniformly spaced cells, where for each cell the gradients are calculated in 9 orientations. The values for each orientation for each cell are stored in a histogram that represent the image. Also contrast normalization is applied for improved accuracy. \autoref{fig:hog} visualizes a simplification of the HOG calculation. 
+The HOG descriptor has been successfully applied and studied in human detection \cite{NavneetDalal2006, watanabe2009}. The HOG descriptors method uses a dense grid of uniformly spaced cells, where for each cell the gradients are calculated in 9 orientations. The values for each orientation for each cell are stored in a histogram that represent the image. \autoref{fig:hog} visualizes a simplification of the HOG calculation. 
 
 \begin{figure}[htbp]
 \center{}
@@ -56,27 +56,21 @@ The SURF descriptor is based on sums of approximated 2D Haar wavelet responses a
 \subsection{Principal Component Analysis}
 Principal Component Analysis (PCA) is a method that reduces data dimensionality performing a covariance analysis between vectors. The original space will be mapped into a new space based on the variance in the data. PCA transforms a number of correlated variables into a (possibly smaller) number of uncorrelated variables called principal components. The first principal component vector accounts for as much of the variability in the data as possible, and each consecutive component vector accounts for as much of the remaining variability as possible.
 
-PCA can improve the performance of a classifier both in classification and time.
+PCA may improve the performance of a classifier both in classification and time.
 
 \section{Classification}
-Using a set of training examples each marked as belonging to a category, a classifier builds a model that predicts whether a new example falls into one category or the other. 
-
-There are many classifiers which can be used in different ways. For computer vision two of these are interesting because of simplicity, or superiority; k Nearest Neighbors and Support Vector Machines;
+Using a set of training examples each marked as belonging to a category, a classifier builds a model that predicts whether a new example falls into one category or the other. There are many classifiers which can be used in different ways. For computer vision two of these are interesting because of simplicity, or superiority; k Nearest Neighbors and Support Vector Machines;
 
 \subsection*{k Nearest Neighbors}
 The k-nearest neighbors algorithm (k-NN) is a method for classifying objects based on euclidean distance between training examples in the feature space. The k-nearest neighbor algorithm is one of the the simplest of all machine learning  algorithms. K-NN is a type of 'lazy learning' where all computation is deferred until classification. This results in a fast training phase, but a computationally expensive classification. Also the memory footprint is large since all data points are stored. 
 
-The training samples are labeled multidimensional vectors. The training phase of the algorithm consists only of storing the vectors and class labels of the training samples.
-
-In the classification phase, $k$ is a user-defined constant, and an unlabeled vector is classified by assigning the label which is most frequent among the k training samples nearest to that query point.
-
-
+The training samples are labeled multidimensional vectors. The training phase of the algorithm consists only of storing the vectors and class labels of the training samples.In the classification phase, $k$ is a user-defined constant, and an unlabeled vector is classified by assigning the label which is most frequent among the k training samples nearest to that query point.
 
 \autoref{fig:knn} is an example of k-NN classification. The test sample (the circle) should be classified either to the squares class or to the triangles class. If $k = 3$ the circle is classified to the triangles class because there are 2 triangles and 1 square inside the inner circle. If $k = 5$ it is classified to as 'square'.
 
 \begin{figure}[htbp]
 \center{}
-\includegraphics[width=0.3\linewidth]{figures/knn.png}
+\includegraphics[width=0.5\linewidth]{figures/knn.png}
 \caption{Classification using K Nearest Neighbors}
 \label{fig:knn}
 \end{figure}
@@ -97,7 +91,7 @@ The function for the DB for a test sample $x$ has the following form:
 	g(x) = \sum_i{\alpha_i y_i K(x_i,x) -b},
 \end{equation}
 
-Where $K(x_i,x)$ is a kernel function for the training sample $x_i$ and the test sample $x$ and $y_i$ the class label of $x_i$ with value $+1$ or $-1$. $\alpha_i$ is the weight of the training sample $x_i$ and $b$ is a threshold parameter which both are learned in the training phase.  
+where $K(x_i,x)$ is a kernel function for the training sample $x_i$ and the test sample $x$ and $y_i$ the class label of $x_i$ with value $+1$ or $-1$. $\alpha_i$ is the weight of the training sample $x_i$ and $b$ is a threshold parameter which both are learned in the training phase.  
 
 There are various kernels, but \cite{Hsu2003} states the Radial Basis Function is a good kernel to start with because it generally gives good results. This kernel is defined by:
 
@@ -121,7 +115,7 @@ where $D(S_i,S_j)$ is defined as
 
 \begin{figure}[htbp]
 \center{}
-\includegraphics[width=0.3\linewidth]{figures/svm.png}
+\includegraphics[width=0.5\linewidth]{figures/svm2.png}
 \caption{Classification using Support Vector machines}
 \label{fig:svm}
 \end{figure}

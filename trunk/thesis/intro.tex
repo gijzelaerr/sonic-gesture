@@ -5,7 +5,7 @@
 
 \section{Background}
 \subsection*{Human-Computer Interaction}
-Human-Computer Interaction (HCI) is limited in transmission rate. The information per second rate is still low nowadays, and innovation is progressing slowly. Since the introduction of the mouse in the seventies very few revolutionary new and still affordable peripherals where introduced that aid the communication with a computer. The most notable innovations in HCI are the Wii - which is mainly used for gaming - and (multi) touch screen, which is becoming more popular for integration smartphones.
+Human-Computer Interaction (HCI) is limited in transmission rate. The amount information per second is still low nowadays, and innovation is progressing slowly. Since the introduction of the mouse in the seventies very few revolutionary new and still affordable peripherals where introduced that aid the communication with a computer. The most notable innovations in HCI are the Wii - which is mainly used for gaming - and (multi) touch screen, which is becoming more popular for integration smartphones.
 
 \begin{figure}[htbp]
 	\center{}
@@ -74,29 +74,27 @@ A more recent method using hand poses in relation to music are the Curwen solfeg
 The goal of this thesis is to describe the design and evaluation of a system for hand pose recognition. The system needs to be fast and user friendly; it should be able to run on current consumer hardware. Overall the system should satisfy the following requirements:
 
 \begin{itemize}
-	\item Extract a set of hands in video
-	\item Extract position of hands in video
-	\item Real time performance (10+ fps)
-	\item Normal consumer processing power
-	\item Normal RGB camera (webcam)
-	\item No gloves or skin mounted electromechanical sensors
-	\item No calibration or initialization
-	\item Minimal configuration/parameters
+	\item Localize and interpret the hand poses of a person in a video stream
+	\item Do this with real time performance, a minimum of 10 frames per second
+	\item Processor power requirements should be moderate, it needs to work on a normal consumer desktop or laptop
+	\item Use a normal inexpensive RGB camera or webcam, without infrared
+	\item Non-intrusive, no gloves or skin mounted electromechanical sensors
+	\item No calibration or initialization is required at startup or during the usage
+	\item Minimal to no configuration parameters are desired.
 \end{itemize}
 	
 To realize these requirements some restrictions on the system's setting are required:
 
 \begin{itemize}
-	\item One person in the image
-	\item Person is wearing clothing with long sleeves
-	\item Good enough lightning conditions
-	\item No skin like colors in the image
+	\item Only one person at a time in the image
+	\item The person is wearing clothing with long sleeves, no arm skin is visible
+	\item The lightning conditions should be 'good enough', enough light illuminating the user
+	\item No skin like colors in the image like pictures and posters with faces.
 \end{itemize}
 
-The system can be used as a controller for a computer, with a focus on subtle detail for continuous variables, which give the sence of more direct control - which is important for real time interaction. Just how a graphical designer prefers a graphics tablet over a mouse for drawing, the design of the system aims to accomplish a similar sensation. The output of the system can be easily configured by a user to map to his or her preferred set commands. For example one hand control the pitch of a sound, while the other controls a accompanying beat while the position of this hand controls a cutoff filter. 
+The system can be used as a controller for a computer, with a focus on subtle detail for continuous variables, which give the sence of more direct control which is important for real time interaction. Just how a graphical designer prefers a graphics tablet over a mouse for drawing, the design of the system aims to accomplish a similar sensation. The output of the system can be easily configured by a user to map to his or her preferred set commands. For example one hand control the pitch of a sound, while the other controls a accompanying beat while the position of this hand controls a cutoff filter. 
 
-It is important to say that the scope of this thesis is limited to extracting the hand poses from video, and will not cover the study of the mapping of hand poses into sound. Although a prototype system is published along this thesis.
-
+It is important to say that the scope of this thesis is limited to extracting the hand poses from video, and will not cover the study of the mapping of hand poses into sound although a prototype system is published along this thesis.
 
 
 \section{Related Work}
@@ -137,33 +135,26 @@ Research has been done in automated sign language interpretation using computer 
 \end{figure}
 
 
-\paragraph{Body Poses}
-2d human pose estimation in tv shows \cite{ferrari2008},
-advances in vision based hum motion capture and analysis (survey) \cite{Moeslund2006},
-Vision-based human motion analysis (overview) \cite{Poppe2007},
-Real-Time Body Pose Recognition using 2D or 3D haarlets \cite{VandenBergh2009}
-
 \paragraph{hand Gestures}
-Estimating 3d hand pose from a cluttered image \cite{Athitsos2003},
-A very old paper using hand motion for segmentation \cite{Cui1996},
-Vision-based hand pose estimation (Review): \cite{Erol2007},
-A variational approach to monocular hand-pose estimation \cite{laGorce2010},
-Old paper using shadows to estimate 3d hand pose \cite{Segen1999},
-A PhD thesis exploring the hand as a input device \cite{Sturman1992},
-Gesture recognition (survey) \cite{Mitra2007},
-Real-time hand pose recognition using low-resolution depth images \cite{Mo2006},
-visual recognition of pointing gestures for robot interaction \cite{Nickel2007},
-Template-based hand pose recognition using multiple clues \cite{Stenger2006},
+A lot of work has been done in the past in the field of hand pose recognition. \cite{Erol2007} gives a good overview of what has been done and what techniques have been used.
 whole-hand input \cite{Sturman1992},
-pixel based hand pose recognition using SIFT features \cite{Wang2007},
+A very old paper using hand motion for segmentation \cite{Cui1996},
+Old paper using shadows to estimate 3d hand pose \cite{Segen1999},
+Estimating 3d hand pose from a cluttered image \cite{Athitsos2003},
+Real-time hand pose recognition using low-resolution depth images \cite{Mo2006},
+Template-based hand pose recognition using multiple clues \cite{Stenger2006},
 hand gesture extracting using adaptive skin color models \cite{Xiong2006},
+pixel based hand pose recognition using SIFT features \cite{Wang2007},
+visual recognition of pointing gestures for robot interaction \cite{Nickel2007},
+Gesture recognition (survey) \cite{Mitra2007},
+A variational approach to monocular hand-pose estimation \cite{laGorce2010},
+
+\paragraph{Body Poses}
+ An alternative approach in hand localization than described in this thesis is to capture the complete body pose. This could be a more robust method, but is at the moment computationally expensive. \cite{ferrari2008} introduces a method to extract a body pose from monoscopic video. \cite{VandenBergh2009} proposes a method for 3D pose recognition using multiple camera's. \cite{Poppe2007} discusses how 3D model fitting can be used for pose estimation. \cite{Moeslund2006} gives an overview of all relevant body pose estimation research until 2006.
+
 
 \paragraph{Sign Language}
-Learning sign language by watching TV using weakly aligned subtitles \cite{Buehler2009},
-Large lexicon detection of sign language \cite{Cooper2007},
-A linguistic feature vector for the visual interpretation of sign language \cite{RichardBowden2004}
-
-
+\cite{Buehler2009} discusses a method to learn sign language with news broadcasts that are subtitled and translated into sign language. The complexity of segmentation in sign language is discussed in \cite{RichardBowden2004}. An other approuch for segmentation is discussed in \cite{Cooper2007}.
 
 
 An interesting overview paper is \cite{Erol2007}, which reviews the current state, possibilities and limitations of computer vision based hand pose and gesture recognition.

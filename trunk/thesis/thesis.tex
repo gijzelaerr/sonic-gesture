@@ -61,10 +61,9 @@
 
 %\begin{abstract}
 \chapter*{Abstract}
-A real\-time method for detecting pre\-trained hand poses from
-video using a normal RGB. The method uses a probabilistic skin color histogram model for pixel based limb localisation and Histogram of Oriented Gradients as features for classification and is compared to SURF performance. SVM an KNN classification performance is evaluated with a dataset consisting 72 recordings of 20 people performing 28 hand symbols based upon the Curwen Solfege method. 
+A real\-time method for detecting trained hand poses from video using a normal RGB camera. The method uses a probabilistic skin color histogram model for pixel based limb localization and HOG as features for classification. The performance of HOG is compared with SURF where HOG yielded superior performance. As classifiers k-NN and SVM with the RBF and $\chi^2$ kernels are evaluated, where SVM with the $x^2$ kernel performed best. All evaluation is done with a new constructed dataset consisting of 72 recordings of 20 people performing 28 hand symbols based upon the Curwen Solfege method. 
 %\end{abstract}
-%\newpage{}
+
 
 %\pagenumbering{roman}
 \tableofcontents{}

@@ -102,7 +102,7 @@ There are various kernels, but \cite{Hsu2003} states the Radial Basis Function i
 	K(\mathbf{x}_i,\mathbf{x}_j) = e^{(-\gamma||S_i-S_j||^2)}, \gamma > 0,
 \end{equation}
 
-where $S_i$ and $S_j$ are two feature vectors. It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the scale of the kernel. An other interesting kernel is based upon the $\chi^2$ distance\cite{Zhang2007}. This distance is incorporated into SVM by the usage of Gaussian kernels\cite{Chapelle1999}:
+where $S_i$ and $S_j$ are two feature vectors. It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the scale of the kernel. An other interesting kernel is based upon the $\chi^2$ distance\cite{Zhang2007}. An advantage is that it doesn't have a parameter that needs optimization. This distance is incorporated into SVM by the usage of Gaussian kernels\cite{Chapelle1999}:
 
 \begin{equation}
 	K(S_i,S_j) = exp(-\frac{1}{A}D(S_i,S_j)),
@@ -151,10 +151,3 @@ For every new label that is given by the classifier all bins are decremented wit
   \label{fig:stabilizer}
 \end{figure}
 
-
-
-
-\subsection*{Training phase}
-recording video, manual labeling, extracting HOG features, training classifier
-
-\section{Discussion}

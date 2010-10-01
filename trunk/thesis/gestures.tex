@@ -75,6 +75,9 @@ The training samples are labeled multidimensional vectors. The training phase of
 \label{fig:knn}
 \end{figure}
 
+
+
+
 \subsection*{Support Vector Machines}
 
 Support vector machines (SVMs) are a set of related supervised learning methods used for classification. It is a binary classifier, but can be extended to be a multi class classifier by combining multiple binary classifiers. 
@@ -83,12 +86,12 @@ SVM uses a subset of the train data (the support vectors) that lay on the border
 
 Often, a set of data points in a space is not linearly separable. For this reason the original space is mapped to a higher dimensional space making the separation easier. This is done by a kernel function.
 
-The training phase consists of computing a kernel to make the space linearly separable. Then a decision boundary is calculated. Training a SVM classifier can be very computationally expensive, but classification is very fast and memory efficient. The training phase has one parameter, which is the error cost $c$. $c$ controls the trade off between allowing training errors and forcing rigid margins. This allows some flexibility in separating the categories and prevents over or under fitting.
+The training phase consists of computing a kernel to make the space linearly separable. Then a decision boundary is calculated. Training a SVM classifier can be very computationally expensive, but classification is very fast and memory efficient. The training phase has one parameter, which is the error cost $c$. $c$ controls the trade off between allowing training errors and forcing rigid margins. It is a multiplication of the error - the difference between a predicted value and true value. This allows some flexibility in separating the categories and, if properly set, prevents over and under fitting.
 
 The function for the DB for a test sample $x$ has the following form:
 
 \begin{equation}
-	g(x) = \sum_i{\alpha_i y_i K(x_i,x) -b},
+	g(\mathbf{x}) = \sum_i{\alpha_i y_i K(\mathbf{x}_i,\mathbf{x}) -b},
 \end{equation}
 
 where $K(x_i,x)$ is a kernel function for the training sample $x_i$ and the test sample $x$ and $y_i$ the class label of $x_i$ with value $+1$ or $-1$. $\alpha_i$ is the weight of the training sample $x_i$ and $b$ is a threshold parameter which both are learned in the training phase.  
@@ -96,20 +99,22 @@ where $K(x_i,x)$ is a kernel function for the training sample $x_i$ and the test
 There are various kernels, but \cite{Hsu2003} states the Radial Basis Function is a good kernel to start with because it generally gives good results. This kernel is defined by:
 
 \begin{equation}
-	K(S_i,S_i) = e^{(-\gamma||S_i-S-j||^2)}, \gamma > 0,
+	K(\mathbf{x}_i,\mathbf{x}_j) = e^{(-\gamma||S_i-S_j||^2)}, \gamma > 0,
 \end{equation}
 
-where $S_i$ and $S_j$ are two feature vectors. It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the steepness of the kernel. An other interesting kernel is based upon the $\chi^2$ distance\cite{Zhang2007}. This distance is incorporated into SVM by the usage of Gaussian kernels\cite{Chapelle1999}:
+where $S_i$ and $S_j$ are two feature vectors. It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the scale of the kernel. An other interesting kernel is based upon the $\chi^2$ distance\cite{Zhang2007}. This distance is incorporated into SVM by the usage of Gaussian kernels\cite{Chapelle1999}:
 
 \begin{equation}
-	K(S_i,S_j) = exp(-\frac{1}{A}D(S_i,S_J)),
+	K(S_i,S_j) = exp(-\frac{1}{A}D(S_i,S_j)),
 \end{equation}
 
 where $D(S_i,S_j)$ is defined as
 
 \begin{equation}
-	D(S_1,S_2) = \frac{1}{2}\sum^{m}_{i=1}\frac{(u_i-w_i)^2}{u_i+w_i}.
+	D(S_1,S_2) = \frac{1}{2}\sum^{m}_{i=1}\frac{(u_i-w_i)^2}{u_i+w_i},
 \end{equation}
+
+with $S_1 = \{u_1, ... u_m\}$ $S_2 = \{w_1, ... w_m\}$.
 
 \autoref{fig:svm} is an example of a SVM classification setting. The space is already linearly separable, so no space transformation is required. 
 

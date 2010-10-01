@@ -110,8 +110,7 @@ To be able to compare the HOG and SURF, the SURF descriptor is configured to wor
 \autoref{fig:lefthandfeatures} is an example of a image used for calculating HOG features.
 
 
-The Curwen hand symbols that are closely related in a musical scale way are quite similar, for example 'Re' and 'Ri' (\autoref{fig:reri}). It is expected that a lot of misclassifications will be caused by this similarity. To investigate the impact of this issue, 2 different scores are calculated, one for the major scale and one for the full scale. The full scale threats every class as a single class, for the major scale the notes in the major scale and their corresponding similar notes are joined into one class. For example Do an
-
+The Curwen hand symbols that are closely related in a musical scale way are quite similar, for example 'Re' and 'Ri' (\autoref{fig:reri}). It is expected that a lot of misclassifications will be caused by this similarity. To investigate the impact, 2 different scores are calculated, one for the major scale and one for the full scale. The full scale threats every class as a single class, for the major scale the notes in the major scale and their corresponding similar notes are joined into one class. \emph{Do} is combined with \emph{Di}, \emph{Re} with \emph{Ri}, \emph{Fa} with \emph{Fi}, \emph{Sol} with \emph{Si} and \emph{La} with \emph{Li}.
 
 
 \begin{figure}[htbp]
@@ -119,17 +118,22 @@ The Curwen hand symbols that are closely related in a musical scale way are quit
 \subfloat[Re]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/2.jpg}}
 \hspace{0.03\linewidth}
 \subfloat[Ri]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/3.jpg}}
-  \caption{The hand symbols for Re and Ri}
+  \caption{Hand poses for \emph{Re1} and \emph{Ri1}}
   \label{fig:reri}
 \end{figure}
 
 
 \subsubsection{Results}
-See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for all the results, $f$ is the number of features.
+See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for all the results, $f$ is the number of features. In all cases SVM performs better than KNN. The SURF features perform very bad compared to HOG. The $x^2$ distance kernel performs slightly better than the RBF kernel.  PCA improves performance when using a SVM classifier, but degrades the performance with KNN. 
 
-\autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm} (SVM with a $\chi^2$ precomputed kernel).
+\autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm}, a SVM classifier with a precomputed kernel using the $\chi^2$ distance and HOG features. Most notable is the poor performance for the \emph{fi1} hand pose, see \autoref{fig:fi1}. This is probably due to the lack of skin surface and unique features. On the opposite \emph{sol1, do2, fa2, ti2, I, II, III }and \emph{IV}, perform near perfect. These hand poses expose a lot of surface and features.
 
-(NEEDS MORE LOVE)
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.2\linewidth]{figures/examples/6.jpg}
+  \caption{Hand pose for \emph{fi1}}
+  \label{fig:fi1}
+\end{figure}
 
 
 \begin{table}
@@ -142,8 +146,8 @@ KNN3 		&	no	&  	84.27\%		& 90.21\%		\\
 KNN3	 	&	yes	& 	83.67\%		& 89.70\%		\\
 SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	&	yes	& 	76.78\%	& 84.38\%	\\
 SVM RBF ($c=2^6$ $\gamma=2^{-5}$)		&	no	&	86.02\%	& 90.88\% \\
-SVM RBF ($c=2^6$ $\gamma=2^{-5}$)		&	yes	& 	86.85\% & 91.85\% \\
-SVM $\chi^2$ &	no	&	87.92\%		& 91.58\% \\
+SVM RBF ($c=2^6$ $\gamma=2^{-5}$)		&	yes	& 	86.85\% & \textbf{91.85\%} \\
+SVM $\chi^2$ &	no	&	\textbf{87.92\%}		& 91.58\% \\
 SVM $\chi^2$ &	yes	&	TODO		& TODO \\
 \hline
 \end{tabular}
@@ -159,11 +163,12 @@ SVM $\chi^2$ &	yes	&	TODO		& TODO \\
 Dataset & Classifier & PCA	& Full scale	& Major scale \\
 \hline
 simple	& KNN3	&	no	& 72.93\%, & 82.63\% \\
-simple	& SVM RBF ($c=2^6$ $\gamma=2^{-5}$) &	yes	& 79.71\% & 86.70\%	\\
+simple	& SVM RBF ($c=2^6$ $\gamma=2^{-5}$) &	yes	& \textbf{79.71\%} & \textbf{86.70\%}	\\
+\hline
 full 	& KNN3 &	no	& 66.98\% & 76.32\%	\\
 full 	& KNN3 &	yes	& 65.31\% & 76.00\%	\\
 full 	& SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$) & yes	& 64.05\% & 74.42\%	\\
-full 	& SVM RBF ($c=2^6$ $\gamma=2^{-5}$)	     & yes	& 73.38\% & 81.44\%	\\
+full 	& SVM RBF ($c=2^6$ $\gamma=2^{-5}$)	     & yes	& \textbf{73.38\%} & \textbf{81.44\%}	\\
 full 	& SVM $\chi^2$ &	no	&  71.83\% &80.07\% \\
 full 	& SVM $\chi^2$ &	yes	&  TODO & TODO \\
 \hline
@@ -183,7 +188,7 @@ Hog & KNN3				& no	&	58.57\% 	&	72.78\%	\\
 Hog & KNN3 				& yes	&	57.62\% 	&	72.17\%	\\
 Hog & SVM RBF ($c=2^6$ $\gamma=2^{-5}$)			& yes & 62.14\%	&	73.39\%	\\
 Hog & SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	& yes & 55.48\%	&	68.25\%	\\
-Hog & SVM $\chi^2$ 		&	no	&	63.81\%		&	74.71\%	\\
+Hog & SVM $\chi^2$ 		&	no	&	\textbf{63.81\%}		&	\textbf{74.71\%}	\\
 Hog & SVM $\chi^2$		&	yes &	58.57\% 	&	71.98\% \\
 \hline
 SURF & KNN3				&	no	&	46.19\% 	&	60.17\%	\\
@@ -277,7 +282,6 @@ The Damerau-Levenshtein Distance algorithm is shown in \autoref{alg:damerauleven
 \subsubsection{Results}
 \autoref{tab:distance} contains all distances, grouped per dataset. The numbers in table heading are the movie number of that column. The average column is the \textit{average} of all movies per person. The average per person column lists the same distances, but without using the stabilizer discussed in \autoref{subsec:stabilizer}. As you see this has a dramatic impact on the performance. The average distance for the simple set is 0.27, for the complex set 0.35.
 
-(NEEDS MORE LOVE)
 
 
 \begin{table}
@@ -367,13 +371,5 @@ To show that Sonic Gesture can also work with non artificial video material a th
 \caption{Failed detection of Vulcan salute}
 \label{fig:vulcanfail}
 \end{figure}
-
-
-
-
-
-\section{Discussion}
-As you can see there is a big difference in performance
-
 
 

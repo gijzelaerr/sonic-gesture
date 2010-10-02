@@ -21,7 +21,7 @@ A dataset was constructed to perform the experiments where people perform the Cu
 \end{figure}
 
 
-The dataset consists of movies with people performing the 28 hand poses. For each pose in each movie a frame was manually labeled where the person was performing the pose correctly. In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first people were recorded performing the complete sequence 5 times, but this was taking too much time, and people became impatient, after we switched to 3 movies per person. The movies where recorded with Sonic Gesture (see \autoref{sec:implementation}), with a resolution of 532x400 and a frame rate of 10. The test subjects were recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. The movies with 12 test subjects where recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 where recorded with a complex background (\autoref{fig:complexbackground}) and 6 where recorded with the same complex background but also with a poster with skinlike colors.
+In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first people were recorded performing the complete sequence 5 times, but this was taking too much time, and people became impatient, after we switched to 3 movies per person. For each pose in each movie a frame was manually labeled where the person was performing the pose correctly.  The movies where recorded with  a resolution of 532x400 and a frame rate of 10. The test subjects were recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. 12 test subjects where recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 where recorded with a complex background (\autoref{fig:complexbackground}) and 6 where recorded with the same complex background but also with a poster with skin like colors.
 
 The nationality of the test subjects is diverse. Half of the set is Dutch and two are from South-East Asia. The rest is from eastern and southern Europe. (KLOPT DIT?)
 
@@ -51,28 +51,28 @@ The nationality of the test subjects is diverse. Half of the set is Dutch and tw
 \centering
 \begin{tabular}{llll}
 \hline\hline
-	Test Subject & Movies & Background & Notes \\
+	Test Subject & Movies & Background &\\
 \hline
-	Anne     & 5 & Simple & None \\
-	Arjan    & 5 & Simple & None \\
-	Gijs     & 5 & Simple & None \\
-	Ivo      & 5 & Simple & None \\
-	Jasper 1 & 5 & Simple & None \\
-	Peter    & 5 & Simple & None \\
-	Hanne    & 5 & Simple & None \\
-	Jasper 2 & 3 & Simple & None \\
-	Ork      & 3 & Simple & None \\
-	Roberto  & 3 & Simple & None \\
-	Xirong   & 3 & Simple & None \\
-	Gosia    & 3 & Complex & None \\
-	Hamdi    & 3 & Complex & None \\
-	Michael  & 3 & Complex & None \\
-	Sil      & 3 & Complex + poster & None \\
-	Victoria & 3 & Complex + poster & None \\
-	Bas      & 3 & Complex + poster & None \\
-	Koen     & 3 & Complex + poster & None \\
-	Chu      & 3 & Complex + poster & problem with brick wall \\
-	Stratis  & 3 & Complex + poster & problems with white wall \\
+	Anne     & 5 & Simple & \\
+	Arjan    & 5 & Simple & \\
+	Gijs     & 5 & Simple & \\
+	Ivo      & 5 & Simple & \\
+	Jasper 1 & 5 & Simple & \\
+	Peter    & 5 & Simple & \\
+	Hanne    & 5 & Simple & \\
+	Jasper 2 & 3 & Simple & \\
+	Ork      & 3 & Simple & \\
+	Roberto  & 3 & Simple & \\
+	Xirong   & 3 & Simple & \\
+	Gosia    & 3 & Complex & \\
+	Hamdi    & 3 & Complex & \\
+	Michael  & 3 & Complex & \\
+	Sil      & 3 & Complex + poster & \\
+	Victoria & 3 & Complex + poster & \\
+	Bas      & 3 & Complex + poster & \\
+	Koen     & 3 & Complex + poster & \\
+	Chu      & 3 & Complex + poster & \\
+	Stratis  & 3 & Complex + poster & \\
 \hline
 \end{tabular}
 \caption{Dataset details}
@@ -105,7 +105,7 @@ For SVM two kernels are evaluated, RBF and $\chi^2$. The $c$ for both kernels an
 
 For calculating the HOG features the same parameters as \cite{watanabe2009} are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
 
-To be able to compare the HOG and SURF, the SURF descriptor is configured to work with a fixed set of interest points set up as a dense grid - the same set used for HOG. This results in a 13440 dimensional feature vector. Also Using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms which makes it unusable for real-time operation.
+To be able to compare the HOG and SURF, the SURF descriptor is configured to work with a fixed set of interest points set up as a dense grid - the same set used for HOG. This results in a 13440 dimensional feature vector. Also using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms which makes it unusable for real-time operation.
 
 \autoref{fig:lefthandfeatures} is an example of a image used for calculating HOG features.
 
@@ -126,7 +126,7 @@ The Curwen hand symbols that are closely related in a musical scale way are quit
 \subsubsection{Results}
 See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for all the results, $f$ is the number of features. In all cases SVM performs better than KNN. The SURF features perform very bad compared to HOG. The $x^2$ distance kernel performs slightly better than the RBF kernel.  PCA improves performance when using a SVM classifier, but degrades the performance with KNN. 
 
-\autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm}, a SVM classifier with a precomputed kernel using the $\chi^2$ distance and HOG features. Most notable is the poor performance for the \emph{fi1} hand pose, see \autoref{fig:fi1}. This is probably due to the lack of skin surface and unique features. On the opposite \emph{sol1, do2, fa2, ti2, I, II, III }and \emph{IV}, perform near perfect. These hand poses expose a lot of surface and features.
+\autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm}, a SVM classifier with a precomputed kernel using the $\chi^2$ distance and HOG features. Most notable is the poor performance for the \emph{fi1} hand pose, see \autoref{fig:fi1}. This is probably due to the lack of skin surface and unique features. On the opposite \emph{sol1, do2, fa2, ti2, I, II, III }and \emph{IV}, perform near perfect. These hand poses expose a lot of surface and features. (MISSCHIEN PLAATJES HIER NOG EEN KEER)
 
 \begin{figure}[htbp]
   \centering
@@ -232,12 +232,13 @@ SURF & SVM $\chi^2$		&	yes	&	53.33\% 	&	65.13 \\
 \label{fig:performances}
 \end{figure}
 
-To evaluate Sonic Gesture in the time domain, the sequential output must be evaluated. Sonic gesture outputs for every frame the estimated label for each hand. Constructing a ground truth for each frame is a difficult, time consuming and subjective process. The material is also 'polluted' with wrong hand poses caused by misunderstanding or misinterpretation. In some cases there are also more people in the image than only the test subject. To evade these problems a different evaluation method is used, where the consecutive changes in labels is evaluated. The ground truth in this case is a ordered list of all labels. The goal for each recorded movie in the dataset was to record a person performing the 28 hand poses sequentially.
+To evaluate Sonic Gesture in the time domain, the sequential output must be evaluated. Sonic gesture outputs for every frame the estimated label for each hand. Constructing a ground truth for each frame is a difficult, time consuming and subjective process. The material is also 'polluted' with wrong hand poses caused by misunderstanding or misinterpretation. In some cases there are also more people in the image than only the test subject. To evade these problems a different evaluation method is used, where the consecutive changes in labels is evaluated. Since the goal for each recorded movie in the dataset was to record a person performing the 28 hand poses sequentially, the ground truth is a ordered list of all labels.
 
-the output of Sonic Gesture for all movies is stored. This results in a long list of labels - one label for each frame - for each move. In each list all repeating labels are replaced with one instance of that label. This reduces the length of each list significantly. This short list of labels is then compared with the ground truth using the Damerau-Levenshtein distance.
+\autoref{fig:performances} visualized the sequence of labels in three cases, (a) when no stabilizer is used, a erratic pattern is the result. When the stabilizer is used (b) a more smooth incremental label pattern is visible. (c) shows the label sequence of an arbitrary movie. Scoring these patterns would be useful for comparison an tweaking. This can be done by calculating the Damerau-Levenshtein distance to the ground truth.
 
+the output of Sonic Gesture for all movies is stored. This results in a long list of labels - one label for each frame - for each move. In each list all repeating labels are replaced with one instance of that label. This reduces the length of each list significantly. Now this list can be used to compute the Damerau-Levenshtein Distance.
 
-The Damerau-Levenshtein Distance algorithm is shown in \autoref{alg:dameraulevenshtein}. The algorithm calculated to number of deletions, insertions, substitutions and transpositions required to transform one string into an other. The maximum number of operations is equal to the length of shortest string. Because of the ground truth's length of 28 the minimum will always be 28 or less. This way the distance can be safely normalized and divided by 28, so all distances can be easily compared.
+The Damerau-Levenshtein Distance algorithm is shown in Algorithm~\autoref{alg:dameraulevenshtein}. The algorithm calculated to number of deletions, insertions, substitutions and transpositions required to transform one string into an other. The maximum number of operations is equal to the length of shortest string. Because of the ground truth's length of 28 the minimum will always be 28 or less. This way the distance can be safely normalized and divided by 28, so all distances can be easily compared.
 
 \begin{algorithm}
 \caption{DamerauLevenshteinDistance(str1, str2)}
@@ -280,7 +281,7 @@ The Damerau-Levenshtein Distance algorithm is shown in \autoref{alg:damerauleven
 \end{algorithm}
 	
 \subsubsection{Results}
-\autoref{tab:distance} contains all distances, grouped per dataset. The numbers in table heading are the movie number of that column. The average column is the \textit{average} of all movies per person. The average per person column lists the same distances, but without using the stabilizer discussed in \autoref{subsec:stabilizer}. As you see this has a dramatic impact on the performance. The average distance for the simple set is 0.27, for the complex set 0.35.
+\autoref{tab:distance} contains all distances, grouped per dataset. The numbers in table heading are the movie number of that column. The average column is the \textit{average} of all movies per person. The average per person column lists the same distances, but without using the stabilizer discussed in \autoref{subsec:stabilizer}. As you see this has a dramatic impact on the performance. The average distance for the simple set is 0.27, for the complex set 0.35. 
 
 
 

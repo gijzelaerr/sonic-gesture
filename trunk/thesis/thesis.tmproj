@@ -3,46 +3,46 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>sonicgesture.tex</string>
+	<string>experiments.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>thesis.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-01T15:25:25Z</date>
+			<date>2010-10-02T11:53:54Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>intro.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-01T12:54:06Z</date>
+			<date>2010-10-02T13:14:47Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>bodyparts.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-01T13:21:37Z</date>
+			<date>2010-10-02T13:35:53Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>gestures.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-01T13:32:35Z</date>
+			<date>2010-10-02T13:52:34Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-01T15:25:26Z</date>
+			<date>2010-10-02T13:52:34Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>sonicgesture.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-01T15:25:26Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-10-02T11:37:55Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -92,14 +92,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>13</integer>
+				<integer>187</integer>
 				<key>line</key>
-				<integer>95</integer>
+				<integer>340</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>0</integer>
+			<integer>57</integer>
 			<key>firstVisibleLine</key>
-			<integer>82</integer>
+			<integer>323</integer>
 		</dict>
 		<key>conc.tex</key>
 		<dict>
@@ -120,42 +120,42 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>96</integer>
+				<integer>714</integer>
 				<key>line</key>
-				<integer>354</integer>
+				<integer>234</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>344</integer>
+			<integer>231</integer>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>114</integer>
 				<key>line</key>
-				<integer>153</integer>
+				<integer>131</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>0</integer>
+			<integer>78</integer>
 			<key>firstVisibleLine</key>
-			<integer>131</integer>
+			<integer>117</integer>
 		</dict>
 		<key>intro.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>12</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>116</integer>
+				<integer>139</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>102</integer>
+			<integer>122</integer>
 		</dict>
 		<key>notes.tex</key>
 		<dict>
@@ -192,9 +192,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>974</integer>
+				<integer>125</integer>
 				<key>line</key>
-				<integer>33</integer>
+				<integer>31</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -236,14 +236,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>45</integer>
+				<integer>720</integer>
 				<key>line</key>
-				<integer>63</integer>
+				<integer>60</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>42</integer>
+			<integer>58</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -262,6 +262,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{592, 0}, {841, 778}}</string>
+	<string>{{455, -8}, {841, 778}}</string>
 </dict>
 </plist>

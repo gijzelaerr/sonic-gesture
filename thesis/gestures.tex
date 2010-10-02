@@ -5,7 +5,7 @@
 
 Knowing the location of the hands in a image doesn't tell much about the hand poses. A method needs to be constructed to discriminate the different hand poses.
 
-This chapter describes how the hand poses are detected in the hand windows. Features are extracted from the hand window and represent the hand pose in a more compact way. These features are compared by a classifier with previously extracted features of hand poses for which the poses where already known. The classifier will determine which known hand pose(s) resembles the at that moment examined hand.
+This chapter describes how the hand poses are detected in the hand windows. Features are extracted from the hand window and represent the hand pose in a more compact way. These features are compared by a classifier with previously extracted features of hand poses for which the labels are known. The classifier will determine which known hand pose(s) resembles the at that moment examined hand.
 
 
 \section{Feature extraction}
@@ -48,25 +48,24 @@ The HOG descriptor has been successfully applied and studied in human detection 
 \end{figure}
 
 
-The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF approximates the speed of Scale-invariant feature transform (SIFT) and is claimed to more robust against several image transformations\cite{Murillo2007, Valgren2010}. SIFT is an other descriptor that is popular and often used.
-
+The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF approximates the speed of Scale-invariant feature transform (SIFT) and is claimed to more robust against several image transformations\cite{Murillo2007, Valgren2010}. SIFT is an other descriptor that is often used. SIFT is similar to HOG as in they both build a histogram of gradients of the keypoints. SIFT and SURF differ from HOG in that they incorporate a method for calculating usable key points, HOG uses a dense grid of key points.
 
 
 
 \subsection{Principal Component Analysis}
-Principal Component Analysis (PCA) is a method that reduces data dimensionality performing a covariance analysis between vectors. The original space will be mapped into a new space based on the variance in the data. PCA transforms a number of correlated variables into a (possibly smaller) number of uncorrelated variables called principal components. The first principal component vector accounts for as much of the variability in the data as possible, and each consecutive component vector accounts for as much of the remaining variability as possible.
+Principal Component Analysis (PCA) is a method that reduces data dimensionality by performing a covariance analysis between vectors. The original space will be mapped into a new space based on the variance in the original data. PCA transforms a number of correlated variables into a (possibly smaller) number of uncorrelated variables called principal components. The first principal component vector accounts for as much of the variability in the data as possible, and each consecutive component vector accounts for as much of the remaining variability as possible. 
 
-PCA may improve the performance of a classifier both in classification and time.
+PCA may improve the performance of a classifier both in classification and time performance.
 
 \section{Classification}
-Using a set of training examples each marked as belonging to a category, a classifier builds a model that predicts whether a new example falls into one category or the other. There are many classifiers which can be used in different ways. For computer vision two of these are interesting because of simplicity, or superiority; k Nearest Neighbors and Support Vector Machines;
+Using a set of training examples each marked as belonging to a category, a classifier builds a model that predicts whether a new example falls into one category or the other. There are many classifiers which can be used in different ways. For computer vision two of these are interesting because of simplicity, or superiority; k Nearest Neighbors and Support Vector Machines.
 
 \subsection*{k Nearest Neighbors}
 The k-nearest neighbors algorithm (k-NN) is a method for classifying objects based on euclidean distance between training examples in the feature space. The k-nearest neighbor algorithm is one of the the simplest of all machine learning  algorithms. K-NN is a type of 'lazy learning' where all computation is deferred until classification. This results in a fast training phase, but a computationally expensive classification. Also the memory footprint is large since all data points are stored. 
 
 The training samples are labeled multidimensional vectors. The training phase of the algorithm consists only of storing the vectors and class labels of the training samples.In the classification phase, $k$ is a user-defined constant, and an unlabeled vector is classified by assigning the label which is most frequent among the k training samples nearest to that query point.
 
-\autoref{fig:knn} is an example of k-NN classification. The test sample (the circle) should be classified either to the squares class or to the triangles class. If $k = 3$ the circle is classified to the triangles class because there are 2 triangles and 1 square inside the inner circle. If $k = 5$ it is classified to as 'square'.
+\autoref{fig:knn} is an example of k-NN classification. The test sample (the circle) should be classified either to the squares class or to the triangles class. If $k = 3$ the circle is classified to the triangles class because there are 2 triangles and 1 square inside the inner circle. If $k = 5$ it is classified as 'square'.
 
 \begin{figure}[htbp]
 \center{}
@@ -86,7 +85,7 @@ SVM uses a subset of the train data (the support vectors) that lay on the border
 
 Often, a set of data points in a space is not linearly separable. For this reason the original space is mapped to a higher dimensional space making the separation easier. This is done by a kernel function.
 
-The training phase consists of computing a kernel to make the space linearly separable. Then a decision boundary is calculated. Training a SVM classifier can be very computationally expensive, but classification is very fast and memory efficient. The training phase has one parameter, which is the error cost $c$. $c$ controls the trade off between allowing training errors and forcing rigid margins. It is a multiplication of the error - the difference between a predicted value and true value. This allows some flexibility in separating the categories and, if properly set, prevents over and under fitting.
+The training phase consists of computing a kernel to make the space linearly separable. Then a decision boundary is calculated. Training a SVM classifier can be computationally expensive, but classification is very fast and memory efficient. The training phase has one parameter, which is the error cost $c$. $c$ controls the trade off between allowing training errors and forcing rigid margins. It is a multiplication of the error - the difference between a predicted value and true value. This allows some flexibility in separating the categories and, if properly set, prevents over and under fitting.
 
 The function for the DB for a test sample $x$ has the following form:
 
@@ -99,7 +98,7 @@ where $K(x_i,x)$ is a kernel function for the training sample $x_i$ and the test
 There are various kernels, but \cite{Hsu2003} states the Radial Basis Function is a good kernel to start with because it generally gives good results. This kernel is defined by:
 
 \begin{equation}
-	K(\mathbf{x}_i,\mathbf{x}_j) = e^{(-\gamma||S_i-S_j||^2)}, \gamma > 0,
+	K(S_i,S_j) = e^{(-\gamma||S_i-S_j||^2)}, \gamma > 0,
 \end{equation}
 
 where $S_i$ and $S_j$ are two feature vectors. It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the scale of the kernel. An other interesting kernel is based upon the $\chi^2$ distance\cite{Zhang2007}. An advantage is that it doesn't have a parameter that needs optimization. This distance is incorporated into SVM by the usage of Gaussian kernels\cite{Chapelle1999}:
@@ -114,7 +113,7 @@ where $D(S_i,S_j)$ is defined as
 	D(S_1,S_2) = \frac{1}{2}\sum^{m}_{i=1}\frac{(u_i-w_i)^2}{u_i+w_i},
 \end{equation}
 
-with $S_1 = \{u_1, ... u_m\}$ $S_2 = \{w_1, ... w_m\}$.
+with $S_1 = \{u_1, ... , u_m\}$ $S_2 = \{w_1, ... , w_m\}$.
 
 \autoref{fig:svm} is an example of a SVM classification setting. The space is already linearly separable, so no space transformation is required. 
 
@@ -130,7 +129,7 @@ with $S_1 = \{u_1, ... u_m\}$ $S_2 = \{w_1, ... w_m\}$.
 
 \subsection*{The stabilizer}
 \label{subsec:stabilizer}
-Since consecutive frames in a video sequence have a spatial-temporal relationship their labels have this also. Because of noise, misclassification can happen. These false matches can be filtered out by smoothing the labels on a time scale.
+Since consecutive frames in a video sequence have a spatial-temporal relationship their labels have this property also. Because of noise, misclassification can happen. These false matches can be filtered out by smoothing the labels on a time scale.
 
 This smoothing is done with a simple self invented method called 'the stabilizer'.
 

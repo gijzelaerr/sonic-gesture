@@ -23,7 +23,7 @@ A dataset was constructed to perform the experiments where people perform the Cu
 
 In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first people were recorded performing the complete sequence 5 times, but this was taking too much time, and people became impatient, after we switched to 3 movies per person. For each pose in each movie a frame was manually labeled where the person was performing the pose correctly.  The movies where recorded with  a resolution of 532x400 and a frame rate of 10. The test subjects were recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. 12 test subjects where recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 where recorded with a complex background (\autoref{fig:complexbackground}) and 6 where recorded with the same complex background but also with a poster with skin like colors.
 
-The nationality of the test subjects is diverse. Half of the set is Dutch and two are from South-East Asia. The rest is from eastern and southern Europe. (KLOPT DIT?)
+The nationality of the test subjects is diverse. Half of the set is Dutch and two are from Asia. The rest is from eastern and southern Europe. 
 
 \begin{figure}[tb]
 \center{}
@@ -97,7 +97,7 @@ The classifier is trained with all movies with the simple background, and as a t
 
 
 \subsubsection{Test setting}
-For the number of neighbors for K-NN a small number of tests where run, and a value between 3 and 10 for N yielded similar performance. Since a lower number of $k$ can give better performance $k=3$ was used for all experiments.
+For the number of neighbors for $k$-NN a small number of tests where run, and a value between 3 and 10 for N yielded similar performance. Since a lower number of $k$ can give better performance $k=3$ was used for all experiments.
 
 When PCA was performed on the dataset the smallest eigenvectors where removed so 95\% of the original variance was remaining. On the simple dataset reduce the dimensions from 3780 to 594 dimensions. For the complex set combined with the simple set the dimensionality is reduced to 688 dimensions, for complex only 283 and for the complete dataset 749.
 

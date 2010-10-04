@@ -126,14 +126,42 @@ The Curwen hand symbols that are closely related in a musical scale way are quit
 \subsubsection{Results}
 See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for all the results, $f$ is the number of features. In all cases SVM performs better than KNN. The SURF features perform very bad compared to HOG. The $x^2$ distance kernel performs slightly better than the RBF kernel.  PCA improves performance when using a SVM classifier, but degrades the performance with KNN. 
 
-\autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm}, a SVM classifier with a precomputed kernel using the $\chi^2$ distance and HOG features. Most notable is the poor performance for the \emph{fi1} hand pose, see \autoref{fig:fi1}. This is probably due to the lack of skin surface and unique features. On the opposite \emph{sol1, do2, fa2, ti2, I, II, III }and \emph{IV}, perform near perfect. These hand poses expose a lot of surface and features. (MISSCHIEN PLAATJES HIER NOG EEN KEER)
+\autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm}, a SVM classifier with a precomputed kernel using the $\chi^2$ distance and HOG features. Most notable is the poor performance for the \emph{fi1} hand pose, see \autoref{fig:fi1}. This is probably due to the lack of skin surface and unique features. On the opposite \emph{sol1, do2, fa2, ti2, I, II, III }and \emph{IV}, perform near perfect. These hand poses, shown in \autoref{fig:goodhands}, expose a lot of surface and gradients, and also possess unique features. 
 
 \begin{figure}[tb]
   \centering
   \includegraphics[width=0.2\linewidth]{figures/examples/6.jpg}
-  \caption{Hand pose for \emph{fi1}}
+  \caption{\emph{fi1}, hand pose that yields poor classification performance}
   \label{fig:fi1}
 \end{figure}
+
+
+\begin{figure}[tb]
+\centering{}
+\subfloat[Sol]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/7.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Do]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/12.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Fa]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/17.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Ti]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/23.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Extra1]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/24.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Extra2]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/25.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Extra3]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/26.jpg}}
+\caption{Hand poses that yield a high accuracy}
+\label{fig:goodhands}
+\end{figure}
+
+
+
+
+
+
+
+
 
 
 \begin{table}

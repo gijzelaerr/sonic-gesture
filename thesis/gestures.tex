@@ -8,13 +8,13 @@ Knowing the location of the hands in a image doesn't tell much about the hand po
 This chapter describes how the hand poses are detected in the hand windows. Features are extracted from the hand window and represent the hand pose in a more compact way. These features are compared by a classifier with previously extracted features of hand poses for which the labels are known. The classifier will determine which known hand pose(s) resembles the at that moment examined hand.
 
 
-\section{Feature extraction}
+\section{Feature Extraction}
 The hand window contains some background pixels, because a hand will never fill a perfect square (Figure \autoref{fig:lefthandwindow}). These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In \autoref{sec:skinmodel} a binary mask for skin pixels is constructed. The inverse skin mask can be used  to remove the background (Figure \autoref{fig:lefthandcutout}). Sometimes the blob is too small to say something useful about the hand pose. One way to artificially increase the blob size is to do a morphological dilate operation on the blob. This will increase the size of the hand cutout and probably add skin pixels, but this will also introduce more noisy (non-skin) pixels.
 
 To compare two or more hands with each other a method is required to calculate the similarity. A very simple method is to compare each pixel location with each other and sum all the differences. But this method isn't feasible. It is not going to work on images that are not the same size or orientation. Also it is computationally expensive for larger images - for an image of 100 by 100 pixels there are already 10.000 dimensions. Also important is that this method is not very forgiving for small variations like scaling and rotation.
 
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \begin{center}
 \subfloat[Hand window]{
         \includegraphics[width=0.2\linewidth]{figures/pipeline/lefthand.jpg}
@@ -40,7 +40,7 @@ To reduce the number of dimensions of an image a descriptor can be used. A descr
 
 The HOG descriptor has been successfully applied and studied in human detection \citep{NavneetDalal2006, watanabe2009}. The HOG descriptors method uses a dense grid of uniformly spaced cells, where for each cell the gradients are calculated in 9 orientations. The values for each orientation for each cell are stored in a histogram that represent the image. \autoref{fig:hog} visualizes a simplification of the HOG calculation. 
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \center{}
 \includegraphics[width=0.8\linewidth]{figures/hog.png}
 \caption{Visual representation of HOG calculation}
@@ -61,13 +61,13 @@ PCA may improve the performance of a classifier both in classification and time 
 Using a set of training examples each marked as belonging to a category, a classifier builds a model that predicts whether a new example falls into one category or the other. There are many classifiers which can be used in different ways. For computer vision two of these are interesting because of simplicity, or superiority; k Nearest Neighbors and Support Vector Machines.
 
 \subsection*{k Nearest Neighbors}
-The k-nearest neighbors algorithm (k-NN) is a method for classifying objects based on euclidean distance between training examples in the feature space. The k-nearest neighbor algorithm is one of the the simplest of all machine learning  algorithms. K-NN is a type of 'lazy learning' where all computation is deferred until classification. This results in a fast training phase, but a computationally expensive classification. Also the memory footprint is large since all data points are stored. 
+The k-nearest neighbors algorithm (k-NN) is a method for classifying objects based on euclidean distance between training examples in the feature space. The k-nearest neighbor algorithm is one of the the simplest of all machine learning  algorithms. K-NN is a type of `lazy learning' where all computation is deferred until classification. This results in a fast training phase, but a computationally expensive classification. Also the memory footprint is large since all data points are stored. 
 
 The training samples are labeled multidimensional vectors. The training phase of the algorithm consists only of storing the vectors and class labels of the training samples.In the classification phase, $k$ is a user-defined constant, and an unlabeled vector is classified by assigning the label which is most frequent among the k training samples nearest to that query point.
 
-\autoref{fig:knn} is an example of k-NN classification. The test sample (the circle) should be classified either to the squares class or to the triangles class. If $k = 3$ the circle is classified to the triangles class because there are 2 triangles and 1 square inside the inner circle. If $k = 5$ it is classified as 'square'.
+\autoref{fig:knn} is an example of k-NN classification. The test sample (the circle) should be classified either to the squares class or to the triangles class. If $k = 3$ the circle is classified to the triangles class because there are 2 triangles and 1 square inside the inner circle. If $k = 5$ it is classified as `square'.
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \center{}
 \includegraphics[width=0.5\linewidth]{figures/knn.png}
 \caption{Classification using K Nearest Neighbors}
@@ -117,7 +117,7 @@ with $S_1 = \{u_1, ... , u_m\}$ $S_2 = \{w_1, ... , w_m\}$.
 
 \autoref{fig:svm} is an example of a SVM classification setting. The space is already linearly separable, so no space transformation is required. 
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \center{}
 \includegraphics[width=0.5\linewidth]{figures/svm2.png}
 \caption{Classification using Support Vector machines}
@@ -131,13 +131,13 @@ with $S_1 = \{u_1, ... , u_m\}$ $S_2 = \{w_1, ... , w_m\}$.
 \label{subsec:stabilizer}
 Since consecutive frames in a video sequence have a spatial-temporal relationship their labels have this property also. Because of noise, misclassification can happen. These false matches can be filtered out by smoothing the labels on a time scale.
 
-This smoothing is done with a simple self invented method called 'the stabilizer'.
+This smoothing is done with a simple self invented method called `the stabilizer'.
 
 A visual representation is given in \autoref{fig:stabilizer}. The stabilizer is initialized with $n$ numbers of bins which is equal to the number of labels. There are 2 parameters, $V_{max}$ which controls the maximum and $V_{th}$ which controls the threshold.
 
 For every new label that is given by the classifier all bins are decremented with 1, except for the bin with the currently classified label which is incremented. A bin is incremented until it reaches $V_{max}$. When at any moment one of the bins value rises above $V_{th}$, the stabilizer will output the label of that bin. The result is a more stable and smoothed stream of labels, where single noisy labels are filtered out. For a sequence of frames with a correctly detected pose there is a delay between the first frame and the stabilizer will output the correct label, this delay is controlled by $V_{th}$ which is measured in frame count. A higher value will reduce more noise, but will give a bigger delay. There is also a delay after a sequence which is controlled by $n_{max}$. With a framerate between $10$ and $25$ frames a second, $V_{max} = 15$ and $V_{th} = 10$ give good results reducing noise and still being very responsive.
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
   \centering
 \subfloat[A]{
     \includegraphics[width=0.7\textwidth]{figures/stabilizer/b.png}

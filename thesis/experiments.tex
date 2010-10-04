@@ -7,7 +7,7 @@
 \section{The dataset}
 A dataset was constructed to perform the experiments where people perform the Curwen hand poses in different settings. Usually the 12 Curwen solfege hand symbols are performed in front of the torso. To increase the number of hand poses to be recognized and increase the usability, all 12 Curwen are also performed mirrored next to the body of the recorded subject, see \autoref{fig:torso}. Additionally four extra hand symbols have been added that are not part of the Curwen sequence. These last four symbols are performed next to the head. This results in a total of 28 hand poses.
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
   \centering
 	\subfloat[in front of torso]{
 		\includegraphics[width=0.4\linewidth]{figures/gijs5/13.png}
@@ -25,21 +25,21 @@ In total there are 74 movies containing 20 different people performing the compl
 
 The nationality of the test subjects is diverse. Half of the set is Dutch and two are from South-East Asia. The rest is from eastern and southern Europe. (KLOPT DIT?)
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \center{}
 \includegraphics[width=0.8\linewidth]{figures/simple.png}
 \caption{Still of movie ivo5 with simple background}
 \label{fig:simplebackground}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \center{}
 \includegraphics[width=0.8\linewidth]{figures/complex.png}
 \caption{Still of movie gosia3 with complex background}
 \label{fig:complexbackground}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \center{}
 \includegraphics[width=0.8\linewidth]{figures/complexposter.png}
 \caption{Still of movie sil1 with complex background with skin like poster}
@@ -80,7 +80,7 @@ The nationality of the test subjects is diverse. Half of the set is Dutch and tw
 
 \section{Evaluation}
 
-\subsection{part I - evaluating classifiers}
+\subsection{Part I - Evaluating Classifiers}
 In this section different classifier with different parameters are evaluated with subsets of the dataset.
 
 \subsubsection{Method}
@@ -101,7 +101,7 @@ For the number of neighbors for K-NN a small number of tests where run, and a va
 
 When PCA was performed on the dataset the smallest eigenvectors where removed so 95\% of the original variance was remaining. On the simple dataset reduce the dimensions from 3780 to 594 dimensions. For the complex set combined with the simple set the dimensionality is reduced to 688 dimensions, for complex only 283 and for the complete dataset 749.
 
-For SVM two kernels are evaluated, RBF and $\chi^2$. The $c$ for both kernels and $\gamma$ for RBF values where found by an extensive grid search on the 'per person' test set with only the simple movies performed on a small cluster in the ranges $2^{-3}$ to $2^{15}$ for $c$ and $2^{-15}$ and $2^3$ for $\gamma$. The most optimal values for $\gamma$ is 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
+For SVM two kernels are evaluated, RBF and $\chi^2$. The $c$ for both kernels and $\gamma$ for RBF values where found by an extensive grid search on the `per person' test set with only the simple movies performed on a small cluster in the ranges $2^{-3}$ to $2^{15}$ for $c$ and $2^{-15}$ and $2^3$ for $\gamma$. The most optimal values for $\gamma$ is 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
 
 For calculating the HOG features the same parameters as \citep{watanabe2009} are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
 
@@ -110,10 +110,10 @@ To be able to compare the HOG and SURF, the SURF descriptor is configured to wor
 \autoref{fig:lefthandfeatures} is an example of a image used for calculating HOG features.
 
 
-The Curwen hand symbols that are closely related in a musical scale way are quite similar, for example 'Re' and 'Ri' (\autoref{fig:reri}). It is expected that a lot of misclassifications will be caused by this similarity. To investigate the impact, 2 different scores are calculated, one for the major scale and one for the full scale. The full scale threats every class as a single class, for the major scale the notes in the major scale and their corresponding similar notes are joined into one class. \emph{Do} is combined with \emph{Di}, \emph{Re} with \emph{Ri}, \emph{Fa} with \emph{Fi}, \emph{Sol} with \emph{Si} and \emph{La} with \emph{Li}.
+The Curwen hand symbols that are closely related in a musical scale way are quite similar, for example \emph{Re} and \emph{Ri} (\autoref{fig:reri}). It is expected that a lot of misclassifications will be caused by this similarity. To investigate the impact, 2 different scores are calculated, one for the major scale and one for the full scale. The full scale threats every class as a single class, for the major scale the notes in the major scale and their corresponding similar notes are joined into one class. \emph{Do} is combined with \emph{Di}, \emph{Re} with \emph{Ri}, \emph{Fa} with \emph{Fi}, \emph{Sol} with \emph{Si} and \emph{La} with \emph{Li}.
 
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
   \centering
 \subfloat[Re]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/2.jpg}}
 \hspace{0.03\linewidth}
@@ -128,7 +128,7 @@ See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for 
 
 \autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm}, a SVM classifier with a precomputed kernel using the $\chi^2$ distance and HOG features. Most notable is the poor performance for the \emph{fi1} hand pose, see \autoref{fig:fi1}. This is probably due to the lack of skin surface and unique features. On the opposite \emph{sol1, do2, fa2, ti2, I, II, III }and \emph{IV}, perform near perfect. These hand poses expose a lot of surface and features. (MISSCHIEN PLAATJES HIER NOG EEN KEER)
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=0.2\linewidth]{figures/examples/6.jpg}
   \caption{Hand pose for \emph{fi1}}
@@ -204,7 +204,7 @@ SURF & SVM $\chi^2$		&	yes	&	53.33\% 	&	65.13 \\
 \end{table}
 
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 	\centering{}
 	\includegraphics[width=\linewidth]{confmat/confusion.jpg}
 	\caption{Confusion matrix using HOG, SVM $\chi^2$, n-fold, per film simple set}
@@ -214,11 +214,11 @@ SURF & SVM $\chi^2$		&	yes	&	53.33\% 	&	65.13 \\
 
 
 
-\subsection{Part II - evaluating Sonic Gesture}
+\subsection{Part II - Evaluating Sonic Gesture}
 
 \subsubsection{Method}
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \center{}
 \subfloat[Without stabilizer]{
 	\includegraphics[width=0.3\linewidth]{figures/performance/anne1_unstable.jpg}}
@@ -232,7 +232,7 @@ SURF & SVM $\chi^2$		&	yes	&	53.33\% 	&	65.13 \\
 \label{fig:performances}
 \end{figure}
 
-To evaluate Sonic Gesture in the time domain, the sequential output must be evaluated. Sonic gesture outputs for every frame the estimated label for each hand. Constructing a ground truth for each frame is a difficult, time consuming and subjective process. The material is also 'polluted' with wrong hand poses caused by misunderstanding or misinterpretation. In some cases there are also more people in the image than only the test subject. To evade these problems a different evaluation method is used, where the consecutive changes in labels is evaluated. Since the goal for each recorded movie in the dataset was to record a person performing the 28 hand poses sequentially, the ground truth is a ordered list of all labels.
+To evaluate Sonic Gesture in the time domain, the sequential output must be evaluated. Sonic gesture outputs for every frame the estimated label for each hand. Constructing a ground truth for each frame is a difficult, time consuming and subjective process. The material is also `polluted' with wrong hand poses caused by misunderstanding or misinterpretation. In some cases there are also more people in the image than only the test subject. To evade these problems a different evaluation method is used, where the consecutive changes in labels is evaluated. Since the goal for each recorded movie in the dataset was to record a person performing the 28 hand poses sequentially, the ground truth is a ordered list of all labels.
 
 \autoref{fig:performances} visualized the sequence of labels in three cases, (a) when no stabilizer is used, a erratic pattern is the result. When the stabilizer is used (b) a more smooth incremental label pattern is visible. (c) shows the label sequence of an arbitrary movie. Scoring these patterns would be useful for comparison an tweaking. This can be done by calculating the Damerau-Levenshtein distance to the ground truth.
 
@@ -326,9 +326,9 @@ poster & Stratis	&	0.43	&	0.11	&	0.18	&	 	&	 	&	0.24	&	0.86 \\
 \subsection{Part III - The Search for Spock}
 
 \subsubsection{Method}
-To show that Sonic Gesture can also work with non artificial video material a third experiment was constructed. For this experiment a collection of real fragments of movies and pictures of people performing the 'Vulcan Salute' was gathered. The Vulcan Salute is greeting hand gesture and was popularised by the half-Vulcan character Mr. Spock on the Star Trek television series in end of the 1960s. \autoref{fig:spock} is a movie fragment of Mr. Spock giving the hand salute. The original dataset used for the previous experiments was extended with a 29th hand pose, the vulcan salute. 
+To show that Sonic Gesture can also work with non artificial video material a third experiment was constructed. For this experiment a collection of real fragments of movies and pictures of people performing the `Vulcan Salute' was gathered. The Vulcan Salute is greeting hand gesture and was popularised by the half-Vulcan character Mr. Spock on the Star Trek television series in end of the 1960s. \autoref{fig:spock} is a movie fragment of Mr. Spock giving the hand salute. The original dataset used for the previous experiments was extended with a 29th hand pose, the vulcan salute. 
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \centering{}
 \includegraphics[width=0.6\linewidth]{figures/spock/salute.png}
 \caption{Mr. Spock giving the Vulcan Salute}
@@ -341,7 +341,7 @@ To show that Sonic Gesture can also work with non artificial video material a th
 
 \autoref{fig:vulcanfail} shows two screenshots of failed segmentation. Sonic Gesture fails on the first salute - performed by Condolisa Rise - because the skin segmentation fails. The skin colour of her face has more in common with the wall than with her hand. The second failure case is performed by Simon Pegg, here the segmentation is correct, but classification is just wrong. More training data could fix this problem.
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \centering
 \subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/good1.png}}
 \hspace{0.09\linewidth}
@@ -364,7 +364,7 @@ To show that Sonic Gesture can also work with non artificial video material a th
 \end{figure}
 
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \centering
 \subfloat{\includegraphics[width=0.45\linewidth,height=0.35\linewidth]{figures/spock/fail1.png}}
 \hspace{0.09\linewidth}

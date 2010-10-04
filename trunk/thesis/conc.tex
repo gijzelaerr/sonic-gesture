@@ -2,19 +2,25 @@
 
 \chapter{Conclusions}
 \label{ch:conc}
-A method is proposed, implemented and evaluated for performing real-time computer vision based hand pose extraction with a single RGB camera. The implementation shows that the system is usable in a real-time human computer interaction setting, e.g. used for creating and manipulating sound.
+A method is proposed, implemented and evaluated for performing real-time computer vision based hand pose extraction with a single RGB camera and could run on current consumer level computing power. The implementation shows that the system is usable in a real-time human computer interaction setting, e.g. used for creating and manipulating sound. It is assumed that in the input video stream only one person is visible, this person is wearing clothing with long sleeves, and no skin-like colors are in the image.
 
 The implementation uses a histogram based probabilistic skin color model which is based upon the users face which is found by a haar classifier. This is a robust way for face detection and the detection speed is reasonable if performed every 10th frame. The face detection will give unpredictable results when multiple faces are visible in the input image.
 
-The skin color model is an effective and fast way to localize body parts in the image, but it is required that no skin-like colors are in the input image. 
+The skin color model is an effective and fast way to localize body parts in the image, but it is required that no skin-like colors are in the input image. Going from the probabilistic domain to the labeled binary domain can be controlled with a threshold parameter.  This parameter can be automatically adjusted, but a carefully chosen fixed value is enough for most cases. 
 
-Using HOG features for image representation gave very good results, much better than SURF. This is probably caused by the improper use of SURF, where the use of the keypoint detection phase seems essential. In the experiments HOG and SURF where both used with a dense grid of keypoints.
+Using heuristics for blob labeling is a robust method, but fails when the hands cross their position in the $x$ direction. Keeping the labels of a blob fixed after the first detection could solve this problem, but introduce many new problems like what to do when the blobs are gone for sequence of frames and decide at what moment a blob should get which label.
+
+Using HOG features for image representation gave very good results, much better than SURF features. This is probably caused by the improper use of SURF, where the use of the keypoint detection phase seems essential. In the experiments HOG and SURF where both used with a dense grid of keypoints.
 
 $k$-NN can be used as a classifier, but becomes slow when a lot of training samples (+2000) are used. SVM is a better alternative, which yields better performance in classification time an accuracy. As a kernel for SVM the $\chi^2$ and RBF kernel accomplish similar results, but the RBF kernel requires the optimization of one extra parameter $\gamma$. This extra parameter requires more work during the training phase, so the $\chi^2$ kernel is preferred.
 
-Even though the accuracy of the classification system was high in some benchmarks, the choice of the Curwen hand poses as `language' wasn't a good one. A smaller set with hand poses that are less similar and have a large visible surface would very likely perform better.
+Even though the accuracy of the classification system was high in some benchmarks, the choice of the Curwen hand poses as `language' wasn't a good one. A smaller set with hand poses that are less similar and have a large visible surface would perform better.
 
-The results seem to show that the system is not person independent. Incorporating training data gathered from the eventual user will improve the classification performance. It is not yet known if the performance will increase with more training data.
+The experiment results show that the system is not person independent. Incorporating training data gathered from the eventual user will improve the classification performance. It is not yet known if the performance will increase with more training data.
 
 \section{Future Work}
-The performance of the system could be evaluated when configured with less hand poses that are less similar. Also, the impact of more training data could be studied.
+As said before, the performance of the system could be evaluated when configured with less hand poses that are less similar. Also the current dataset is to small to analyze the impact of more or less train data. A bigger dataset could be constructed and the impact on person independence could be studied.
+
+
+
+Also, the impact of more training data could be studied.

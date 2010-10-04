@@ -103,7 +103,7 @@ When PCA was performed on the dataset the smallest eigenvectors where removed so
 
 For SVM two kernels are evaluated, RBF and $\chi^2$. The $c$ for both kernels and $\gamma$ for RBF values where found by an extensive grid search on the 'per person' test set with only the simple movies performed on a small cluster in the ranges $2^{-3}$ to $2^{15}$ for $c$ and $2^{-15}$ and $2^3$ for $\gamma$. The most optimal values for $\gamma$ is 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
 
-For calculating the HOG features the same parameters as \cite{watanabe2009} are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
+For calculating the HOG features the same parameters as \citep{watanabe2009} are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
 
 To be able to compare the HOG and SURF, the SURF descriptor is configured to work with a fixed set of interest points set up as a dense grid - the same set used for HOG. This results in a 13440 dimensional feature vector. Also using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms which makes it unusable for real-time operation.
 

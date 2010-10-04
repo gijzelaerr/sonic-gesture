@@ -5,7 +5,7 @@
 
 To perform hand pose estimation of a person in a image, hands need to be localized in the image first. Hands are very deformable - they can have very different appearances and different orientations. Also hand size, hand shape and skin color can differ tremendously per person. This makes localization a  difficult task. 
 
-One way to localize the hands is by searching for skin like colors in an image given a pre-calculated color profile. A generic skin color model based on average skin color has been constructed for this purpose\citep{Jones1999}. The problem with this method is that it fails when the skin color isn't 'pure', for example when it is colored by a light source. Also, since the profile is very generic, it contains colors for many different skin colors. This introduces more false positives.
+One way to localize the hands is by searching for skin like colors in an image given a pre-calculated color profile. A generic skin color model based on average skin color has been constructed for this purpose\citep{Jones1999}. The problem with this method is that it fails when the skin color isn't `pure', for example when it is colored by a light source. Also, since the profile is very generic, it contains colors for many different skin colors. This introduces more false positives.
 
 It is preferred to obtain the skin color of a person in a image from that image itself. This can be done by extracting the skin model from the face, which is much easier to detect than a hand.
 
@@ -36,7 +36,7 @@ When a subject is lighted by a light source with uniform hue distribution, the l
 
 The luminance can be removed from the color space by transforming the color model to a chromatic color space. There are multiple chromatic color spaces, for example LAB, HSV and normalized RGB. No significant improvements are measured with a specific choice of these color spaces \citep{vsa03survey, Bradski1998}, so the HSV color space is used in the rest of this paper.
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
   \centering
 \subfloat[HSV color space]{
 	\label{fig:hsv}\includegraphics[width=0.45\linewidth]{figures/hsv2.png}
@@ -73,7 +73,7 @@ Note that for computation reasons this a simplification of the real HSV color sp
 
 The input 3 channel RGB image is transformed into a 3 channel HSV image, after which the value channel is discarded. Using the detected face region of the hue and saturation channel a histogram can be constructed which will represent a statistical skin model.
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
   \centering
 \subfloat[hue channel]{\label{fig:hue}\includegraphics[width=0.3\linewidth]{figures/pipeline/hue.jpg}}
 \hspace{0.03\linewidth}
@@ -89,7 +89,7 @@ The input 3 channel RGB image is transformed into a 3 channel HSV image, after w
 
 \subsection*{Statistical Skin Color Model}
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
     \center{}
     \includegraphics[width=1\textwidth]{figures/pipeline/histogram.png}
 	\caption{A histogram of face pixels}
@@ -98,13 +98,13 @@ The input 3 channel RGB image is transformed into a 3 channel HSV image, after w
 
 There are multiple ways of constructing a statistical skin color model. The most conventional ways are a (mixture of) gaussian(s) or a histogram. 
 
-The skin color model is represented in a 2 dimensional histogram, where the first dimension is Hue and the second is Saturation. The histogram is filled with the values from the detected face region. The histogram is normalized - all values are divided by the sum of all bins - to properly approximate the color density. This makes the histogram independent of the original image size, and each histogram bin value represents a 'skin probablility'. \autoref{fig:histogram} is the histogram of a caucasian's skin color.
+The skin color model is represented in a 2 dimensional histogram, where the first dimension is Hue and the second is Saturation. The histogram is filled with the values from the detected face region. The histogram is normalized - all values are divided by the sum of all bins - to properly approximate the color density. This makes the histogram independent of the original image size, and each histogram bin value represents a `skin probablility'. \autoref{fig:histogram} is the histogram of a caucasian's skin color.
 
 Manual experiments show that tweaking the number of bins doesn't have much effect, as long as the number of bins is not too high or not to low. Since for the storage of the values a 8 bit integer is used, a number of bins higher than 256 doesn't make sense. In all experiments mentioned in this paper a number of bins of 30 is used for both the hue and saturation.
 
 \subsection*{Back Projection}
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
     \center{}
     \includegraphics[width=0.5\textwidth]{figures/pipeline/backproject.jpg}
  	\caption{Backprojection}
@@ -118,14 +118,14 @@ A back projection is the combination of an image and a histogram. The result is 
 \subsection*{Smoothing}
 Back projection can be quite noisy, which is caused by the rounding of values in the in the histogram and noise introduced by the camera. Thresholding this image will result in skin pixel groups with rough edges and a lot of holes, see \autoref{fig:threshold_noblur}. The noise can be reduced by smoothing the image. This way, the pixel value is replaced by the old value weighted with the surrounding pixel values. Using a gaussian kernel with a high $\sigma^2$ gives a good result, see \autoref{fig:blurred}.
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
     \center{}
  \includegraphics[width=0.5\textwidth]{figures/pipeline/thresholded_noblur.jpg}
 	\caption{Thresholded image without blur preprocessing}
 	\label{fig:threshold_noblur}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
     \center{}
     \includegraphics[width=0.5\textwidth]{figures/pipeline/blurred.jpg}
 	\caption{Blurred image}
@@ -135,7 +135,7 @@ Back projection can be quite noisy, which is caused by the rounding of values in
 
 \subsection*{Threshold}
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
     \center{}
     \includegraphics[width=0.5\textwidth]{figures/pipeline/thresholded.jpg}
 	\caption{Thresholded image with blur preprocessing}
@@ -160,7 +160,7 @@ where $T(x,y)$ is the mean of the $n$ by $n$ pixel neighborhood.
 
 \subsection*{Morphological Operations}
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
     \center{}
     \includegraphics[width=0.5\textwidth]{figures/pipeline/closed.jpg}
 	\caption{Morphologically closed}
@@ -183,7 +183,7 @@ From the contours of the group, a square region of interest is defined by the ou
 
 \subsection*{Blob Labeling}
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
     \center{}
     \includegraphics[width=0.5\textwidth]{figures/pipeline/contours.jpg}
 	\caption{Labeled blobs with hand windows}
@@ -204,7 +204,7 @@ Multiple cues can be used to determine which blob is which body part. The most  
 
 To determine which blob is which hand the relative x position to the head can be used. Algorithm \autoref{alg:blobheuristics} sorts the hands by x position and labels them with heuristics. The result of the heuristics in different scenarios is shown in \autoref{fig:heuristics}. (a) in this figure shows the usual position, where the left hand is on the left of the face and the right hand on the right. The labels are labeled accordingly. In some cases both hands are on one side of the face (b), here the relative position is used to label the hand. This is a robust method, except for the scenario where the hands positions are swapped in the x position. Fortunately this is a very unnatural body pose, so this case is just simply ignored. If such a scenario occurs the labels of the hands are mixed. 
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \centering
  \subfloat[]{
    \includegraphics[width=0.29\linewidth]{figures/heurist/a.png}
@@ -228,8 +228,8 @@ To determine which blob is which hand the relative x position to the head can be
 \caption{Blob labeling heuristics}
 \label{alg:blobheuristics}
 \begin{algorithmic}
-   \REQUIRE A list of blobs 'blobs'
-   \REQUIRE Coordinates of a face 'faceCenter'
+   \REQUIRE A list of blobs `blobs'
+   \REQUIRE Coordinates of a face `faceCenter'
    \ENSURE 3 or less blobs labeled head, left or right
 
 	\FOR{blob in blobs}
@@ -340,7 +340,7 @@ With these matrices and a standard kalman filter the position and size of the ha
 \subsection*{Self Occlusion by Body Parts}
 Failing to detect the hand in the current frame is caused by one of three disturbances. First of all the hand can be out of the image, or occluded by an obstacle. The second case is where the hand detection phase just fails and couldn't localize the body part. The third case is self occlusion, where the hand is very close or occluding the face or the other hand. The skin segmentation will segment this as one big blob. In this case template search is used to track the specific hand. A cut out image of the hand from the previous frame is used for this template search. Template search is a very simple and fast method, as long as the search area is small. A sliding window  with the same size as the cutout image is sliding over a small surrounding area of the location predicted by the Kalman filter. The window with the lowest squared sum difference to the previous cutout image is set as the new location. If the original cutout is touching the border of the image or the squared sum difference is too high it is assumed the hand is not visible anymore, and is flagged accordingly. This method works if the shape and size of the hand don't change too much from the last.
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \begin{center}
 \subfloat[detected hand]{\label{fig:template_good}\includegraphics[width=0.45\linewidth]{figures/template/good.jpg}}
 \hspace{0.03\linewidth}
@@ -356,7 +356,7 @@ Failing to detect the hand in the current frame is caused by one of three distur
 \section{Discussion}
 This method is quite robust, but can fail if the conditions listed in \autoref{sec:goal} are not met. See \autoref{fig:fail} for an example of failed segmentation. This figure is a still from one of the movies in the dataset used in the experiments. The test subject has a skin color profile that is similar to parts of the background. Not much can be done to solve this problem, except the threshold can be manually adjusted. Still, this will introduce more false negatives and the segmentation will still be poor.
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \center{}
 \includegraphics[width=0.8\linewidth]{figures/fail.png}
 \caption{Example of failed segmentation}
@@ -366,7 +366,7 @@ This method is quite robust, but can fail if the conditions listed in \autoref{s
 Thresholding can be adjusted automatically by adaptive thresholding. The downside of the method is that it requires a large neighborhood value to work in a reasonable stable way, which becomes to computationally expensive. Also, the background will be clustered as a blob also, which introduces an extra blob removal step. \autoref{fig:thresholdedAdap} shows the example output of a adaptive threshold with a neighborhood of 51.
 
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
 \center{}
 \includegraphics[width=0.3\linewidth]{figures/pipeline/thresholdedAdap.jpg}
 \caption{Adaptive threshold with pixel neighborhood of 51}

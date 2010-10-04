@@ -28,6 +28,13 @@ Sonic Gesture will submit
 
 There is no strict defined relationship between a hand pose and a sound or parameter, the user of Sonic Gesture can define his own specific mapping with his or her preferred audio application. 
 
+\begin{figure}[ht]
+\centering{}
+\includegraphics[width=0.9\linewidth]{figures/sonicableton.png}
+\caption{Sonic Gesture linked to Ableton with OSCulator}
+\label{fig:sonicableton}
+\end{figure}
+
 \section{Time Performance}
 A lot of effort has been put into getting Sonic Gesture as fast as possible. Initially Sonic Gesture was written in Python and used the Python API of OpenCV. Soon it became clear that Python was to limited to do high performance graphic processing so a switch to C++ was made. 
 
@@ -37,14 +44,14 @@ The performance of Sonic Gesture depends on how fast the testing systems CPU pow
 
 \begin{table}
 \centering
-\begin{tabular}{cccc}
-What & relative time & absolute time & comment \\
+\begin{tabular}{ccc}
+What & relative time & comment \\
 \hline
-kNN & 47\% & ... & 3780 features, 2016 samples \\
-Color space convertion & 8.4\% & ... & \\
-Image resizing & 7.6\% & ... & \\
-Face detection & 3.7\% & ... &  19\% if every frame \\
-HOG features & 2.6\% & ... \\
+kNN & 47\% & 3780 features, 2016 samples \\
+Color space convertion & 8.4\% & \\
+Image resizing & 7.6\% & \\
+Face detection & 3.7\% &  19\% if every frame \\
+HOG features & 2.6\% \\
 \end{tabular}
 \caption{Performance timing of Sonic Gesture}
 \end{table}

@@ -11,7 +11,7 @@ This chapter describes how the hand poses are detected in the hand windows. Feat
 \section{Feature Extraction}
 The hand window contains some background pixels, because a hand will never fill a perfect square (Figure \autoref{fig:lefthandwindow}). These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In \autoref{sec:skinmodel} a binary mask for skin pixels is constructed. The inverse skin mask can be used  to remove the background (Figure \autoref{fig:lefthandcutout}). Sometimes the blob is too small to say something useful about the hand pose. One way to artificially increase the blob size is to do a morphological dilate operation on the blob. This will increase the size of the hand cutout and probably add skin pixels, but this will also introduce more noisy (non-skin) pixels.
 
-To compare two or more hands with each other a method is required to calculate the similarity. A very simple method is to compare each pixel location with each other and sum all the differences. But this method is not feasible. It is not going to work on images that are not the same size or orientation. Also it is computationally expensive for larger images - for an image of 100 by 100 pixels there are already 10.000 dimensions. Also important is that this method is not very forgiving for small variations like scaling and rotation.
+To compare two or more hands with each other a method is required to calculate the similarity. A very simple method is to compare each pixel location with each other and sum all the differences. But this method is not feasible. It is not going to work on images that are not the same size or orientation. Also it is computationally expensive for larger images - for an image of 100 by 100 pixels there are already 10.000 dimensions. Also important is that this method is not very forgiving for small variations such as scaling and rotation.
 
 
 \begin{figure}[tb]
@@ -36,7 +36,7 @@ To compare two or more hands with each other a method is required to calculate t
 \end{figure}
 
 \subsection*{Descriptors}
-To reduce the number of dimensions of an image a descriptor can be used. A descriptor describes an image in, if properly used, less dimensions than the image itself. Also it can introduce some useful properties like scale and rotation invariance. In this paper 2 descriptors are discussed and compared, Histogram of oriented gradient \citep{NavneetDalal2006} (HOG) and Speeded Up Robust Features \citep{Bay2006} (SURF).
+To reduce the number of dimensions of an image a descriptor can be used. A descriptor describes an image in, if properly used, less dimensions than the image itself. Also it can introduce some useful properties like scale and rotation invariance. In this paper 2 descriptors are discussed and compared, Histogram of Oriented Gradient \citep{NavneetDalal2006} (HOG) and Speeded Up Robust Features \citep{Bay2006} (SURF).
 
 The HOG descriptor has been successfully applied and studied in human detection \citep{NavneetDalal2006, watanabe2009}. The HOG descriptors method uses a dense grid of uniformly spaced cells, where for each cell the gradients are calculated in 9 orientations. The values for each orientation for each cell are stored in a histogram that represent the image. \autoref{fig:hog} visualizes a simplification of the HOG calculation. 
 
@@ -53,7 +53,7 @@ The SURF descriptor is based on sums of approximated 2D Haar wavelet responses a
 
 
 \subsection{Principal Component Analysis}
-Principal Component Analysis (PCA) is a method that reduces data dimensionality by performing a covariance analysis between vectors. The original space will be mapped into a new space based on the variance in the original data. PCA transforms a number of correlated variables into a (possibly smaller) number of uncorrelated variables called principal components. The first principal component vector accounts for as much of the variability in the data as possible, and each consecutive component vector accounts for as much of the remaining variability as possible. 
+Principal Component Analysis (PCA) is a method that reduces data dimensionality by performing a covariance analysis between vectors \cite{jolliffe2002}. The original space will be mapped into a new space based on the variance in the original data. PCA transforms a number of correlated variables into a (possibly smaller) number of uncorrelated variables called principal components. The first principal component vector accounts for as much of the variability in the data as possible, and each consecutive component vector accounts for as much of the remaining variability as possible. 
 
 PCA may improve the performance of a classifier both in classification and time performance.
 
@@ -61,11 +61,11 @@ PCA may improve the performance of a classifier both in classification and time 
 Using a set of training examples each marked as belonging to a category, a classifier builds a model that predicts whether a new example falls into one category or the other. There are many classifiers which can be used in different ways. For computer vision two of these are interesting because of simplicity, or superiority; k Nearest Neighbors and Support Vector Machines.
 
 \subsection*{k Nearest Neighbors}
-The k-nearest neighbors algorithm (k-NN) is a method for classifying objects based on euclidean distance between training examples in the feature space. The k-nearest neighbor algorithm is one of the the simplest of all machine learning  algorithms. K-NN is a type of `lazy learning' where all computation is deferred until classification. This results in a fast training phase, but a computationally expensive classification. Also the memory footprint is large since all data points are stored. 
+The $k$-Nearest Neighbors algorithm ($k$-NN) is a method for classifying objects based on euclidean distance between training examples in the feature space. $k$-NN is one of the the simplest of all machine learning  algorithms. It is a type of `lazy learning' where all computation is deferred until classification. This results in a fast training phase, but a computationally expensive classification. Also the memory footprint is large since all data points are stored. 
 
 The training samples are labeled multidimensional vectors. The training phase of the algorithm consists only of storing the vectors and class labels of the training samples.In the classification phase, $k$ is a user-defined constant, and an unlabeled vector is classified by assigning the label which is most frequent among the k training samples nearest to that query point.
 
-\autoref{fig:knn} is an example of k-NN classification. The test sample (the circle) should be classified either to the squares class or to the triangles class. If $k = 3$ the circle is classified to the triangles class because there are 2 triangles and 1 square inside the inner circle. If $k = 5$ it is classified as `square'.
+\autoref{fig:knn} is an example of $k$-NN classification. The test sample (the circle) should be classified either to the squares class or to the triangles class. If $k = 3$ the circle is classified to the triangles class because there are 2 triangles and 1 square inside the inner circle. If $k = 5$ it is classified as `square'.
 
 \begin{figure}[tb]
 \center{}
@@ -79,9 +79,9 @@ The training samples are labeled multidimensional vectors. The training phase of
 
 \subsection*{Support Vector Machines}
 
-Support vector machines (SVMs) are a set of related supervised learning methods used for classification. It is a binary classifier, but can be extended to be a multi class classifier by combining multiple binary classifiers. 
+Support Vector Machines (SVMs) are a set of related supervised learning methods used for classification. It is a binary classifier, but can be extended to be a multi class classifier by combining multiple binary classifiers. 
 
-SVM uses a subset of the train data (the support vectors) that lay on the borders of a category cluster to calculate a decision boundary (DB). This DB is constructed by maximizing the distance between the support vector of two classes. The decision boundary, a linear function, is later used to classify new data points.
+SVM uses a subset of the train data (the support vectors) that lay on the borders of a category cluster to calculate a Decision Boundary (DB). This DB is constructed by maximizing the distance between the support vector of two classes. The decision boundary, a linear function, is later used to classify new data points.
 
 Often, a set of data points in a space is not linearly separable. For this reason the original space is mapped to a higher dimensional space making the separation easier. This is done by a kernel function.
 
@@ -127,7 +127,7 @@ with $S_1 = \{u_1, ... , u_m\}$ $S_2 = \{w_1, ... , w_m\}$.
 
 
 
-\subsection*{The stabilizer}
+\subsection*{The Stabilizer}
 \label{subsec:stabilizer}
 Since consecutive frames in a video sequence have a spatial-temporal relationship their labels have this property also. Because of noise, misclassification can happen. These false matches can be filtered out by smoothing the labels on a time scale.
 

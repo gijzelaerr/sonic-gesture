@@ -36,9 +36,9 @@ To compare two or more hands with each other a method is required to calculate t
 \end{figure}
 
 \subsection*{Descriptors}
-To reduce the number of dimensions of an image a descriptor can be used. A descriptor describes an image in, if properly used, less dimensions than the image itself. Also it can introduce some useful properties like scale and rotation invariance. In this paper 2 descriptors are discussed and compared, Histogram of oriented gradient\cite{NavneetDalal2006} (HOG) and Speeded Up Robust Features\cite{Bay2006} (SURF).
+To reduce the number of dimensions of an image a descriptor can be used. A descriptor describes an image in, if properly used, less dimensions than the image itself. Also it can introduce some useful properties like scale and rotation invariance. In this paper 2 descriptors are discussed and compared, Histogram of oriented gradient\citep{NavneetDalal2006} (HOG) and Speeded Up Robust Features\citep{Bay2006} (SURF).
 
-The HOG descriptor has been successfully applied and studied in human detection \cite{NavneetDalal2006, watanabe2009}. The HOG descriptors method uses a dense grid of uniformly spaced cells, where for each cell the gradients are calculated in 9 orientations. The values for each orientation for each cell are stored in a histogram that represent the image. \autoref{fig:hog} visualizes a simplification of the HOG calculation. 
+The HOG descriptor has been successfully applied and studied in human detection \citep{NavneetDalal2006, watanabe2009}. The HOG descriptors method uses a dense grid of uniformly spaced cells, where for each cell the gradients are calculated in 9 orientations. The values for each orientation for each cell are stored in a histogram that represent the image. \autoref{fig:hog} visualizes a simplification of the HOG calculation. 
 
 \begin{figure}[htbp]
 \center{}
@@ -48,7 +48,7 @@ The HOG descriptor has been successfully applied and studied in human detection 
 \end{figure}
 
 
-The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF approximates the speed of Scale-invariant feature transform (SIFT) and is claimed to more robust against several image transformations\cite{Murillo2007, Valgren2010}. SIFT is an other descriptor that is often used. SIFT is similar to HOG as in they both build a histogram of gradients of the keypoints. SIFT and SURF differ from HOG in that they incorporate a method for calculating usable key points, HOG uses a dense grid of key points.
+The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF approximates the speed of Scale-invariant feature transform (SIFT) and is claimed to more robust against several image transformations\citep{Murillo2007, Valgren2010}. SIFT is an other descriptor that is often used. SIFT is similar to HOG as in they both build a histogram of gradients of the keypoints. SIFT and SURF differ from HOG in that they incorporate a method for calculating usable key points, HOG uses a dense grid of key points.
 
 
 
@@ -95,13 +95,13 @@ The function for the DB for a test sample $x$ has the following form:
 
 where $K(x_i,x)$ is a kernel function for the training sample $x_i$ and the test sample $x$ and $y_i$ the class label of $x_i$ with value $+1$ or $-1$. $\alpha_i$ is the weight of the training sample $x_i$ and $b$ is a threshold parameter which both are learned in the training phase.  
 
-There are various kernels, but \cite{Hsu2003} states the Radial Basis Function is a good kernel to start with because it generally gives good results. This kernel is defined by:
+There are various kernels, but \citep{Hsu2003} states the Radial Basis Function is a good kernel to start with because it generally gives good results. This kernel is defined by:
 
 \begin{equation}
 	K(S_i,S_j) = e^{(-\gamma||S_i-S_j||^2)}, \gamma > 0,
 \end{equation}
 
-where $S_i$ and $S_j$ are two feature vectors. It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the scale of the kernel. An other interesting kernel is based upon the $\chi^2$ distance\cite{Zhang2007}. An advantage is that it doesn't have a parameter that needs optimization. This distance is incorporated into SVM by the usage of Gaussian kernels\cite{Chapelle1999}:
+where $S_i$ and $S_j$ are two feature vectors. It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the scale of the kernel. An other interesting kernel is based upon the $\chi^2$ distance\citep{Zhang2007}. An advantage is that it doesn't have a parameter that needs optimization. This distance is incorporated into SVM by the usage of Gaussian kernels\citep{Chapelle1999}:
 
 \begin{equation}
 	K(S_i,S_j) = exp(-\frac{1}{A}D(S_i,S_j)),

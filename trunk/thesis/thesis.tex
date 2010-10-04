@@ -31,14 +31,16 @@
 \usepackage{algorithm}
 \usepackage{algorithmic}
 
-% for internal references, USE AS LAST
-\usepackage[colorlinks]{hyperref}
+% for nice sitation references
+\usepackage{natbib}
 
 % for fancy headers
 %\usepackage{fancyhdr}
 %\setlength{\headheight}{15.2pt}
 %\pagestyle{fancy}
 
+% for internal references, USE AS LAST
+\usepackage[colorlinks]{hyperref}
 
 
 
@@ -83,10 +85,16 @@ Until not so long ago I never dared dreaming to do this; writing the acknowledgm
 
 \include{conc}
 
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{thesis}
+%\bibliographystyle{unsrt}
+\bibliographystyle{unsrtnat}
+
 \include{appendix}
 
-\bibliography{thesis}
-\bibliographystyle{unsrt}
+
 
 \end{document}
 

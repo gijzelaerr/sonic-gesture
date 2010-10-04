@@ -42,14 +42,13 @@
 % for internal references, USE AS LAST
 \usepackage[colorlinks]{hyperref}
 
-
-
-
 % for better image placing
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\textfraction}{0.1}
 \renewcommand{\floatpagefraction}{0.75}
 
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 \begin{document}
 
@@ -57,13 +56,47 @@
 \pagenumbering{Alph}
 \thispagestyle{empty}
 
-\title{Sonic Gesture}
-\author{G. J. Molenaaar}
-\date{2010}
-\maketitle{}
+\begin{titlepage}
+\begin{center}
+
+% Upper part of the page
+\includegraphics[width=0.15\textwidth]{./figures/uva.png}\\[1cm]
+\textsc{\LARGE Universiteit van Amsterdam}\\[1.5cm]
+\textsc{\Large Master Thesis}\\[0.5cm]
+
+% Title
+\HRule \\[0.4cm]
+{ \huge \bfseries Sonic Gesture}\\[0.4cm]
+
+\HRule \\[1.5cm]
+
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+Gijs \textsc{Moleaar}
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisor:} \\
+M.Sc.~Ivo \textsc{Everts} \\
+Dr.~Theo \textsc{Gevers}
+\end{flushright}
+\end{minipage}
+
+\vfill
+
+% Bottom of the page
+{\large \today}
+
+\end{center}
+\end{titlepage}
+
+
 
 \chapter*{Abstract}
-A real\-time method for estimating hand poses in video using a normal RGB camera. The method uses a probabilistic skin color histogram model for pixel based limb localization and HOG features for classification. The performance of HOG is compared with SURF where HOG yielded superior performance. As classifiers $k$-NN and SVM with the RBF and $\chi^2$ kernels are evaluated, where SVM in combination with the $x^2$ kernel performed best. All evaluation is done with a new constructed dataset consisting of 72 recordings of 20 people performing 28 hand symbols based upon the Curwen Solfege method. A prototype mapping the hand poses into sound is described, this to demonstrate the practical usability of the method in a real-time situation.
+A real\-time method for estimating hand poses in video using a normal RGB camera is presented. The method uses a skin color distribution for pixel based limb localization and HOG features for classification. The performance of HOG is compared with SURF where HOG yielded superior performance. As classifiers $k$-NN and SVM with the RBF and $\chi^2$ kernels are evaluated, where SVM in combination with the $\chi^2$ kernel performed best. All evaluation is performed with a new constructed dataset consisting of 72 recordings of 20 people performing 28 hand symbols based upon the Curwen Solfege method. A prototype implementation translating in Open Sound Control is described, this to demonstrate the practical usability of the method in a real-time situation.
 
 % contents etc
 \pagenumbering{Roman}

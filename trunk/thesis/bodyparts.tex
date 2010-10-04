@@ -3,11 +3,9 @@
 \chapter{Body Part Detection}
 \label{ch:bodyparts}
 
-To perform hand pose estimation of a person in a image, hands need to be localized in the image first. Hands are very deformable - they can have very different appearances and different orientations. Also hand size, hand shape and skin color can differ tremendously per person. This makes localization a  difficult task. 
+To perform hand pose estimation of a person in a image, hands need to be localized first. Hands are very deformable - they can have very different appearances and different orientations. Also hand size, hand shape and skin color can differ tremendously per person. This makes localization a  difficult task. 
 
-One way to localize the hands is by searching for skin like colors in an image given a pre-calculated color profile. A generic skin color model based on average skin color has been constructed for this purpose \citep{Jones1999}. The problem with this method is that it fails when the skin color is not `pure', for example when it is colored by a light source. Also, since the profile is very generic, it contains colors for many different skin colors. This introduces more false positives.
-
-It is preferred to obtain the skin color of a person in a image from that image itself. This can be done by extracting the skin model from the face, which is much easier to detect than a hand.
+One way to localize the hands is by searching for skin like colors in an image given a pre-calculated color profile. A generic skin color model based on average skin color has been constructed for this purpose \citep{Jones1999}. The problem with this method is that it fails when the skin color is not `pure', for example when it is colored by a light source. Also, since the profile is very generic, it contains colors for many different skin colors. This introduces more false positives. It would therefore be preferred to to obtain the skin color of a person in a image from that image itself. This can be done by extracting the skin model from the face, which is much easier to detect than a hand.
 
 This chapter describes how a skin model is created and how this is used to find the skin pixels in the image. These  skin pixels are clustered and labeled as left hand, right hand and head. 
 
@@ -23,16 +21,16 @@ This chapter describes how a skin model is created and how this is used to find 
   \label{fig:face_detection}
 \end{figure}
 
-Finding faces in a image is a rather well solved problem. A face is easy to detect, since it is almost non-deformable. Different faces are quite similar looking at the most prominent properties, e.g. edges. People do not tilt their head often or not more than a couple degrees, which makes it even more easier to detect. Face detection can be done in a robust way using a \emph{haar classifier}, a boosted rejection cascade that is trained with Haar\-like wavelet \citep{Viola2001,Viola2004}. This  method does not rely on color information. The classifier is run over the image on different scales and positions with a score above a certain threshold are classified as face position, see \autoref{fig:face_detection} for an example. The red rectangle is the returned face location and size. This classifier is trained with traindata which also includes a small area of background, so this is also returned. Since we are only interested in the skin pixels a smaller sub-region is used for further processing. This sub square can be adjusted to minimize the influence of facial hair. 
+Finding faces in an image is a rather well solved problem. A face is easy to detect, since it is almost non-deformable. Different faces are quite similar looking at the most prominent properties, e.g. edges. People do not tilt their head often or not more than a few degrees, which makes it even easier to detect. Face detection can be done in a robust way using a \emph{haar classifier}, a boosted rejection cascade that is trained with Haar\-like wavelet \citep{Viola2001,Viola2004}. This  method does not rely on color information. The classifier is run over the image on different scales and positions with a score above a certain threshold are classified as face position, see \autoref{fig:face_detection} for an example. The red rectangle is the returned face location and size. This classifier is trained with traindata which also includes a small area of background, so this is also returned. Since we are only interested in the skin pixels a smaller sub-region is used for further processing. This sub square can be adjusted to minimize the influence of facial hair. 
 
 Unfortunately, the face detection is a relative expensive operation. Fortunately, as a face does not move fast in a video sequence, a number of frames can be skipped which will free more computational time for other operations.
 
 With the face location and size a skin color model of the user can be constructed.
 
 \subsection*{Color Space Conversion}
-Usually, pixel values of a image are stored in the Red, Green Blue (RGB) color space where colors are represented with combinations of these primary colors. The RGB representation of colors is not suitable for modeling skin color. The RGB color space represents not only color, but also luminance which is not a reliable measure for segmenting skin pixels \citep{Cai1999}.
+Usually, pixel values of a image are stored in the Red, Green Blue (RGB) color space where colors are represented as combinations of these primary colors. The RGB representation of colors is not suitable for modeling skin color, because it represents not only color, but also luminance which is not a reliable measure for segmenting skin pixels \citep{Cai1999}.
 
-When a subject is lighted by a light source with uniform hue distribution, the light does not change the hue or saturation of the subject. The only thing that will change is the luminance, which is changing because of the light source's intensity, distance or (self casted) shadow. Since we want to extract hand pixels independent of the illumination intensity, we can ignore this channel and only use the hue and saturation.
+When a subject is illuminated by a light source with uniform hue distribution, the light does not change the hue or saturation of the subject. The only thing that will change is the luminance, which is changing because of the light source's intensity, distance or (self casted) shadow. Since we want to extract hand pixels independent of the illumination intensity, we can ignore this channel and only use the hue and saturation.
 
 The luminance can be removed from the color space by transforming the color model to a chromatic color space. There are multiple chromatic color spaces, for example LAB, HSV and normalized RGB. No significant improvements are measured with a specific choice of these color spaces \citep{vsa03survey, Bradski1998}, so the HSV color space is used in the rest of this paper.
 
@@ -71,7 +69,7 @@ The RGB color space is transformed into the HSV color space using the following 
 
 Note that for computation reasons this a simplification of the real HSV color space. The real HSV colorspace is circular in the Hue dimension.
 
-The input 3 channel RGB image is transformed into a 3 channel HSV image, after which the value channel is discarded. Using the detected face region of the hue and saturation channel a histogram can be constructed which will represent a statistical skin model.
+The input 3-channel RGB image is transformed into a 3 channel HSV image, after which the value channel is discarded. Using the detected face region of the hue and saturation channel a histogram can be constructed which will represent a statistical skin model.
 
 \begin{figure}[tb]
   \centering
@@ -116,7 +114,7 @@ A back projection is the combination of an image and a histogram. The result is 
 
 
 \subsection*{Smoothing}
-Back projection can be quite noisy, which is caused by the rounding of values in the in the histogram and noise introduced by the camera. Thresholding this image will result in skin pixel groups with rough edges and a lot of holes, see \autoref{fig:threshold_noblur}. The noise can be reduced by smoothing the image. This way, the pixel value is replaced by the old value weighted with the surrounding pixel values. Using a gaussian kernel with a high $\sigma^2$ gives a good result, see \autoref{fig:blurred}.
+Back projection can be quite noisy, which is caused by the rounding of values in the in the histogram and noise introduced by the camera. Thresholding this image will result in skin pixel groups with rough edges and a lot of holes, see \autoref{fig:threshold_noblur}. The noise can be reduced by smoothing the image. This way, the pixel value is replaced by the old value weighted with the surrounding pixel values. Using a gaussian kernel with a high variance gives a good result, see \autoref{fig:blurred}.
 
 \begin{figure}[tb]
     \center{}
@@ -202,7 +200,7 @@ where $h$ is the height of the face in pixels and $c$ is a parameter to control 
 
 Multiple cues can be used to determine which blob is which body part. The most  certain and important one is the face center, which is known as we detected the face. If a blob contains this point, this blob is the face. 
 
-To determine which blob is which hand the relative x position to the head can be used. Algorithm \autoref{alg:blobheuristics} sorts the hands by x position and labels them with heuristics. The result of the heuristics in different scenarios is shown in \autoref{fig:heuristics}. (a) in this figure shows the usual position, where the left hand is on the left of the face and the right hand on the right. The labels are labeled accordingly. In some cases both hands are on one side of the face (b), here the relative position is used to label the hand. This is a robust method, except for the scenario where the hands positions are swapped in the x position. Fortunately this is a very unnatural body pose, so this case is just simply ignored. If such a scenario occurs the labels of the hands are mixed. 
+To determine which blob is which hand the relative x position to the head can be used. The hands are sorted by $x$ position and labeled accordingly. The result of the heuristics in different scenarios is shown in \autoref{fig:heuristics}. Subfigure (a) shows the usual position, where the left hand is on the left of the face and the right hand on the right. The labels are labeled accordingly. In some cases both hands are on one side of the face (b), here the relative position is used to label the hand. If only one hand is detected the relative position to the head is determined, left to the head is labeled left and the same for right. This is a robust method, except for the scenario where the hand positions are swapped in the x position. Fortunately this is a unnatural body pose, so this case is just simply ignored. If such a scenario occurs the labels of the hands are mixed. 
 
 \begin{figure}[tb]
 \centering
@@ -218,47 +216,10 @@ To determine which blob is which hand the relative x position to the head can be
    \includegraphics[width=0.29\linewidth]{figures/heurist/c.png}
 }
 \hspace{0.02\linewidth}
-\caption{3 scenarios for ßlabeling of blobs}
+\caption{3 scenarios for labeling of blobs}
 \label{fig:heuristics}
 \end{figure}
 
-
-
-\begin{algorithm}
-\caption{Blob labeling heuristics}
-\label{alg:blobheuristics}
-\begin{algorithmic}
-   \REQUIRE A list of blobs $blobs$
-   \REQUIRE Coordinates of a face $faceCenter$
-   \ENSURE 3 or less blobs $head$, $left$ or $right$
-
-	\FOR{$blob$ \textbf{in} $blobs$}
-		\IF{blob \textbf{contains} $faceCenter$}
-			\STATE $head$ $\leftarrow$ $blob$
-			\STATE remove $blob$ from $blobs$
-		\ENDIF
-	\ENDFOR
-
-	\STATE keep only 2 biggest in $blobs$
-	\STATE sort $blobs$ by $x$ position
-
-	\STATE $n \leftarrow |blobs|$
-	\IF{$n = 2$}
-	    \STATE $left \leftarrow blobs_0$
-	    \STATE $right \leftarrow blobs_1$
-	\ELSE
-		\IF{$n = 1$}
-		    \IF{center of $blobs_0 <$ center of $face$}
-		        \STATE $left \leftarrow blobs_0$
-		    \ELSE
-		        \STATE $right \leftarrow blobs_0$
-			\ENDIF
-		\ENDIF
-	\ELSE
-	    \STATE no limbs found
-	\ENDIF
-\end{algorithmic}
-\end{algorithm}
 
 
 
@@ -338,7 +299,7 @@ With these matrices and a standard Kalman filter the position and size of the ha
 
 
 \subsection*{Self Occlusion by Body Parts}
-Failing to detect the hand in the current frame is caused by one of three disturbances. First of all the hand can be out of the image, or occluded by an obstacle. The second case is where the hand detection phase just fails and couldn't localize the body part. The third case is self occlusion, where the hand is very close or occluding the face or the other hand. The skin segmentation will segment this as one big blob. In this case template search is used to track the specific hand. A cut out image of the hand from the previous frame is used for this template search. Template search is a very simple and fast method, as long as the search area is small. A sliding window  with the same size as the cutout image is sliding over a small surrounding area of the location predicted by the Kalman filter. The window with the lowest squared sum difference to the previous cutout image is set as the new location. If the original cutout is touching the border of the image or the squared sum difference is too high it is assumed the hand is not visible anymore, and is flagged accordingly. This method works if the shape and size of the hand do not change too much from the last.
+Failing to detect the hand in the current frame is caused by one of three disturbances. First of all the hand can be out of the image, or occluded by an obstacle. The second case is where the hand detection phase just fails and couldn't localize the body part. The third case is self occlusion, where the hand is very close or occluding the face or the other hand.  The skin segmentation will segment this as one big blob. Disturbance one and two are fatal and hand localization is impossible, but for the third case there is a last resort. Here template search is used to track the specific hand. A cut out image of the hand from the previous frame is used for this template search. Template search is a very simple and fast method, as long as the search area is small. A sliding window  with the same size as the cutout image is sliding over a small surrounding area of the location predicted by the Kalman filter. The window with the lowest squared sum difference to the previous cutout image is set as the new location. If the original cutout is touching the border of the image or the squared sum difference is too high it is assumed the hand is not visible anymore, and is flagged accordingly. This method works if the shape and size of the hand do not change too much from the last.
 
 \begin{figure}[tb]
 \begin{center}
@@ -363,7 +324,7 @@ This method is quite robust, but can fail if the conditions listed in \autoref{s
 \label{fig:fail}
 \end{figure}
 
-Thresholding can be adjusted automatically by adaptive thresholding. The downside of the method is that it requires a large neighborhood value to work in a reasonable stable way, which becomes to computationally expensive. Also, the background will be clustered as a blob also, which introduces an extra blob removal step. \autoref{fig:thresholdedAdap} shows the example output of a adaptive threshold with a neighborhood of 51.
+Thresholding can be adjusted automatically by adaptive thresholding. The downside of the method is that it requires a large neighborhood value to work in a reasonable stable way, which becomes too computationally expensive. Also, the background will be clustered as a blob also, which introduces an extra blob removal step. \autoref{fig:thresholdedAdap} shows the example output of a adaptive threshold with a neighborhood of 51.
 
 
 \begin{figure}[tb]

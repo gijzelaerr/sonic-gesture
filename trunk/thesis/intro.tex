@@ -21,9 +21,9 @@ When two people are in a room and do not have an auditive or visual limitation, 
 
 \subsection*{Sign Language}
 
-A deaf person cannot interpret spoken words, at least not by listening. He or she is highly depended on visual information. Sign languages have been emerged or invented to aid this visual communication. In these languages two elements have an important role: the face and the hands. These body parts give the most expressive power. The face because it is very good for expressing feelings and emotions, and the hands because they are very deformable. This makes the hands very interesting and useful, since there are countless combinations of finger poses and orientations. 
+A deaf person cannot interpret spoken words, at least not by listening. He or she is highly depended on visual information. Sign languages have been emerged or invented to aid this visual communication. In these languages two elements play an important role: the face and the hands. These body parts give the most expressive power. The face because it is very good for expressing feelings and emotions, and the hands because they are very deformable. This makes the hands very interesting and useful, since there are countless combinations of finger poses and orientations. 
 
-Speech synthesis \citep{Schroder2001, Hunt1996}, speech recognition \citep{rabiner1993, rabiner1989}, facial expression recognition \citep{Cohen2003, zhang2002} and sign language interpretation \citep{Buehler2009,RichardBowden2004,Cooper2007} are all subject of extensive research. Breakthroughs in these area's are important for revolutionary new interfaces which can tremendously improve the speed of interaction and usability for a user. 
+Speech synthesis \citep{Hunt1996}, speech recognition \citep{rabiner1993}, facial expression recognition \citep{Cohen2003} and sign language interpretation \citep{Cooper2007} are all subject of extensive research. Breakthroughs in these areas are important for revolutionary new interfaces which can tremendously improve the speed of interaction and usability for a user. 
 
 
 
@@ -34,7 +34,7 @@ Translating sign language into music is a very interesting concept, not only bec
 \subsection*{Hand Poses}
 Sign language does not really have distinct signs for musical concepts. Usually, when music is translated into sign language only the vocals are translated. Facial expression and references to emotions are used to indicate the `mood' of the music and the speed and expressiveness of the gestures indicate the intensity of the music, but these kind of gesture are not really usable for HCI because they are too subjective. A more formal method is required. Also, previous studies have shown that the segmentation of the consecutive gestures is a difficult task \citep{Buehler2009,RichardBowden2004}.
 
-It is more feasible to have a limited set of hand poses that corresponds to a set of commands and parameters.  Any set of hand poses would do for this system, as long as the individual poses do not look too similar. Since the idea is to translate the interpreted hand poses into sound, it would be interesting to use a set of poses that has a already existing relationship to sound.
+It is more feasible to have a limited set of hand poses that corresponds to a set of commands and parameters.  Any set of hand poses would do for this system, as long as the individual poses do not look too similar. Since the idea is to translate the interpreted hand poses into sound, it would be interesting to use a set of poses that has an already existing relationship to sound.
 
 In Medieval music, the Guidonian hand was a mnemonic device used to assist singers in learning to sight sing; singing according to visual perceived information like sheet music or hand gestures, typically not seen before. The idea of the Guidonian hand is that each portion of one hand represents a specific note within the hexachord system, which spans nearly three octaves. The other hand is used to point to the correct hand portion. \autoref{fig:guidonian} shows a hands with the tonal positions.
 
@@ -89,15 +89,15 @@ The goal of this thesis is to describe the design and evaluation of a system for
 To realize these requirements some restrictions on the system's setting are required:
 
 \begin{itemize}
-	\item Only one person at a time in the image
+	\item There should be only one person at a time in the image
 	\item The person is wearing clothing with long sleeves, no arm skin is visible
 	\item The lightning conditions should be `good enough', enough light should illuminate the user
-	\item No skin like colors in the image like pictures and posters with faces.
+	\item There should be no skin like colors in the image like pictures and posters with faces.
 \end{itemize}
 
-The system can be used as a controller for a computer, with a focus on subtle detail for continuous variables, which give the sense of more direct control which is important for real time interaction. Just how a graphical designer prefers a graphics tablet over a mouse for drawing, the design of the system aims to accomplish a similar sensation. The output of the system can be easily configured by a user to map to his or her preferred set commands. For example one hand control the pitch of a sound, while the other controls a accompanying beat while the position of this hand controls a sound manipulating frequency.
+The system can be used as a controller for a computer, with a focus on subtle detail for continuous variables, which give the sense of more direct control which is important for real time interaction. Akin to how a graphical designer prefers a graphics tablet over a mouse for drawing, the design of the system aims to accomplish a similar sensation. The output of the system can be easily configured by a user to map to his or her preferred set of commands. For example, one hand can control the pitch of a sound, while the other controls an accompanying beat while the position of this hand controls a sound manipulating variable.
 
-It is important to say that the scope of this thesis is limited to extracting the hand poses from video, and will not cover the study of the mapping of hand poses into sound although a prototype system is published along this thesis.
+It is important to say that the scope of this thesis is limited to extracting the hand poses from video, and will not cover the study of the mapping of hand poses into sound although a prototype system is discussed in chapter \autoref{ch:sonicgesture}.
 
 
 \section{Related Work}
@@ -134,7 +134,7 @@ A similar approach as described in this paper is \citep{Wang2007}, but SIFT feat
 
 \citep{Hassanpour2008} describes an adaptive skin color segmentation method using Guassian Mixture Models. \citep{Phung2002} talks about skin modeling in the YCbCr color space and the application to human face detection. \citep{Sigal2004,Soriano2000,Stoerring1999} discuss the handling of changing illumination. \citep{Kakumanu2007} is a survey paper about skin color modeling and detection.
 
-An alternative approach in hand localization than described in this thesis is to capture the complete body pose. This could be a more robust method, but is at the moment computationally expensive. \citep{ferrari2008} introduces a method to extract a body pose from monoscopic video. \citep{VandenBergh2009} proposes a method for 3D pose recognition using multiple camera's. \citep{Poppe2007} discusses how 3D model fitting can be used for pose estimation. \citep{Moeslund2006} gives an overview of all relevant body pose estimation research until 2006.
+An alternative approach to hand localization than described in this thesis is to capture the complete body pose. This could be a more robust method, but is at the moment computationally expensive. \citep{ferrari2008} introduces a method to extract a body pose from monoscopic video. \citep{VandenBergh2009} proposes a method for 3D pose recognition using multiple camera's. \citep{Poppe2007} discusses how 3D model fitting can be used for pose estimation. \citep{Moeslund2006} gives an overview of all relevant body pose estimation research until 2006.
 
 \citep{Buehler2009} discusses a method to learn sign language with news broadcasts that are subtitled and translated into sign language. The complexity of segmentation in sign language is discussed in \citep{RichardBowden2004}. An other approach for segmentation is discussed in \citep{Cooper2007}. \citep{starner1998,Vogler1999} use Hidden Markov Models to model sign language.
 

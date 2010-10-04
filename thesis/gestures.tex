@@ -3,7 +3,7 @@
 \chapter{Gesture Recognition}
 \label{ch:gestures}
 
-Knowing the location of the hands in a image doesn't tell much about the hand poses. A method needs to be constructed to discriminate the different hand poses.
+Knowing the location of the hands in a image does not tell much about the hand poses. A method needs to be constructed to discriminate the different hand poses.
 
 This chapter describes how the hand poses are detected in the hand windows. Features are extracted from the hand window and represent the hand pose in a more compact way. These features are compared by a classifier with previously extracted features of hand poses for which the labels are known. The classifier will determine which known hand pose(s) resembles the at that moment examined hand.
 
@@ -11,7 +11,7 @@ This chapter describes how the hand poses are detected in the hand windows. Feat
 \section{Feature Extraction}
 The hand window contains some background pixels, because a hand will never fill a perfect square (Figure \autoref{fig:lefthandwindow}). These pixels are unwanted since they contain arbitrary values that introduce noise into our process. In \autoref{sec:skinmodel} a binary mask for skin pixels is constructed. The inverse skin mask can be used  to remove the background (Figure \autoref{fig:lefthandcutout}). Sometimes the blob is too small to say something useful about the hand pose. One way to artificially increase the blob size is to do a morphological dilate operation on the blob. This will increase the size of the hand cutout and probably add skin pixels, but this will also introduce more noisy (non-skin) pixels.
 
-To compare two or more hands with each other a method is required to calculate the similarity. A very simple method is to compare each pixel location with each other and sum all the differences. But this method isn't feasible. It is not going to work on images that are not the same size or orientation. Also it is computationally expensive for larger images - for an image of 100 by 100 pixels there are already 10.000 dimensions. Also important is that this method is not very forgiving for small variations like scaling and rotation.
+To compare two or more hands with each other a method is required to calculate the similarity. A very simple method is to compare each pixel location with each other and sum all the differences. But this method is not feasible. It is not going to work on images that are not the same size or orientation. Also it is computationally expensive for larger images - for an image of 100 by 100 pixels there are already 10.000 dimensions. Also important is that this method is not very forgiving for small variations like scaling and rotation.
 
 
 \begin{figure}[tb]
@@ -36,7 +36,7 @@ To compare two or more hands with each other a method is required to calculate t
 \end{figure}
 
 \subsection*{Descriptors}
-To reduce the number of dimensions of an image a descriptor can be used. A descriptor describes an image in, if properly used, less dimensions than the image itself. Also it can introduce some useful properties like scale and rotation invariance. In this paper 2 descriptors are discussed and compared, Histogram of oriented gradient\citep{NavneetDalal2006} (HOG) and Speeded Up Robust Features\citep{Bay2006} (SURF).
+To reduce the number of dimensions of an image a descriptor can be used. A descriptor describes an image in, if properly used, less dimensions than the image itself. Also it can introduce some useful properties like scale and rotation invariance. In this paper 2 descriptors are discussed and compared, Histogram of oriented gradient \citep{NavneetDalal2006} (HOG) and Speeded Up Robust Features \citep{Bay2006} (SURF).
 
 The HOG descriptor has been successfully applied and studied in human detection \citep{NavneetDalal2006, watanabe2009}. The HOG descriptors method uses a dense grid of uniformly spaced cells, where for each cell the gradients are calculated in 9 orientations. The values for each orientation for each cell are stored in a histogram that represent the image. \autoref{fig:hog} visualizes a simplification of the HOG calculation. 
 
@@ -48,7 +48,7 @@ The HOG descriptor has been successfully applied and studied in human detection 
 \end{figure}
 
 
-The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF approximates the speed of Scale-invariant feature transform (SIFT) and is claimed to more robust against several image transformations\citep{Murillo2007, Valgren2010}. SIFT is an other descriptor that is often used. SIFT is similar to HOG as in they both build a histogram of gradients of the keypoints. SIFT and SURF differ from HOG in that they incorporate a method for calculating usable key points, HOG uses a dense grid of key points.
+The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF approximates the speed of Scale-invariant feature transform (SIFT) and is claimed to more robust against several image transformations \citep{Murillo2007, Valgren2010}. SIFT is an other descriptor that is often used. SIFT is similar to HOG as in they both build a histogram of gradients of the keypoints. SIFT and SURF differ from HOG in that they incorporate a method for calculating usable key points, HOG uses a dense grid of key points.
 
 
 
@@ -101,7 +101,7 @@ There are various kernels, but \citep{Hsu2003} states the Radial Basis Function 
 	K(S_i,S_j) = e^{(-\gamma||S_i-S_j||^2)}, \gamma > 0,
 \end{equation}
 
-where $S_i$ and $S_j$ are two feature vectors. It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the scale of the kernel. An other interesting kernel is based upon the $\chi^2$ distance\citep{Zhang2007}. An advantage is that it doesn't have a parameter that needs optimization. This distance is incorporated into SVM by the usage of Gaussian kernels\citep{Chapelle1999}:
+where $S_i$ and $S_j$ are two feature vectors. It has one parameter $\gamma$ which needs adjusting to fit the dataset, it controls the scale of the kernel. An other interesting kernel is based upon the $\chi^2$ distance\citep{Zhang2007}. An advantage is that it does not have a parameter that needs optimization. This distance is incorporated into SVM by the usage of Gaussian kernels\citep{Chapelle1999}:
 
 \begin{equation}
 	K(S_i,S_j) = exp(-\frac{1}{A}D(S_i,S_j)),

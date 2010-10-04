@@ -17,13 +17,13 @@ Human-Computer Interaction (HCI), the communication between humans and computers
 
 New and revolutionary ideas are required to create new peripherals that improve productivity, but are still intuitive and thus easy to learn to use. To get inspiration for improvement, one can look around and study already existing communication methods, for example the communication between humans. 
 
-When two people are in a room and don't have an auditive or visual limitation, they will probably communicate by speech. But there is much more going on than only producing and interpreting words. The intonation, speed and other small variations in the voice add a lot more information to the words. Also the facial expression and body language give more space for expression. Some people like to `talk with their hands' while telling a story, something that adds more expression to the transmitted information.
+When two people are in a room and do not have an auditive or visual limitation, they will probably communicate by speech. But there is much more going on than only producing and interpreting words. The intonation, speed and other small variations in the voice add a lot more information to the words. Also the facial expression and body language give more space for expression. Some people like to `talk with their hands' while telling a story, something that adds more expression to the transmitted information.
 
 \subsection*{Sign Language}
 
 A deaf person cannot interpret spoken words, at least not by listening. He or she is highly depended on visual information. Sign languages have been emerged or invented to aid this visual communication. In these languages two elements have an important role: the face and the hands. These body parts give the most expressive power. The face because it is very good for expressing feelings and emotions, and the hands because they are very deformable. This makes the hands very interesting and useful, since there are countless combinations of finger poses and orientations. 
 
-Speech synthesis\citep{Schroder2001, Hunt1996}, speech recognition\citep{rabiner1993, rabiner1989}, facial expression recognition\citep{Cohen2003, zhang2002} and sign language interpretation\citep{Buehler2009,RichardBowden2004,Cooper2007} are all subject of extensive research. Breakthroughs in these area's are important for revolutionary new interfaces which can tremendously improve the speed of interaction and usability for a user. 
+Speech synthesis \citep{Schroder2001, Hunt1996}, speech recognition \citep{rabiner1993, rabiner1989}, facial expression recognition \citep{Cohen2003, zhang2002} and sign language interpretation \citep{Buehler2009,RichardBowden2004,Cooper2007} are all subject of extensive research. Breakthroughs in these area's are important for revolutionary new interfaces which can tremendously improve the speed of interaction and usability for a user. 
 
 
 
@@ -32,9 +32,9 @@ This thesis aims at looking into the details of using computer vision to interpr
 Translating sign language into music is a very interesting concept, not only because it sounds poetic but it can really demonstrate the power of such a system. Making live music is a complex process where real-time interaction between a artist and his tools is important. Also, for an audience it is much more compelling to look at a artist who is physically more active than only clicking a mouse.
 
 \subsection*{Hand Poses}
-Sign language doesn't really have distinct signs for musical concepts. Usually, when music is translated into sign language only the vocals are translated. Facial expression and references to emotions are used to indicate the `mood' of the music and the speed and expressiveness of the gestures indicate the intensity of the music, but these kind of gesture are not really usable for HCI because they are too subjective. A more formal method is required. Also, previous studies have shown that the segmentation of the consecutive gestures is a difficult task\citep{Buehler2009,RichardBowden2004}.
+Sign language does not really have distinct signs for musical concepts. Usually, when music is translated into sign language only the vocals are translated. Facial expression and references to emotions are used to indicate the `mood' of the music and the speed and expressiveness of the gestures indicate the intensity of the music, but these kind of gesture are not really usable for HCI because they are too subjective. A more formal method is required. Also, previous studies have shown that the segmentation of the consecutive gestures is a difficult task \citep{Buehler2009,RichardBowden2004}.
 
-It is more feasible to have a limited set of hand poses that corresponds to a set of commands and parameters.  Any set of hand poses would do for this system, as long as the individual poses don't look too similar. Since the idea is to translate the interpreted hand poses into sound, it would be interesting to use a set of poses that has a already existing relationship to sound.
+It is more feasible to have a limited set of hand poses that corresponds to a set of commands and parameters.  Any set of hand poses would do for this system, as long as the individual poses do not look too similar. Since the idea is to translate the interpreted hand poses into sound, it would be interesting to use a set of poses that has a already existing relationship to sound.
 
 In Medieval music, the Guidonian hand was a mnemonic device used to assist singers in learning to sight sing; singing according to visual perceived information like sheet music or hand gestures, typically not seen before. The idea of the Guidonian hand is that each portion of one hand represents a specific note within the hexachord system, which spans nearly three octaves. The other hand is used to point to the correct hand portion. \autoref{fig:guidonian} shows a hands with the tonal positions.
 
@@ -47,7 +47,7 @@ In Medieval music, the Guidonian hand was a mnemonic device used to assist singe
 
 Despite the fact that this system has a large set of symbols - 22 to be exact - this system is not usable since the individual poses are very much alike. Discriminating between the different positions on the hand will be problematic.
 
-A more recent method using hand poses in relation to music are the Curwen solfege hand signs\citep{choksy1999}. This method was introduced in the 19th century by John Curwen, who also is the founder of the famous tonic sol-fa. The tonic sol-fa is better known as \emph{'do re mi fa sol la ti'}.
+A more recent method using hand poses in relation to music are the Curwen solfege hand signs \citep{choksy1999}. This method was introduced in the 19th century by John Curwen, who also is the founder of the famous tonic sol-fa. The tonic sol-fa is better known as \emph{'do re mi fa sol la ti'}.
 
 \begin{figure}[tb]
 	\centering{}
@@ -119,11 +119,6 @@ At the moment of writing this thesis Microsoft is finishing the development of a
 	\label{fig:yi2009}
 \end{figure}
 
-
-
-
-
-\paragraph{hand Gestures}
 A lot of work has been done in the field of hand pose recognition. \citep{Erol2007,Mitra2007} give a good overview of what has been done and what techniques have been used.
 
 A similar approach as described in this paper is \citep{Wang2007}, but SIFT features are used and only 3 hand poses are detected. From the same author is \citep{Wang2009}, where a colored glove \autoref{fig:wang2009} is used to perform full 3d hand pose estimation which seem to yield promising results. The disadvantage of this method is the intrusive requirement of wearing a specific color glove, see \autoref{fig:wang2009}.
@@ -137,16 +132,10 @@ A similar approach as described in this paper is \citep{Wang2007}, but SIFT feat
 
 \citep{Segen1999} used shadows of hand poses for pose estimation. \citep{Mo2006} proposes a method for pose estimation from low-resolution depth images from a laser camera. A 3d model fitting approach is described in \citep{Athitsos2003,laGorce2010}. \citep{Stenger2006} uses template matching for pose estimation. \citep{Xiong2006} describes a method for 3d hand path tracking in a meeting setting with multiple camera's. \citep{Nickel2007} proposes a method for detection pointing gestures with a single camera.
 
+\citep{Hassanpour2008} describes an adaptive skin color segmentation method using Guassian Mixture Models. \citep{Phung2002} talks about skin modeling in the YCbCr color space and the application to human face detection. \citep{Sigal2004,Soriano2000,Stoerring1999} discuss the handling of changing illumination. \citep{Kakumanu2007} is a survey paper about skin color modeling and detection.
 
-\paragraph{Color}
- \citep{Hassanpour2008} describes an adaptive skin color segmentation method using Guassian Mixture Models. \citep{Phung2002} talks about skin modeling in the YCbCr color space and the application to human face detection. \citep{Sigal2004,Soriano2000,Stoerring1999} discuss the handling of changing illumination. \citep{Kakumanu2007} is a survey paper about skin color modeling and detection.
-
-
-\paragraph{Body Poses}
 An alternative approach in hand localization than described in this thesis is to capture the complete body pose. This could be a more robust method, but is at the moment computationally expensive. \citep{ferrari2008} introduces a method to extract a body pose from monoscopic video. \citep{VandenBergh2009} proposes a method for 3D pose recognition using multiple camera's. \citep{Poppe2007} discusses how 3D model fitting can be used for pose estimation. \citep{Moeslund2006} gives an overview of all relevant body pose estimation research until 2006.
 
-
-\paragraph{Sign Language}
 \citep{Buehler2009} discusses a method to learn sign language with news broadcasts that are subtitled and translated into sign language. The complexity of segmentation in sign language is discussed in \citep{RichardBowden2004}. An other approach for segmentation is discussed in \citep{Cooper2007}. \citep{starner1998,Vogler1999} use Hidden Markov Models to model sign language.
 
 

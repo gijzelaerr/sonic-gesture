@@ -128,8 +128,8 @@ int Matcher::match(const vector<float>& other_descriptors) {
     response = int(knn_matcher.find_nearest(&img_cvmat, settings->kNeirNeigh, 0, 0, 0, 0));
 #endif
 
-    //return this->stabilizer.update(response);
-    return response;
+    return this->stabilizer.update(response);
+    //return response;
 }
 
 Stabilizer::Stabilizer(int state_num) {

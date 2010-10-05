@@ -113,10 +113,10 @@ int main(int argc, char *argv[]) {
             };
 
             // UNCOMMENT THIS TO USE HOG
-            //hog.compute(handimg, descriptors, winStride, padding, locations);
+            hog.compute(handimg, descriptors, winStride, padding, locations);
 
             // UNCOMMENT THIS TO USE SURF
-            surf(handimg, Mat(), keypoints, descriptors, true);
+            //surf(handimg, Mat(), keypoints, descriptors, true);
 
             // initialize the matrix with info from first hand
             if(first) {

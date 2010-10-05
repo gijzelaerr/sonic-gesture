@@ -42,7 +42,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::openVideo() {
     QString fileName = QFileDialog::getOpenFileName(this, "Open Movie", settings->moviePath.path(),
-            "Movies (*.asf *.mp4 *.mpeg *.wmv *.mpg *.mov *.avi)");
+            "Movies (*.asf *.mp4 *.mpeg *.wmv *.mpg *.mov *.avi *.jpg *.png *.jpeg)");
          if (!fileName.isEmpty()) {
             QFileInfo fileInfo(fileName);
             settings->moviePath = fileInfo.absolutePath();

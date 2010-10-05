@@ -3,26 +3,27 @@
 clear;
 close all;
 
-%% settings
+% settings
 %number of symbols in each set
 SYMBOLS=28;
+knn = 5;
+% svm parms
+cRange = 2.^(-4:1:4);
+nReps = 1;
+nFolds = 3;
 
-%% load features
+% load features
 full_dataset = load('features.txt');
 
-%% load labels
+% load labels
 full_labels = load('labels.txt');
 
-%% load set labels
+% load set labels
 full_sets = importdata('sets.txt');
 
-%% import all video groups
+% import all video groups
 groups
-
-%% SETTINGS
-% which nameset we want to use
 nameset = full_names;
-knn = 5;
 
 %% prepare rundata
 rundata = cell(size(nameset,1), 2);
@@ -46,7 +47,8 @@ end;
 
 %% DO IT
 confusion = zeros(SYMBOLS, SYMBOLS);
-parfor index = 1:size(rundata,1)
+%for index = 1:size(rundata,1)
+for index = 1:1
     name = nameset(index);
     fprintf('running test with: %s\n', name{1});
     data = rundata(index, :);
@@ -97,9 +99,10 @@ parfor index = 1:size(rundata,1)
     testData = testData + testShift;
     testData(testData<0) = 0;
 
+
     fprintf('constructing kernel\n');
-    trainDist = ChiSquareDistance(trainSet);
-    testDist = ChiSquareDistance(testSet, trainSet);
+    trainDist = ChiSquareDistance(trainData);
+    testDist = ChiSquareDistance(testData, trainData);
 
     fprintf('doing classification\n');
     [avgPrec clfsOutput] = SvmPKExpOpt(trainDist, testDist, trainLabels, testLabels, cRange, nReps, nFolds, 0);

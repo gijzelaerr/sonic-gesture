@@ -43,8 +43,8 @@ void SkinFinder::find_face() {
         
     frame_counter = 0;
     assert(frame.data);
-    haar.detectMultiScale(frame, faces, 1.3, 3, CV_HAAR_DO_CANNY_PRUNING +
-        CV_HAAR_FIND_BIGGEST_OBJECT, Size(frame.rows/10, frame.rows/10) );
+    haar.detectMultiScale(frame, faces, 1.3, 3, CV_HAAR_DO_CANNY_PRUNING + CV_HAAR_FIND_BIGGEST_OBJECT, Size(frame.rows/10, frame.rows/10) );
+    //haar.detectMultiScale(frame, faces, 1.1, 1, NULL, Size(frame.rows/10, frame.rows/10) );
 
     if (faces.size() > 0) {
         face = faces.at(0);

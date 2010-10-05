@@ -47,8 +47,8 @@ end;
 
 %% DO IT
 confusion = zeros(SYMBOLS, SYMBOLS);
-%for index = 1:size(rundata,1)
-for index = 1:1
+parfor index = 1:size(rundata,1)
+%for index = 1:1
     name = nameset(index);
     fprintf('running test with: %s\n', name{1});
     data = rundata(index, :);
@@ -80,10 +80,12 @@ for index = 1:1
         testSet(target_start:target_finish, :) = range;
     end
     
-    % construct labels
-    testLabels = repmat((1:SYMBOLS)', size(testIndexes,2), 1);
-    trainLabels = repmat((1:SYMBOLS)', size(trainIndexes,2), 1);
     
+    % construct labels
+    trainLabels = repmat(eye(28,28),size(trainIndexes,2),1);
+    testLabels  = repmat(eye(28,28),size(testIndexes,2),1);
+
+
     fprintf('doing PCA\n');
     eigenhands = pca(trainSet, 0.95);
     trainSetEigen = trainSet*eigenhands;
@@ -99,11 +101,12 @@ for index = 1:1
     testData = testData + testShift;
     testData(testData<0) = 0;
 
-
+    %%
     fprintf('constructing kernel\n');
-    trainDist = ChiSquareDistance(trainData);
-    testDist = ChiSquareDistance(testData, trainData);
+    trainDist = ChiSquareDistance(trainSet);
+    testDist = ChiSquareDistance(testSet, trainSet);
 
+    %%
     fprintf('doing classification\n');
     [avgPrec clfsOutput] = SvmPKExpOpt(trainDist, testDist, trainLabels, testLabels, cRange, nReps, nFolds, 0);
     [c,acc]= svmOutput2Confmat(clfsOutput, testLabels);

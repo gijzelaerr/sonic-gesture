@@ -50,13 +50,11 @@ The HOG descriptor has been successfully applied and studied in human detection 
 
 The SURF descriptor is based on sums of approximated 2D Haar wavelet responses and makes use of integral images. SURF approximates the speed of Scale-invariant feature transform (SIFT) and is claimed to more robust against several image transformations \citep{Murillo2007, Valgren2010}. SIFT is an other descriptor that is often used. SIFT is similar to HOG as in they both build a histogram of gradients of the keypoints. SIFT and SURF differ from HOG in that they incorporate a method for calculating usable key points, HOG uses a dense grid of key points.
 
-
-
 \subsection{Principal Component Analysis}
-Principal Component Analysis (PCA) is a method that reduces data dimensionality by performing a covariance analysis between vectors \cite{jolliffe2002}. The original space will be mapped into a new space based on the variance in the original data. PCA transforms a number of correlated variables into a (possibly smaller) number of uncorrelated variables called principal components. The first principal component vector accounts for as much of the variability in the data as possible, and each consecutive component vector accounts for as much of the remaining variability as possible. 
+An other approach for dimension reduction is Principal Component Analysis (PCA). PCA is a method that reduces data dimensionality by performing a covariance analysis between vectors \cite{jolliffe2002}. The original space will be mapped into a new space based on the variance in the original data. PCA transforms a number of correlated variables into a (possibly smaller) number of uncorrelated variables called principal components. The first principal component vector accounts for as much of the variability in the data as possible, and each consecutive component vector accounts for as much of the remaining variability as possible. 
 
-PCA may improve the performance of a classifier both in classification and time performance.
-
+PCA may improve the performance of a classifier both in classification and time performance. PCA can also be used in combination with the previously described descriptors.
+                      
 \section{Classification}
 Using a set of training examples each marked as belonging to a category, a classifier builds a model that predicts whether a new example falls into one category or the other. There are many classifiers which can be used in different ways. For computer vision two of these are interesting because of simplicity, or superiority; k Nearest Neighbors and Support Vector Machines.
 

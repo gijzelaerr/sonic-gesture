@@ -119,9 +119,7 @@ At the moment of writing this thesis Microsoft is finishing the development of a
 	\label{fig:yi2009}
 \end{figure}
 
-A lot of work has been done in the field of hand pose recognition. \citep{Erol2007,Mitra2007} give a good overview of what has been done and what techniques have been used.
-
-A similar approach as described in this paper is \citep{Wang2007}, but SIFT features are used and only 3 hand poses are detected. From the same author is \citep{Wang2009}, where a colored glove \autoref{fig:wang2009} is used to perform full 3d hand pose estimation which seem to yield promising results. The disadvantage of this method is the intrusive requirement of wearing a specific color glove, see \autoref{fig:wang2009}.
+A lot of work has been done in the field of hand pose recognition. \citep{Erol2007, Mitra2007} give a good overview of what has been done and what techniques have been used. \citep{Stenger2006} describes a similar approach as in this paper, but uses template matching and $k$-NN. Also a similar approach  is \citep{Wang2007}, but SIFT features are used and only 3 hand poses are detected. Both papers don't have a dynamic skin model. From the same author is \citep{Wang2009}, where a colored glove is used to perform full 3d hand pose estimation which seem to yield promising results. The disadvantage of this method is the intrusive requirement of wearing a specific color glove, see \autoref{fig:wang2009}.
 
 \begin{figure}[tb]
 	\center{}
@@ -130,13 +128,11 @@ A similar approach as described in this paper is \citep{Wang2007}, but SIFT feat
 	\label{fig:wang2009}
 \end{figure}
 
-\citep{Segen1999} used shadows of hand poses for pose estimation. \citep{Mo2006} proposes a method for pose estimation from low-resolution depth images from a laser camera. A 3d model fitting approach is described in \citep{Athitsos2003,laGorce2010}. \citep{Stenger2006} uses template matching for pose estimation. \citep{Xiong2006} describes a method for 3d hand path tracking in a meeting setting with multiple camera's. \citep{Nickel2007} proposes a method for detection pointing gestures with a single camera.
+Other studies require extra non-consumer hardware; \citep{Mo2006} proposes a method for pose estimation from low-resolution depth images from a laser camera. \citep{Xiong2006} describes a method for 3D hand path tracking in a meeting setting with multiple camera's. A 3d model fitting approach is described in \citep{Athitsos2003,laGorce2010}. 3D model fitting can yield more accurate results, but the search space is much bigger and it will be very difficult to gain real-time performance. 
 
-\citep{Hassanpour2008} describes an adaptive skin color segmentation method using Guassian Mixture Models. \citep{Phung2002} talks about skin modeling in the YCbCr color space and the application to human face detection. \citep{Sigal2004,Soriano2000,Stoerring1999} discuss the handling of changing illumination. \citep{Kakumanu2007} is a survey paper about skin color modeling and detection.
+An alternative approach to hand localization is to capture the complete body pose. This could be a more robust method, but is at the moment also computationally expensive. \citep{ferrari2008} introduces a method to extract a body pose from monoscopic video. \citep{VandenBergh2009} proposes a method for 3D pose recognition using multiple camera's. \citep{Poppe2007} discusses how 3D model fitting can be used for pose estimation. \citep{Moeslund2006} gives an overview of all relevant body pose estimation research until 2006.
 
-An alternative approach to hand localization than described in this thesis is to capture the complete body pose. This could be a more robust method, but is at the moment computationally expensive. \citep{ferrari2008} introduces a method to extract a body pose from monoscopic video. \citep{VandenBergh2009} proposes a method for 3D pose recognition using multiple camera's. \citep{Poppe2007} discusses how 3D model fitting can be used for pose estimation. \citep{Moeslund2006} gives an overview of all relevant body pose estimation research until 2006.
-
-\citep{Buehler2009} discusses a method to learn sign language with news broadcasts that are subtitled and translated into sign language. The complexity of segmentation in sign language is discussed in \citep{RichardBowden2004}. An other approach for segmentation is discussed in \citep{Cooper2007}. \citep{starner1998,Vogler1999} use Hidden Markov Models to model sign language.
+Related but more\citep{Buehler2009} discusses a method to learn sign language with news broadcasts that are subtitled and translated into sign language. The complexity of segmentation in sign language is discussed in \citep{RichardBowden2004}. An other approach for segmentation is discussed in \citep{Cooper2007}. \citep{starner1998,Vogler1999} use Hidden Markov Models to model sign language.
 
 
 

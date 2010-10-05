@@ -19,14 +19,14 @@ Sonic Gesture has been implemented in C++. Almost all computer vision algorithms
 
 When the finder mode is active, Sonic Gesture will translate the labeled hand poses, the hand positions and the size of the hand into Open Sound Control (OSC). OSC is a protocol which is specifically designed for transferring audio information over a network. For those who are familiar with digital music, it is very similar to MIDI. A program that can interpreted OSC can then be configured to listen on a specific port and process these OSC command.
 
-Sonic Gesture will submit
+Sonic Gesture will submit:
 \begin{itemize}
 	\item For each hand the beginning and the end of detected sequence of hand specific hand pose. This is an integer. This can be used to trigger a action, like playing a specific note.
 	\item The position of each hand in $x$ and $y$ position. This is a float and can be used to manipulate a parameter.
 	\item The size of the hand. This is also a float and can also be used to manipulate a parameter.
 \end{itemize}
 
-There is no strict defined relationship between a hand pose and a sound or parameter, the user of Sonic Gesture can define his own specific mapping with his or her preferred audio application. 
+There is no strict defined relationship between a hand pose and a sound or parameter, the user of Sonic Gesture can define his or her own specific mapping with apreferred audio application. 
 
 \begin{figure}[ht]
 \centering{}
@@ -38,7 +38,9 @@ There is no strict defined relationship between a hand pose and a sound or param
 \section{Time Performance}
 A lot of effort has been put into getting Sonic Gesture as fast as possible. Initially Sonic Gesture was written in Python and used the Python API of OpenCV. Soon it became clear that Python was to limited to do high performance graphic processing so a switch to C++ was made. 
 
-The performance of Sonic Gesture depends on how fast the testing systems CPU power is, if the OpenCV IPP extensions is used, but also how fast the camera can capture frames. On a Macbook Pro, 2.4 GHz intel core 2 duo with 4 GB of memory using the build-in iSight as camera, processing one frame takes 65 ms on average. This is with the full dataset of 2072 datapoints with 3780 dimensions using the KNN classifier. KNN works fine with low numbers of datapoint, but with high numbers it starts to slow down. Still it is quite fast; around 25 ms on average. SVM will probably perform much faster with a high number of datapoints but we couldn't get the SVM implementation of OpenCV to work. An other expensive operation is the face detection algorithm, when tweaked it takes around 13 ms to locale a face in a image. Since a face position is not required constantly this is done only every 10th frame, so valuable computation time is saved. An other surprisingly expensive operation is the resizing of a image. Resizing an image to a small size is a crucial part of the pipe line, because some operations on a big image will take too much time. But resizing a image using interpolation is a expensive operation. Where interpolation is not required, for example for rendering on the screen, it is disabled saving more computing time. 
+The performance of Sonic Gesture depends on how fast the testing systems CPU power is, if the OpenCV IPP extensions is used, but also how fast the camera can capture frames. On a Macbook Pro, 2.4 GHz intel core 2 duo with 4 GB of memory using the build-in iSight as camera, processing one frame takes 65 ms on average. This is with the full dataset of 2072 datapoints with 3780 dimensions using the KNN classifier. KNN works fine with low numbers of datapoint, but with high numbers it starts to slow down. Still it is quite fast; around 25 ms on average. SVM will probably perform faster with a high number of datapoints but the current implementation of SVM in OpenCV is problematic.
+
+An other expensive operation is the face detection algorithm, when tweaked it takes around 13 ms to locale a face in a image. Since a face position is not required constantly this is done only every 10th frame, so valuable computation time is saved. An other surprisingly expensive operation is the resizing of a image. Resizing an image to a small size is a crucial part of the pipe line, because some operations on a big image will take too much time. But resizing a image using interpolation is a expensive operation. Where interpolation is not required, for example for rendering on the screen, it is disabled and thus saving computing time. 
 
 
 

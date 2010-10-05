@@ -121,9 +121,13 @@ The Curwen hand symbols that are closely related in a musical scale way are quit
 
 
 \subsubsection{Results}
-See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for all the results, $f$ is the number of features. In all cases SVM performs better than KNN. The SURF features perform very bad compared to HOG. The $x^2$ distance kernel performs slightly better than the RBF kernel.  PCA improves performance when using a SVM classifier, but degrades the performance with KNN. 
+\paragraph{K-fold per movie using simple dataset only}
+\autoref{tab:perfilm}
 
-\autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm}, a SVM classifier with a precomputed kernel using the $\chi^2$ distance and HOG features. Most notable is the poor performance for the \emph{fi1} hand pose, see \autoref{fig:fi1}. This is probably due to the lack of skin surface and unique features. On the opposite \emph{sol1, do2, fa2, ti2, I, II, III }and \emph{IV}, perform near perfect. These hand poses, shown in \autoref{fig:goodhands}, expose a lot of surface and gradients, and also possess unique features. 
+\paragraph{K-fold per person}
+\autoref{tab:perperson}
+
+\autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm}, a SVM classifier with a precomputed kernel using the $\chi^2$ distance and HOG features. Most notable is the poor performance for the \emph{fi1} hand pose, see \autoref{fig:fi1}. This is probably due to the lack of skin surface and unique features. On the opposite \emph{sol1, do2, fa2, ti2, I, II, III }and \emph{IV}, perform near perfect. These hand poses, shown in \autoref{fig:goodhands}, expose a lot of surface and gradients, and also possess unique features.
 
 \begin{figure}[tb]
   \centering
@@ -131,7 +135,6 @@ See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for 
   \caption{\emph{fi1}, hand pose that yields poor classification performance}
   \label{fig:fi1}
 \end{figure}
-
 
 \begin{figure}[tb]
 \centering{}
@@ -151,6 +154,16 @@ See \autoref{tab:perfilm}, \autoref{tab:perperson} and \autoref{tab:perset} for 
 \caption{Hand poses that yield a high accuracy}
 \label{fig:goodhands}
 \end{figure}
+
+
+\paragraph{Simple as train set, complex as test set}
+\autoref{tab:perset}
+The SURF features perform very bad compared to HOG.
+
+See ,  and  for all the results, $f$ is the number of features. In all cases SVM performs better than KNN.  The $x^2$ distance kernel performs slightly better than the RBF kernel.  PCA improves performance when using a SVM classifier, but degrades the performance with KNN. 
+
+
+
 
 
 
@@ -194,8 +207,8 @@ full 	& KNN3 &	no	& 66.98\% & 76.32\%	\\
 full 	& KNN3 &	yes	& 65.31\% & 76.00\%	\\
 full 	& SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$) & yes	& 64.05\% & 74.42\%	\\
 full 	& SVM RBF ($c=2^6$ $\gamma=2^{-5}$)	     & yes	& \textbf{73.38\%} & \textbf{81.44\%}	\\
-full 	& SVM $\chi^2$ &	no	&  71.83\% &80.07\% \\
-full 	& SVM $\chi^2$ &	yes	&  TODO & TODO \\
+full 	& SVM $\chi^2$ &	no	&  71.83\% & 80.07\% \\
+full 	& SVM $\chi^2$ &	yes	&  72.43\% & 82.82\% \\
 \hline
 \end{tabular}
 \caption{k-fold per person}
@@ -263,7 +276,7 @@ To evaluate Sonic Gesture in the time domain, the sequential output must be eval
 
 the output of Sonic Gesture for all movies is stored. This results in a long list of labels - one label for each frame - for each move. In each list all repeating labels are replaced with one instance of that label. This reduces the length of each list significantly. Now this list can be used to compute the Damerau-Levenshtein Distance.
 
-The Damerau-Levenshtein Distance algorithm is shown in Algorithm~\autoref{alg:dameraulevenshtein}. The algorithm calculated to number of deletions, insertions, substitutions and transpositions required to transform one string into an other. The maximum number of operations is equal to the length of the shortest string. Because of the ground truth's length of 28 the minimum will always be 28 or less. This way the distance can be safely normalized and divided by 28, so all distances can be easily compared.
+The Damerau-Levenshtein Distance algorithm is shown in Algorithm~\autoref{alg:dameraulevenshtein}. The algorithm calculates the number of deletions, insertions, substitutions and transpositions required to transform one string into an other. The maximum number of operations is equal to the length of the shortest string. Because of the ground truth's length of 28 the minimum will always be 28 or less. This way the distance can be safely normalized and divided by 28, so all distances can be easily compared.
 
 \begin{algorithm}
 \caption{DamerauLevenshteinDistance(str1, str2)}
@@ -362,7 +375,7 @@ To show that Sonic Gesture can also work with non artificial video material a th
 
 
 \subsubsection{Results}
-\autoref{fig:vulcangood} shows eight examples of successful classification of the vulcan salute. The images are cutout screenshots of the implementation of Sonic Gesture. The upper left window is the input, the upper right window is the segmented and labeled visualisation. A green square indicates a right hand and yellow left. The bottom squares show the estimated hand poses, the left square for the left hand and the right square for the right hand. For the visualisation of the detected Vulcan Salute the picture of Mr. Spock is used.
+\autoref{fig:vulcangood} shows eight examples of successful detection of the vulcan salute. The images are cutout screenshots of the implementation of Sonic Gesture. The upper left window is the input, the upper right window is the segmented and labeled visualisation. A green square indicates a right hand and yellow left. The bottom squares show the estimated hand poses, the left square for the left hand and the right square for the right hand. For the visualisation of the detected Vulcan Salute the picture of Mr. Spock is used.
 
 \autoref{fig:vulcanfail} shows two screenshots of failed segmentation. Sonic Gesture fails on the first salute - performed by Condolisa Rise - because the skin segmentation fails. The skin colour of her face has more in common with the wall than with her hand. The second failure case is performed by Simon Pegg, here the segmentation is correct, but classification is just wrong. More training data could fix this problem.
 

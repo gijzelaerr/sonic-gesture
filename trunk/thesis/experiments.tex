@@ -93,7 +93,7 @@ Only the movies with a simple background are used. For each run one movie is use
 All movies or used, but per person the movies are used for testing and all other movies for training. Both complex and simple backgrounds are used. This setting mimics the real life situation where the system is pre-trained with only other people than the user of the system, and the background is not necessarily simple. 
 
 \paragraph{Simple as train set, complex as test set}
-The classifier is trained with all movies with the simple background, and as a test set the movies with the complex background are used. This mimics the real life situation where the training is with recordings in optimal conditions, but the system is used in a complex environment like a living room. Also the system is not trained by the user.
+The classifier is trained with all movies with the simple background, and as a test set the movies with the complex background are used. This mimics the real life situation where the training is with recordings in optimal conditions, but the system is used in a complex environment like a living room. Also the system is not trained by the user. One time the complete test is run with HOG features, and one time with SURF so we can compare the performance. The SURF features are only used in this experiment, since this one takes the least time, running the others experiments again with SURF would take a couple of days.
 
 
 \subsubsection{Test setting}
@@ -121,57 +121,8 @@ The Curwen hand symbols that are closely related in a musical scale way are quit
 
 
 \subsubsection{Results}
+
 \paragraph{K-fold per movie using simple dataset only}
-\autoref{tab:perfilm}
-
-\paragraph{K-fold per person}
-\autoref{tab:perperson}
-
-\autoref{fig:confusion} is the confusion matrix of the best results from \autoref{tab:perfilm}, a SVM classifier with a precomputed kernel using the $\chi^2$ distance and HOG features. Most notable is the poor performance for the \emph{fi1} hand pose, see \autoref{fig:fi1}. This is probably due to the lack of skin surface and unique features. On the opposite \emph{sol1, do2, fa2, ti2, I, II, III }and \emph{IV}, perform near perfect. These hand poses, shown in \autoref{fig:goodhands}, expose a lot of surface and gradients, and also possess unique features.
-
-\begin{figure}[tb]
-  \centering
-  \includegraphics[width=0.2\linewidth]{figures/examples/6.jpg}
-  \caption{\emph{fi1}, hand pose that yields poor classification performance}
-  \label{fig:fi1}
-\end{figure}
-
-\begin{figure}[tb]
-\centering{}
-\subfloat[Sol]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/7.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Do]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/12.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Fa]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/17.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Ti]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/23.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Extra1]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/24.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Extra2]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/25.jpg}}
-\hspace{0.03\linewidth}
-\subfloat[Extra3]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/26.jpg}}
-\caption{Hand poses that yield a high accuracy}
-\label{fig:goodhands}
-\end{figure}
-
-
-\paragraph{Simple as train set, complex as test set}
-\autoref{tab:perset}
-The SURF features perform very bad compared to HOG.
-
-See ,  and  for all the results, $f$ is the number of features. In all cases SVM performs better than KNN.  The $x^2$ distance kernel performs slightly better than the RBF kernel.  PCA improves performance when using a SVM classifier, but degrades the performance with KNN. 
-
-
-
-
-
-
-
-
-
-
-
 
 
 \begin{table}
@@ -180,9 +131,8 @@ See ,  and  for all the results, $f$ is the number of features. In all cases SVM
 \hline\hline
 Classifier 		& PCA		&  	Full scale	& Major scale	\\
 \hline
-KNN3 		&	no	&  	84.27\%		& 90.21\%		\\
-KNN3	 	&	yes	& 	83.67\%		& 89.70\%		\\
-SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	&	yes	& 	76.78\%	& 84.38\%	\\
+$k$-NN ($k=3$)	&	no	&  	84.27\%		& 90.21\%		\\
+$k$-NN ($k=3$) 	&	yes	& 	83.67\%		& 89.70\%		\\
 SVM RBF ($c=2^6$ $\gamma=2^{-5}$)		&	no	&	86.02\%	& 90.88\% \\
 SVM RBF ($c=2^6$ $\gamma=2^{-5}$)		&	yes	& 	86.85\% & \textbf{91.85\%} \\
 SVM $\chi^2$ &	no	&	\textbf{87.92\%}		& 91.58\% \\
@@ -193,27 +143,66 @@ SVM $\chi^2$ &	yes	&	TODO		& TODO \\
 \label{tab:perfilm}
 \end{table}
 
+\autoref{tab:perfilm} shows the result for this experiments. $k$-NN performs worse in all cases. Using PCA with $k$-NN makes the results even worse. SVM with the RBF kernel performs better on the Major scale, but the $\chi^2$ kernel performs better on the Full scale. 
+
+\autoref{fig:confusion} is the confusion matrix of the best results for the full scale, a SVM classifier with a precomputed kernel using the $\chi^2$ distance. Most notable is the poor performance for the \emph{fi1} hand pose, see Figure~\ref{fig:badhand}. This is probably due to the lack of skin surface and unique features. On the opposite \emph{sol1, do2, fa2, ti2, I, II, III }and \emph{IV}, perform near perfect. These hand poses, shown in \autoref{fig:goodhands}, expose a lot of surface and gradients, and also possess unique features.
+
+
+\begin{figure}[tb]
+	\centering{}
+	\includegraphics[width=0.8\linewidth]{confmat/confusion.jpg}
+	\caption{Confusion matrix for the n-fold per movie experiment}
+	\label{fig:confusion}
+\end{figure}
+
+\begin{figure}[tb]
+\centering{}
+\subfloat[Fi1]{
+\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/6.jpg}
+\label{fig:badhand}
+}
+\hspace{0.03\linewidth}
+\subfloat[Sol1]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/7.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Do2]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/12.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Fa2]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/17.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[Ti2]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/23.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[I]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/24.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[II]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/25.jpg}}
+\hspace{0.03\linewidth}
+\subfloat[III]{\includegraphics[width=0.2\linewidth,height=0.15\linewidth]{figures/examples/26.jpg}}
+\caption{\emph{Sol1, Do2, Fa2, Ti2, I, II} and \emph{III}}
+\label{fig:goodhands}
+\end{figure}
+
+
+\paragraph{K-fold per person}
 
 \begin{table}
 \centering
-\begin{tabular}{lllrr}
+\begin{tabular}{llrr}
 \hline\hline
-Dataset & Classifier & PCA	& Full scale	& Major scale \\
+ Classifier & PCA	& Full scale	& Major scale \\
 \hline
-simple	& KNN3	&	no	& 72.93\%, & 82.63\% \\
-simple	& SVM RBF ($c=2^6$ $\gamma=2^{-5}$) &	yes	& \textbf{79.71\%} & \textbf{86.70\%}	\\
-\hline
-full 	& KNN3 &	no	& 66.98\% & 76.32\%	\\
-full 	& KNN3 &	yes	& 65.31\% & 76.00\%	\\
-full 	& SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$) & yes	& 64.05\% & 74.42\%	\\
-full 	& SVM RBF ($c=2^6$ $\gamma=2^{-5}$)	     & yes	& \textbf{73.38\%} & \textbf{81.44\%}	\\
-full 	& SVM $\chi^2$ &	no	&  71.83\% & 80.07\% \\
-full 	& SVM $\chi^2$ &	yes	&  72.43\% & 82.82\% \\
+$k$-NN ($k=3$) &	no	& 66.98\% & 76.32\%	\\
+$k$-NN ($k=3$) &	yes	& 65.31\% & 76.00\%	\\
+SVM RBF ($c=2^6$ $\gamma=2^{-5}$) & yes & \textbf{73.38\%} & 81.44\%	\\
+SVM $\chi^2$ &	no	&  71.83\% & 80.07\% \\
+SVM $\chi^2$ &	yes	&  72.43\% & \textbf{82.82\%} \\
 \hline
 \end{tabular}
 \caption{k-fold per person}
 \label{tab:perperson}
 \end{table}
+
+
+\autoref{tab:perperson} shows the results of this experiment. Also here, SVM has superior performance compared to $k$-NN. SVM with the RBF kernel performs better on the Full Scale, while the$\chi^2$ kernel performs better on the Major scale. Again, PCA improves the performance for SVM but not for $k-NN$. It is interesting to see that the overall performance is worse than the previous experiment. This is due to the fact that the train set doesn't contain extracted hands from the test subject during $k$-fold. It shows that Sonic Gesture works better when it is trained by the end user.
+
+\paragraph{Simple as train set, complex as test set}
 
 
 \begin{table}
@@ -222,34 +211,26 @@ full 	& SVM $\chi^2$ &	yes	&  72.43\% & 82.82\% \\
 \hline\hline
 Descriptors & Classifier 		& pca		&  	Full scale	&	Major scale	\\
 \hline
-Hog & KNN3				& no	&	58.57\% 	&	72.78\%	\\
-Hog & KNN3 				& yes	&	57.62\% 	&	72.17\%	\\
-Hog & SVM RBF ($c=2^6$ $\gamma=2^{-5}$)			& yes & 62.14\%	&	73.39\%	\\
-Hog & SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	& yes & 55.48\%	&	68.25\%	\\
-Hog & SVM $\chi^2$ 		&	no	&	\textbf{63.81\%}		&	\textbf{74.71\%}	\\
-Hog & SVM $\chi^2$		&	yes &	58.57\% 	&	71.98\% \\
+Hog & $k$-NN ($k=3$)& no	&	58.57\% 	&	72.78\%	\\
+& $k$-NN ($k=3$)	& yes	&	57.62\% 	&	72.17\%	\\
+& SVM RBF ($c=2^6$ $\gamma=2^{-5}$)			& yes & 62.14\%	&	73.39\%	\\
+& SVM $\chi^2$ 		&	no	&	\textbf{63.81\%}		&	\textbf{74.71\%}\\
+& SVM $\chi^2$		&	yes &	58.57\% 	&	71.98\% \\
 \hline
-SURF & KNN3				&	no	&	46.19\% 	&	60.17\%	\\
-SURF & KNN3				&	yes &	44.05\%		& 56.65\% \\
-SURF & SVM RBF ($c=2^6$ $\gamma=2^{-5}$)		& yes &	44.29\%	&	57.18\%	\\
-SURF & SVM RBF ($c=1$ $\gamma=\frac{1}{|f|}$)	& yes &	40.00\%	&	53.28\%	\\
-SURF & SVM $\chi^2$		&	no	&	37.93\%		&	47.91\%	\\
-SURF & SVM $\chi^2$		&	yes	&	53.33\% 	&	65.13 \\
+SURF & $k$-NN ($k=3$)&	no	&	46.19\% 	&	60.17\%	\\
+& $k$-NN ($k=3$)	&	yes &	44.05\%		& 56.65\% \\
+& SVM RBF ($c=2^6$ $\gamma=2^{-5}$)			& yes &	44.29\%	&	57.18\%	\\
+& SVM $\chi^2$		&	no	&	37.93\%		&	47.91\%	\\
+& SVM $\chi^2$		&	yes	&	53.33\% 	&	65.13 \\
 \hline
 \end{tabular}
 \caption{simple as trainset, complex as testset}
 \label{tab:perset}
 \end{table}
 
+\autoref{tab:perset} shows the results of this experiment. Again, SVM performed better than $k$-NN, but now the $\chi^2$ kernel performs better than the RBF kernel in both cases. But overall the difference is minimal. The abnormality here is that PCA did not improve the results. The performance of the previous experiment is better than this experiment. Also for this experiment the train data doesn't contain hands from the same person in the test set. This experiment also shows that the a complex background has a negative influence on the classification performance. 
 
-\begin{figure}[tb]
-	\centering{}
-	\includegraphics[width=\linewidth]{confmat/confusion.jpg}
-	\caption{Confusion matrix using HOG, SVM $\chi^2$, n-fold, per film simple set}
-	\label{fig:confusion}
-\end{figure}
-
-
+Even more interesting is the fact that the SURF features perform very bad compared to HOG features. Performing PCA on the SURF features improves performance dramatically. The horrible performance of SURF is probably caused by the improper usage of the keypoints.
 
 
 \subsection{Part II - Evaluating Sonic Gesture}
@@ -319,9 +300,7 @@ The Damerau-Levenshtein Distance algorithm is shown in Algorithm~\autoref{alg:da
 \end{algorithm}
 	
 \subsubsection{Results}
-\autoref{tab:distance} contains all distances, grouped per dataset. The numbers in table heading are the movie number of that column. The average column is the \textit{average} of all movies per person. The average per person column lists the same distances, but without using the stabilizer discussed in \autoref{subsec:stabilizer}. As you see this has a dramatic impact on the performance. The average distance for the simple set is 0.27, for the complex set 0.35. 
-
-
+\autoref{tab:distance} contains all distances, grouped per dataset. The numbers in table heading are the movie number of that column. The average column is the \textit{average} of all movies per person. The average per person column lists the same distances, but without using the stabilizer discussed in \autoref{subsec:stabilizer}. As you see this has a dramatic impact on the performance in this experiment. No clear patterns are visible, there is a small difference between the average distance for the simple set (0.27), and the complex set 0.35. This score tells more about how well the test subject performed the Curwen hand sequence. This score could be used to compare Sonic Gesture to other systems when the same dataset is used. 
 
 \begin{table}
 \centering

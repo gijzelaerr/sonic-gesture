@@ -63,11 +63,6 @@ void SkinFinder::make_histogram() {
     if (!(face == Rect())) {
         facepixels = hsv(face);
         histogram.update(facepixels);
-
-        //Mat gijs = frame(face);
-        //Mat gijs2;
-        //resize(gijs, gijs2, Size(), 5, 5);
-        //imshow("gijs", gijs2);
     }
 }
 

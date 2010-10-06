@@ -10,7 +10,7 @@
 			<key>filename</key>
 			<string>thesis.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-06T10:01:26Z</date>
+			<date>2010-10-06T10:14:23Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -222,14 +222,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>27</integer>
 				<key>line</key>
-				<integer>18</integer>
+				<integer>109</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>102</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -247,6 +247,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{771, 3}, {811, 1018}}</string>
+	<string>{{780, 10}, {811, 1018}}</string>
 </dict>
 </plist>

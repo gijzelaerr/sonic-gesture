@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>conc.tex</string>
+	<string>experiments.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -34,21 +34,21 @@
 			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T16:30:52Z</date>
+			<date>2010-10-05T23:57:26Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>sonicgesture.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T15:43:06Z</date>
+			<date>2010-10-05T16:33:56Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>conc.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T16:30:52Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-10-05T16:33:53Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -136,14 +136,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>191</integer>
+				<integer>41</integer>
 				<key>line</key>
-				<integer>202</integer>
+				<integer>138</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>181</integer>
+			<integer>113</integer>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>

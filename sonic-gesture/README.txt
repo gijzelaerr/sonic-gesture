@@ -8,3 +8,8 @@ This is the graduation project of Gijs Molenaar for the Master
 Artificial Intelligence at the University of Amsterdam.
 
 More info: http://code.google.com/p/sonic-gesture
+
+NOTE: The current state of the code is a little bit a mess. When
+I have time I will clean up stuff.
+
+

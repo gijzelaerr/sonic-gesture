@@ -35,12 +35,18 @@
 \usepackage{natbib}
 
 % for fancy headers
-%\usepackage{fancyhdr}
-%\setlength{\headheight}{15.2pt}
-%\pagestyle{fancy}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\usepackage{calc} \fancyheadoffset[LE,RO]{\marginparsep+\marginparwidth} \renewcommand{\chaptermark}[1]{\markboth{#1}{}} \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}} \fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage} \fancyhead[LO]{\bfseries\rightmark} \fancyhead[RE]{\bfseries\leftmark} \fancypagestyle{plain}{\fancyhead{}}
+
+% for title page centering
+\usepackage{changepage}
 
 % for internal references, USE AS LAST
-\usepackage[colorlinks]{hyperref}
+%\usepackage[colorlinks]{hyperref}
+\usepackage{hyperref}
 
 % for better image placing
 \renewcommand{\topfraction}{0.85}
@@ -51,11 +57,9 @@
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 \begin{document}
+\pagenumbering{Roman}
 
-% Titel pagina
-\pagenumbering{Alph}
-\thispagestyle{empty}
-
+%\begin{adjustwidth}{}{-5em}
 \begin{titlepage}
 \begin{center}
 
@@ -92,19 +96,16 @@ Dr.~Theo \textsc{Gevers}
 
 \end{center}
 \end{titlepage}
-
+%\end{adjustwidth}
 
 
 \chapter*{Abstract}
 A real\-time method for estimating hand poses in video using a normal RGB camera is presented. The method uses a skin color distribution for pixel based limb localization and HOG features for classification. The performance of HOG is compared with SURF where HOG yielded superior performance. As classifiers $k$-NN and SVM with the RBF and $\chi^2$ kernels are evaluated, where SVM in combination with the $\chi^2$ kernel performed best. The evaluation is done on a new constructed dataset consisting of 72 recordings of 20 people performing 28 hand symbols based upon the Curwen Solfege method. A prototype implementation that translates estimated hand poses into Open Sound Control parameters is described, which can be used to make music. This to demonstrate the practical usability of the method in a real-time situation.
 
-% contents etc
-\pagenumbering{Roman}
-\setcounter{page}{1}
 
 \tableofcontents{}
-\listoffigures{}
-\listoftables{}
+%\listoffigures{}
+%\listoftables{}
 
 \chapter*{Acknowledgements}
 Until not so long ago I never dared dreaming to do this; writing the acknowledgments of my Master Thesis. I'm really proud I came this far and I'm really content with the subject and results of my research. It took a total of 9 months to finish the software, gather a dataset, read papers and write this thesis. I never worked on a project this long.
@@ -131,6 +132,7 @@ and finally, I want to thank everybody who I forgot, everybody that gave me good
 \cleardoublepage
 \pagenumbering{arabic}
 \setcounter{page}{1}
+
 
 \include{intro}
 

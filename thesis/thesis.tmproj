@@ -3,14 +3,16 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>sonicgesture.tex</string>
+	<string>thesis.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>thesis.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-06T09:42:21Z</date>
+			<date>2010-10-06T10:01:26Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -34,15 +36,13 @@
 			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-06T09:52:23Z</date>
+			<date>2010-10-06T10:01:26Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>sonicgesture.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-06T09:52:23Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-10-06T09:59:55Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -152,14 +152,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>47</integer>
+				<integer>164</integer>
 				<key>line</key>
-				<integer>230</integer>
+				<integer>147</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>197</integer>
+			<integer>131</integer>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>
@@ -222,14 +222,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>118</integer>
+				<integer>16</integer>
 				<key>line</key>
-				<integer>121</integer>
+				<integer>18</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>92</integer>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>

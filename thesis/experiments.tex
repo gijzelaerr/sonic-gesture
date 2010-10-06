@@ -21,7 +21,7 @@ A dataset was constructed where people perform the Curwen hand poses in differen
 \end{figure}
 
 
-In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first, people were recorded performing the complete sequence 5 times, but this was taking too much time and people became impatient, after we switched to 3 movies per person. For each pose in each movie a frame was manually labeled where the person was performing the pose correctly.  The movies where recorded with  a resolution of 532x400 and a frame rate of 10 fps. The test subjects were recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. 12 test subjects were recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 were recorded with a complex background (\autoref{fig:complexbackground}) and 6 were recorded with the same complex background but also with a poster with skin like colors.
+In total there are 74 movies containing 20 different people performing the complete sequence of 28 hand symbols. At first, people were recorded performing the complete sequence 5 times, but this was taking too much time and people became impatient. After we switched to 3 movies per person. For each pose in each movie a frame was manually labeled where the person was performing the pose correctly.  The movies where recorded with  a resolution of 532x400 and a frame rate of 10 fps. The test subjects were recorded while looking at a computer screen and asked to mimic the examples as in \autoref{fig:hands}. 12 test subjects were recorded with a simple (almost empty and smooth) background (\autoref{fig:simplebackground}), 3 were recorded with a complex background (\autoref{fig:complexbackground}) and 6 were recorded with the same complex background but also with a poster with skin like colors.
 
 The nationality of the test subjects is diverse. Half of the set is Dutch and two are from Asia. The rest is from eastern and southern Europe. 
 
@@ -97,13 +97,13 @@ The classifier is trained with all movies with the simple background, and as a t
 
 
 \subsubsection{Test setting}
-For the number of neighbors for $k$-NN a small number of tests where run, and a value between 3 and 10 for N yielded similar performance. Since a lower number of $k$ can give better performance $k=3$ was used for all experiments.
+For the number of neighbors for $k$-NN a small number of tests were run, and a value between 3 and 10 for N yielded similar performance. Since a lower number of $k$ can give better performance $k=3$ was used for all experiments.
 
-When PCA was performed on the dataset the smallest eigenvectors where removed so 95\% of the original variance was remaining. On the simple dataset reduce the dimensions from 3780 to 594 dimensions. For the complex set combined with the simple set the dimensionality is reduced to 688 dimensions, for complex only 283 and for the complete dataset 749.
+When PCA was performed on the dataset the smallest eigenvectors were removed such that 95\% of the original variance was remaining. On the simple dataset this results in a reduction from 3780 to 594 dimensions. For the complex set combined with the simple set the dimensionality is reduced to 688 dimensions, for complex only 283 and for the complete dataset 749.
 
-For SVM two kernels are evaluated, RBF and $\chi^2$. The $c$ for both kernels and $\gamma$ for RBF values where found by an extensive grid search on the `per person' test set with only the simple movies performed on a small cluster in the ranges $2^{-3}$ to $2^{15}$ for $c$ and $2^{-15}$ and $2^3$ for $\gamma$. The most optimal values for $\gamma$ is 0.03125. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
+Two kernels are evaluated, RBF and $\chi^2$. The $c$ for both kernels and $\gamma$ for RBF values where found by an extensive grid search on the `per person' test set with only the simple movies. The grid search was performed on a small Matlab cluster in the ranges $[2^{-3}$, $2^{15}]$ for $c$ and $[2^{-15}$, $2^3]$ for $\gamma$. The most optimal values for $\gamma$ is $2^{-5}$. With this $\gamma$ changing the value for $c$ didn't have much effect on the performance, so a value of 64 was taken.
 
-For calculating the HOG features the same parameters as \citep{watanabe2009} are used, except that the image is not resized to 64 by 128 pixels, but 128 by 128 pixels.
+For calculating the HOG features the same parameters as \citep{watanabe2009} are used, except that the image is not resized to 64 by 128 pixels, but to 128 by 128 pixels.
 
 To be able to compare the HOG and SURF, the SURF descriptor is configured to work with a fixed set of interest points set up as a dense grid - the same set used for HOG. This results in a 13440 dimensional feature vector. Also using the interest point detection is a expensive operation, calculating this on a small image takes about 500 ms which makes it unusable for real-time operation.
 
@@ -200,7 +200,7 @@ SVM $\chi^2$ &	yes	&  72.43\% & \textbf{82.82\%} \\
 \end{table}
 
 
-\autoref{tab:perperson} shows the results of this experiment. Also here, SVM has superior performance compared to $k$-NN. SVM with the RBF kernel performs better on the Full Scale, while the $\chi^2$ kernel performs better on the Major scale. Again, PCA improves the performance for SVM but not for $k$-NN. It is interesting to see that the overall performance is worse than the previous experiment. This is due to the fact that the train set doesn't contain extracted hands from the test subject during $k$-fold. It shows that Sonic Gesture works better when it is additionally trained by the end user.
+In \autoref{tab:perperson} the results of this experiment are shown. Also here, SVM has superior performance compared to $k$-NN. SVM with the RBF kernel performs better on the Full Scale, while the $\chi^2$ kernel performs better on the Major scale. Again, PCA improves the performance for SVM but not for $k$-NN. It is interesting to see that the overall performance is worse than the previous experiment. This is due to the fact that the train set doesn't contain extracted hands from the test subject during $k$-fold. It shows that Sonic Gesture works better when it is additionally trained by the end user.
 
 \paragraph{Simple as train set, complex as test set}
 
@@ -228,7 +228,7 @@ SURF & $k$-NN ($k=3$)&	no	&	46.19\% 	&	60.17\%	\\
 \label{tab:perset}
 \end{table}
 
-\autoref{tab:perset} shows the results of this experiment. Again, SVM performed better than $k$-NN, but now the $\chi^2$ kernel performs better than the RBF kernel in both cases. But overall the difference is minimal. The abnormality here is that PCA did not improve the results. The performance of the previous experiment is better than this experiment. Also for this experiment the train data doesn't contain hands from the same person in the test set. This experiment also shows that the a complex background has a negative influence on the classification performance. 
+The results of this experiment are presented in \autoref{tab:perset}. Again, SVM performed better than $k$-NN, but now the $\chi^2$ kernel performs better than the RBF kernel in both cases. But overall the difference is minimal. The abnormality here is that PCA did not improve the results. The performance of the previous experiment is better than this experiment. Also for this experiment the train data doesn't contain hands from the same person in the test set. This experiment also shows that the a complex background has a negative influence on the classification performance. 
 
 Even more interesting is the fact that the SURF features perform very bad compared to HOG features. Performing PCA on the SURF features improves performance dramatically. The horrible performance of SURF is probably caused by the improper usage of the keypoints.
 

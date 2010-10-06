@@ -3,64 +3,64 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>experiments.tex</string>
+	<string>sonicgesture.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>thesis.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T16:16:06Z</date>
+			<date>2010-10-06T09:42:21Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>intro.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T16:11:50Z</date>
+			<date>2010-10-06T09:38:28Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>bodyparts.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T16:11:55Z</date>
+			<date>2010-10-06T09:44:13Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>gestures.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T14:53:21Z</date>
+			<date>2010-10-06T09:43:33Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>experiments.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T23:57:26Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-10-06T09:52:23Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>sonicgesture.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T16:33:56Z</date>
+			<date>2010-10-06T09:52:23Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>conc.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T16:33:53Z</date>
+			<date>2010-10-06T09:31:43Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>appendix.tex</string>
 			<key>lastUsed</key>
-			<date>2010-10-05T16:01:58Z</date>
+			<date>2010-10-06T09:38:22Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>thesis.bib</string>
 			<key>lastUsed</key>
-			<date>2010-10-04T12:57:54Z</date>
+			<date>2010-10-06T09:44:09Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -78,14 +78,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>12</integer>
+				<integer>34</integer>
 				<key>line</key>
-				<integer>219</integer>
+				<integer>94</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>187</integer>
+			<integer>75</integer>
 		</dict>
 		<key>bodyparts.tex</key>
 		<dict>
@@ -105,7 +105,7 @@
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>138</integer>
+				<integer>132</integer>
 				<key>line</key>
 				<integer>7</integer>
 			</dict>
@@ -122,28 +122,44 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>48</integer>
+				<integer>149</integer>
 				<key>line</key>
-				<integer>8</integer>
+				<integer>21</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
-			<integer>0</integer>
+			<integer>457</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>4</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>147</integer>
+				<key>line</key>
+				<integer>21</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>149</integer>
+				<key>line</key>
+				<integer>21</integer>
+			</dict>
 		</dict>
 		<key>experiments.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>41</integer>
+				<integer>47</integer>
 				<key>line</key>
-				<integer>138</integer>
+				<integer>230</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>113</integer>
+			<integer>197</integer>
 		</dict>
 		<key>gestures.tex</key>
 		<dict>
@@ -169,97 +185,51 @@
 				<integer>36</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>455</integer>
-			<key>firstVisibleLine</key>
-			<integer>19</integer>
-		</dict>
-		<key>notes.tex</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>11</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
 		</dict>
 		<key>sonicgesture.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>646</integer>
+				<integer>661</integer>
 				<key>line</key>
-				<integer>42</integer>
+				<integer>40</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
-			<integer>0</integer>
+			<integer>75</integer>
 			<key>firstVisibleLine</key>
-			<integer>13</integer>
+			<integer>28</integer>
 		</dict>
 		<key>thesis.bib</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>18</integer>
+				<integer>33</integer>
 				<key>line</key>
-				<integer>632</integer>
+				<integer>684</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>684</integer>
+			<integer>658</integer>
 		</dict>
 		<key>thesis.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>9</integer>
+				<integer>118</integer>
 				<key>line</key>
-				<integer>3</integer>
+				<integer>121</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>3</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>14</integer>
-				<key>line</key>
-				<integer>3</integer>
-			</dict>
+			<integer>92</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -270,14 +240,13 @@
 		<string>gestures.tex</string>
 		<string>experiments.tex</string>
 		<string>sonicgesture.tex</string>
+		<string>conc.tex</string>
 		<string>appendix.tex</string>
 		<string>thesis.bib</string>
-		<string>conc.tex</string>
-		<string>notes.tex</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{838, 0}, {781, 1028}}</string>
+	<string>{{771, 3}, {811, 1018}}</string>
 </dict>
 </plist>

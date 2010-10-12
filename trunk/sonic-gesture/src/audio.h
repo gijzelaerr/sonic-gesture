@@ -12,6 +12,11 @@ public:
     float rightState;
     bool triggerLeft;
     bool triggerRight;
+    float leftSizeAverage;
+    float rightSizeAverage;
+
+    float leftSizePrev;
+    float rightSizePrev;
 
 private:
     lo_address connection;

@@ -168,6 +168,8 @@ bool Source::grab() {
         return false;
     }
 
+
+
     if(sourceMode == DEVICE)
         cv::flip(frame, frame, 1);
 
@@ -181,4 +183,3 @@ void Source::close() {
 void Source::setError(QString str) {
     this->error = str;
 }
-

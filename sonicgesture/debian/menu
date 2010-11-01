@@ -1,0 +1,6 @@
+?package(sonicgesture):needs="X11" \
+  section="Applications/Graphics"\
+  title="Sonic Gesture"\
+  command="/usr/bin/sonicgesture"\
+  icon="/usr/share/pixmaps/sonicgesture.xpm"
+

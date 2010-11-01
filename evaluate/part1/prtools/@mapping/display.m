@@ -1,1 +1,0 @@
-%DISPLAY Display mapping information

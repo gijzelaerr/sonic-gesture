@@ -2,31 +2,90 @@
 \section{Capture Class Reference}
 \label{class_capture}\index{Capture@{Capture}}
 }
+
+
+{\ttfamily \#include $<$capture.h$>$}
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{class_capture_a77272498fbe1485e894cc3a4b0a3d90d}{Capture} (const \hyperlink{class_source}{Source} \&source)
+\hyperlink{class_capture_a97036b5d271238bd4852da79a0091b57}{Capture} ()
+\begin{DoxyCompactList}\small\item\em Same as finder but used to label movies. \item\end{DoxyCompactList}\item 
+bool \hyperlink{class_capture_a839796507d186895909a682db340ebdd}{init} (const cv::Size \&Size)
 \item 
-void \hyperlink{class_capture_afad27cc4bb92fe56914bfee7745d091d}{run} ()
+bool \hyperlink{class_capture_a61c588ac4ae9f074ff1890a2b6feaa3e}{step} (const Mat \&big)
+\item 
+bool \hyperlink{class_capture_ad4653ef227165c3b3b0ecee616ebf39e}{saveImage} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Mat \hyperlink{class_capture_addc6e8bf729bb97b86a04be837b3188c}{combined}
+\item 
+QString \hyperlink{class_capture_a2fc9b180a1d2cc668d95a647a472d45c}{error}
 \end{DoxyCompactItemize}
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{class_capture_a77272498fbe1485e894cc3a4b0a3d90d}{
+\hypertarget{class_capture_a97036b5d271238bd4852da79a0091b57}{
 \index{Capture@{Capture}!Capture@{Capture}}
 \index{Capture@{Capture}!Capture@{Capture}}
-\subsubsection[{Capture}]{\setlength{\rightskip}{0pt plus 5cm}Capture::Capture (const {\bf Source} \& {\em source})}}
-\label{class_capture_a77272498fbe1485e894cc3a4b0a3d90d}
+\subsubsection[{Capture}]{\setlength{\rightskip}{0pt plus 5cm}Capture::Capture (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_capture_a97036b5d271238bd4852da79a0091b57}
+
+
+Same as finder but used to label movies. 
+
 
 
 \subsection{Member Function Documentation}
-\hypertarget{class_capture_afad27cc4bb92fe56914bfee7745d091d}{
-\index{Capture@{Capture}!run@{run}}
-\index{run@{run}!Capture@{Capture}}
-\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void Capture::run ()}}
-\label{class_capture_afad27cc4bb92fe56914bfee7745d091d}
+\hypertarget{class_capture_a839796507d186895909a682db340ebdd}{
+\index{Capture@{Capture}!init@{init}}
+\index{init@{init}!Capture@{Capture}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool Capture::init (
+\begin{DoxyParamCaption}
+\item[{const cv::Size \&}]{ Size}
+\end{DoxyParamCaption}
+)}}
+\label{class_capture_a839796507d186895909a682db340ebdd}
+\hypertarget{class_capture_ad4653ef227165c3b3b0ecee616ebf39e}{
+\index{Capture@{Capture}!saveImage@{saveImage}}
+\index{saveImage@{saveImage}!Capture@{Capture}}
+\subsubsection[{saveImage}]{\setlength{\rightskip}{0pt plus 5cm}bool Capture::saveImage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_capture_ad4653ef227165c3b3b0ecee616ebf39e}
+\hypertarget{class_capture_a61c588ac4ae9f074ff1890a2b6feaa3e}{
+\index{Capture@{Capture}!step@{step}}
+\index{step@{step}!Capture@{Capture}}
+\subsubsection[{step}]{\setlength{\rightskip}{0pt plus 5cm}bool Capture::step (
+\begin{DoxyParamCaption}
+\item[{const Mat \&}]{ big}
+\end{DoxyParamCaption}
+)}}
+\label{class_capture_a61c588ac4ae9f074ff1890a2b6feaa3e}
 
 
-The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\subsection{Member Data Documentation}
+\hypertarget{class_capture_addc6e8bf729bb97b86a04be837b3188c}{
+\index{Capture@{Capture}!combined@{combined}}
+\index{combined@{combined}!Capture@{Capture}}
+\subsubsection[{combined}]{\setlength{\rightskip}{0pt plus 5cm}Mat {\bf Capture::combined}}}
+\label{class_capture_addc6e8bf729bb97b86a04be837b3188c}
+\hypertarget{class_capture_a2fc9b180a1d2cc668d95a647a472d45c}{
+\index{Capture@{Capture}!error@{error}}
+\index{error@{error}!Capture@{Capture}}
+\subsubsection[{error}]{\setlength{\rightskip}{0pt plus 5cm}QString {\bf Capture::error}}}
+\label{class_capture_a2fc9b180a1d2cc668d95a647a472d45c}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
+src/\hyperlink{capture_8h}{capture.h}\item 
 src/\hyperlink{capture_8cpp}{capture.cpp}\end{DoxyCompactItemize}

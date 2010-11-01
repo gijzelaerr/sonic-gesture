@@ -10,19 +10,43 @@
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{class_source_a660c0a4b8b8f8402568bef86f2cb2fbb}{Source} ()
-\item 
-\hyperlink{class_source_aefdbc55d88adc315498b669642379eb8}{Source} (int device)
-\item 
-\hyperlink{class_source_a5c3bf2e7a9d8d75c334a5d11a29eb058}{Source} (const string \&movie)
-\item 
+\begin{DoxyCompactList}\small\item\em used for reading from movie or camera \item\end{DoxyCompactList}\item 
 \hyperlink{class_source_ac5104a4d66641ae529419b47da4a1473}{$\sim$Source} ()
 \item 
-Mat \& \hyperlink{class_source_a7ca090eb632f1ca7175adeed540fdc26}{grab} ()
+bool \hyperlink{class_source_adc1559efec6c503afc2cc56715179b9c}{open} (int device)
+\item 
+bool \hyperlink{class_source_a32d55e7dad1e96edf324f07db6431781}{open} (const QImage \&qimage)
+\item 
+bool \hyperlink{class_source_ab8013e3aac01f5c1e40f568596950689}{open} (const QFileInfo \&file)
+\item 
+bool \hyperlink{class_source_a99fe00d4c01a089a5f9ede75ca000673}{open} (const cv::Mat \&image)
+\item 
+bool \hyperlink{class_source_aeb030e2e66c3ca961c56680342f64c0b}{grab} ()
+\item 
+bool \hyperlink{class_source_a39ec8e95f96c046e92aa1c1e2e8cef4b}{setPos} (double position)
+\item 
+double \hyperlink{class_source_a67705b9b6a9aa608bca2173438a49506}{getPos} ()
+\item 
+double \hyperlink{class_source_a6a6551f6d7496d73eaa89bccd11677fe}{getAbsolutePos} ()
+\item 
+void \hyperlink{class_source_a567c519d7d922f3746d6b6fd9dcf0dec}{close} ()
+\item 
+void \hyperlink{class_source_ae6fbc6e40dc2d5da14fc5f5e548290db}{startScreen} ()
+\item 
+void \hyperlink{class_source_a50c48db87dde21ee9fc9ffd70b47b971}{setLoop} (bool loop)
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-Size \hyperlink{class_source_aa801cdb298f6ce14f2ec12ab8f288dc3}{size}
+cv::Size \hyperlink{class_source_a393c476b5e1552419a5d53669a8f904c}{size}
+\item 
+cv::Mat \hyperlink{class_source_afebfeaef1846860d8186d2db609dbfe4}{frame}
+\item 
+QString \hyperlink{class_source_ad11b5c8dc6d902815b90d0bb8dff83a4}{error}
+\item 
+\hyperlink{source_8h_a403dbde794b369eacf53e8156dfe3fab}{SourceModeType} \hyperlink{class_source_a51e7fd70a7ba4ae0f4fe082019e5b2b8}{sourceMode}
+\item 
+QFileInfo \hyperlink{class_source_a76811d0f7eaba90cb2f6dfc5c59dd049}{movieLocation}
 \end{DoxyCompactItemize}
 
 
@@ -30,39 +54,155 @@ Size \hyperlink{class_source_aa801cdb298f6ce14f2ec12ab8f288dc3}{size}
 \hypertarget{class_source_a660c0a4b8b8f8402568bef86f2cb2fbb}{
 \index{Source@{Source}!Source@{Source}}
 \index{Source@{Source}!Source@{Source}}
-\subsubsection[{Source}]{\setlength{\rightskip}{0pt plus 5cm}Source::Source ()}}
+\subsubsection[{Source}]{\setlength{\rightskip}{0pt plus 5cm}Source::Source (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
 \label{class_source_a660c0a4b8b8f8402568bef86f2cb2fbb}
-\hypertarget{class_source_aefdbc55d88adc315498b669642379eb8}{
-\index{Source@{Source}!Source@{Source}}
-\index{Source@{Source}!Source@{Source}}
-\subsubsection[{Source}]{\setlength{\rightskip}{0pt plus 5cm}Source::Source (int {\em device})}}
-\label{class_source_aefdbc55d88adc315498b669642379eb8}
-\hypertarget{class_source_a5c3bf2e7a9d8d75c334a5d11a29eb058}{
-\index{Source@{Source}!Source@{Source}}
-\index{Source@{Source}!Source@{Source}}
-\subsubsection[{Source}]{\setlength{\rightskip}{0pt plus 5cm}Source::Source (const string \& {\em movie})}}
-\label{class_source_a5c3bf2e7a9d8d75c334a5d11a29eb058}
+
+
+used for reading from movie or camera 
+
 \hypertarget{class_source_ac5104a4d66641ae529419b47da4a1473}{
 \index{Source@{Source}!$\sim$Source@{$\sim$Source}}
 \index{$\sim$Source@{$\sim$Source}!Source@{Source}}
-\subsubsection[{$\sim$Source}]{\setlength{\rightskip}{0pt plus 5cm}Source::$\sim$Source ()}}
+\subsubsection[{$\sim$Source}]{\setlength{\rightskip}{0pt plus 5cm}Source::$\sim$Source (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
 \label{class_source_ac5104a4d66641ae529419b47da4a1473}
 
 
 \subsection{Member Function Documentation}
-\hypertarget{class_source_a7ca090eb632f1ca7175adeed540fdc26}{
+\hypertarget{class_source_a567c519d7d922f3746d6b6fd9dcf0dec}{
+\index{Source@{Source}!close@{close}}
+\index{close@{close}!Source@{Source}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void Source::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_a567c519d7d922f3746d6b6fd9dcf0dec}
+\hypertarget{class_source_a6a6551f6d7496d73eaa89bccd11677fe}{
+\index{Source@{Source}!getAbsolutePos@{getAbsolutePos}}
+\index{getAbsolutePos@{getAbsolutePos}!Source@{Source}}
+\subsubsection[{getAbsolutePos}]{\setlength{\rightskip}{0pt plus 5cm}double Source::getAbsolutePos (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_a6a6551f6d7496d73eaa89bccd11677fe}
+\hypertarget{class_source_a67705b9b6a9aa608bca2173438a49506}{
+\index{Source@{Source}!getPos@{getPos}}
+\index{getPos@{getPos}!Source@{Source}}
+\subsubsection[{getPos}]{\setlength{\rightskip}{0pt plus 5cm}double Source::getPos (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_a67705b9b6a9aa608bca2173438a49506}
+\hypertarget{class_source_aeb030e2e66c3ca961c56680342f64c0b}{
 \index{Source@{Source}!grab@{grab}}
 \index{grab@{grab}!Source@{Source}}
-\subsubsection[{grab}]{\setlength{\rightskip}{0pt plus 5cm}Mat \& Source::grab ()}}
-\label{class_source_a7ca090eb632f1ca7175adeed540fdc26}
+\subsubsection[{grab}]{\setlength{\rightskip}{0pt plus 5cm}bool Source::grab (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_aeb030e2e66c3ca961c56680342f64c0b}
+\hypertarget{class_source_a99fe00d4c01a089a5f9ede75ca000673}{
+\index{Source@{Source}!open@{open}}
+\index{open@{open}!Source@{Source}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}bool Source::open (
+\begin{DoxyParamCaption}
+\item[{const cv::Mat \&}]{ image}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_a99fe00d4c01a089a5f9ede75ca000673}
+\hypertarget{class_source_adc1559efec6c503afc2cc56715179b9c}{
+\index{Source@{Source}!open@{open}}
+\index{open@{open}!Source@{Source}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}bool Source::open (
+\begin{DoxyParamCaption}
+\item[{int}]{ device}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_adc1559efec6c503afc2cc56715179b9c}
+\hypertarget{class_source_a32d55e7dad1e96edf324f07db6431781}{
+\index{Source@{Source}!open@{open}}
+\index{open@{open}!Source@{Source}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}bool Source::open (
+\begin{DoxyParamCaption}
+\item[{const QImage \&}]{ qimage}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_a32d55e7dad1e96edf324f07db6431781}
+\hypertarget{class_source_ab8013e3aac01f5c1e40f568596950689}{
+\index{Source@{Source}!open@{open}}
+\index{open@{open}!Source@{Source}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}bool Source::open (
+\begin{DoxyParamCaption}
+\item[{const QFileInfo \&}]{ file}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_ab8013e3aac01f5c1e40f568596950689}
+\hypertarget{class_source_a50c48db87dde21ee9fc9ffd70b47b971}{
+\index{Source@{Source}!setLoop@{setLoop}}
+\index{setLoop@{setLoop}!Source@{Source}}
+\subsubsection[{setLoop}]{\setlength{\rightskip}{0pt plus 5cm}void Source::setLoop (
+\begin{DoxyParamCaption}
+\item[{bool}]{ loop}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_a50c48db87dde21ee9fc9ffd70b47b971}
+\hypertarget{class_source_a39ec8e95f96c046e92aa1c1e2e8cef4b}{
+\index{Source@{Source}!setPos@{setPos}}
+\index{setPos@{setPos}!Source@{Source}}
+\subsubsection[{setPos}]{\setlength{\rightskip}{0pt plus 5cm}bool Source::setPos (
+\begin{DoxyParamCaption}
+\item[{double}]{ position}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_a39ec8e95f96c046e92aa1c1e2e8cef4b}
+\hypertarget{class_source_ae6fbc6e40dc2d5da14fc5f5e548290db}{
+\index{Source@{Source}!startScreen@{startScreen}}
+\index{startScreen@{startScreen}!Source@{Source}}
+\subsubsection[{startScreen}]{\setlength{\rightskip}{0pt plus 5cm}void Source::startScreen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_source_ae6fbc6e40dc2d5da14fc5f5e548290db}
 
 
 \subsection{Member Data Documentation}
-\hypertarget{class_source_aa801cdb298f6ce14f2ec12ab8f288dc3}{
+\hypertarget{class_source_ad11b5c8dc6d902815b90d0bb8dff83a4}{
+\index{Source@{Source}!error@{error}}
+\index{error@{error}!Source@{Source}}
+\subsubsection[{error}]{\setlength{\rightskip}{0pt plus 5cm}QString {\bf Source::error}}}
+\label{class_source_ad11b5c8dc6d902815b90d0bb8dff83a4}
+\hypertarget{class_source_afebfeaef1846860d8186d2db609dbfe4}{
+\index{Source@{Source}!frame@{frame}}
+\index{frame@{frame}!Source@{Source}}
+\subsubsection[{frame}]{\setlength{\rightskip}{0pt plus 5cm}cv::Mat {\bf Source::frame}}}
+\label{class_source_afebfeaef1846860d8186d2db609dbfe4}
+\hypertarget{class_source_a76811d0f7eaba90cb2f6dfc5c59dd049}{
+\index{Source@{Source}!movieLocation@{movieLocation}}
+\index{movieLocation@{movieLocation}!Source@{Source}}
+\subsubsection[{movieLocation}]{\setlength{\rightskip}{0pt plus 5cm}QFileInfo {\bf Source::movieLocation}}}
+\label{class_source_a76811d0f7eaba90cb2f6dfc5c59dd049}
+\hypertarget{class_source_a393c476b5e1552419a5d53669a8f904c}{
 \index{Source@{Source}!size@{size}}
 \index{size@{size}!Source@{Source}}
-\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}Size {\bf Source::size}}}
-\label{class_source_aa801cdb298f6ce14f2ec12ab8f288dc3}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}cv::Size {\bf Source::size}}}
+\label{class_source_a393c476b5e1552419a5d53669a8f904c}
+\hypertarget{class_source_a51e7fd70a7ba4ae0f4fe082019e5b2b8}{
+\index{Source@{Source}!sourceMode@{sourceMode}}
+\index{sourceMode@{sourceMode}!Source@{Source}}
+\subsubsection[{sourceMode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf SourceModeType} {\bf Source::sourceMode}}}
+\label{class_source_a51e7fd70a7ba4ae0f4fe082019e5b2b8}
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

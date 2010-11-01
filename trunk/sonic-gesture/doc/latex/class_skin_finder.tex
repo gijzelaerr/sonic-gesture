@@ -10,8 +10,10 @@
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{class_skin_finder_aac7af0cb4507fc573997c4fb63ad21f0}{SkinFinder} ()
+\begin{DoxyCompactList}\small\item\em When given a image returns a list of blobs that are probably skin. \item\end{DoxyCompactList}\item 
+bool \hyperlink{class_skin_finder_a8c761b35fd96ad32224810d363d8915e}{init} ()
 \item 
-vector$<$ vector$<$ Point $>$ $>$ \hyperlink{class_skin_finder_a407aba46cd098b2cd45f458470a1aeab}{compute} (const Mat \&\hyperlink{class_skin_finder_ae7f9082d757d32f18c06b1f4ab600467}{frame})
+bool \hyperlink{class_skin_finder_ac183e04f82d087fdd04e184e9283fc33}{compute} (const Mat \&\hyperlink{class_skin_finder_ae7f9082d757d32f18c06b1f4ab600467}{frame})
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
@@ -35,6 +37,8 @@ Mat \hyperlink{class_skin_finder_a40173df66e4ec87e0c69c4858e49f7a7}{mask}
 Mat \hyperlink{class_skin_finder_abc551e869a5beddbc7d4c956653d414e}{blur}
 \item 
 Mat \hyperlink{class_skin_finder_a199a4f558e062704a4c24d65801e47ba}{thresh}
+\item 
+QString \hyperlink{class_skin_finder_a6487c08c34a8330230b06918c89bbd4d}{error}
 \end{DoxyCompactItemize}
 
 
@@ -42,16 +46,37 @@ Mat \hyperlink{class_skin_finder_a199a4f558e062704a4c24d65801e47ba}{thresh}
 \hypertarget{class_skin_finder_aac7af0cb4507fc573997c4fb63ad21f0}{
 \index{SkinFinder@{SkinFinder}!SkinFinder@{SkinFinder}}
 \index{SkinFinder@{SkinFinder}!SkinFinder@{SkinFinder}}
-\subsubsection[{SkinFinder}]{\setlength{\rightskip}{0pt plus 5cm}SkinFinder::SkinFinder ()}}
+\subsubsection[{SkinFinder}]{\setlength{\rightskip}{0pt plus 5cm}SkinFinder::SkinFinder (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
 \label{class_skin_finder_aac7af0cb4507fc573997c4fb63ad21f0}
 
 
+When given a image returns a list of blobs that are probably skin. 
+
+
+
 \subsection{Member Function Documentation}
-\hypertarget{class_skin_finder_a407aba46cd098b2cd45f458470a1aeab}{
+\hypertarget{class_skin_finder_ac183e04f82d087fdd04e184e9283fc33}{
 \index{SkinFinder@{SkinFinder}!compute@{compute}}
 \index{compute@{compute}!SkinFinder@{SkinFinder}}
-\subsubsection[{compute}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ vector$<$ Point $>$ $>$ SkinFinder::compute (const Mat \& {\em frame})}}
-\label{class_skin_finder_a407aba46cd098b2cd45f458470a1aeab}
+\subsubsection[{compute}]{\setlength{\rightskip}{0pt plus 5cm}bool SkinFinder::compute (
+\begin{DoxyParamCaption}
+\item[{const Mat \&}]{ frame}
+\end{DoxyParamCaption}
+)}}
+\label{class_skin_finder_ac183e04f82d087fdd04e184e9283fc33}
+\hypertarget{class_skin_finder_a8c761b35fd96ad32224810d363d8915e}{
+\index{SkinFinder@{SkinFinder}!init@{init}}
+\index{init@{init}!SkinFinder@{SkinFinder}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool SkinFinder::init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_skin_finder_a8c761b35fd96ad32224810d363d8915e}
 
 
 \subsection{Member Data Documentation}
@@ -75,6 +100,11 @@ Mat \hyperlink{class_skin_finder_a199a4f558e062704a4c24d65801e47ba}{thresh}
 \index{contours@{contours}!SkinFinder@{SkinFinder}}
 \subsubsection[{contours}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$vector$<$Point$>$ $>$ {\bf SkinFinder::contours}}}
 \label{class_skin_finder_a6921f1002639c7a369f637b229de376a}
+\hypertarget{class_skin_finder_a6487c08c34a8330230b06918c89bbd4d}{
+\index{SkinFinder@{SkinFinder}!error@{error}}
+\index{error@{error}!SkinFinder@{SkinFinder}}
+\subsubsection[{error}]{\setlength{\rightskip}{0pt plus 5cm}QString {\bf SkinFinder::error}}}
+\label{class_skin_finder_a6487c08c34a8330230b06918c89bbd4d}
 \hypertarget{class_skin_finder_a55330ad48d6c72f9a0f9d16a874b39ce}{
 \index{SkinFinder@{SkinFinder}!face\_\-center@{face\_\-center}}
 \index{face\_\-center@{face\_\-center}!SkinFinder@{SkinFinder}}

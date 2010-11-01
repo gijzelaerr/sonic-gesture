@@ -3,50 +3,23 @@
 \label{common_8h}\index{src/common.h@{src/common.h}}
 }
 {\ttfamily \#include \char`\"{}cv.h\char`\"{}}\par
-{\ttfamily \#include \char`\"{}cvtypes.h\char`\"{}}\par
-{\ttfamily \#include \char`\"{}highgui.h\char`\"{}}\par
-{\ttfamily \#include \char`\"{}ml.h\char`\"{}}\par
-{\ttfamily \#include \char`\"{}cvaux.h\char`\"{}}\par
-{\ttfamily \#include \char`\"{}settings.h\char`\"{}}\par
-{\ttfamily \#include \char`\"{}tools.h\char`\"{}}\par
-{\ttfamily \#include \char`\"{}boost/filesystem.hpp\char`\"{}}\par
-\subsection*{Defines}
-\begin{DoxyCompactItemize}
-\item 
-\#define \hyperlink{common_8h_a15472b614c6a110aa07c431be7f44d0e}{SOLFEGE\_\-FILES}~\{ \char`\"{}00\_\-do.jpg\char`\"{}, \char`\"{}01\_\-di.jpg\char`\"{}, \char`\"{}02\_\-re.jpg\char`\"{}, \char`\"{}03\_\-ri.jpg\char`\"{}, \char`\"{}04\_\-mi.jpg\char`\"{}, \char`\"{}05\_\-fa.jpg\char`\"{}, \char`\"{}06\_\-fi.jpg\char`\"{}, \char`\"{}07\_\-sol.jpg\char`\"{}, \char`\"{}08\_\-si.jpg\char`\"{}, \char`\"{}09\_\-la.jpg\char`\"{}, \char`\"{}10\_\-li.jpg\char`\"{}, \char`\"{}11\_\-ti.jpg\char`\"{}\}
-\item 
-\#define \hyperlink{common_8h_a04289ffbd4a51de8cb134a58d4d6cb05}{CV\_\-NO\_\-BACKWARD\_\-COMPATIBILITY}
-\end{DoxyCompactItemize}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-typedef vector$<$ Point $>$ \hyperlink{common_8h_ae36dbb8c0708f160f4cd45521366c562}{contour}
+typedef std::vector$<$ cv::Point $>$ \hyperlink{common_8h_abe4c0d81732355b653509ed36e889160}{contour}
 \item 
-typedef vector$<$ \hyperlink{common_8h_ae36dbb8c0708f160f4cd45521366c562}{contour} $>$ \hyperlink{common_8h_adb337241440422f19b5200479d510b76}{contours}
+typedef std::vector$<$ \hyperlink{common_8h_abe4c0d81732355b653509ed36e889160}{contour} $>$ \hyperlink{common_8h_a87a62b74d59a9b4795cc71a10740381e}{contours}
 \end{DoxyCompactItemize}
 
 
-\subsection{Define Documentation}
-\hypertarget{common_8h_a04289ffbd4a51de8cb134a58d4d6cb05}{
-\index{common.h@{common.h}!CV\_\-NO\_\-BACKWARD\_\-COMPATIBILITY@{CV\_\-NO\_\-BACKWARD\_\-COMPATIBILITY}}
-\index{CV\_\-NO\_\-BACKWARD\_\-COMPATIBILITY@{CV\_\-NO\_\-BACKWARD\_\-COMPATIBILITY}!common.h@{common.h}}
-\subsubsection[{CV\_\-NO\_\-BACKWARD\_\-COMPATIBILITY}]{\setlength{\rightskip}{0pt plus 5cm}\#define CV\_\-NO\_\-BACKWARD\_\-COMPATIBILITY}}
-\label{common_8h_a04289ffbd4a51de8cb134a58d4d6cb05}
-\hypertarget{common_8h_a15472b614c6a110aa07c431be7f44d0e}{
-\index{common.h@{common.h}!SOLFEGE\_\-FILES@{SOLFEGE\_\-FILES}}
-\index{SOLFEGE\_\-FILES@{SOLFEGE\_\-FILES}!common.h@{common.h}}
-\subsubsection[{SOLFEGE\_\-FILES}]{\setlength{\rightskip}{0pt plus 5cm}\#define SOLFEGE\_\-FILES~\{ \char`\"{}00\_\-do.jpg\char`\"{}, \char`\"{}01\_\-di.jpg\char`\"{}, \char`\"{}02\_\-re.jpg\char`\"{}, \char`\"{}03\_\-ri.jpg\char`\"{}, \char`\"{}04\_\-mi.jpg\char`\"{}, \char`\"{}05\_\-fa.jpg\char`\"{}, \char`\"{}06\_\-fi.jpg\char`\"{}, \char`\"{}07\_\-sol.jpg\char`\"{}, \char`\"{}08\_\-si.jpg\char`\"{}, \char`\"{}09\_\-la.jpg\char`\"{}, \char`\"{}10\_\-li.jpg\char`\"{}, \char`\"{}11\_\-ti.jpg\char`\"{}\}}}
-\label{common_8h_a15472b614c6a110aa07c431be7f44d0e}
-
-
 \subsection{Typedef Documentation}
-\hypertarget{common_8h_ae36dbb8c0708f160f4cd45521366c562}{
+\hypertarget{common_8h_abe4c0d81732355b653509ed36e889160}{
 \index{common.h@{common.h}!contour@{contour}}
 \index{contour@{contour}!common.h@{common.h}}
-\subsubsection[{contour}]{\setlength{\rightskip}{0pt plus 5cm}typedef vector$<$Point$>$ {\bf contour}}}
-\label{common_8h_ae36dbb8c0708f160f4cd45521366c562}
-\hypertarget{common_8h_adb337241440422f19b5200479d510b76}{
+\subsubsection[{contour}]{\setlength{\rightskip}{0pt plus 5cm}typedef std::vector$<$cv::Point$>$ {\bf contour}}}
+\label{common_8h_abe4c0d81732355b653509ed36e889160}
+\hypertarget{common_8h_a87a62b74d59a9b4795cc71a10740381e}{
 \index{common.h@{common.h}!contours@{contours}}
 \index{contours@{contours}!common.h@{common.h}}
-\subsubsection[{contours}]{\setlength{\rightskip}{0pt plus 5cm}typedef vector$<${\bf contour} $>$ {\bf contours}}}
-\label{common_8h_adb337241440422f19b5200479d510b76}
+\subsubsection[{contours}]{\setlength{\rightskip}{0pt plus 5cm}typedef std::vector$<${\bf contour} $>$ {\bf contours}}}
+\label{common_8h_a87a62b74d59a9b4795cc71a10740381e}

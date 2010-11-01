@@ -52,7 +52,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="resources.qrc">
           <normaloff>:/icons/pauze movie</normaloff>:/icons/pauze movie</iconset>
         </property>
        </widget>
@@ -66,7 +66,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="resources.qrc">
           <normaloff>:/icons/play movie</normaloff>:/icons/play movie</iconset>
         </property>
        </widget>
@@ -80,7 +80,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="resources.qrc">
           <normaloff>:/icons/record</normaloff>:/icons/record</iconset>
         </property>
         <property name="checkable">
@@ -130,9 +130,6 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
-    <addaction name="actionFinder_View"/>
-    <addaction name="actionCapture_View"/>
-    <addaction name="actionSource_view"/>
     <addaction name="separator"/>
     <addaction name="actionFullscreen"/>
    </widget>
@@ -171,10 +168,6 @@
    <addaction name="actionOpen_Video"/>
    <addaction name="actionOpen_Device_2"/>
    <addaction name="separator"/>
-   <addaction name="actionSource_view"/>
-   <addaction name="actionFinder_View"/>
-   <addaction name="actionCapture_View"/>
-   <addaction name="separator"/>
    <addaction name="actionRecord_original_movie"/>
    <addaction name="actionRecord_visual_output"/>
    <addaction name="separator"/>
@@ -185,7 +178,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/film</normaloff>:/icons/film</iconset>
    </property>
    <property name="text">
@@ -202,38 +195,11 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/camera</normaloff>:/icons/camera</iconset>
    </property>
    <property name="text">
     <string>Open &amp;Device...</string>
-   </property>
-  </action>
-  <action name="actionFinder_View">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/finder view</normaloff>:/icons/finder view</iconset>
-   </property>
-   <property name="text">
-    <string>Finder view</string>
-   </property>
-  </action>
-  <action name="actionCapture_View">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/capture view</normaloff>:/icons/capture view</iconset>
-   </property>
-   <property name="text">
-    <string>Capture view</string>
    </property>
   </action>
   <action name="actionRecord_original_movie">
@@ -247,7 +213,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/record input</normaloff>:/icons/record input</iconset>
    </property>
    <property name="text">
@@ -262,29 +228,11 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/record output</normaloff>:/icons/record output</iconset>
    </property>
    <property name="text">
     <string>Record output</string>
-   </property>
-  </action>
-  <action name="actionSource_view">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/normal view</normaloff>:/icons/normal view</iconset>
-   </property>
-   <property name="text">
-    <string>Source view</string>
    </property>
   </action>
   <action name="actionAbout_Sonic_Gesture">
@@ -297,7 +245,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="resources.qrc">
      <normaloff>:/icons/fullscreen</normaloff>:/icons/fullscreen</iconset>
    </property>
    <property name="text">
@@ -316,7 +264,9 @@
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionOpen_Video</sender>
@@ -351,22 +301,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionFinder_View</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>finderView()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>356</x>
-     <y>321</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionRecord_original_movie</sender>
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
@@ -387,22 +321,6 @@
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
    <slot>recordOutput()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>356</x>
-     <y>321</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionSource_view</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>sourceView()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -455,22 +373,6 @@
     <hint type="sourcelabel">
      <x>408</x>
      <y>482</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>356</x>
-     <y>321</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionCapture_View</sender>
-   <signal>activated()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>captureView()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>356</x>

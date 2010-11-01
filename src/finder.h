@@ -35,7 +35,6 @@ private:
     cv::Mat current_left, current_right, black;
     bool ready;
 
-    void draw_fps(int fps);
     void setError(QString);
     void audioOut(int left, int right, float leftPos, float rightPos, float leftSize, float rightSize);
 };

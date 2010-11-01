@@ -35,7 +35,7 @@ qt4_add_resources (SONICGESTURE_RES qt/resources.qrc)
 set(SONICGESTURE_SOURCE src/qcvimage.cpp src/finder.cpp src/skinfinder.cpp
     src/source.cpp src/histogram.cpp src/combiner.cpp src/tools.cpp src/settings.cpp
     src/bodypart.cpp src/blob.cpp src/matcher.cpp src/loader.cpp src/main.cpp
-    src/mainwindow.cpp src/capture.cpp src/application.cpp src/recorder.cpp
+    src/mainwindow.cpp src/application.cpp src/recorder.cpp
     src/settingscreen.cpp src/labeler.cpp src/audio.cpp)
 
 ###

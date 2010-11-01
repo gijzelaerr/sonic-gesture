@@ -1,8 +1,0 @@
-
-#ifndef _CMAKE_H
-#define	_CMAKE_H
-
-// set by CMAKE
-#define DATA_DIR "@DATA_DIR@"
-
-#endif

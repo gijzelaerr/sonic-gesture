@@ -122,21 +122,6 @@ bool Source::init() {
         return false;
     };
     
-    // doesn't work for webcam somehow
-    //int width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
-    //int height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
-    //CV_CAP_PROP_POS_MSEC - Film current position in milliseconds or video capture timestamp
-    //CV_CAP_PROP_POS_FRAMES - 0-based index of the frame to be decoded/captured next
-    //CV_CAP_PROP_POS_AVI_RATIO - Relative position of the video file (0 - start of the film, 1 - end of the film)
-    //CV_CAP_PROP_FRAME_WIDTH - Width of the frames in the video stream
-    //CV_CAP_PROP_FRAME_HEIGHT - Height of the frames in the video stream
-    //CV_CAP_PROP_FPS - Frame rate
-    //CV_CAP_PROP_FOURCC - 4-character code of codec
-    //CV_CAP_PROP_FRAME_COUNT - Number of frames in the video file
-    //CV_CAP_PROP_BRIGHTNESS - Brightness of the image (only for cameras)
-    //CV_CAP_PROP_CONTRAST - Contrast of the image (only for cameras)
-    //CV_CAP_PROP_SATURATION - Saturation of the image (only for cameras)
-    //CV_CAP_PROP_HUE - Hue of the image (only for cameras)
     int width = frame.cols;
     int height = frame.rows;
     
@@ -151,15 +136,17 @@ void Source::setLoop(bool loop) {
 };
 
 bool Source::grab() {
-    if (sourceMode != IMAGE) {
-        // loop video
+    if (sourceMode == MOVIE) {
+        // loop it at end
         if (cap.get(CV_CAP_PROP_POS_FRAMES) == (cap.get(CV_CAP_PROP_FRAME_COUNT)-1)) {
             if (this->loop)
                 setPos(0);
             else
                 return false;
         };
+    };
 
+    if (sourceMode != IMAGE) {
         try {
             cap >> frame;
         } catch (cv::Exception) {

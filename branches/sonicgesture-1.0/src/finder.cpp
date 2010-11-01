@@ -125,22 +125,9 @@ bool Finder::step(Mat& big) {
     visuals = bodyparts.draw_in_image();
     combined = this->combiner.render();
 
-    //t = ((double)getTickCount() - t)*1000/getTickFrequency();
-    //int wait = MIN(40, MAX(40-(int)t, 4)); // Wait max of 40 ms, min of 4;
-    //draw_fps(t+wait);
-
     return true;
 }
 
-void Finder::draw_fps(int delay) {
-    double fps = 1000.0 / delay;
-    std::string s;
-    std::stringstream out;
-    out.precision(1);
-    out << std::fixed << fps << " fps";
-    s = out.str();
-    putText(combined, s, Point(5, 12), FONT_HERSHEY_SIMPLEX, 0.4, Scalar(255, 255, 255), 1);
-}
 
 void Finder::setError(QString error) {
     this->error = error;

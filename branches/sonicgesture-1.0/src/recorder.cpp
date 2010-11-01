@@ -15,7 +15,6 @@ Recorder::Recorder(const QString& filename, double fps, cv::Size frameSize) {
 
 bool Recorder::open(const QString& filename, double fps, cv::Size frameSize) {
     return writer.open(filename.toStdString(), CV_FOURCC('M','J','P','G'), fps, frameSize, true);
-    //return writer.open(filename.toStdString(), CV_FOURCC('P','I','M','1'), fps, frameSize, true);
 };
 
 bool Recorder::isOpened() {

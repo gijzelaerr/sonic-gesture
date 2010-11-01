@@ -2,31 +2,79 @@
 \section{Finder Class Reference}
 \label{class_finder}\index{Finder@{Finder}}
 }
+
+
+{\ttfamily \#include $<$finder.h$>$}
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{class_finder_a26a4356e33a752b46f2fe773cfebd58a}{Finder} (const \hyperlink{class_source}{Source} \&source)
+\hyperlink{class_finder_aca168ee313ae6267e1492ed21a2d5ca3}{Finder} ()
+\begin{DoxyCompactList}\small\item\em The 'finder' that actually finds the bodyparts in a image. \item\end{DoxyCompactList}\item 
+bool \hyperlink{class_finder_a781fb5b52a069df93c92086b5c65eecc}{init} (const cv::Size \&size)
 \item 
-void \hyperlink{class_finder_a444b55731e2ec784447009b40ecdb577}{run} ()
+bool \hyperlink{class_finder_a8a9750545d0f0842bbed3c497ea83f6e}{step} (cv::Mat \&big)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+cv::Mat \hyperlink{class_finder_a84e5765529c87929b84bea6185da9296}{combined}
+\item 
+QString \hyperlink{class_finder_a9291af5c0b8e9c00a7d57475031a02f9}{error}
 \end{DoxyCompactItemize}
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{class_finder_a26a4356e33a752b46f2fe773cfebd58a}{
+\hypertarget{class_finder_aca168ee313ae6267e1492ed21a2d5ca3}{
 \index{Finder@{Finder}!Finder@{Finder}}
 \index{Finder@{Finder}!Finder@{Finder}}
-\subsubsection[{Finder}]{\setlength{\rightskip}{0pt plus 5cm}Finder::Finder (const {\bf Source} \& {\em source})}}
-\label{class_finder_a26a4356e33a752b46f2fe773cfebd58a}
+\subsubsection[{Finder}]{\setlength{\rightskip}{0pt plus 5cm}Finder::Finder (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_finder_aca168ee313ae6267e1492ed21a2d5ca3}
 
+
+The 'finder' that actually finds the bodyparts in a image. 
+
+This is a sort of crossroad class where all parts come together 
 
 \subsection{Member Function Documentation}
-\hypertarget{class_finder_a444b55731e2ec784447009b40ecdb577}{
-\index{Finder@{Finder}!run@{run}}
-\index{run@{run}!Finder@{Finder}}
-\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void Finder::run ()}}
-\label{class_finder_a444b55731e2ec784447009b40ecdb577}
+\hypertarget{class_finder_a781fb5b52a069df93c92086b5c65eecc}{
+\index{Finder@{Finder}!init@{init}}
+\index{init@{init}!Finder@{Finder}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool Finder::init (
+\begin{DoxyParamCaption}
+\item[{const cv::Size \&}]{ size}
+\end{DoxyParamCaption}
+)}}
+\label{class_finder_a781fb5b52a069df93c92086b5c65eecc}
+\hypertarget{class_finder_a8a9750545d0f0842bbed3c497ea83f6e}{
+\index{Finder@{Finder}!step@{step}}
+\index{step@{step}!Finder@{Finder}}
+\subsubsection[{step}]{\setlength{\rightskip}{0pt plus 5cm}bool Finder::step (
+\begin{DoxyParamCaption}
+\item[{cv::Mat \&}]{ big}
+\end{DoxyParamCaption}
+)}}
+\label{class_finder_a8a9750545d0f0842bbed3c497ea83f6e}
 
 
-The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\subsection{Member Data Documentation}
+\hypertarget{class_finder_a84e5765529c87929b84bea6185da9296}{
+\index{Finder@{Finder}!combined@{combined}}
+\index{combined@{combined}!Finder@{Finder}}
+\subsubsection[{combined}]{\setlength{\rightskip}{0pt plus 5cm}cv::Mat {\bf Finder::combined}}}
+\label{class_finder_a84e5765529c87929b84bea6185da9296}
+\hypertarget{class_finder_a9291af5c0b8e9c00a7d57475031a02f9}{
+\index{Finder@{Finder}!error@{error}}
+\index{error@{error}!Finder@{Finder}}
+\subsubsection[{error}]{\setlength{\rightskip}{0pt plus 5cm}QString {\bf Finder::error}}}
+\label{class_finder_a9291af5c0b8e9c00a7d57475031a02f9}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
+src/\hyperlink{finder_8h}{finder.h}\item 
 src/\hyperlink{finder_8cpp}{finder.cpp}\end{DoxyCompactItemize}

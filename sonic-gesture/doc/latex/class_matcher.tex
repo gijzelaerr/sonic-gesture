@@ -9,33 +9,73 @@
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{class_matcher_a254e6a060fa3843d8f700e9e226991a2}{Matcher} (bool mirror=false)
-\item 
+\hyperlink{class_matcher_afe819df374b49c50e0c82c88d7bda929}{Matcher} ()
+\begin{DoxyCompactList}\small\item\em The matcher decides which label a list of HOG features extracted from a body part gets. This is the machine learning part. \item\end{DoxyCompactList}\item 
 \hyperlink{class_matcher_adb99ad379498c429f93a8ae851ad75c3}{$\sim$Matcher} ()
 \item 
+\hyperlink{class_matcher_a85ebe82d0e882000549ac216eb509c8c}{Matcher} (bool mirror, vector$<$ int $>$ labels)
+\item 
 int \hyperlink{class_matcher_a243d7e85b90e22f333c2e31a4b96c73c}{match} (const vector$<$ float $>$ \&descriptors)
+\item 
+void \hyperlink{class_matcher_ad16dec832f31fa68138b251a30fbfb03}{train} (Mat train\_\-mat, Mat labels\_\-mat)
 \end{DoxyCompactItemize}
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{class_matcher_a254e6a060fa3843d8f700e9e226991a2}{
+\hypertarget{class_matcher_afe819df374b49c50e0c82c88d7bda929}{
 \index{Matcher@{Matcher}!Matcher@{Matcher}}
 \index{Matcher@{Matcher}!Matcher@{Matcher}}
-\subsubsection[{Matcher}]{\setlength{\rightskip}{0pt plus 5cm}Matcher::Matcher (bool {\em mirror} = {\ttfamily false})}}
-\label{class_matcher_a254e6a060fa3843d8f700e9e226991a2}
+\subsubsection[{Matcher}]{\setlength{\rightskip}{0pt plus 5cm}Matcher::Matcher (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_matcher_afe819df374b49c50e0c82c88d7bda929}
+
+
+The matcher decides which label a list of HOG features extracted from a body part gets. This is the machine learning part. 
+
 \hypertarget{class_matcher_adb99ad379498c429f93a8ae851ad75c3}{
 \index{Matcher@{Matcher}!$\sim$Matcher@{$\sim$Matcher}}
 \index{$\sim$Matcher@{$\sim$Matcher}!Matcher@{Matcher}}
-\subsubsection[{$\sim$Matcher}]{\setlength{\rightskip}{0pt plus 5cm}Matcher::$\sim$Matcher ()}}
+\subsubsection[{$\sim$Matcher}]{\setlength{\rightskip}{0pt plus 5cm}Matcher::$\sim$Matcher (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
 \label{class_matcher_adb99ad379498c429f93a8ae851ad75c3}
+\hypertarget{class_matcher_a85ebe82d0e882000549ac216eb509c8c}{
+\index{Matcher@{Matcher}!Matcher@{Matcher}}
+\index{Matcher@{Matcher}!Matcher@{Matcher}}
+\subsubsection[{Matcher}]{\setlength{\rightskip}{0pt plus 5cm}Matcher::Matcher (
+\begin{DoxyParamCaption}
+\item[{bool}]{ mirror, }
+\item[{vector$<$ int $>$}]{ labels}
+\end{DoxyParamCaption}
+)}}
+\label{class_matcher_a85ebe82d0e882000549ac216eb509c8c}
 
 
 \subsection{Member Function Documentation}
 \hypertarget{class_matcher_a243d7e85b90e22f333c2e31a4b96c73c}{
 \index{Matcher@{Matcher}!match@{match}}
 \index{match@{match}!Matcher@{Matcher}}
-\subsubsection[{match}]{\setlength{\rightskip}{0pt plus 5cm}int Matcher::match (const vector$<$ float $>$ \& {\em descriptors})}}
+\subsubsection[{match}]{\setlength{\rightskip}{0pt plus 5cm}int Matcher::match (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ float $>$ \&}]{ descriptors}
+\end{DoxyParamCaption}
+)}}
 \label{class_matcher_a243d7e85b90e22f333c2e31a4b96c73c}
+\hypertarget{class_matcher_ad16dec832f31fa68138b251a30fbfb03}{
+\index{Matcher@{Matcher}!train@{train}}
+\index{train@{train}!Matcher@{Matcher}}
+\subsubsection[{train}]{\setlength{\rightskip}{0pt plus 5cm}void Matcher::train (
+\begin{DoxyParamCaption}
+\item[{Mat}]{ train\_\-mat, }
+\item[{Mat}]{ labels\_\-mat}
+\end{DoxyParamCaption}
+)}}
+\label{class_matcher_ad16dec832f31fa68138b251a30fbfb03}
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

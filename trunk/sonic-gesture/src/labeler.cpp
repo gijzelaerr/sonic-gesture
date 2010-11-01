@@ -1,3 +1,7 @@
+/*!
+ * \brief Stores labels capture with the 'capture' mode into a label file
+ *
+  */
 #include "labeler.h"
 
 #include <QString>

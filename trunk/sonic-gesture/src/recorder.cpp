@@ -1,3 +1,8 @@
+/*!
+ * \brief The matcher decides which label a list of HOG features extracted from
+ * a body part gets. This is the machine learning part.
+ *
+ */
 #include "recorder.h"
 
 Recorder::Recorder() {

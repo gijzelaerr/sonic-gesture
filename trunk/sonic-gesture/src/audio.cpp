@@ -1,3 +1,10 @@
+/*!
+ * \brief Output Open Sounc Control class.
+ *
+ * This class is used to transmit parameters to a OSC receiver.
+ */
+
+
 #include "audio.h"
 #include <QDebug>
 

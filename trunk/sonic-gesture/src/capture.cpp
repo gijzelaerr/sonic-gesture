@@ -1,3 +1,7 @@
+/*!
+ * \brief Same as finder but used to label movies
+ *
+ */
 
 
 #include "capture.h"

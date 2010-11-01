@@ -1,4 +1,6 @@
-
+/*!
+ * The blob class. This class represents a group of pixels.
+ */
 
 #include "blob.h"
 #include "tools.h"

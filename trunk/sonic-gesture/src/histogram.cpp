@@ -1,4 +1,8 @@
-
+/*!
+ * \brief Class that encapsulates the opencv histogram
+ *
+ *  The combiner class combines a vector of frames into one big frame.
+ */
 #include "histogram.h"
 
 

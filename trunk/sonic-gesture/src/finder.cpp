@@ -1,4 +1,9 @@
+/*!
+ * \brief The 'finder' that actually finds the bodyparts in a image
+ *
+ *  This is a sort of crossroad class where all parts come together
 
+ */
 #include <iostream>
 #include "tools.h"
 #include "bodypart.h"

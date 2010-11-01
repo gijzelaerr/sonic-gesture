@@ -1,3 +1,11 @@
+/*!
+ * \brief Extracts labeled frames from movies
+ *
+ *  The extractor is a CLI program that extracts specific hand windows from.
+ * movies. Which frames are used is controlled by a label file, a newline seperated
+ * list of frame numbers. The 'capture' mode can be used to construct such
+ * a file.
+ */
 
 #include <iostream>
 #include <fstream>

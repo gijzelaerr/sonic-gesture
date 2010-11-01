@@ -1,4 +1,9 @@
-
+/*!
+ * \brief A settings class containing all settings.
+ *
+ * There is no settings screen at the moment but maybe there will be some day
+ *
+ */
 #include "cmake.h"
 #include "settings.h"
 #include <iostream>
@@ -46,8 +51,8 @@ void Settings::load()  {
  };
 
  void Settings::save() {
-     qSettings->setValue("moviePath", moviePath.absolutePath());
-     qSettings->setValue("dataPath", dataPath.absolutePath());
+     //qSettings->setValue("moviePath", moviePath.absolutePath());
+     //qSettings->setValue("dataPath", dataPath.absolutePath());
      //qSettings->setValue("dataSet", dataSet.absolutePath());
      //qSettings->setValue("cvWorkWinHight", cvWorkWinHight);
      //qSettings->setValue("cvWorkWinInX", cvWorkWinInX);
@@ -55,7 +60,7 @@ void Settings::load()  {
      //qSettings->setValue("probToBinThresh", probToBinThresh);
      //qSettings->setValue("kNeirNeigh", kNeirNeigh);
      //qSettings->setValue("deviceId", deviceId);
-     qSettings->setValue("blur", blur);
+     //qSettings->setValue("blur", blur);
      qSettings->sync();
 
 };

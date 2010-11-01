@@ -1,4 +1,7 @@
-
+/*!
+ * \brief A self constructed qwidget that displays a opencv image Matrix
+ *
+ */
 #include <QtGui/qwidget.h>
 #include <QDesktopWidget>
 #include <QApplication>

@@ -1,3 +1,9 @@
+/*!
+ * \brief Combines a vector of frames into one big frame
+ *
+ *  The combiner class combines a vector of frames into one big frame.
+ */
+
 
 #include <iostream>
 #include "combiner.h"

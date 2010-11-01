@@ -1,3 +1,10 @@
+/*!
+ * \brief Dumps all features extracted from the train images
+ *
+ *  This can be used to import the features into an external program like MATLAB
+ */
+
+
 #include "settings.h"
 #include "loader.h"
 #include "tools.h"

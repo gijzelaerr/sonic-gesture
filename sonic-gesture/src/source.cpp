@@ -1,3 +1,8 @@
+/*!
+ * \brief used for reading from movie or camera
+ *
+ */
+
 #include <iostream>
 #include <QtGui/QImage>
 #include <QtCore/qfileinfo.h>

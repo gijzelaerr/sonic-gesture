@@ -1,12 +1,13 @@
-
+/*!
+ * \brief The matcher decides which label a list of HOG features extracted from
+ * a body part gets. This is the machine learning part.
+ *
+ */
 #include "matcher.h"
 #include "highgui.h"
 #include "tools.h"
 #include <QtCore/QDir>
 #include <QtDebug>
-
-//#define USE_SVM
-//#define USE_PCA
 
 
 Matcher::Matcher() {
@@ -98,36 +99,15 @@ Matcher::Matcher(bool mirror, vector<int> labels) {
 
 
 void Matcher::train(Mat train_mat, Mat labels_mat) {
-#ifdef USE_PCA
-    int maxComponents = 10;
-    PCA pca(train_mat, Mat(), CV_PCA_DATA_AS_ROW, maxComponents);
-    train_mat = pca.project(train_mat);
-#endif
-
-#ifdef USE_SVM
-    svm_matcher = CvSVM();
-    svm_matcher.train(train_mat, labels_mat);
-#else
     knn_matcher = KNearest();
     knn_matcher.train(train_mat, labels_mat);
-#endif
 }
 
 int Matcher::match(const vector<float>& other_descriptors) {
     Mat sample = Mat(other_descriptors).t();
     int response;
-
-#ifdef USE_PCA
-    sample = pca.project(sample);
-#endif
-
-#ifdef USE_SVM
-    response = int(svm_matcher.predict(sample, false));
-#else
     CvMat img_cvmat = sample;
     response = int(knn_matcher.find_nearest(&img_cvmat, settings->kNeirNeigh, 0, 0, 0, 0));
-#endif
-
     return this->stabilizer.update(response);
     //return response;
 }

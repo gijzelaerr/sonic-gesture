@@ -1,4 +1,8 @@
-
+/*!
+ * \brief Loads data from a dataset.
+ *
+ *  The data is train data, example images and labels
+ */
 #include "loader.h"
 #include "tools.h"
 #include <fstream>

@@ -1,3 +1,9 @@
+/*!
+ * \brief The mainwindow class
+ *
+ *  Connects the Logic with the GUI
+ */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 

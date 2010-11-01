@@ -1,3 +1,7 @@
+/*!
+ * \brief Set of commonly used functions
+ *
+ */
 
 #include <iostream>
 

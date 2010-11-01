@@ -1,4 +1,7 @@
-
+/*!
+ * \brief When given a image returns a list of blobs that are probably skin
+ *
+ */
 
 #include "skinfinder.h"
 #include "tools.h"

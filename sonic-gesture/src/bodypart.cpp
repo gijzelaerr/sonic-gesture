@@ -1,3 +1,12 @@
+/*!
+ * \brief The bodypart class represents a hand or head.
+ *
+ *  This class respresents a hand or a head and is a placeholder
+ * for all related data like kalman filter, cutout images and calculated HOG
+ * features.
+ */
+
+
 
 #include "bodypart.h"
 #include "blob.h"

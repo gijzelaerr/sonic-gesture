@@ -55,67 +55,6 @@ target_link_libraries (sonicgesture
 )
 
 ###
-### BUILD EXTRACTOR
-###
-add_executable (extractor
-    src/extractor.cpp
-    src/settings.cpp
-    src/source.cpp
-    src/skinfinder.cpp
-    src/bodypart.cpp
-    src/tools.cpp
-    src/histogram.cpp
-    src/blob.cpp
-    ${SONICGESTURE_RES}
-)
-
-target_link_libraries (extractor
-    ${OpenCV_LIBS}
-    ${QT_LIBRARIES}
-)
-
-###
-### BUILD PERFORMANCE
-###
-add_executable (performance
-    src/performance.cpp
-    src/settings.cpp
-    src/source.cpp
-    src/skinfinder.cpp
-    src/bodypart.cpp
-    src/tools.cpp
-    src/histogram.cpp
-    src/blob.cpp
-    src/matcher.cpp
-    src/loader.cpp
-    ${SONICGESTURE_RES}
-)
-
-target_link_libraries (performance
-    ${OpenCV_LIBS}
-    ${QT_LIBRARIES}
-)
-
-###
-### BUILD DUMPER
-###
-add_executable (dumper
-    src/dumpFeatures.cpp
-    src/settings.cpp
-    src/tools.cpp
-    src/loader.cpp
-    ${SONICGESTURE_RES}
-)
-
-target_link_libraries (dumper
-    ${OpenCV_LIBS}
-    ${QT_LIBRARIES}
-)
-
-
-
-
-###
 ### INSTALLATION STUFF
 ###
 SET(CPACK_PACKAGE_NAME "sonicgesture")

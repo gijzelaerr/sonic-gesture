@@ -1,1 +1,2 @@
-debian/sonicgesture.xpm    usr/share/pixmaps
+debian/sonicgesture.xpm     usr/share/pixmaps
+debian/sonicgesture.desktop usr/share/applications

@@ -8,8 +8,8 @@ include(${QT_USE_FILE})
 
 # where can we find data
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
-set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/data")
-#set(DATA_DIR "/usr/share/sonicgesture")
+set(DATA_DIR "." CACHE PATH "where is the sonic gesture data")
+message(STATUS "DATA_DIR: ${DATA_DIR}")
 include_directories(${PROJECT_SOURCE_DIR})
 
 #pass cmake config to source
@@ -67,9 +67,9 @@ SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.txt")
 SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYRIGHT.txt")
 SET(CPACK_PACKAGE_EXECUTABLES "sonicgesture;SonicGesture")
 SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/data/installer/icon.bmp")
-SET(CPACK_PACKAGE_VERSION_MAJOR "0")
+SET(CPACK_PACKAGE_VERSION_MAJOR "1")
 SET(CPACK_PACKAGE_VERSION_MINOR "0")
-SET(CPACK_PACKAGE_VERSION_PATCH "1")
+SET(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 
 # the same for all architechtures
@@ -93,10 +93,8 @@ IF(UNIX AND NOT APPLE)
     install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/sets" DESTINATION share/${CPACK_PACKAGE_NAME} PATTERN ".svn" EXCLUDE)
     install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/storage" DESTINATION share/${CPACK_PACKAGE_NAME} PATTERN ".svn" EXCLUDE)
 
-    # only use this when building package!
-
     set(CPACK_GENERATOR "DEB")
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libopencv0, liblo7, libqt4-gui, libqt4-core")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libcv2.1, libhighgui2.1, libcvaux2.1, liblo7, libqt4-gui, libqt4-core")
 ENDIF(UNIX AND NOT APPLE)
 
 IF(APPLE)

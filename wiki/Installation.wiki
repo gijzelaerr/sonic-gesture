@@ -7,7 +7,7 @@ This page describes how to install Sonic Gesture. Currently only the latest Ubun
 
 
 = Ubuntu Installation =
-There are prebuild Ubuntu Packages available! Use the following commands to install Sonic Gesture on Ubuntu 10.04:
+There are prebuild Ubuntu Packages available! Use the following commands to install Sonic Gesture on Ubuntu 10.10:
 {{{
  $ sudo add-apt-repository ppa:gijzelaar/sonicgesture
  $ sudo apt-get update

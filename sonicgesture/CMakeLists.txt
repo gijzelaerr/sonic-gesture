@@ -8,7 +8,7 @@ include(${QT_USE_FILE})
 
 # where can we find data
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
-set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/data")
+set(DATA_DIR "./data")
 #set(DATA_DIR "/usr/share/sonicgesture")
 include_directories(${PROJECT_SOURCE_DIR})
 

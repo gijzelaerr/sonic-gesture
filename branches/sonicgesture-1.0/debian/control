@@ -2,7 +2,8 @@ Source: sonicgesture
 Section: devel
 Priority: optional
 Maintainer: Gijs Molenaar <gijs@pythonic.nl>
-Build-Depends: cdbs, debhelper (>= 7), cmake, libopencv-dev, libqt4-dev, liblo-dev
+Build-Depends: cdbs, debhelper (>= 7), cmake, libcv-dev, libcvaux-dev,
+ libhighgui-dev, libqt4-dev, liblo-dev
 Standards-Version: 3.8.3
 Homepage: http://code.google.com/p/sonic-gesture/
 

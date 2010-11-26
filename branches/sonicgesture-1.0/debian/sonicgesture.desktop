@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Sonic Gesture
+Comment=Hand Pose Estimation Software
+Exec=sonicgesture
+Terminal=false
+Type=Application
+Icon=sonicgesture
+Categories=AudioVideo
+

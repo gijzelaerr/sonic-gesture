@@ -1,15 +1,27 @@
 
+
+
+# where to put resulting binary
+DESTDIR = $${PWD}/result
+
+
+
 QT       += core gui
 
 
-TARGET = sonicgesture
+CONFIG(debug, debug|release) {
+    TARGET = sonicgesture-debug
+} else {
+    TARGET = sonicgesture
+}
+
 
 
 TEMPLATE = app
 
 
 INCLUDEPATH += \
-    C:\dev\MinGW\msys\1.0\local\include \
+    C:/dev/MinGW/msys/1.0/local/include \
     src
 
 

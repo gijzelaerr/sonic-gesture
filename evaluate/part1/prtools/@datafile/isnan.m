@@ -1,1 +1,0 @@
-%ISNAN Datafile overload

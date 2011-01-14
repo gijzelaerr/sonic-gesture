@@ -1,1 +1,0 @@
-%ISDOUBLE Test on doubles

@@ -4,7 +4,11 @@
 # where to put resulting binary
 DESTDIR = $${PWD}/result
 
+macx {
+    CONFIG += app_bundle
+}
 
+ICON = $${PWD}/sonicgesture.icns
 
 QT       += core gui
 
@@ -91,3 +95,12 @@ win32:LIBS += \
     -lpthread \
     -lws2_32 \
     -lwsock32
+
+macx:LIBS += \
+    -llo \
+    -lopencv_core \
+    -lopencv_highgui \
+    -lopencv_imgproc \
+    -lopencv_ml \
+    -lopencv_objdetect \
+    -lopencv_video

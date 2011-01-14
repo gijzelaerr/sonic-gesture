@@ -7,6 +7,10 @@
 
 #include "settings.h"
 #include <iostream>
+#include <QDebug>
+#include <QDir>
+#include <QString>
+#include <QCoreApplication>
 
 Settings* Settings::m_pSettings = NULL;
 
@@ -32,9 +36,10 @@ void Settings::destroy() {
  m_pSettings=NULL;
 }
 
+
 void Settings::load()  {
      moviePath = QDir(qSettings->value("moviePath", ".").toString());
-     dataPath = QDir(qSettings->value("dataPath", QDir::currentPath() + "/data").toString());
+     dataPath = QDir(QCoreApplication::applicationDirPath()  + "/../Resources/data");
      dataSet = qSettings->value("dataSet", dataPath.path() + "/sets/subset").toString();
      cvWorkWinHight = qSettings->value("cvWorkWinHight", 200).toInt();
      cvWorkWinInX = qSettings->value("cvWorkWinInX", 2).toInt();

@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // initialize finder and capture, check if they start
     if (!finder.init(source.size)) {
-        QMessageBox::warning(this, tr("Can't initialize finder"), finder.error, QMessageBox::Ok);
+        QMessageBox::warning(this, "Can't initialize finder", finder.error + "\n" + settings->dataPath.absolutePath(), QMessageBox::Ok);
     }
 
     whatWeSee = source.frame;

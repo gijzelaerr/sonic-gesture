@@ -65,14 +65,12 @@ void MatWidget::initImages(IplImage* image)
     }
     catch(QString msg)
     {
-        msg += "MatWidget::initImages return error\n";
-        qWarning(msg.toLatin1().data());
+        qWarning("MatWidget::initImages return error\n");
         return;
     }
     catch(...)
     {
-        QString msg("MatWidget::initImages return error\n");
-        qWarning(msg.toLatin1().data());
+        qWarning("MatWidget::initImages return error\n");
         return;
     }
 }
@@ -119,15 +117,13 @@ void MatWidget::setIplImage(IplImage* image)
     catch(QString msg)
     {
         d->mutex.unlock();
-        msg += "MatWidget::setIplImage return error\n";
-        qWarning(msg.toLatin1().data());
+        qWarning("MatWidget::setIplImage return error\n");
         return;
     }
     catch(...)
     {
         d->mutex.unlock();
-        QString msg("MatWidget::setIplImage return error\n");
-        qWarning(msg.toLatin1().data());
+        qWarning("MatWidget::setIplImage return error\n");
         return;
     }
 }

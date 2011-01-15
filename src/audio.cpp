@@ -56,4 +56,6 @@ bool Audio::send(int left, int right, float leftPos, float rightPos, float leftS
         lo_send(connection, "/sonicgesture/RightTrigger", "f", 0.0);
     }
 
+    return true;
+
 };

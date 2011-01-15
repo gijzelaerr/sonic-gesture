@@ -1,16 +1,8 @@
 
+QT       += core gui
 
-
-# where to put resulting binary
-DESTDIR = $${PWD}/result
-
-macx {
-    CONFIG += app_bundle
-}
 
 ICON = $${PWD}/sonicgesture.icns
-
-QT       += core gui
 
 
 CONFIG(debug, debug|release) {
@@ -20,12 +12,10 @@ CONFIG(debug, debug|release) {
 }
 
 
-
 TEMPLATE = app
 
 
 INCLUDEPATH += \
-    C:/dev/MinGW/msys/1.0/local/include \
     src
 
 
@@ -78,29 +68,35 @@ FORMS    += qt/mainwindow.ui
 RESOURCES += qt/resources.qrc
 
 
-win32:INCLUDEPATH += \
-    include \
+win32 {
+    INCLUDEPATH += \
+        include
 
+    LIBS += \
+        -L$${PWD}/lib \
+        -LC:\dev\MinGW\msys\1.0\local\lib \
+        -lml210 \
+        -lcv210 \
+        -lcvaux210 \
+        -lcxcore210 \
+        -lhighgui210 \
+        -lopencv_ffmpeg210 \
+        -llo \
+        -lpthread \
+        -lws2_32 \
+        -lwsock32
+}
 
-win32:LIBS += \
-    -L$${PWD}/lib \
-    -LC:\dev\MinGW\msys\1.0\local\lib \
-    -lml210 \
-    -lcv210 \
-    -lcvaux210 \
-    -lcxcore210 \
-    -lhighgui210 \
-    -lopencv_ffmpeg210 \
-    -llo \
-    -lpthread \
-    -lws2_32 \
-    -lwsock32
+macx {
+    LIBS += \
+        -llo \
+        -lopencv_core \
+        -lopencv_highgui \
+        -lopencv_imgproc \
+        -lopencv_ml \
+        -lopencv_objdetect \
+        -lopencv_video
 
-macx:LIBS += \
-    -llo \
-    -lopencv_core \
-    -lopencv_highgui \
-    -lopencv_imgproc \
-    -lopencv_ml \
-    -lopencv_objdetect \
-    -lopencv_video
+    CONFIG += app_bundle
+    QMAKE_POST_LINK = svn export --force $${PWD}/data $${TARGET}.app/Contents/Resources/data
+}

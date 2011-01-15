@@ -3,6 +3,7 @@
 
 #include <QtGui/QMainWindow>
 #include <QTime>
+#include <QTimer>
 
 #include "qcvimage.h"
 #include "finder.h"
@@ -42,6 +43,7 @@ private:
     bool recording;
 
     QTime time;
+    QTimer timer;
     Mat whatWeSee;
 
     void step();

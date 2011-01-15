@@ -25,7 +25,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // initialize finder and capture, check if they start
     if (!finder.init(source.size)) {
-        QMessageBox::warning(this, "Can't initialize finder", finder.error + "\n" + settings->dataPath.absolutePath(), QMessageBox::Ok);
+        QMessageBox::warning(this, "Can't initialize finder", finder.error +
+                             "\n" + settings->dataPath.absolutePath(), QMessageBox::Ok);
     }
 
     whatWeSee = source.frame;
@@ -228,8 +229,7 @@ void MainWindow::heartBeat() {
     int MINWAIT = 10;
     int wait = (1000/settings->FPS) - elapsed;
     wait = MAX(wait, MINWAIT);
-    //qDebug() << elapsed << "\t" << wait;
-    QTimer::singleShot(wait, this, SLOT(heartBeat()));
+    timer.singleShot(wait, this, SLOT(heartBeat()));
 };
 
 

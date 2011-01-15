@@ -149,8 +149,9 @@ bool Source::grab() {
     if (sourceMode != IMAGE) {
         try {
             cap >> frame;
-        } catch (cv::Exception) {
-            setError("can't grab frame");
+        } catch (cv::Exception& e) {
+            const char* err_msg = e.what();
+            setError("can't grab frame" + QString(err_msg));
             return false;
         };
     };

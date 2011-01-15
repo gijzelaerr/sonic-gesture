@@ -137,6 +137,10 @@ void MatWidget::setImage(cv::Mat& mat) {
 void MatWidget::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
+
+    if (d->qtImage.isNull()) {
+        return;
+    }
     QImage scaled = d->qtImage.scaled(this->size(), Qt::KeepAspectRatio);
     int wskip = (this->width() - scaled.width())/2;
     int hskip = (this->height() - scaled.height())/2;

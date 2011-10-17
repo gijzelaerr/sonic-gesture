@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 project( "sonic-gesture" )
-find_package( OpenCV REQUIRED )  
+find_package( OpenCV REQUIRED )
 find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED )
 
 include(${QT_USE_FILE})
@@ -21,9 +21,6 @@ include_directories("${PROJECT_BINARY_DIR}/src")
 #include generated QT files
 include_directories(${PROJECT_BINARY_DIR})
 
-#build 32 bit for OSX
-set(CMAKE_OSX_ARCHITECTURES "i386")
-
 ###
 ### QT STUFF
 ###
@@ -41,12 +38,21 @@ set(SONICGESTURE_SOURCE src/qcvimage.cpp src/finder.cpp src/skinfinder.cpp
 ###
 ### BUILD SONIC GESTURE
 ###
-add_executable ( sonicgesture
-    ${SONICGESTURE_SOURCE}
-    ${SONICGESTURE_CPP}
-    ${SONICGESTURE_RES}
-    ${SONICGESTURE_UI}
-)
+IF(APPLE)
+    add_executable ( sonicgesture MACOSX_BUNDLE
+        ${SONICGESTURE_SOURCE}
+        ${SONICGESTURE_CPP}
+        ${SONICGESTURE_RES}
+        ${SONICGESTURE_UI}
+    )
+ELSE()
+    add_executable ( sonicgesture
+        ${SONICGESTURE_SOURCE}
+        ${SONICGESTURE_CPP}
+        ${SONICGESTURE_RES}
+        ${SONICGESTURE_UI}
+    )
+ENDIF()
 
 target_link_libraries (sonicgesture
     ${OpenCV_LIBS}
@@ -97,14 +103,23 @@ IF(UNIX AND NOT APPLE)
     set(CPACK_DEBIAN_PACKAGE_DEPENDS "libcv2.1, libhighgui2.1, libcvaux2.1, liblo7, libqt4-gui, libqt4-core")
 ENDIF(UNIX AND NOT APPLE)
 
-IF(APPLE)
-    install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/sets" DESTINATION share/${CPACK_PACKAGE_NAME} PATTERN ".svn" EXCLUDE)
-    install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/storage" DESTINATION share/${CPACK_PACKAGE_NAME} PATTERN ".svn" EXCLUDE)
+IF (APPLE)
+    INSTALL(TARGETS sonicgesture BUNDLE DESTINATION . COMPONENT Runtime)
+    install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/sets" DESTINATION ${CMAKE_INSTALL_PREFIX}/Contents/Resources PATTERN ".svn" EXCLUDE)
+    install (DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/data/storage" DESTINATION ${CMAKE_INSTALL_PREFIX}/Contents/Resources PATTERN ".svn" EXCLUDE)
 
-    set(CPACK_GENERATOR "Bundle")
-    set(CPACK_BUNDLE_NAME "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}")
-    set(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/Info.plist")
-    set(CPACK_BUNDLE_ICON "${CPACK_PACKAGE_ICON}")
+    INSTALL(CODE "
+            include(BundleUtilities)
+            SET(BU_CHMOD_BUNDLE_ITEMS ON)
+            fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/emovision.app\" \"\${QTPLUGINS}\")
+            " COMPONENT Runtime)
+
+    SET(MACOSX_BUNDLE_BUNDLE_NAME "sonic gesture")
+    SET(MACOSX_BUNDLE_INFO_STRING "SonicGesture "${VERSION})
+    SET(MACOSX_BUNDLE_GUI_IDENTIFIER "com.gijzelaerr.sonicgesture" )
+    SET(MACOSX_BUNDLE_BUNDLE_VERSION ${VERSION})
+    SET(MACOSX_BUNDLE_LONG_VERSION_STRING ${VERSION})
+    SET(CPACK_GENERATOR "DragNDrop")
 ENDIF(APPLE)
 
 INCLUDE(CPack)

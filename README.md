@@ -6,7 +6,7 @@ Sonic Gesture is a Computer Vision project where learned hand poses are translat
 This is the graduation project of [http://gijs.pythonic.nl Gijs Molenaar] for the Master Artificial Intelligence at the [http://www.uva.nl University of Amsterdam]. You can read [http://sonic-gesture.googlecode.com/svn/trunk/thesis/thesis-small.pdf the thesis] if you want.
 
 # Installation
-Please refer the [Installation installation manual] if you want to try out Sonic Gesture. If you have questions or want to contribute please join the [http://groups.google.com/group/sonic-gesture discussion list].
+Please refer the [Installation installation manual] if you want to try out Sonic Gesture. 
 
 
 # Examples

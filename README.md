@@ -7,7 +7,14 @@ This is the graduation project of [Gijs Molenaar](http://gijs.pythonic.nl) for t
 
 # Installation
 
-Unfortunatly I didn't have time to update this project in a while, i'm not even sure if it still compiles. 
+Unfortunatly I didn't have time to update this project in a while, i'm not even sure if it still compiles. the `sonicgesture` folder contains the C++ code which used cmake, QT and opencv.
+
+other folders:
+
+* **evaluate**: contains performance evaluation data
+* **puredata**: contains a puredata toy patch
+* **pysonic-gesture**: a early python based prototype
+* **sonicgesture**: the C++ source code
 
 
 # Examples
